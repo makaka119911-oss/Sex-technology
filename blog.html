@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог | Татьяна Солнечная и Виктория Румянцева</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div id="ageModal" class="modal">
+        <div class="modal-content">
+            <h2>Вам есть 18 лет?</h2>
+            <p>Этот сайт содержит материалы для взрослой аудитории</p>
+            <div class="modal-buttons">
+                <button id="confirmAge" class="btn-primary">Да, мне есть 18 лет</button>
+                <button id="denyAge" class="btn-secondary">Нет, мне нет 18</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <div class="logo">TS&VR</div>
+                <span class="brand-names">Татьяна Солнечная & Виктория Румянцева</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="training.html">Тренинг</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="blog.html" class="active">Блог</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+            <button class="nav-cta">Записаться на консультацию</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section for Blog Page -->
+    <section class="hero blog-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Наш блог</h1>
+            <p class="hero-subtitle">Полезные статьи о сексуальности и отношениях</p>
+            <p class="hero-description">Делимся экспер knowledge и практическими советами для улучшения качества вашей интимной жизни.</p>
+        </div>
+        <div class="hero-image">
+            <img src="images/blog-hero.jpg" alt="Блог о сексуальности">
+        </div>
+    </section>
+
+    <!-- Blog Filters -->
+    <section class="blog-filters">
+        <div class="container">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все статьи</button>
+                <button class="filter-btn" data-filter="couples">Для пар</button>
+                <button class="filter-btn" data-filter="men">Для мужчин</button>
+                <button class="filter-btn" data-filter="women">Для женщин</button>
+                <button class="filter-btn" data-filter="myths">Мифы</button>
+                <button class="filter-btn" data-filter="reviews">Обзоры</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="blog-grid-section">
+        <div class="container">
+            <div class="blog-grid">
+                <!-- Статья 1 -->
+                <article class="blog-card" data-category="couples">
+                    <div class="blog-image">
+                        <img src="images/blog-1.jpg" alt="5 языков любви в интимной близости">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">Для пар</span>
+                        <h3>5 языков любви в интимной близости</h3>
+                        <p class="blog-excerpt">Как понимание языков любви может преобразить вашу интимную жизнь и сделать близость более осознанной и приятной для обоих партнеров.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">15 января 2024</span>
+                            <span class="blog-read-time">5 мин чтения</span>
+                        </div>
+                        <a href="#" class="blog-link">Читать далее</a>
+                    </div>
+                </article>
+
+                <!-- Статья 2 -->
+                <article class="blog-card" data-category="couples">
+                    <div class="blog-image">
+                        <img src="images/blog-2.jpg" alt="Как вернуть страсть в долгих отношениях">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">Для пар</span>
+                        <h3>Как вернуть страсть в долгих отношениях?</h3>
+                        <p class="blog-excerpt">Практические советы и упражнения для пар, которые вместе много лет и хотят вернуть novelty и страсть в свои отношения.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">10 января 2024</span>
+                            <span class="blog-read-time">7 мин чтения</span>
+                        </div>
+                        <a href="#" class="blog-link">Читать далее</a>
+                    </div>
+                </article>
+
+                <!-- Статья 3 -->
+                <article class="blog-card" data-category="myths">
+                    <div class="blog-image">
+                        <img src="images/blog-3.jpg" alt="Топ-5 мифов о женском оргазме">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">Мифы</span>
+                        <h3>Топ-5 мифов о женском оргазме</h3>
+                        <p class="blog-excerpt">Разбираем распространенные заблуждения о женском удовольствии и рассказываем, как все обстоит на самом деле с научной точки зрения.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">5 января 2024</span>
+                            <span class="blog-read-time">6 мин чтения</span>
+                        </div>
+                        <a href="#" class="blog-link">Читать далее</a>
+                    </div>
+                </article>
+
+                <!-- Статья 4 -->
+                <article class="blog-card" data-category="women">
+                    <div class="blog-image">
+                        <img src="images/blog-4.jpg" alt="Что такое консенсус и почему он важен">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">Для женщин</span>
+                        <h3>Что такое консенсус и почему он важен</h3>
+                        <p class="blog-excerpt">Подробно объясняем, что значит согласие в интимных отношениях и почему это основа безопасного и приятного сексуального опыта.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">28 декабря 2023</span>
+                            <span class="blog-read-time">4 мин чтения</span>
+                        </div>
+                        <a href="#" class="blog-link">Читать далее</a>
+                    </div>
+                </article>
+
+                <!-- Статья 5 -->
+                <article class="blog-card" data-category="men">
+                    <div class="blog-image">
+                        <img src="images/blog-5.jpg" alt="Мужская сексуальность beyond the obvious">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">Для мужчин</span>
+                        <h3>Мужская сексуальность beyond the obvious</h3>
+                        <p class="blog-excerpt">Глубокое погружение в мужскую психологию и сексуальность: что на самом деле волнует мужчин в интимной жизни.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">20 декабря 2023</span>
+                            <span class="blog-read-time">8 мин чтения</span>
+                        </div>
+                        <a href="#" class="blog-link">Читать далее</a>
+                    </div>
+                </article>
+
+                <!-- Статья 6 -->
+                <article class="blog-card" data-category="reviews">
+                    <div class="blog-image">
+                        <img src="images/blog-6.jpg" alt="Обзор секс-игрушек для начинающих">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">Обзоры</span>
+                        <h3>Обзор секс-игрушек для начинающих</h3>
+                        <p class="blog-excerpt">Безопасный и информативный гайд по выбору первых секс-игрушек: на что обращать внимание и как сделать правильный выбор.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">15 декабря 2023</span>
+                            <span class="blog-read-time">10 мин чтения</span>
+                        </div>
+                        <a href="#" class="blog-link">Читать далее</a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <span class="pagination-dots">...</span>
+                <button class="pagination-btn">Следующая</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Подпишитесь на нашу рассылку</h2>
+                <p>Получайте новые статьи и анонсы мероприятий первыми</p>
+                <form class="newsletter-form" data-telegram-newsletter>
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit" class="btn-primary">Подписаться</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">TS&VR</div>
+                    <p>Татьяна Солнечная & Виктория Румянцева</p>
+                    <p>Профессиональные сексологи</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="training.html">Тренинг</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <p>Телефон Виктории: +7 917 503-13-33</p>
+                    <p>Телефон Татьяны: +7 905 595 9996</p>
+                    <p>Email: info@sexology-duo.ru</p>
+                </div>
+                <div class="footer-social">
+                    <h4>Социальные сети</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Telegram</a>
+                        <a href="#" class="social-link">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Татьяна Солнечная и Виктория Румянцева. Все права защищены.</p>
+                <a href="#">Политика конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/age-verification.js"></script>
+    <script src="js/telegram-bot.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Filter functionality for blog
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const blogCards = document.querySelectorAll('.blog-card');
+                
+                blogCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Pagination functionality
+        document.querySelectorAll('.pagination-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.pagination-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                // Here would be AJAX loading of new page content
+            });
+        });
+    </script>
+</body>
+</html>
