@@ -1,14 +1,14 @@
-// Age Verification - показывается только при первом входе
+// Age Verification
 document.addEventListener('DOMContentLoaded', function() {
     // Проверка возраста только при первом посещении
-    if (!sessionStorage.getItem('ageVerified')) {
+    if (!localStorage.getItem('ageVerified')) {
         document.getElementById('age-verification').style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
     
     // Подтверждение возраста
     document.getElementById('age-confirm').addEventListener('click', function() {
-        sessionStorage.setItem('ageVerified', 'true');
+        localStorage.setItem('ageVerified', 'true');
         document.getElementById('age-verification').style.display = 'none';
         document.body.style.overflow = 'auto';
     });
@@ -50,68 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Показать уведомление
     function showNotification(message) {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 5px;
-            z-index: 10000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        `;
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.remove();
-        }, 5000);
+        // Создаем уведомление
+        alert(message); // Простой alert вместо сложного уведомления
     }
-
-    // Обработчики для всех кнопок "Записаться"
-    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const buttonText = this.textContent.trim();
-            
-            if (buttonText.includes('Записаться') || buttonText.includes('Забронировать') || 
-                buttonText.includes('Выбрать') || buttonText.includes('Подробнее')) {
-                
-                if (buttonText.includes('тренинг') || buttonText.includes('Выбрать') || buttonText.includes('Забронировать')) {
-                    // Прокрутка к форме на странице тренинга
-                    const trainingForm = document.getElementById('training-form-section');
-                    if (trainingForm) {
-                        e.preventDefault();
-                        trainingForm.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        // Если формы нет на странице, переходим на страницу тренинга
-                        window.location.href = 'training.html';
-                    }
-                } else if (buttonText.includes('консультацию')) {
-                    // Прокрутка к форме контактов
-                    const contactForm = document.getElementById('contact-form');
-                    if (contactForm) {
-                        e.preventDefault();
-                        contactForm.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        window.location.href = 'contacts.html';
-                    }
-                } else if (buttonText.includes('Подробнее')) {
-                    if (buttonText.includes('нас')) {
-                        window.location.href = 'about.html';
-                    } else if (buttonText.includes('тренинг') || this.closest('.service-card')) {
-                        window.location.href = 'training.html';
-                    } else if (this.closest('.blog-card')) {
-                        // Для блога - заглушка
-                        e.preventDefault();
-                        showNotification('Статья скоро будет доступна!');
-                    }
-                }
-            }
-        });
-    });
 
     // Subscribe Form Handler
     const subscribeForm = document.getElementById('subscribe-form');
@@ -120,10 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const email = this.querySelector('input[type="email"]').value;
             
-            const message = `📧 <b>Новая подписка на рассылку</b>\n\nEmail: ${email}`;
+            const message = `📧 Новая подписка на рассылку\n\nEmail: ${email}`;
             sendToTelegram(message);
             
             this.reset();
+            showNotification('Спасибо за подписку! Проверьте вашу почту для получения бесплатного гайда.');
         });
     }
     
@@ -139,10 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const service = this.querySelector('select[name="service"]').value;
             const message = this.querySelector('textarea[name="message"]').value;
             
-            const telegramMessage = `📞 <b>Новая заявка с сайта</b>\n\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nУслуга: ${service}\nСообщение: ${message}`;
+            const telegramMessage = `📞 Новая заявка с сайта\n\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nУслуга: ${service}\nСообщение: ${message}`;
             sendToTelegram(telegramMessage);
             
             this.reset();
+            showNotification('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
         });
     }
     
@@ -157,10 +100,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const phone = this.querySelector('input[name="phone"]').value;
             const package = this.querySelector('select[name="package"]').value;
             
-            const telegramMessage = `🎓 <b>Новая заявка на тренинг</b>\n\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nПакет: ${package}`;
+            const telegramMessage = `🎓 Новая заявка на тренинг\n\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nПакет: ${package}`;
             sendToTelegram(telegramMessage);
             
             this.reset();
+            showNotification('Спасибо за вашу заявку! Мы свяжемся с вами для подтверждения записи.');
         });
     }
     
@@ -193,38 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
 
     // Mobile menu toggle
     const mobileMenuBtn = document.createElement('button');
     mobileMenuBtn.innerHTML = '☰';
     mobileMenuBtn.className = 'mobile-menu-btn';
-    mobileMenuBtn.style.cssText = `
-        display: none;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: var(--primary-color);
-        cursor: pointer;
-    `;
-
+    
     const headerInner = document.querySelector('.header-inner');
     const nav = document.querySelector('.nav');
     
@@ -233,6 +151,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         mobileMenuBtn.addEventListener('click', function() {
             nav.classList.toggle('mobile-active');
+        });
+        
+        // Close mobile menu when clicking on links
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('mobile-active');
+            });
         });
     }
 });
