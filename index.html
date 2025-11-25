@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сексологи Татьяна Солнечная и Виктория Румянцева | Гармония в отношениях</title>
-    <link rel="stylesheet" href="css/style.css">  
+    <link rel="stylesheet" href="стиль.css">
+    <link rel="stylesheet" href="адаптивный.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -28,14 +29,14 @@
                 <span class="brand-names">Татьяна Солнечная & Виктория Румянцева</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="training.html">Тренинг</a></li>
-                <li><a href="about.html">О нас</a></li>
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="обучение.html">Тренинг</a></li>
+                <li><a href="о.html">О нас</a></li>
                 <li><a href="services.html">Услуги</a></li>
-                <li><a href="blog.html">Блог</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="блог.html">Блог</a></li>
+                <li><a href="контакты.html">Контакты</a></li>
             </ul>
-            <button class="nav-cta">Записаться на тренинг</button>
+            <button class="nav-cta" onclick="scrollToForm()">Записаться на тренинг</button>
         </nav>
     </header>
 
@@ -45,10 +46,10 @@
             <h1 class="hero-title">Сексуальное развитие: от табу к гармонии</h1>
             <p class="hero-subtitle">Авторский тренинг от Татьяны Солнечной и Виктории Румянцевой</p>
             <p class="hero-description">Научитесь говорить о сексе, раскройте чувственность, верните страсть в отношения</p>
-            <button class="btn-primary large">Узнать о тренинге</button>
+            <button class="btn-primary large" onclick="scrollToForm()">Узнать о тренинге</button>
         </div>
         <div class="hero-image">
-            <img src="images/heroes/therapists-main.jpg" alt="Татьяна Солнечная и Виктория Румянцева">
+            <img src="https://images.unsplash.com/photo-1551836026-d5c88ac5d691?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Татьяна Солнечная и Виктория Румянцева">
         </div>
     </section>
 
@@ -87,10 +88,10 @@
                 <div class="about-text">
                     <h2>Наша философия</h2>
                     <p>Мы объединяем мужской и женский взгляд на сексуальность, создавая уникальный подход к решению интимных вопросов. Наша миссия — помочь парам и отдельным людям обрести гармонию в отношениях.</p>
-                    <button class="btn-secondary">Подробнее о нас</button>
+                    <a href="о.html" class="btn-secondary">Подробнее о нас</a>
                 </div>
                 <div class="about-image">
-                    <img src="images/team/therapists-together.jpg" alt="Совместное фото сексологов">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Совместное фото сексологов">
                 </div>
             </div>
         </div>
@@ -143,12 +144,12 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
+    <section class="cta-section" id="ctaForm">
         <div class="container">
             <h2>Готовы изменить вашу интимную жизнь?</h2>
             <p>Подпишитесь на анонсы тренингов и получите бесплатный гайд</p>
             <form class="newsletter-form" id="newsletterForm">
-                <input type="email" placeholder="Ваш email" required>
+                <input type="email" name="email" placeholder="Ваш email" required>
                 <button type="submit" class="btn-primary">Подписаться</button>
             </form>
         </div>
@@ -167,11 +168,11 @@
                     <h4>Навигация</h4>
                     <ul>
                         <li><a href="index.html">Главная</a></li>
-                        <li><a href="training.html">Тренинг</a></li>
-                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="обучение.html">Тренинг</a></li>
+                        <li><a href="о.html">О нас</a></li>
                         <li><a href="services.html">Услуги</a></li>
-                        <li><a href="blog.html">Блог</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
+                        <li><a href="блог.html">Блог</a></li>
+                        <li><a href="контакты.html">Контакты</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -183,8 +184,8 @@
                 <div class="footer-social">
                     <h4>Социальные сети</h4>
                     <div class="social-links">
-                        <a href="#" class="social-link">Telegram</a>
-                        <a href="#" class="social-link">Instagram</a>
+                        <a href="https://t.me/ViktoriaRum" class="social-link">Telegram Виктории</a>
+                        <a href="https://t.me/Tan4ik77G" class="social-link">Telegram Татьяны</a>
                     </div>
                 </div>
             </div>
@@ -195,7 +196,15 @@
         </div>
     </footer>
 
-    <script src="js/age-verification.js"></script>
-    <script src="js/main.js"></script>
+    <script src="age-verification.js"></script>
+    <script src="телеграмма-бот.js"></script>
+    <script src="main.js"></script>
+    <script>
+        function scrollToForm() {
+            document.getElementById('ctaForm').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
