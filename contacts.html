@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | Сексологи Татьяна Солнечная и Виктория Румянцева</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Age Verification Overlay -->
+    <div id="age-verification" class="age-verification">
+        <div class="age-modal">
+            <h2>Подтвердите ваш возраст</h2>
+            <p>Содержание этого сайта предназначено для лиц старше 18 лет</p>
+            <div class="age-buttons">
+                <button id="age-confirm" class="btn-primary">Мне есть 18 лет</button>
+                <button id="age-deny" class="btn-secondary">Мне нет 18 лет</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <h1>Сексологи</h1>
+                    <p>Татьяна Солнечная & Виктория Румянцева</p>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="training.html">Тренинг</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </nav>
+                <button class="btn-primary nav-cta">Записаться на тренинг</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contacts Hero -->
+    <section class="contacts-hero">
+        <div class="container">
+            <h1>Контакты</h1>
+            <p>Свяжитесь с нами удобным для вас способом</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>info@sexology-expert.ru</p>
+                        <p>Для общих вопросов и записи на консультации</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h3>Телефон / WhatsApp / Telegram</h3>
+                        <p>Виктория: +7 917 503-13-33</p>
+                        <p>Татьяна: +7 905 595-99-96</p>
+                        <p>Предпочтительный способ связи для срочных вопросов</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">🏢</div>
+                    <div class="contact-details">
+                        <h3>Офис</h3>
+                        <p>Немчиновка, парк Шато Отель</p>
+                        <p>Консультации по предварительной записи</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">🕒</div>
+                    <div class="contact-details">
+                        <h3>Часы работы</h3>
+                        <p>Пн-Пт: 10:00 - 20:00</p>
+                        <p>Сб: 11:00 - 17:00</p>
+                        <p>Вс: выходной</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">🔗</div>
+                    <div class="contact-details">
+                        <h3>Социальные сети</h3>
+                        <p>Telegram: @ViktoriaRum, @Tan4ik77G</p>
+                        <p>Подписывайтесь для получения полезных материалов</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h2>Форма обратной связи</h2>
+                <p>Заполните форму, и мы свяжемся с вами в течение 24 часов</p>
+                
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Ваше имя *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Интересующая услуга *</label>
+                        <select id="service" name="service" required>
+                            <option value="" disabled selected>Выберите услугу</option>
+                            <option value="training">Тренинг "Осознанная сексуальность"</option>
+                            <option value="couples">Консультации для пар</option>
+                            <option value="individual">Индивидуальные консультации</option>
+                            <option value="express">Экспресс-консультации</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Сообщение *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Отправить сообщение</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="container">
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2242.563366715884!2d37.35987631593187!3d55.79668098056633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b5489b7e1d7e9f%3A0x5c1b4a5e5f5e5f5e!2z0J3QtdC80YzQutC40L3QvdC-0YHQutC-0LPQviDQoNC10YHQu9C-0L3QtQ!5e0!3m2!1sru!2sru!4v1632930380000!5m2!1sru!2sru" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы сделать первый шаг к гармоничным отношениям?</h2>
+                <p>Запишитесь на бесплатную 15-минутную консультацию с нашими специалистами</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary large">Записаться на консультацию</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Сексологи</h3>
+                    <p>Татьяна Солнечная & Виктория Румянцева</p>
+                    <p>Раскройте гармонию в любви и отношениях</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="training.html">Тренинг</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <p>Email: info@sexology-expert.ru</p>
+                    <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+                    <div class="social-links">
+                        <a href="#">Telegram</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Сексологи Татьяна Солнечная и Виктория Румянцева. Все права защищены.</p>
+                <p><a href="#">Политика конфиденциальности</a> | <a href="#">Пользовательское соглашение</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
