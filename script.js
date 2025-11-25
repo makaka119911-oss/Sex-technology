@@ -1,26 +1,28 @@
-// Age Verification
+// Age Verification - показывается только при первом входе
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if age has been verified
-    if (!localStorage.getItem('ageVerified')) {
+    // Проверка возраста только при первом посещении
+    if (!sessionStorage.getItem('ageVerified')) {
         document.getElementById('age-verification').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
     }
     
-    // Age confirmation
+    // Подтверждение возраста
     document.getElementById('age-confirm').addEventListener('click', function() {
-        localStorage.setItem('ageVerified', 'true');
+        sessionStorage.setItem('ageVerified', 'true');
         document.getElementById('age-verification').style.display = 'none';
+        document.body.style.overflow = 'auto';
     });
     
-    // Age denial
+    // Отказ
     document.getElementById('age-deny').addEventListener('click', function() {
         window.location.href = 'https://www.google.com';
     });
-    
+
     // Telegram Bot Configuration
     const TELEGRAM_BOT_TOKEN = '8511281654:AAFc-7eif0tGwB9bFvp_lrnibLYNYdQgvmw';
     const TELEGRAM_CHAT_ID = '846572018';
     
-    // Function to send message to Telegram
+    // Функция отправки в Telegram
     function sendToTelegram(message) {
         const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
         
@@ -38,12 +40,79 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             console.log('Message sent to Telegram:', data);
+            showNotification('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
         })
         .catch(error => {
             console.error('Error sending message to Telegram:', error);
+            showNotification('Ошибка отправки. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.');
         });
     }
-    
+
+    // Показать уведомление
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    }
+
+    // Обработчики для всех кнопок "Записаться"
+    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const buttonText = this.textContent.trim();
+            
+            if (buttonText.includes('Записаться') || buttonText.includes('Забронировать') || 
+                buttonText.includes('Выбрать') || buttonText.includes('Подробнее')) {
+                
+                if (buttonText.includes('тренинг') || buttonText.includes('Выбрать') || buttonText.includes('Забронировать')) {
+                    // Прокрутка к форме на странице тренинга
+                    const trainingForm = document.getElementById('training-form-section');
+                    if (trainingForm) {
+                        e.preventDefault();
+                        trainingForm.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        // Если формы нет на странице, переходим на страницу тренинга
+                        window.location.href = 'training.html';
+                    }
+                } else if (buttonText.includes('консультацию')) {
+                    // Прокрутка к форме контактов
+                    const contactForm = document.getElementById('contact-form');
+                    if (contactForm) {
+                        e.preventDefault();
+                        contactForm.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.location.href = 'contacts.html';
+                    }
+                } else if (buttonText.includes('Подробнее')) {
+                    if (buttonText.includes('нас')) {
+                        window.location.href = 'about.html';
+                    } else if (buttonText.includes('тренинг') || this.closest('.service-card')) {
+                        window.location.href = 'training.html';
+                    } else if (this.closest('.blog-card')) {
+                        // Для блога - заглушка
+                        e.preventDefault();
+                        showNotification('Статья скоро будет доступна!');
+                    }
+                }
+            }
+        });
+    });
+
     // Subscribe Form Handler
     const subscribeForm = document.getElementById('subscribe-form');
     if (subscribeForm) {
@@ -54,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = `📧 <b>Новая подписка на рассылку</b>\n\nEmail: ${email}`;
             sendToTelegram(message);
             
-            alert('Спасибо за подписку! Проверьте вашу почту для получения бесплатного гайда.');
             this.reset();
         });
     }
@@ -74,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const telegramMessage = `📞 <b>Новая заявка с сайта</b>\n\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nУслуга: ${service}\nСообщение: ${message}`;
             sendToTelegram(telegramMessage);
             
-            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
             this.reset();
         });
     }
@@ -93,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const telegramMessage = `🎓 <b>Новая заявка на тренинг</b>\n\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nПакет: ${package}`;
             sendToTelegram(telegramMessage);
             
-            alert('Спасибо за вашу заявку! Мы свяжемся с вами для подтверждения записи.');
             this.reset();
         });
     }
@@ -113,9 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             button.classList.add('active');
             
             const filterValue = button.getAttribute('data-filter');
@@ -147,7 +211,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.createElement('button');
+    mobileMenuBtn.innerHTML = '☰';
+    mobileMenuBtn.className = 'mobile-menu-btn';
+    mobileMenuBtn.style.cssText = `
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        cursor: pointer;
+    `;
+
+    const headerInner = document.querySelector('.header-inner');
+    const nav = document.querySelector('.nav');
     
-    // Mobile menu toggle (if needed in future)
-    // You can add a hamburger menu for mobile if needed
+    if (headerInner && nav) {
+        headerInner.appendChild(mobileMenuBtn);
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('mobile-active');
+        });
+    }
 });
