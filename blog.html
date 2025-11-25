@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог | Сексологи Татьяна Солнечная и Виктория Румянцева</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Age Verification Overlay -->
+    <div id="age-verification" class="age-verification">
+        <div class="age-modal">
+            <h2>Подтвердите ваш возраст</h2>
+            <p>Содержание этого сайта предназначено для лиц старше 18 лет</p>
+            <div class="age-buttons">
+                <button id="age-confirm" class="btn-primary">Мне есть 18 лет</button>
+                <button id="age-deny" class="btn-secondary">Мне нет 18 лет</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <h1>Сексологи</h1>
+                    <p>Татьяна Солнечная & Виктория Румянцева</p>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="training.html">Тренинг</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </nav>
+                <button class="btn-primary nav-cta">Записаться на тренинг</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Блог о сексуальности и отношениях</h1>
+            <p>Полезные статьи, исследования и практические советы от экспертов</p>
+        </div>
+    </section>
+
+    <!-- Blog Filters -->
+    <section class="blog-filters">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Все темы</button>
+                <button class="filter-btn" data-filter="couples">Для пар</button>
+                <button class="filter-btn" data-filter="men">Для мужчин</button>
+                <button class="filter-btn" data-filter="women">Для женщин</button>
+                <button class="filter-btn" data-filter="myths">Мифы</button>
+                <button class="filter-btn" data-filter="reviews">Обзоры</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="blog-grid">
+        <div class="container">
+            <div class="blog-card" data-category="couples">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="5 языков любви">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Для пар</span>
+                    <h3>5 языков любви в интимной близости</h3>
+                    <p class="blog-excerpt">Как понимание языков любви может преобразовать вашу интимную жизнь и сделать отношения более гармоничными.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="couples">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Вернуть страсть">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Для пар</span>
+                    <h3>Как вернуть страсть в долгих отношениях?</h3>
+                    <p class="blog-excerpt">Практические советы по возобновлению интереса и страсти в отношениях, длящихся несколько лет.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="myths">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Мифы об оргазме">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Мифы</span>
+                    <h3>Топ-5 мифов о женском оргазме</h3>
+                    <p class="blog-excerpt">Разбираем распространенные заблуждения о женской сексуальности и оргазме, основанные на научных данных.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="reviews">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Секс-игрушки">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Обзоры</span>
+                    <h3>Гид по выбору секс-игрушек для начинающих</h3>
+                    <p class="blog-excerpt">Как безопасно и осознанно подойти к выбору первых секс-игрушек для себя или пары.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="women">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616c113a1d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Женское либидо">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Для женщин</span>
+                    <h3>Что влияет на женское либидо: гормоны, стресс и не только</h3>
+                    <p class="blog-excerpt">Комплексный взгляд на факторы, влияющие на сексуальное желание у женщин, и как с ними работать.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="men">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Мужская тревожность">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Для мужчин</span>
+                    <h3>Мужская тревожность в постели: как справиться?</h3>
+                    <p class="blog-excerpt">Почему возникает тревожность у мужчин в интимных ситуациях и эффективные методы ее преодоления.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="myths">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Консенсус">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Мифы</span>
+                    <h3>Что такое консенсус и почему он важен в интимной жизни?</h3>
+                    <p class="blog-excerpt">Подробно разбираем понятие согласия в сексуальных отношениях и его значение для здоровой близости.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+            
+            <div class="blog-card" data-category="couples">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Коммуникация">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-category">Для пар</span>
+                    <h3>Искусство говорить о сексе: руководство для пар</h3>
+                    <p class="blog-excerpt">Практические техники для комфортного и эффективного обсуждения интимных тем с партнером.</p>
+                    <a href="#" class="read-more">Читать далее →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Хотите получать новые статьи первыми?</h2>
+                <p>Подпишитесь на нашу рассылку и будьте в курсе свежих материалов о сексуальности и отношениях</p>
+                <form class="subscribe-form" id="subscribe-form">
+                    <input type="email" placeholder="Ваш email" required>
+                    <button type="submit" class="btn-primary">Подписаться</button>
+                </form>
+                <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Сексологи</h3>
+                    <p>Татьяна Солнечная & Виктория Румянцева</p>
+                    <p>Раскройте гармонию в любви и отношениях</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="training.html">Тренинг</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <p>Email: info@sexology-expert.ru</p>
+                    <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+                    <div class="social-links">
+                        <a href="#">Telegram</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Сексологи Татьяна Солнечная и Виктория Румянцева. Все права защищены.</p>
+                <p><a href="#">Политика конфиденциальности</a> | <a href="#">Пользовательское соглашение</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
