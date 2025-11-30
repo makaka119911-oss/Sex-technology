@@ -250,8 +250,12 @@ nav a:hover::before {
     transform: translateY(-10px);
 }
 
-.problem-icon {
-    font-size: 3rem;
+.problem-icon svg {
+    width: 60px;
+    height: 60px;
+    stroke: var(--secondary-color);
+    stroke-width: 1.5;
+    fill: none;
     margin-bottom: 20px;
 }
 
@@ -287,8 +291,12 @@ nav a:hover::before {
     transform: translateY(-10px);
 }
 
-.solution-icon {
-    font-size: 3rem;
+.solution-icon svg {
+    width: 60px;
+    height: 60px;
+    stroke: var(--secondary-color);
+    stroke-width: 1.5;
+    fill: none;
     margin-bottom: 20px;
 }
 
@@ -370,8 +378,12 @@ nav a:hover::before {
     transform: translateY(-10px);
 }
 
-.training-icon {
-    font-size: 3rem;
+.training-icon svg {
+    width: 60px;
+    height: 60px;
+    stroke: var(--secondary-color);
+    stroke-width: 1.5;
+    fill: none;
     margin-bottom: 20px;
 }
 
@@ -449,9 +461,13 @@ nav a:hover::before {
     background: rgba(212, 175, 55, 0.1);
 }
 
-.contact-icon {
-    margin-right: 10px;
-    font-size: 1.1rem;
+.contact-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+    margin-right: 8px;
 }
 
 /* Booking Form */
