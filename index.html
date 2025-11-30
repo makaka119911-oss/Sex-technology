@@ -1,400 +1,755 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Татьяна Солнечная и Виктория Румянцева | Сексологи-психологи</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Солнечная & Румянцева | Сексологи-психологи</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Общие стили */
         :root {
             --primary-color: #8B0000;
             --secondary-color: #B22222;
-            --accent-color: #DC143C;
-            --light-bg: #FFF5F5;
+            --light-color: #FFF5F5;
+            --dark-color: #4A0000;
+            --text-color: #333;
+            --light-text: #FFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: "Raleway", sans-serif;
-            font-size: 1.2em;
-            color: #333;
-            margin: 0;
-            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
             overflow-x: hidden;
         }
         
-        .tm-bg-primary { background-color: var(--primary-color) !important; }
-        .tm-text-primary { color: var(--primary-color) !important; }
-        .tm-btn-primary { 
-            background-color: var(--primary-color); 
-            border-color: var(--primary-color);
-        }
-        .tm-btn-primary:hover { 
-            background-color: var(--secondary-color); 
-            border-color: var(--secondary-color);
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
         
-        /* Hero Section */
-        #hero {
-            background: linear-gradient(rgba(139, 0, 0, 0.7), rgba(178, 34, 34, 0.7)), url('img/hero-bg.jpg');
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Навигация */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(139, 0, 0, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+        
+        .mobile-menu {
+            display: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Главный баннер */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1790&q=80');
             background-size: cover;
             background-position: center;
-            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
             color: white;
         }
         
-        .navbar-brand {
-            font-weight: bold;
-            color: white !important;
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .tm-nav-link {
-            color: white !important;
-        }
-        
-        .tm-hero-title {
-            font-size: 3.5rem;
+        .hero h1 {
+            font-size: 48px;
             margin-bottom: 20px;
-        }
-        
-        /* Problem-Solution Section */
-        .problem-solution {
-            padding: 80px 0;
-            background-color: var(--light-bg);
-        }
-        
-        /* About Section */
-        .about-section {
-            padding: 80px 0;
-        }
-        
-        .about-img {
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        /* Training Section */
-        .training-section {
-            padding: 80px 0;
-            background-color: var(--light-bg);
-        }
-        
-        .training-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        /* Testimonials */
-        .testimonials-section {
-            padding: 80px 0;
-            background: linear-gradient(rgba(139, 0, 0, 0.8), rgba(178, 34, 34, 0.8)), url('img/testimonials-bg.jpg');
-            background-size: cover;
             color: white;
         }
         
-        /* Contact */
-        .contact-section {
-            padding: 80px 0;
-            background-color: #f8f9fa;
-        }
-        
-        .contact-item {
+        .hero p {
+            font-size: 24px;
             margin-bottom: 30px;
         }
         
-        .contact-icon {
-            font-size: 1.5rem;
+        .names {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        /* Блок Проблема-Решение */
+        .problem-solution {
+            background: var(--light-color);
+        }
+        
+        .ps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .problem-column, .solution-column {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .problem-column {
+            background: white;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .solution-column {
+            background: white;
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .problem-list, .solution-list {
+            list-style: none;
+        }
+        
+        .problem-list li, .solution-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .problem-list li:before {
+            content: '✕';
+            position: absolute;
+            left: 0;
             color: var(--primary-color);
-            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .solution-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        /* Блок О нас */
+        .about {
+            background: white;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-content h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        /* Блок Что вас ждет */
+        .features {
+            background: var(--light-color);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Блок Отзывы */
+        .testimonials {
+            background: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .testimonial-item {
+            padding: 30px;
+            background: var(--light-color);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .testimonial-item:before {
+            content: '"';
+            font-size: 80px;
+            color: var(--primary-color);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* Блок Контакты */
+        .contact {
+            background: var(--dark-color);
+            color: white;
+        }
+        
+        .contact .section-title h2 {
+            color: white;
+        }
+        
+        .contact .section-title h2:after {
+            background: white;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .contact-person {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .contact-person h3 {
+            color: white;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .contact-details {
+            list-style: none;
+        }
+        
+        .contact-details li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-details i {
+            margin-right: 10px;
+            color: #FFD700;
+            width: 20px;
+        }
+        
+        /* Футер */
+        footer {
+            background: #2C0A0A;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .ps-grid, .about-grid, .features-grid, .testimonials-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            .names {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--primary-color);
+                flex-direction: column;
+                padding: 20px 0;
+                text-align: center;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .names {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
-
-<body>    
-    <!-- Hero section -->
-    <section id="hero" class="text-white tm-parallax">
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">              
-            <div class="container">   
-                <div class="tm-next">
-                    <a href="#hero" class="navbar-brand">Т. Солнечная & В. Румянцева</a>
-                </div>             
-                
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars navbar-toggler-icon"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link tm-nav-link" href="#hero">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-nav-link" href="#problem-solution">Проблема-Решение</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-nav-link" href="#about">О нас</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-nav-link" href="#training">Тренинг</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-nav-link" href="#testimonials">Отзывы</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-nav-link" href="#contact">Контакты</a>
-                        </li>                    
-                    </ul>
-                </div>        
-            </div>
-        </nav>
-        
-        <div class="text-center tm-hero-text-container">
-            <div class="tm-hero-text-container-inner">
-                <h1 class="tm-hero-title">Раскрой Гармонию в любви и отношениях</h1>
-                <p class="tm-hero-subtitle">
-                    Сексологи-психологи Татьяна Солнечная и Виктория Румянцева
-                </p>
-                <a href="#contact" class="btn tm-btn-primary btn-lg mt-4">ЗАПИСАТЬСЯ НА ТРЕНИНГ</a>
-            </div>        
+<body>
+    <!-- Навигация -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-text">Солнечная & Румянцева</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#problem-solution">Услуги</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#features">Тренинг</a></li>
+                    <li><a href="#testimonials">Отзывы</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
         </div>
+    </header>
 
-        <div class="tm-next tm-intro-next">
-            <a href="#problem-solution" class="text-center tm-down-arrow-link">
-                <i class="fas fa-2x fa-arrow-down tm-down-arrow"></i>
-            </a>
-        </div>      
+    <!-- Главный баннер -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="names">Татьяна Солнечная и Виктория Румянцева</div>
+                <h1>Раскрой Гармонию в любви и отношениях</h1>
+                <p>Сексологи-психологи с уникальным подходом к решению интимных проблем</p>
+                <a href="#contact" class="btn">ЗАПИСАТЬСЯ НА ТРЕНИНГ</a>
+            </div>
+        </div>
     </section>
 
-    <!-- Problem-Solution Section -->
+    <!-- Блок Проблема-Решение -->
     <section id="problem-solution" class="problem-solution">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="tm-text-primary mb-4">Проблема & Решение</h2>
-                </div>
+            <div class="section-title">
+                <h2>Проблема - Решение</h2>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3 class="card-title tm-text-primary">Типичные проблемы</h3>
-                            <ul class="list-unstyled">
-                                <li class="mb-3"><i class="fas fa-times-circle text-danger mr-2"></i> Непонимание в паре</li>
-                                <li class="mb-3"><i class="fas fa-times-circle text-danger mr-2"></i> Зажатость и стеснение</li>
-                                <li class="mb-3"><i class="fas fa-times-circle text-danger mr-2"></i> Рутина в отношениях</li>
-                                <li class="mb-3"><i class="fas fa-times-circle text-danger mr-2"></i> Низкое либидо</li>
-                                <li class="mb-3"><i class="fas fa-times-circle text-danger mr-2"></i> Чувство стыда и вины</li>
-                                <li class="mb-3"><i class="fas fa-times-circle text-danger mr-2"></i> Отсутствие доверия</li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="ps-grid">
+                <div class="problem-column">
+                    <h3>Типичные проблемы</h3>
+                    <ul class="problem-list">
+                        <li>Непонимание в паре и отсутствие взаимопонимания</li>
+                        <li>Зажатость и скованность в интимной жизни</li>
+                        <li>Рутина и потеря страсти в отношениях</li>
+                        <li>Низкое либидо и отсутствие желания</li>
+                        <li>Стыд и неумение говорить о своих потребностях</li>
+                    </ul>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3 class="card-title tm-text-primary">Наше решение</h3>
-                            <ul class="list-unstyled">
-                                <li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i> Практические инструменты для улучшения отношений</li>
-                                <li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i> Открытый и честный диалог</li>
-                                <li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i> Новые ощущения и впечатления</li>
-                                <li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i> Уверенность в себе и партнере</li>
-                                <li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i> Гармония в интимной жизни</li>
-                                <li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i> Возрождение страсти</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="solution-column">
+                    <h3>Наше решение</h3>
+                    <ul class="solution-list">
+                        <li>Практические инструменты для улучшения отношений</li>
+                        <li>Навыки открытого диалога и выражения чувств</li>
+                        <li>Техники для возвращения новизны и страсти</li>
+                        <li>Методы пробуждения чувственности и желания</li>
+                        <li>Уверенность в себе и своих интимных потребностях</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
+    <!-- Блок О нас -->
+    <section id="about" class="about">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <img src="img/about-photo.jpg" alt="Татьяна Солнечная и Виктория Румянцева" class="img-fluid about-img">
+            <div class="section-title">
+                <h2>О нас / Наша философия</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <!-- Замените на реальное фото -->
+                    <img src="https://images.unsplash.com/photo-1551836026-d5c88ac5d691?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Татьяна Солнечная и Виктория Румянцева">
                 </div>
-                <div class="col-lg-6">
-                    <h2 class="tm-text-primary mb-4">О нас / Наша философия</h2>
-                    <p class="mb-4">
-                        Мы - Татьяна Солнечная и Виктория Румянцева, профессиональные сексологи-психологи с многолетним опытом работы. 
-                    </p>
-                    <p class="mb-4">
-                        Наша уникальность в том, что мы объединяем мужской и женский взгляд на сексуальность и отношения. 
-                        Этот подход позволяет нам предлагать комплексные решения, учитывающие все аспекты интимной жизни.
-                    </p>
-                    <p class="mb-4">
-                        Мы верим, что гармоничные отношения - основа счастливой жизни, и помогаем парам обрести эту гармонию через 
-                        понимание, принятие и развитие.
-                    </p>
-                    <a href="#contact" class="btn tm-btn-primary">Подробнее о нас</a>
+                <div class="about-content">
+                    <h3>Почему мы работаем в паре?</h3>
+                    <p>Мы объединяем мужской и женский взгляд на сексуальность, что позволяет нам предлагать комплексный подход к решению интимных проблем в парах.</p>
+                    <p>Наш уникальный метод сочетает в себе психологическую глубину и практическую направленность. Мы помогаем не просто понять корень проблем, но и даем конкретные инструменты для их решения.</p>
+                    <p>Совместная работа позволяет нам рассматривать каждую ситуацию с разных углов, обеспечивая более полное понимание и эффективные решения для наших клиентов.</p>
+                    <a href="#contact" class="btn">Подробнее о нас</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Training Section -->
-    <section id="training" class="training-section">
+    <!-- Блок Что вас ждет -->
+    <section id="features" class="features">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="tm-text-primary mb-4">Что вас ждет на тренинге</h2>
-                </div>
+            <div class="section-title">
+                <h2>Что вас ждет на тренинге</h2>
             </div>
-            <div class="row text-center">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="training-icon">
-                        <i class="fas fa-book"></i>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
                     </div>
-                    <h4>Теория без воды</h4>
-                    <p>Только проверенные знания и научный подход</p>
+                    <h3>Теория без воды</h3>
+                    <p>Только проверенные знания и научный подход без лишней информации</p>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="training-icon">
+                <div class="feature-item">
+                    <div class="feature-icon">
                         <i class="fas fa-tasks"></i>
                     </div>
-                    <h4>Практические задания</h4>
-                    <p>Упражнения для применения в реальной жизни</p>
+                    <h3>Практические задания</h3>
+                    <p>Конкретные упражнения и техники, которые можно применять сразу</p>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="training-icon">
+                <div class="feature-item">
+                    <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h4>Безопасное пространство</h4>
-                    <p>Атмосфера доверия и поддержки</p>
+                    <h3>Безопасное пространство</h3>
+                    <p>Атмосфера доверия, где можно говорить на любые темы без стеснения</p>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="training-icon">
+                <div class="feature-item">
+                    <div class="feature-icon">
                         <i class="fas fa-user-secret"></i>
                     </div>
-                    <h4>Конфиденциальность</h4>
-                    <p>Полная анонимность и защита ваших данных</p>
+                    <h3>Конфиденциальность</h3>
+                    <p>Полная анонимность и защита вашей личной информации</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
+    <!-- Блок Отзывы -->
+    <section id="testimonials" class="testimonials">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="mb-4">Отзывы</h2>
-                </div>
+            <div class="section-title">
+                <h2>Отзывы</h2>
             </div>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <p class="card-text">"Тренинг изменил наши отношения. Мы научились говорить о своих желаниях без стеснения. Спасибо Татьяне и Виктории!"</p>
-                            <footer class="blockquote-footer">Анна и Максим, 32 года</footer>
-                        </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-item">
+                    <div class="testimonial-text">
+                        После тренинга наши отношения с мужем кардинально изменились. Мы научились говорить о своих желаниях без стеснения и страха. Спасибо Татьяне и Виктории за их профессионализм и чуткость!
                     </div>
+                    <div class="testimonial-author">- Анна, 34 года</div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <p class="card-text">"После рождения ребенка наши интимные отношения сошли на нет. Благодаря тренингу мы вернули страсть и близость."</p>
-                            <footer class="blockquote-footer">Ольга и Дмитрий, 28 лет</footer>
-                        </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-text">
+                        Я долго стеснялся своих проблем в интимной жизни, но на тренинге создали такую безопасную атмосферу, что все страхи ушли. Получил практические инструменты, которые действительно работают.
                     </div>
+                    <div class="testimonial-author">- Дмитрий, 41 год</div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <p class="card-text">"Я никогда не думала, что смогу так открыто говорить на интимные темы. Тренинг дал мне уверенность в себе и своих желаниях."</p>
-                            <footer class="blockquote-footer">Марина, 35 лет</footer>
-                        </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-text">
+                        Тренинг помог нам с партнером вернуть страсть в отношения, которые стали рутинными. Мы не только улучшили интимную жизнь, но и стали лучше понимать друг друга в целом.
                     </div>
+                    <div class="testimonial-author">- Ольга и Сергей, 29 и 32 года</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
+    <!-- Блок Контакты -->
+    <section id="contact" class="contact">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="tm-text-primary mb-4">Контакты</h2>
-                </div>
+            <div class="section-title">
+                <h2>Контакты</h2>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="contact-item">
-                        <h4 class="tm-text-primary">Татьяна Солнечная</h4>
-                        <p><i class="fas fa-phone contact-icon"></i> +7 905 595 9996</p>
-                        <p><i class="fab fa-telegram contact-icon"></i> @Tan4ik77G</p>
-                        <p><i class="fas fa-envelope contact-icon"></i> Tan4ik@gmail.com</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-person">
+                        <h3>Татьяна Солнечная</h3>
+                        <ul class="contact-details">
+                            <li><i class="fas fa-phone"></i> +7 905 595 9996</li>
+                            <li><i class="fab fa-telegram"></i> @Tan4ik77G</li>
+                            <li><i class="fas fa-envelope"></i> Tan4ik@gmail.com</li>
+                        </ul>
+                    </div>
+                    <div class="contact-person">
+                        <h3>Виктория Румянцева</h3>
+                        <ul class="contact-details">
+                            <li><i class="fas fa-phone"></i> +7 917 503-13-33</li>
+                            <li><i class="fab fa-telegram"></i> @ViktoriaRum</li>
+                            <li><i class="fas fa-envelope"></i> BikRooM@gmail.com</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="contact-item">
-                        <h4 class="tm-text-primary">Виктория Румянцева</h4>
-                        <p><i class="fas fa-phone contact-icon"></i> +7 917 503-13-33</p>
-                        <p><i class="fab fa-telegram contact-icon"></i> @ViktoriaRum</p>
-                        <p><i class="fas fa-envelope contact-icon"></i> BikRooM@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-lg-12">
-                    <h3 class="text-center tm-text-primary mb-4">Записаться на консультацию</h3>
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" placeholder="Ваше имя" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="tel" class="form-control" placeholder="Ваш телефон" required>
-                            </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Ваше имя" required>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" rows="4" placeholder="Сообщение"></textarea>
+                            <input type="email" placeholder="Ваш email" required>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn tm-btn-primary btn-lg">Отправить заявку</button>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Ваш телефон">
                         </div>
+                        <div class="form-group">
+                            <textarea placeholder="Ваше сообщение" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Отправить сообщение</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-dark text-white text-center py-4">
+    <!-- Футер -->
+    <footer>
         <div class="container">
-            <p>&copy; 2023 Татьяна Солнечная и Виктория Румянцева. Все права защищены.</p>
+            <div class="footer-content">
+                <div class="footer-logo">Солнечная & Румянцева</div>
+                <div class="footer-text">© 2023 Все права защищены</div>
+            </div>
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script>
-        $(document).ready(function(){
-            // Smooth scrolling
-            $('a[href*="#"]').on('click', function(e) {
+        // Мобильное меню
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                $('html, body').animate({
-                    scrollTop: $($(this).attr('href')).offset().top
-                }, 500, 'linear');
-            });
-
-            // Navbar background change on scroll
-            $(window).scroll(function() {
-                if($(window).scrollTop() > 50) {
-                    $('.tm-navbar').addClass('scroll');
-                } else {
-                    $('.tm-navbar').removeClass('scroll');
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Закрываем мобильное меню после клика
+                    document.querySelector('.nav-links').classList.remove('active');
                 }
             });
+        });
+        
+        // Фиксация навигации при прокрутке
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(139, 0, 0, 0.98)';
+                header.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+            } else {
+                header.style.background = 'rgba(139, 0, 0, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+        
+        // Обработка формы
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
         });
     </script>
 </body>
