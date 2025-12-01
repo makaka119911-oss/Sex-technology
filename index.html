@@ -5,11 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Терапия любви и желаний | Секс-терапия для женщин</title>
     <meta name="description" content="Безопасное пространство для женщин, которые хотят больше удовольствия, близости с собой и уверенности в своей сексуальности">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Убраны внешние шрифты и Font Awesome -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Встроим иконки Font Awesome как SVG спрайт */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+        
+        /* SVG иконки */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
+        }
+    </style>
 </head>
 <body>
     <!-- Preloader -->
@@ -35,7 +55,7 @@
                     <a href="#contact" class="nav-cta">Записаться</a>
                 </div>
                 
-                <button class="burger-menu">
+                <button class="burger-menu" aria-label="Открыть меню">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -100,19 +120,19 @@
             
             <!-- Slider Controls -->
             <div class="slider-controls">
-                <button class="slider-prev">
-                    <i class="fas fa-chevron-left"></i>
+                <button class="slider-prev" aria-label="Предыдущий слайд">
+                    ←
                 </button>
-                <button class="slider-next">
-                    <i class="fas fa-chevron-right"></i>
+                <button class="slider-next" aria-label="Следующий слайд">
+                    →
                 </button>
             </div>
             
             <!-- Slider Dots -->
             <div class="slider-dots">
-                <button class="dot active" data-slide="1"></button>
-                <button class="dot" data-slide="2"></button>
-                <button class="dot" data-slide="3"></button>
+                <button class="dot active" data-slide="1" aria-label="Перейти к слайду 1"></button>
+                <button class="dot" data-slide="2" aria-label="Перейти к слайду 2"></button>
+                <button class="dot" data-slide="3" aria-label="Перейти к слайду 3"></button>
             </div>
         </div>
         
@@ -138,12 +158,12 @@
                 <!-- Expert 1 -->
                 <div class="expert-card" data-aos="fade-up">
                     <div class="expert-image">
-                        <img src="фото Татьяны Солнечной.jpg" alt="Татьяна Солнечная">
+                        <img src="фото Татьяны Солнечной.jpg" alt="Татьяна Солнечная" loading="lazy">
                         <div class="expert-overlay">
                             <div class="social-links">
-                                <a href="https://t.me/Tan4ik77G" target="_blank"><i class="fab fa-telegram"></i></a>
-                                <a href="tel:+79055959996"><i class="fas fa-phone"></i></a>
-                                <a href="mailto:Tan4ik@gmail.com"><i class="fas fa-envelope"></i></a>
+                                <a href="https://t.me/Tan4ik77G" target="_blank" rel="noopener noreferrer" aria-label="Telegram Татьяны">Tg</a>
+                                <a href="tel:+79055959996" aria-label="Позвонить Татьяне">Тел</a>
+                                <a href="mailto:Tan4ik@gmail.com" aria-label="Написать email Татьяне">@</a>
                             </div>
                         </div>
                     </div>
@@ -152,9 +172,9 @@
                         <p class="expert-role">Психолог, сексолог</p>
                         <p class="expert-bio">Сопровождает женщин в теме желаний, удовольствия и отношений с телом. Работает с травматичным опытом и чувством стыда.</p>
                         <ul class="expert-specialties">
-                            <li><i class="fas fa-check-circle"></i> Индивидуальная секс-терапия</li>
-                            <li><i class="fas fa-check-circle"></i> Работа с последствиями травм</li>
-                            <li><i class="fas fa-check-circle"></i> Сопровождение после насилия</li>
+                            <li>✓ Индивидуальная секс-терапия</li>
+                            <li>✓ Работа с последствиями травм</li>
+                            <li>✓ Сопровождение после насилия</li>
                         </ul>
                         <a href="#contact" class="btn btn-outline">Связаться с Татьяной</a>
                     </div>
@@ -163,12 +183,12 @@
                 <!-- Expert 2 -->
                 <div class="expert-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="expert-image">
-                        <img src="Фото Виктории РУмянцевой.jpg" alt="Виктория Румянцева">
+                        <img src="Фото Виктории РУмянцевой.jpg" alt="Виктория Румянцева" loading="lazy">
                         <div class="expert-overlay">
                             <div class="social-links">
-                                <a href="https://t.me/ViktoriaRum" target="_blank"><i class="fab fa-telegram"></i></a>
-                                <a href="tel:+79175031333"><i class="fas fa-phone"></i></a>
-                                <a href="mailto:BikRooM@gmail.com"><i class="fas fa-envelope"></i></a>
+                                <a href="https://t.me/ViktoriaRum" target="_blank" rel="noopener noreferrer" aria-label="Telegram Виктории">Tg</a>
+                                <a href="tel:+79175031333" aria-label="Позвонить Виктории">Тел</a>
+                                <a href="mailto:BikRooM@gmail.com" aria-label="Написать email Виктории">@</a>
                             </div>
                         </div>
                     </div>
@@ -177,9 +197,9 @@
                         <p class="expert-role">Психолог, сексолог</p>
                         <p class="expert-bio">Создаёт безопасные женские круги и поддерживает в проживании желаний. Работает с телесностью и чувственностью.</p>
                         <ul class="expert-specialties">
-                            <li><i class="fas fa-check-circle"></i> Женские круги онлайн и оффлайн</li>
-                            <li><i class="fas fa-check-circle"></i> Работа с телесностью</li>
-                            <li><i class="fas fa-check-circle"></i> Поддержка в изменениях</li>
+                            <li>✓ Женские круги онлайн и оффлайн</li>
+                            <li>✓ Работа с телесностью</li>
+                            <li>✓ Поддержка в изменениях</li>
                         </ul>
                         <a href="#contact" class="btn btn-outline">Связаться с Викторией</a>
                     </div>
@@ -199,49 +219,37 @@
             
             <div class="help-cards">
                 <div class="help-card" data-aos="fade-up">
-                    <div class="help-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
+                    <div class="help-icon">❤</div>
                     <h3>Либидо и желание</h3>
                     <p>Когда «ничего не хочется», хотя внутри есть потребность в близости и жизни в теле.</p>
                 </div>
                 
                 <div class="help-card" data-aos="fade-up" data-aos-delay="50">
-                    <div class="help-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
+                    <div class="help-icon">★</div>
                     <h3>Оргазм и удовольствие</h3>
                     <p>Трудности с достижением оргазма, «застревание» в голове, страх расслабиться и довериться.</p>
                 </div>
                 
                 <div class="help-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="help-icon">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
+                    <div class="help-icon">👤</div>
                     <h3>Стеснение тела</h3>
                     <p>Стыд за тело, зажимы, сложность показать себя настоящую и принимать комплименты.</p>
                 </div>
                 
                 <div class="help-card" data-aos="fade-up">
-                    <div class="help-icon">
-                        <i class="fas fa-hand-holding-heart"></i>
-                    </div>
+                    <div class="help-icon">🤝</div>
                     <h3>Последствия травм</h3>
                     <p>Опыт насилия или болезненных отношений, который влияет на интимность и доверие.</p>
                 </div>
                 
                 <div class="help-card" data-aos="fade-up" data-aos-delay="50">
-                    <div class="help-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
+                    <div class="help-icon">🚫</div>
                     <h3>Интимные блоки</h3>
                     <p>Воспитание, религиозные установки, чувство вины за свои фантазии и желания.</p>
                 </div>
                 
                 <div class="help-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="help-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
+                    <div class="help-icon">💬</div>
                     <h3>Сложности говорить о сексе</h3>
                     <p>Страх быть «слишком», «не такой», трудность прямо озвучить, что нравится и чего хочется.</p>
                 </div>
@@ -260,21 +268,18 @@
                     
                     <div class="features-list">
                         <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Формат: практика, разговоры по душам</span>
+                            ✓ <span>Формат: практика, разговоры по душам</span>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Ритуалы для контакта с телом</span>
+                            ✓ <span>Ритуалы для контакта с телом</span>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Атмосфера безопасности и принятия</span>
+                            ✓ <span>Атмосфера безопасности и принятия</span>
                         </div>
                     </div>
                     
                     <div class="note-box">
-                        <i class="fas fa-info-circle"></i>
+                        ℹ
                         <p>Количество мест ограничено, группа небольшая и безопасная по атмосфере.</p>
                     </div>
                     
@@ -282,7 +287,7 @@
                 </div>
                 
                 <div class="circles-image" data-aos="fade-left">
-                    <img src="галерея3.jpg" alt="Женский круг">
+                    <img src="галерея3.jpg" alt="Женский круг" loading="lazy">
                     <div class="image-decoration">
                         <div class="decoration-circle"></div>
                         <div class="decoration-circle"></div>
@@ -304,37 +309,37 @@
             
             <div class="gallery-grid">
                 <div class="gallery-item" data-aos="zoom-in">
-                    <img src="галерея.jpg" alt="Галерея 1">
+                    <img src="галерея.jpg" alt="Галерея 1" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                            🔍
                         </div>
                     </div>
                 </div>
                 
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
-                    <img src="галерея1.jpg" alt="Галерея 2">
+                    <img src="галерея1.jpg" alt="Галерея 2" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                            🔍
                         </div>
                     </div>
                 </div>
                 
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="галерея2.jpg" alt="Галерея 3">
+                    <img src="галерея2.jpg" alt="Галерея 3" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                            🔍
                         </div>
                     </div>
                 </div>
                 
                 <div class="gallery-item" data-aos="zoom-in">
-                    <img src="выпускницы.jpg" alt="Выпускницы">
+                    <img src="выпускницы.jpg" alt="Выпускницы" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                            🔍
                         </div>
                     </div>
                 </div>
@@ -354,9 +359,7 @@
             <div class="testimonials-slider">
                 <div class="testimonial-slide active">
                     <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
+                        <div class="quote-icon">"</div>
                         <p class="testimonial-text">"После работы с Татьяной я впервые за 10 лет почувствовала желание. Не просто выполнение супружеского долга, а настоящее желание. Я плакала от счастья."</p>
                         <div class="client-info">
                             <h4>Марина, 35 лет</h4>
@@ -367,9 +370,7 @@
                 
                 <div class="testimonial-slide">
                     <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
+                        <div class="quote-icon">"</div>
                         <p class="testimonial-text">"Женские круги у Виктории стали для меня откровением. Впервые я смогла говорить о сексе без стыда. Спасибо за безопасное пространство!"</p>
                         <div class="client-info">
                             <h4>Анна, 28 лет</h4>
@@ -380,9 +381,7 @@
                 
                 <div class="testimonial-slide">
                     <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
+                        <div class="quote-icon">"</div>
                         <p class="testimonial-text">"После травматичных отношений я думала, что никогда больше не смогу доверять. Терапия помогла мне не только восстановиться, но и научиться получать удовольствие."</p>
                         <div class="client-info">
                             <h4>Елена, 42 года</h4>
@@ -392,16 +391,16 @@
                 </div>
                 
                 <div class="testimonial-controls">
-                    <button class="testimonial-prev">
-                        <i class="fas fa-chevron-left"></i>
+                    <button class="testimonial-prev" aria-label="Предыдущий отзыв">
+                        ←
                     </button>
                     <div class="testimonial-dots">
-                        <button class="testimonial-dot active"></button>
-                        <button class="testimonial-dot"></button>
-                        <button class="testimonial-dot"></button>
+                        <button class="testimonial-dot active" aria-label="Отзыв 1"></button>
+                        <button class="testimonial-dot" aria-label="Отзыв 2"></button>
+                        <button class="testimonial-dot" aria-label="Отзыв 3"></button>
                     </div>
-                    <button class="testimonial-next">
-                        <i class="fas fa-chevron-right"></i>
+                    <button class="testimonial-next" aria-label="Следующий отзыв">
+                        →
                     </button>
                 </div>
             </div>
@@ -421,18 +420,18 @@
                         <div class="contact-person">
                             <h4>Татьяна Солнечная</h4>
                             <div class="contact-details">
-                                <a href="tel:+79055959996"><i class="fas fa-phone"></i> +7 905 595 9996</a>
-                                <a href="https://t.me/Tan4ik77G" target="_blank"><i class="fab fa-telegram"></i> @Tan4ik77G</a>
-                                <a href="mailto:Tan4ik@gmail.com"><i class="fas fa-envelope"></i> Tan4ik@gmail.com</a>
+                                <a href="tel:+79055959996">📞 +7 905 595 9996</a>
+                                <a href="https://t.me/Tan4ik77G" target="_blank" rel="noopener noreferrer">✈ @Tan4ik77G</a>
+                                <a href="mailto:Tan4ik@gmail.com">✉ Tan4ik@gmail.com</a>
                             </div>
                         </div>
                         
                         <div class="contact-person">
                             <h4>Виктория Румянцева</h4>
                             <div class="contact-details">
-                                <a href="tel:+79175031333"><i class="fas fa-phone"></i> +7 917 503 13 33</a>
-                                <a href="https://t.me/ViktoriaRum" target="_blank"><i class="fab fa-telegram"></i> @ViktoriaRum</a>
-                                <a href="mailto:BikRooM@gmail.com"><i class="fas fa-envelope"></i> BikRooM@gmail.com</a>
+                                <a href="tel:+79175031333">📞 +7 917 503 13 33</a>
+                                <a href="https://t.me/ViktoriaRum" target="_blank" rel="noopener noreferrer">✈ @ViktoriaRum</a>
+                                <a href="mailto:BikRooM@gmail.com">✉ BikRooM@gmail.com</a>
                             </div>
                         </div>
                     </div>
@@ -494,7 +493,7 @@
                 <div class="faq-item" data-aos="fade-up">
                     <div class="faq-question">
                         <h3>Подойдёт ли вам терапия, если я никогда не была у психолога?</h3>
-                        <i class="fas fa-plus"></i>
+                        <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>Да, мы мягко объясняем, как проходит процесс, и вы двигаетесь в своём темпе без давления. Мы создаём комфортные условия для новичков.</p>
@@ -504,7 +503,7 @@
                 <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
                     <div class="faq-question">
                         <h3>Нужно ли говорить о самых личных деталях?</h3>
-                        <i class="fas fa-plus"></i>
+                        <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>Вы сами решаете, чем делиться. Мы создаём пространство, где можно говорить ровно настолько, насколько вам сейчас безопасно. Никакого давления.</p>
@@ -514,7 +513,7 @@
                 <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="faq-question">
                         <h3>Работаете ли вы онлайн?</h3>
-                        <i class="fas fa-plus"></i>
+                        <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>Да, доступны онлайн-сессии и онлайн-круги для женщин, если вы не можете приехать лично. Формат онлайн также эффективен.</p>
@@ -524,7 +523,7 @@
                 <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
                     <div class="faq-question">
                         <h3>Будете ли вы осуждать мои фантазии и желания?</h3>
-                        <i class="fas fa-plus"></i>
+                        <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>Нет. Наша задача — поддерживать, а не оценивать. Мы работаем с принятием и уважением к вашему опыту, без осуждения.</p>
@@ -562,7 +561,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>© 2024 Терапия любви и желаний. Все права защищены.</p>
+                <p>© <span id="currentYear">2024</span> Терапия любви и желаний. Все права защищены.</p>
                 <p class="footer-disclaimer">Сайт для взрослых (18+). Информация не заменяет консультацию врача.</p>
             </div>
         </div>
@@ -571,12 +570,11 @@
     <!-- Modal for Gallery -->
     <div class="modal" id="galleryModal">
         <div class="modal-content">
-            <button class="modal-close">&times;</button>
+            <button class="modal-close" aria-label="Закрыть">×</button>
             <img src="" alt="" class="modal-image">
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>
