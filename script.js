@@ -89,22 +89,11 @@ if (form && statusEl) {
       statusEl.textContent = 'Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.';
       statusEl.style.color = '#2e7d32';
       
-      // Можно также отправить данные на email через Formspree или аналогичный сервис
-      // Пример с Formspree (замените на ваш email):
-      // const response = await fetch('https://formspree.io/f/your-form-id', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data)
-      // });
-      
       // Очистка формы через 5 секунд
       setTimeout(() => {
         form.reset();
         statusEl.textContent = '';
       }, 5000);
-      
-      // Отправка данных в Telegram (если настроен бот)
-      // await sendToTelegram(data);
       
     } catch (error) {
       console.error('Ошибка отправки формы:', error);
@@ -112,43 +101,6 @@ if (form && statusEl) {
       statusEl.style.color = '#d32f2f';
     }
   });
-}
-
-// Функция отправки в Telegram (раскомментируйте и настройте при необходимости)
-async function sendToTelegram(data) {
-  const botToken = 'YOUR_BOT_TOKEN';
-  const chatId = 'YOUR_CHAT_ID';
-  const message = `
-    Новая заявка с сайта:
-    Имя: ${data.name}
-    Контакт: ${data.contact}
-    Формат: ${data.format}
-    Сообщение: ${data.message}
-    Дата: ${new Date(data.date).toLocaleString('ru-RU')}
-  `;
-  
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-  
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: 'HTML'
-      })
-    });
-    
-    if (!response.ok) {
-      throw new Error('Ошибка отправки в Telegram');
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Ошибка отправки в Telegram:', error);
-    throw error;
-  }
 }
 
 // Изменение стиля header при скролле
@@ -208,11 +160,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
-  // Добавляем класс для плавного появления элементов при загрузке
-  setTimeout(() => {
-    document.body.classList.add('loaded');
-  }, 100);
-  
   // Показываем элементы в hero сразу
   const heroElements = document.querySelectorAll('.hero .fade-in');
   heroElements.forEach((el, index) => {
