@@ -5,6 +5,9 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             preloader.style.opacity = '0';
             preloader.style.visibility = 'hidden';
+            setTimeout(() => {
+                preloader.remove();
+            }, 500);
         }, 500);
     }
 });
@@ -14,7 +17,8 @@ const burgerMenu = document.querySelector('.burger-menu');
 const navMenu = document.querySelector('.nav-menu');
 
 if (burgerMenu && navMenu) {
-    burgerMenu.addEventListener('click', () => {
+    burgerMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
         burgerMenu.classList.toggle('active');
         navMenu.classList.toggle('active');
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
@@ -37,33 +41,44 @@ if (burgerMenu && navMenu) {
             document.body.style.overflow = 'auto';
         }
     });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
 }
 
 // ===== Header Scroll Effect =====
 const header = document.querySelector('.header');
 let lastScrollTop = 0;
 
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Add/remove scrolled class
-    if (scrollTop > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-    
-    // Hide/show header on scroll
-    if (scrollTop > lastScrollTop && scrollTop > 100) {
-        // Scrolling down
-        header.style.transform = 'translateY(-100%)';
-    } else {
-        // Scrolling up
-        header.style.transform = 'translateY(0)';
-    }
-    
-    lastScrollTop = scrollTop;
-});
+if (header) {
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add/remove scrolled class
+        if (scrollTop > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        // Hide/show header on scroll
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling down
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            // Scrolling up
+            header.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+}
 
 // ===== Main Slider =====
 class HeroSlider {
@@ -74,9 +89,11 @@ class HeroSlider {
         this.nextBtn = document.querySelector('.slider-next');
         this.currentSlide = 0;
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 5000; // 5 seconds
+        this.autoPlayDelay = 6000; // 6 seconds
         
-        this.init();
+        if (this.slides.length > 0) {
+            this.init();
+        }
     }
     
     init() {
@@ -125,28 +142,13 @@ class HeroSlider {
         });
         
         // Show current slide
-        this.slides[index].classList.add('active');
-        this.dots[index].classList.add('active');
-        this.currentSlide = index;
-        
-        // Reset animations
-        this.resetAnimations();
-    }
-    
-    resetAnimations() {
-        const slideText = this.slides[this.currentSlide].querySelector('.slide-text');
-        if (slideText) {
-            const elements = slideText.querySelectorAll('[class*="slide-"]');
-            elements.forEach(el => {
-                const animation = window.getComputedStyle(el).animation;
-                if (animation && animation !== 'none 0s ease 0s 1 normal none running') {
-                    // Reset animation
-                    el.style.animation = 'none';
-                    void el.offsetWidth; // Trigger reflow
-                    el.style.animation = null;
-                }
-            });
+        if (this.slides[index]) {
+            this.slides[index].classList.add('active');
         }
+        if (this.dots[index]) {
+            this.dots[index].classList.add('active');
+        }
+        this.currentSlide = index;
     }
     
     nextSlide() {
@@ -169,7 +171,9 @@ class HeroSlider {
     }
     
     startAutoPlay() {
-        this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
+        if (this.slides.length > 1) {
+            this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
+        }
     }
     
     stopAutoPlay() {
@@ -191,7 +195,9 @@ class TestimonialsSlider {
         this.nextBtn = document.querySelector('.testimonial-next');
         this.currentSlide = 0;
         
-        this.init();
+        if (this.slides.length > 0) {
+            this.init();
+        }
     }
     
     init() {
@@ -212,8 +218,10 @@ class TestimonialsSlider {
             dot.addEventListener('click', () => this.goToSlide(index));
         });
         
-        // Auto advance every 7 seconds
-        setInterval(() => this.nextSlide(), 7000);
+        // Auto advance every 8 seconds
+        if (this.slides.length > 1) {
+            setInterval(() => this.nextSlide(), 8000);
+        }
     }
     
     showSlide(index) {
@@ -228,8 +236,12 @@ class TestimonialsSlider {
         });
         
         // Show current slide
-        this.slides[index].classList.add('active');
-        this.dots[index].classList.add('active');
+        if (this.slides[index]) {
+            this.slides[index].classList.add('active');
+        }
+        if (this.dots[index]) {
+            this.dots[index].classList.add('active');
+        }
         this.currentSlide = index;
     }
     
@@ -254,7 +266,10 @@ class TestimonialsSlider {
 class FAQAccordion {
     constructor() {
         this.faqItems = document.querySelectorAll('.faq-item');
-        this.init();
+        
+        if (this.faqItems.length > 0) {
+            this.init();
+        }
     }
     
     init() {
@@ -279,24 +294,31 @@ class FAQAccordion {
 class GalleryModal {
     constructor() {
         this.modal = document.getElementById('galleryModal');
-        this.modalImage = this.modal.querySelector('.modal-image');
+        this.modalImage = this.modal?.querySelector('.modal-image');
         this.galleryItems = document.querySelectorAll('.gallery-item');
-        this.closeBtn = this.modal.querySelector('.modal-close');
+        this.closeBtn = this.modal?.querySelector('.modal-close');
         
-        this.init();
+        if (this.modal && this.modalImage && this.galleryItems.length > 0) {
+            this.init();
+        }
     }
     
     init() {
         // Open modal on gallery item click
         this.galleryItems.forEach(item => {
             item.addEventListener('click', (e) => {
-                const imgSrc = item.querySelector('img').src;
-                this.openModal(imgSrc);
+                const img = item.querySelector('img');
+                if (img) {
+                    this.openModal(img.src, img.alt);
+                }
             });
         });
         
         // Close modal
-        this.closeBtn.addEventListener('click', () => this.closeModal());
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+        
         this.modal.addEventListener('click', (e) => {
             if (e.target === this.modal) this.closeModal();
         });
@@ -309,8 +331,9 @@ class GalleryModal {
         });
     }
     
-    openModal(imgSrc) {
+    openModal(imgSrc, imgAlt) {
         this.modalImage.src = imgSrc;
+        this.modalImage.alt = imgAlt;
         this.modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -355,7 +378,7 @@ class ContactForm {
             this.showStatus('Отправляем заявку...', 'loading');
             
             try {
-                // Simulate API call
+                // Simulate API call (in production, replace with actual fetch)
                 await this.simulateApiCall();
                 
                 // Show success message
@@ -367,12 +390,9 @@ class ContactForm {
                     this.clearStatus();
                 }, 5000);
                 
-                // Send to Telegram (uncomment and configure if needed)
-                // await this.sendToTelegram(data);
-                
             } catch (error) {
                 console.error('Form submission error:', error);
-                this.showStatus('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.', 'error');
+                this.showStatus('Произошла ошибка. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.', 'error');
             }
         });
     }
@@ -432,14 +452,18 @@ class ContactForm {
     }
     
     showStatus(message, type = 'info') {
-        this.statusEl.textContent = message;
-        this.statusEl.className = 'form-status';
-        this.statusEl.classList.add(type);
+        if (this.statusEl) {
+            this.statusEl.textContent = message;
+            this.statusEl.className = 'form-status';
+            this.statusEl.classList.add(type);
+        }
     }
     
     clearStatus() {
-        this.statusEl.textContent = '';
-        this.statusEl.className = 'form-status';
+        if (this.statusEl) {
+            this.statusEl.textContent = '';
+            this.statusEl.className = 'form-status';
+        }
     }
     
     async simulateApiCall() {
@@ -447,45 +471,6 @@ class ContactForm {
         return new Promise(resolve => {
             setTimeout(resolve, 1500);
         });
-    }
-    
-    async sendToTelegram(data) {
-        // Configure your Telegram bot here
-        const botToken = 'YOUR_BOT_TOKEN';
-        const chatId = 'YOUR_CHAT_ID';
-        
-        const message = `
-📞 Новая заявка с сайта:
-
-👤 Имя: ${data.name}
-📱 Контакт: ${data.contact}
-🎯 Формат: ${data.format}
-💬 Сообщение: ${data.message || 'Не указано'}
-📅 Дата: ${new Date(data.date).toLocaleString('ru-RU')}
-        `;
-        
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error('Telegram API error');
-            }
-            
-            return await response.json();
-        } catch (error) {
-            console.error('Telegram error:', error);
-            throw error;
-        }
     }
 }
 
@@ -501,14 +486,14 @@ class SmoothScroll {
             anchor.addEventListener('click', (e) => {
                 const href = anchor.getAttribute('href');
                 
-                if (href === '#') return;
+                if (href === '#' || href === '#0') return;
                 
                 const target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
                     
                     // Close mobile menu if open
-                    if (burgerMenu && navMenu) {
+                    if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
                         burgerMenu.classList.remove('active');
                         navMenu.classList.remove('active');
                         document.body.style.overflow = 'auto';
@@ -577,40 +562,24 @@ document.addEventListener('DOMContentLoaded', () => {
     new ScrollAnimations();
     
     // Add current year to footer
-    const yearSpan = document.querySelector('.current-year');
+    const yearSpan = document.querySelector('#currentYear');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
     
-    // Parallax effect for gallery background
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.circles-image img');
-        
-        parallaxElements.forEach(el => {
-            const speed = 0.5;
-            const yPos = -(scrolled * speed);
-            el.style.transform = `translateY(${yPos}px) scale(1.1)`;
-        });
+    // Add loading="lazy" to images that don't have it
+    document.querySelectorAll('img:not([loading])').forEach(img => {
+        if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+        }
     });
     
-    // Add animation to cards on hover
-    document.querySelectorAll('.help-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-10px) scale(1.02)';
+    // Handle form submission analytics (optional)
+    const form = document.getElementById('consultationForm');
+    if (form) {
+        form.addEventListener('submit', () => {
+            // You can add analytics tracking here
+            console.log('Form submitted successfully');
         });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) scale(1)';
-        });
-    });
+    }
 });
-
-// ===== Service Worker Registration (Optional) =====
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(error => {
-            console.log('ServiceWorker registration failed:', error);
-        });
-    });
-}
