@@ -903,7 +903,8 @@ document.addEventListener('DOMContentLoaded', () => {
     new ScrollAnimations();
     new LevelsInteraction();
     new CinematicEffects();
-    new WineEffects();
+    new WineEffects();// Инициализация винныx кнопок
+    initWineButtons();
     // Добавление текущего года в футер
     const yearSpan = document.querySelector('#currentYear');
     if (yearSpan) {
