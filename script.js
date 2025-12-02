@@ -1,18 +1,18 @@
-// ===== Preloader =====
+// ===== PRELOADER =====
 window.addEventListener('load', () => {
-    const preloader = document.querySelector('.preloader');
+    const preloader = document.querySelector('.cinematic-preloader');
     if (preloader) {
         setTimeout(() => {
             preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
             setTimeout(() => {
+                preloader.style.visibility = 'hidden';
                 preloader.remove();
             }, 500);
-        }, 500);
+        }, 1000);
     }
 });
 
-// ===== Mobile Menu =====
+// ===== MOBILE MENU =====
 const burgerMenu = document.querySelector('.burger-menu');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -24,7 +24,7 @@ if (burgerMenu && navMenu) {
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
     });
 
-    // Close menu when clicking on links
+    // Закрытие по клику на ссылку
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
             burgerMenu.classList.remove('active');
@@ -33,7 +33,7 @@ if (burgerMenu && navMenu) {
         });
     });
 
-    // Close menu when clicking outside
+    // Закрытие по клику вне меню
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.navbar') && navMenu.classList.contains('active')) {
             burgerMenu.classList.remove('active');
@@ -42,7 +42,7 @@ if (burgerMenu && navMenu) {
         }
     });
 
-    // Close on escape key
+    // Закрытие по Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             burgerMenu.classList.remove('active');
@@ -52,7 +52,7 @@ if (burgerMenu && navMenu) {
     });
 }
 
-// ===== Header Scroll Effect =====
+// ===== HEADER SCROLL EFFECT =====
 const header = document.querySelector('.header');
 let lastScrollTop = 0;
 
@@ -60,19 +60,19 @@ if (header) {
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        // Add/remove scrolled class
+        // Добавление класса при скролле
         if (scrollTop > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
         
-        // Hide/show header on scroll
+        // Скрытие/показ хедера при скролле
         if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
+            // Скролл вниз
             header.style.transform = 'translateY(-100%)';
         } else {
-            // Scrolling up
+            // Скролл вверх
             header.style.transform = 'translateY(0)';
         }
         
@@ -80,16 +80,18 @@ if (header) {
     });
 }
 
-// ===== Main Slider =====
-class HeroSlider {
+// ===== CINEMATIC HERO SLIDER =====
+class CinematicHeroSlider {
     constructor() {
         this.slides = document.querySelectorAll('.slide');
-        this.dots = document.querySelectorAll('.dot');
+        this.indicators = document.querySelectorAll('.indicator');
+        this.progressBar = document.querySelector('.progress-bar');
         this.prevBtn = document.querySelector('.slider-prev');
         this.nextBtn = document.querySelector('.slider-next');
         this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 6000; // 6 seconds
+        this.autoPlayDelay = 7000; // 7 секунд
         
         if (this.slides.length > 0) {
             this.init();
@@ -97,10 +99,10 @@ class HeroSlider {
     }
     
     init() {
-        // Set initial slide
+        // Показать первый слайд
         this.showSlide(this.currentSlide);
         
-        // Event listeners for buttons
+        // Навигация кнопками
         if (this.prevBtn) {
             this.prevBtn.addEventListener('click', () => this.prevSlide());
         }
@@ -109,69 +111,113 @@ class HeroSlider {
             this.nextBtn.addEventListener('click', () => this.nextSlide());
         }
         
-        // Event listeners for dots
-        this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => this.goToSlide(index));
+        // Навигация индикаторами
+        this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => this.goToSlide(index));
         });
         
-        // Start autoplay
+        // Автоплей
         this.startAutoPlay();
         
-        // Pause on hover
+        // Пауза при наведении
         this.slides.forEach(slide => {
             slide.addEventListener('mouseenter', () => this.stopAutoPlay());
             slide.addEventListener('mouseleave', () => this.startAutoPlay());
         });
         
-        // Keyboard navigation
+        // Навигация клавишами
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') this.prevSlide();
             if (e.key === 'ArrowRight') this.nextSlide();
         });
+        
+        // Параллакс эффект
+        this.initParallax();
     }
     
     showSlide(index) {
-        // Hide all slides
+        // Скрыть все слайды
         this.slides.forEach(slide => {
             slide.classList.remove('active');
         });
         
-        // Remove active class from all dots
-        this.dots.forEach(dot => {
-            dot.classList.remove('active');
+        // Убрать активные классы у индикаторов
+        this.indicators.forEach(indicator => {
+            indicator.classList.remove('active');
         });
         
-        // Show current slide
+        // Показать текущий слайд
         if (this.slides[index]) {
             this.slides[index].classList.add('active');
         }
-        if (this.dots[index]) {
-            this.dots[index].classList.add('active');
+        
+        // Активировать индикатор
+        if (this.indicators[index]) {
+            this.indicators[index].classList.add('active');
         }
+        
         this.currentSlide = index;
+        
+        // Обновить прогресс бар
+        this.updateProgressBar();
+        
+        // Анимация контента
+        this.animateContent();
+    }
+    
+    animateContent() {
+        const activeSlide = this.slides[this.currentSlide];
+        const content = activeSlide.querySelector('.slide-text');
+        
+        if (content) {
+            content.style.animation = 'none';
+            setTimeout(() => {
+                content.style.animation = 'slideReveal 1s ease forwards';
+            }, 10);
+        }
+        
+        // Анимация кинематографических элементов
+        this.animateElements();
+    }
+    
+    animateElements() {
+        const rays = document.querySelectorAll('.light-ray');
+        rays.forEach((ray, index) => {
+            ray.style.animation = 'none';
+            setTimeout(() => {
+                ray.style.animation = `rayMove 15s infinite ease-in-out ${index * 2}s`;
+            }, 10);
+        });
     }
     
     nextSlide() {
-        const nextIndex = (this.currentSlide + 1) % this.slides.length;
+        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
         this.showSlide(nextIndex);
         this.resetAutoPlay();
     }
     
     prevSlide() {
-        const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
         this.showSlide(prevIndex);
         this.resetAutoPlay();
     }
     
     goToSlide(index) {
-        if (index >= 0 && index < this.slides.length) {
+        if (index >= 0 && index < this.totalSlides) {
             this.showSlide(index);
             this.resetAutoPlay();
         }
     }
     
+    updateProgressBar() {
+        if (this.progressBar) {
+            const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+            this.progressBar.style.width = `${progress}%`;
+        }
+    }
+    
     startAutoPlay() {
-        if (this.slides.length > 1) {
+        if (this.totalSlides > 1) {
             this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
         }
     }
@@ -184,9 +230,24 @@ class HeroSlider {
         this.stopAutoPlay();
         this.startAutoPlay();
     }
+    
+    initParallax() {
+        // Простой параллакс эффект при движении мыши
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+            const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            this.slides.forEach(slide => {
+                const parallaxLayer = slide.querySelector('.parallax-layer');
+                if (parallaxLayer && slide.classList.contains('active')) {
+                    parallaxLayer.style.transform = `scale(1.1) translate(${mouseX}px, ${mouseY}px)`;
+                }
+            });
+        });
+    }
 }
 
-// ===== Testimonials Slider =====
+// ===== TESTIMONIALS SLIDER =====
 class TestimonialsSlider {
     constructor() {
         this.slides = document.querySelectorAll('.testimonial-slide');
@@ -201,10 +262,10 @@ class TestimonialsSlider {
     }
     
     init() {
-        // Set initial slide
+        // Показать первый слайд
         this.showSlide(this.currentSlide);
         
-        // Event listeners
+        // Навигация
         if (this.prevBtn) {
             this.prevBtn.addEventListener('click', () => this.prevSlide());
         }
@@ -213,35 +274,38 @@ class TestimonialsSlider {
             this.nextBtn.addEventListener('click', () => this.nextSlide());
         }
         
-        // Event listeners for dots
+        // Навигация точками
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => this.goToSlide(index));
         });
         
-        // Auto advance every 8 seconds
+        // Автоплей
         if (this.slides.length > 1) {
             setInterval(() => this.nextSlide(), 8000);
         }
     }
     
     showSlide(index) {
-        // Hide all slides
+        // Скрыть все слайды
         this.slides.forEach(slide => {
             slide.classList.remove('active');
         });
         
-        // Remove active class from all dots
+        // Убрать активные классы у точек
         this.dots.forEach(dot => {
             dot.classList.remove('active');
         });
         
-        // Show current slide
+        // Показать текущий слайд
         if (this.slides[index]) {
             this.slides[index].classList.add('active');
         }
+        
+        // Активировать точку
         if (this.dots[index]) {
             this.dots[index].classList.add('active');
         }
+        
         this.currentSlide = index;
     }
     
@@ -262,7 +326,7 @@ class TestimonialsSlider {
     }
 }
 
-// ===== FAQ Accordion =====
+// ===== FAQ ACCORDION =====
 class FAQAccordion {
     constructor() {
         this.faqItems = document.querySelectorAll('.faq-item');
@@ -276,21 +340,21 @@ class FAQAccordion {
         this.faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
-                // Close all other items
+                // Закрыть все остальные элементы
                 this.faqItems.forEach(otherItem => {
                     if (otherItem !== item && otherItem.classList.contains('active')) {
                         otherItem.classList.remove('active');
                     }
                 });
                 
-                // Toggle current item
+                // Переключить текущий элемент
                 item.classList.toggle('active');
             });
         });
     }
 }
 
-// ===== Gallery Modal =====
+// ===== GALLERY MODAL =====
 class GalleryModal {
     constructor() {
         this.modal = document.getElementById('galleryModal');
@@ -304,7 +368,7 @@ class GalleryModal {
     }
     
     init() {
-        // Open modal on gallery item click
+        // Открытие модального окна
         this.galleryItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 const img = item.querySelector('img');
@@ -314,7 +378,7 @@ class GalleryModal {
             });
         });
         
-        // Close modal
+        // Закрытие модального окна
         if (this.closeBtn) {
             this.closeBtn.addEventListener('click', () => this.closeModal());
         }
@@ -323,7 +387,7 @@ class GalleryModal {
             if (e.target === this.modal) this.closeModal();
         });
         
-        // Close on escape key
+        // Закрытие по Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.modal.classList.contains('active')) {
                 this.closeModal();
@@ -344,7 +408,7 @@ class GalleryModal {
     }
 }
 
-// ===== Contact Form =====
+// ===== CONTACT FORM =====
 class ContactForm {
     constructor() {
         this.form = document.getElementById('consultationForm');
@@ -359,12 +423,12 @@ class ContactForm {
         this.form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Validate form
+            // Валидация
             if (!this.validateForm()) {
                 return;
             }
             
-            // Collect form data
+            // Сбор данных
             const formData = new FormData(this.form);
             const data = {
                 name: formData.get('name'),
@@ -374,17 +438,17 @@ class ContactForm {
                 date: new Date().toISOString()
             };
             
-            // Show loading state
+            // Показать статус отправки
             this.showStatus('Отправляем заявку...', 'loading');
             
             try {
-                // Simulate API call (in production, replace with actual fetch)
+                // Имитация отправки (в реальном проекте заменить на fetch)
                 await this.simulateApiCall();
                 
-                // Show success message
+                // Успешная отправка
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
                 
-                // Reset form after 5 seconds
+                // Очистка формы через 5 секунд
                 setTimeout(() => {
                     this.form.reset();
                     this.clearStatus();
@@ -400,26 +464,26 @@ class ContactForm {
     validateForm() {
         const name = this.form.querySelector('#name');
         const contact = this.form.querySelector('#contact');
-        const consent = this.form.querySelector('input[name="consent"]');
+        const consent = this.form.querySelector('#consent');
         
         let isValid = true;
         
-        // Clear previous errors
+        // Очистка предыдущих ошибок
         this.clearErrors();
         
-        // Validate name
+        // Валидация имени
         if (!name.value.trim()) {
             this.showError(name, 'Пожалуйста, введите ваше имя');
             isValid = false;
         }
         
-        // Validate contact
+        // Валидация контакта
         if (!contact.value.trim()) {
             this.showError(contact, 'Пожалуйста, введите контактные данные');
             isValid = false;
         }
         
-        // Validate consent
+        // Валидация согласия
         if (!consent.checked) {
             this.showError(consent.parentElement, 'Необходимо согласие на обработку данных');
             isValid = false;
@@ -434,9 +498,10 @@ class ContactForm {
         const errorEl = document.createElement('div');
         errorEl.className = 'error-message';
         errorEl.textContent = message;
-        errorEl.style.color = '#D32F2F';
+        errorEl.style.color = '#F44336';
         errorEl.style.fontSize = '14px';
-        errorEl.style.marginTop = '5px';
+        errorEl.style.marginTop = '8px';
+        errorEl.style.fontWeight = '500';
         
         element.parentElement.appendChild(errorEl);
     }
@@ -467,21 +532,21 @@ class ContactForm {
     }
     
     async simulateApiCall() {
-        // Simulate network delay
+        // Имитация задержки сети
         return new Promise(resolve => {
             setTimeout(resolve, 1500);
         });
     }
 }
 
-// ===== Smooth Scroll =====
+// ===== SMOOTH SCROLL =====
 class SmoothScroll {
     constructor() {
         this.init();
     }
     
     init() {
-        // Smooth scroll for anchor links
+        // Плавный скролл для якорных ссылок
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 const href = anchor.getAttribute('href');
@@ -492,17 +557,17 @@ class SmoothScroll {
                 if (target) {
                     e.preventDefault();
                     
-                    // Close mobile menu if open
+                    // Закрытие мобильного меню если открыто
                     if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
                         burgerMenu.classList.remove('active');
                         navMenu.classList.remove('active');
                         document.body.style.overflow = 'auto';
                     }
                     
-                    // Calculate header height
+                    // Вычисление высоты хедера
                     const headerHeight = header ? header.offsetHeight : 80;
                     
-                    // Scroll to target
+                    // Скролл к цели
                     const targetPosition = target.offsetTop - headerHeight;
                     
                     window.scrollTo({
@@ -515,7 +580,7 @@ class SmoothScroll {
     }
 }
 
-// ===== Scroll Animations =====
+// ===== SCROLL ANIMATIONS =====
 class ScrollAnimations {
     constructor() {
         this.observerOptions = {
@@ -528,13 +593,13 @@ class ScrollAnimations {
     }
     
     init() {
-        // Create Intersection Observer
+        // Создание Intersection Observer
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('aos-animate');
                     
-                    // Handle delay
+                    // Обработка задержки
                     const delay = entry.target.dataset.aosDelay;
                     if (delay) {
                         entry.target.style.transitionDelay = `${delay}ms`;
@@ -543,43 +608,204 @@ class ScrollAnimations {
             });
         }, this.observerOptions);
         
-        // Observe all elements with data-aos attribute
+        // Наблюдение за всеми элементами с data-aos
         document.querySelectorAll('[data-aos]').forEach(el => {
             this.observer.observe(el);
         });
     }
 }
 
-// ===== Initialize Everything =====
+// ===== LEVELS INTERACTION =====
+class LevelsInteraction {
+    constructor() {
+        this.levelCards = document.querySelectorAll('.level-card');
+        
+        if (this.levelCards.length > 0) {
+            this.init();
+        }
+    }
+    
+    init() {
+        this.levelCards.forEach(card => {
+            card.addEventListener('mouseenter', () => this.handleMouseEnter(card));
+            card.addEventListener('mouseleave', () => this.handleMouseLeave(card));
+            
+            // Клик для мобильных устройств
+            if (window.innerWidth <= 768) {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('a')) {
+                        this.handleClick(card);
+                    }
+                });
+            }
+        });
+    }
+    
+    handleMouseEnter(card) {
+        // Эффект подъема
+        card.style.zIndex = '10';
+        
+        // Анимация номера уровня
+        const number = card.querySelector('.level-number');
+        if (number) {
+            number.style.color = 'rgba(232, 180, 188, 0.4)';
+            number.style.transform = 'scale(1.1)';
+        }
+        
+        // Анимация иконки
+        const icon = card.querySelector('.level-icon');
+        if (icon) {
+            icon.style.transform = 'rotate(10deg) scale(1.1)';
+        }
+    }
+    
+    handleMouseLeave(card) {
+        card.style.zIndex = '';
+        
+        const number = card.querySelector('.level-number');
+        if (number) {
+            number.style.color = '';
+            number.style.transform = '';
+        }
+        
+        const icon = card.querySelector('.level-icon');
+        if (icon) {
+            icon.style.transform = '';
+        }
+    }
+    
+    handleClick(card) {
+        // Для мобильных: переключение активного состояния
+        this.levelCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+    }
+}
+
+// ===== CINEMATIC EFFECTS =====
+class CinematicEffects {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        // Эффект мерцания для заголовков
+        this.initTitleShine();
+        
+        // Эффект параллакса для фона
+        this.initBackgroundParallax();
+        
+        // Эффект свечения для кнопок
+        this.initButtonGlow();
+    }
+    
+    initTitleShine() {
+        const titles = document.querySelectorAll('.title-line, .section-title');
+        
+        titles.forEach(title => {
+            setInterval(() => {
+                const brightness = Math.random() * 0.2 + 0.9;
+                title.style.filter = `brightness(${brightness})`;
+            }, 3000);
+        });
+    }
+    
+    initBackgroundParallax() {
+        const sections = document.querySelectorAll('.section');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const speed = 0.5;
+                const yPos = -(scrollTop * speed);
+                section.style.backgroundPosition = `center ${yPos}px`;
+            });
+        });
+    }
+    
+    initButtonGlow() {
+        const buttons = document.querySelectorAll('.btn-primary');
+        
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.boxShadow = '0 0 25px rgba(232, 180, 188, 0.6)';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.boxShadow = '';
+            });
+        });
+    }
+}
+
+// ===== INITIALIZE EVERYTHING =====
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize components
-    new HeroSlider();
+    // Инициализация компонентов
+    new CinematicHeroSlider();
     new TestimonialsSlider();
     new FAQAccordion();
     new GalleryModal();
     new ContactForm();
     new SmoothScroll();
     new ScrollAnimations();
+    new LevelsInteraction();
+    new CinematicEffects();
     
-    // Add current year to footer
+    // Добавление текущего года в футер
     const yearSpan = document.querySelector('#currentYear');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
     
-    // Add loading="lazy" to images that don't have it
+    // Добавление lazy loading для изображений
     document.querySelectorAll('img:not([loading])').forEach(img => {
         if (!img.hasAttribute('loading')) {
             img.setAttribute('loading', 'lazy');
         }
     });
     
-    // Handle form submission analytics (optional)
+    // Эффект для карточек помощи
+    const helpCards = document.querySelectorAll('.help-card');
+    helpCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.help-icon');
+            if (icon) {
+                icon.style.transform = 'rotate(15deg) scale(1.1)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.help-icon');
+            if (icon) {
+                icon.style.transform = '';
+            }
+        });
+    });
+    
+    // Эффект для карточек специалистов
+    const expertCards = document.querySelectorAll('.expert-card');
+    expertCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const image = card.querySelector('.expert-image img');
+            if (image) {
+                image.style.transform = 'scale(1.05)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const image = card.querySelector('.expert-image img');
+            if (image) {
+                image.style.transform = '';
+            }
+        });
+    });
+    
+    // Логика отправки формы
     const form = document.getElementById('consultationForm');
     if (form) {
         form.addEventListener('submit', () => {
-            // You can add analytics tracking here
-            console.log('Form submitted successfully');
+            // Можно добавить аналитику или другие действия
+            console.log('Форма отправлена');
         });
     }
 });
