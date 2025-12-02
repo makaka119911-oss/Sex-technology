@@ -1,41 +1,52 @@
-/* ===== CINEMATIC STYLES ===== */
+/* ===== CINEMATIC STYLES - ВИННО-КРАСНАЯ ГАММА ===== */
 
 /* Основные переменные */
 :root {
-    /* Цветовая палитра кинематографическая */
-    --color-primary: #E8B4BC;
-    --color-primary-dark: #d89da6;
-    --color-primary-light: #f4d2d8;
-    --color-secondary: #8A7F8D;
-    --color-accent: #FF9A8B;
-    --color-accent-dark: #ff7a68;
+    /* Винно-красная цветовая палитра */
+    --color-primary: #800020;          /* Бордовый / Винный */
+    --color-primary-dark: #5a0017;     /* Тёмный бордовый */
+    --color-primary-light: #a3334d;    /* Светлый бордовый */
+    --color-primary-transparent: rgba(128, 0, 32, 0.15);
     
-    /* Кинематографические оттенки */
-    --cinematic-dark: #0a0a1a;
-    --cinematic-darker: #050510;
-    --cinematic-light: #1a1a2e;
-    --cinematic-lighter: #2d2d4a;
-    --cinematic-gold: #E8B4BC;
-    --cinematic-gold-dark: #d89da6;
-    --cinematic-text: rgba(255, 255, 255, 0.85);
-    --cinematic-text-light: rgba(255, 255, 255, 0.7);
-    --cinematic-text-lighter: rgba(255, 255, 255, 0.5);
+    --color-secondary: #8B7355;        /* Тёмное золото */
+    --color-accent: #B22234;           /* Яркий красный акцент */
+    --color-accent-dark: #8b0000;      /* Тёмно-красный */
+    --color-accent-transparent: rgba(178, 34, 52, 0.15);
     
-    /* Градиенты */
+    /* Кинематографические оттенки - чёрная гамма */
+    --cinematic-dark: #000000;         /* Чистый чёрный */
+    --cinematic-darker: #0a0a0a;       /* Почти чёрный */
+    --cinematic-light: #1a1a1a;        /* Тёмно-серый */
+    --cinematic-lighter: #2d2d2d;      /* Средне-серый */
+    --cinematic-lightest: #404040;     /* Светло-серый */
+    
+    /* Текст */
+    --cinematic-text: rgba(255, 255, 255, 0.95);
+    --cinematic-text-light: rgba(255, 255, 255, 0.8);
+    --cinematic-text-lighter: rgba(255, 255, 255, 0.6);
+    
+    /* Градиенты - винно-красные */
     --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-    --gradient-dark: linear-gradient(135deg, var(--cinematic-dark), var(--cinematic-light));
-    --gradient-gold: linear-gradient(135deg, var(--cinematic-gold), var(--cinematic-gold-dark));
-    --gradient-overlay: linear-gradient(135deg, rgba(10, 10, 26, 0.8) 0%, rgba(26, 26, 46, 0.6) 50%, rgba(232, 180, 188, 0.1) 100%);
+    --gradient-dark: linear-gradient(135deg, var(--cinematic-dark), var(--color-primary-dark));
+    --gradient-overlay: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.85) 0%, 
+        rgba(128, 0, 32, 0.6) 50%, 
+        rgba(178, 34, 52, 0.2) 100%);
+    
+    --gradient-black-red: linear-gradient(135deg, 
+        var(--cinematic-dark) 0%, 
+        var(--color-primary-dark) 100%);
+    
+    /* Тени */
+    --shadow-sm: 0 2px 15px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 8px 35px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 15px 55px rgba(0, 0, 0, 0.9);
+    --shadow-red: 0 0 25px rgba(128, 0, 32, 0.4);
+    --shadow-red-glow: 0 0 35px rgba(128, 0, 32, 0.6);
     
     /* Шрифты */
     --font-title: 'Sora', sans-serif;
     --font-body: 'Raleway', sans-serif;
-    
-    /* Тени */
-    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 15px 50px rgba(0, 0, 0, 0.7);
-    --shadow-glow: 0 0 20px rgba(232, 180, 188, 0.3);
     
     /* Скругления */
     --radius-sm: 8px;
