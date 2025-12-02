@@ -809,3 +809,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// Оптимизация для мобильных устройств
+if ('ontouchstart' in window) {
+    document.body.classList.add('touch-device');
+    
+    // Отключение hover эффектов на тач-устройствах
+    const style = document.createElement('style');
+    style.textContent = `
+        @media (hover: none) and (pointer: coarse) {
+            .level-card:hover, .help-card:hover, .expert-card:hover {
+                transform: none !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Предзагрузка критичных изображений
+function preloadCriticalImages() {
+    const criticalImages = [
+        'фото 2х сексологов вместе.jpg',
+        'фото Татьяны Солнечной.jpg',
+        'Фото Виктории РУмянцевой.jpg'
+    ];
+    
+    criticalImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
+
+// Запуск после полной загрузки страницы
+window.addEventListener('load', () => {
+    preloadCriticalImages();
+});
