@@ -737,7 +737,160 @@ class CinematicEffects {
         });
     }
 }
+// ===== WINE EFFECTS =====
+class WineEffects {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        // Эффект винного свечения для кнопок
+        this.initWineGlow();
+        
+        // Эффект капель вина для хедера
+        this.initWineDrops();
+        
+        // Анимация виноградной лозы
+        this.initVineAnimation();
+    }
+    
+    initWineGlow() {
+        const buttons = document.querySelectorAll('.btn-primary, .nav-cta');
+        
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.boxShadow = '0 0 30px rgba(128, 0, 32, 0.7)';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.boxShadow = '';
+            });
+        });
+    }
+    
+    initWineDrops() {
+        // Создаём эффект капель вина в хедере при скролле
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            
+            if (scrollTop > 100 && !this.dropsCreated) {
+                this.createWineDrops();
+                this.dropsCreated = true;
+            }
+        });
+    }
+    
+    createWineDrops() {
+        const header = document.querySelector('.header');
+        if (!header) return;
+        
+        // Создаем несколько капель
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const drop = document.createElement('div');
+                drop.className = 'wine-drop';
+                drop.style.cssText = `
+                    position: absolute;
+                    width: 3px;
+                    height: 10px;
+                    background: var(--color-primary);
+                    border-radius: 50%;
+                    top: -10px;
+                    left: ${Math.random() * 100}%;
+                    opacity: 0;
+                    animation: wineDrop 1.5s ease-in-out forwards;
+                `;
+                
+                header.appendChild(drop);
+                
+                // Удаляем каплю после анимации
+                setTimeout(() => drop.remove(), 1500);
+            }, i * 300);
+        }
+    }
+    
+    initVineAnimation() {
+        // Добавляем анимацию виноградной лозы для уровней
+        const levelIcons = document.querySelectorAll('.level-icon');
+        
+        levelIcons.forEach((icon, index) => {
+            icon.addEventListener('mouseenter', () => {
+                // Создаем эффект виноградной лозы
+                const vine = document.createElement('div');
+                vine.className = 'vine-effect';
+                vine.style.cssText = `
+                    position: absolute;
+                    width: 2px;
+                    height: 0;
+                    background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    animation: growVine 0.8s ease-out forwards;
+                `;
+                
+                icon.appendChild(vine);
+                
+                setTimeout(() => vine.remove(), 1000);
+            });
+        });
+    }
+}
 
+// Добавляем анимации в CSS через JS
+const wineStyles = document.createElement('style');
+wineStyles.textContent = `
+    @keyframes wineDrop {
+        0% {
+            transform: translateY(0);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100px);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes growVine {
+        0% {
+            height: 0;
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            height: 40px;
+            opacity: 0;
+        }
+    }
+    
+    /* Эффект мерцания вина */
+    @keyframes wineShimmer {
+        0%, 100% {
+            filter: brightness(1);
+        }
+        50% {
+            filter: brightness(1.3);
+        }
+    }
+    
+    /* Анимация для заголовков */
+    .slide-title:hover .title-line {
+        animation: wineShimmer 2s infinite;
+    }
+    
+    /* Эффект винной ряби на кнопках */
+    .btn-primary:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+    }
+`;
+
+document.head.appendChild(wineStyles);
 // ===== INITIALIZE EVERYTHING =====
 document.addEventListener('DOMContentLoaded', () => {
     // Инициализация компонентов
@@ -750,7 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new ScrollAnimations();
     new LevelsInteraction();
     new CinematicEffects();
-    
+    new WineEffects();
     // Добавление текущего года в футер
     const yearSpan = document.querySelector('#currentYear');
     if (yearSpan) {
