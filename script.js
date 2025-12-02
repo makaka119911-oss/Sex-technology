@@ -997,3 +997,123 @@ function preloadCriticalImages() {
 window.addEventListener('load', () => {
     preloadCriticalImages();
 });
+// ===== КНОПКИ В ВИННОМ СТИЛЕ =====
+function initWineButtons() {
+    // Находим все кнопки уровня
+    const levelButtons = document.querySelectorAll('.btn-level, .levels-section .btn');
+    
+    levelButtons.forEach(button => {
+        // Эффект при наведении
+        button.addEventListener('mouseenter', (e) => {
+            // Создаем эффект волны
+            const wave = document.createElement('div');
+            wave.className = 'button-wave';
+            wave.style.cssText = `
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: rgba(178, 34, 52, 0.3);
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                animation: buttonWave 0.6s ease-out;
+                pointer-events: none;
+            `;
+            
+            button.appendChild(wave);
+            
+            // Удаляем волну после анимации
+            setTimeout(() => wave.remove(), 600);
+            
+            // Эффект текста
+            const text = button.querySelector('span');
+            if (text) {
+                text.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.5)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            const text = button.querySelector('span');
+            if (text) {
+                text.style.textShadow = '';
+            }
+        });
+        
+        // Эффект при клике
+        button.addEventListener('click', (e) => {
+            // Создаем эффект вспышки
+            const flash = document.createElement('div');
+            flash.className = 'button-flash';
+            flash.style.cssText = `
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba(178, 34, 52, 0.5);
+                top: 0;
+                left: 0;
+                animation: buttonFlash 0.3s ease-out;
+                pointer-events: none;
+                border-radius: inherit;
+            `;
+            
+            button.appendChild(flash);
+            
+            // Удаляем вспышку после анимации
+            setTimeout(() => flash.remove(), 300);
+        });
+    });
+}
+
+// Добавляем анимации в CSS через JS
+const buttonStyles = document.createElement('style');
+buttonStyles.textContent = `
+    @keyframes buttonWave {
+        0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes buttonFlash {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+    
+    /* Улучшенная анимация пульсации */
+    @keyframes enhancedPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 15px rgba(128, 0, 32, 0.5);
+        }
+        50% {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(128, 0, 32, 0.8);
+        }
+    }
+    
+    .btn-level {
+        animation: enhancedPulse 3s infinite !important;
+    }
+    
+    /* Эффект блеска на тексте */
+    .btn-level span {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* Градиентная обводка при наведении */
+    .btn-level:hover {
+        border-image: linear-gradient(45deg, var(--color-primary), var(--color-accent)) 1;
+    }
+`;
+
+document.head.appendChild(buttonStyles);
