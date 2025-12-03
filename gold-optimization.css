@@ -1,0 +1,127 @@
+/* Кроссбраузерная поддержка золотого текста */
+
+/* Для Firefox */
+@-moz-document url-prefix() {
+    .gold-text {
+        background: #D4AF37 !important;
+        color: #D4AF37 !important;
+        text-shadow: 
+            0 2px 0 #8B4513,
+            0 4px 0 #654321,
+            0 6px 1px rgba(0,0,0,.1),
+            0 0 5px rgba(0,0,0,.1),
+            0 1px 3px rgba(0,0,0,.3),
+            0 3px 5px rgba(0,0,0,.2),
+            0 5px 10px rgba(0,0,0,.25) !important;
+    }
+}
+
+/* Для Safari */
+@media not all and (min-resolution:.001dpcm) { 
+    @supports (-webkit-appearance:none) {
+        .gold-text {
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+        }
+    }
+}
+
+/* Для Internet Explorer (поддержка старых версий) */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .gold-text {
+        background: transparent !important;
+        color: #D4AF37 !important;
+        position: relative;
+    }
+    
+    .gold-text::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gold-14k);
+        z-index: -1;
+        filter: blur(5px);
+        opacity: 0.3;
+    }
+}
+
+/* Для Edge */
+@supports (-ms-ime-align:auto) {
+    .gold-text {
+        background: #D4AF37 !important;
+        color: #D4AF37 !important;
+    }
+}
+
+/* Улучшение для браузеров без поддержки background-clip: text */
+@supports not (background-clip: text) {
+    .gold-title {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .gold-title::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gold-14k);
+        z-index: -1;
+        border-radius: 10px;
+        filter: blur(10px);
+        opacity: 0.5;
+    }
+}
+
+/* Адаптация для режима высокой контрастности */
+@media (forced-colors: active) {
+    .gold-text {
+        background: transparent !important;
+        color: CanvasText !important;
+        text-shadow: none !important;
+        border: 2px solid CanvasText;
+        padding: 10px 20px !important;
+    }
+}
+
+/* Поддержка для читалок экрана */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Улучшение доступности */
+.gold-title:focus {
+    outline: 2px solid #D4AF37;
+    outline-offset: 4px;
+}
+
+/* Оптимизация печати */
+@media print {
+    .gold-text {
+        color: #000000 !important;
+        background: none !important;
+        text-shadow: none !important;
+        animation: none !important;
+    }
+    
+    .slide-overlay {
+        background: transparent !important;
+    }
+    
+    .slider-controls {
+        display: none !important;
+    }
+}
