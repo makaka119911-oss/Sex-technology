@@ -1010,3 +1010,131 @@ function preloadCriticalImages() {
 window.addEventListener('load', () => {
     preloadCriticalImages();
 });
+// ===== МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ДЛЯ КНОПОК =====
+function optimizeMobileButtons() {
+    const slideButtons = document.querySelectorAll('.slide-buttons .btn-level');
+    
+    slideButtons.forEach(button => {
+        // Добавляем атрибуты для мобильных устройств
+        button.setAttribute('data-mobile', 'true');
+        
+        // Для очень маленьких экранов уменьшаем отступы
+        if (window.innerWidth <= 480) {
+            button.style.padding = '12px 15px';
+            button.style.fontSize = '0.9rem';
+            
+            const icon = button.querySelector('i');
+            if (icon) {
+                icon.style.fontSize = '1rem';
+            }
+        }
+    });
+    
+    // Оптимизация индикаторов для мобильных
+    const indicators = document.querySelectorAll('.slider-indicators .indicator');
+    
+    indicators.forEach(indicator => {
+        if (window.innerWidth <= 480) {
+            const title = indicator.querySelector('.indicator-title');
+            if (title) {
+                title.style.display = 'none';
+            }
+        }
+    });
+}
+
+// Вызываем при загрузке и изменении размера окна
+window.addEventListener('load', optimizeMobileButtons);
+window.addEventListener('resize', optimizeMobileButtons);
+
+// ===== УЛУЧШЕНИЕ НАВИГАЦИИ НА МОБИЛЬНЫХ =====
+function optimizeMobileNavigation() {
+    const burgerMenu = document.querySelector('.burger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (window.innerWidth <= 768) {
+        // Добавляем эффект нажатия для мобильных кнопок
+        const mobileButtons = document.querySelectorAll('.nav-link, .nav-cta');
+        
+        mobileButtons.forEach(button => {
+            button.addEventListener('touchstart', () => {
+                button.style.transform = 'scale(0.98)';
+                button.style.opacity = '0.8';
+            });
+            
+            button.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    button.style.transform = '';
+                    button.style.opacity = '';
+                }, 150);
+            });
+        });
+        
+        // Улучшаем закрытие меню
+        if (burgerMenu && navMenu) {
+            // Закрытие по клику вне меню
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-menu') && !e.target.closest('.burger-menu') && navMenu.classList.contains('active')) {
+                    burgerMenu.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+    }
+}
+
+// Инициализация улучшений для мобильных
+document.addEventListener('DOMContentLoaded', () => {
+    optimizeMobileNavigation();
+    
+    // Предзагрузка изображений для слайдов
+    const slideImages = [
+        'фото 2х сексологов вместе.jpg',
+        'фото замка.jpg',
+        'галерея4.jpg'
+    ];
+    
+    slideImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+});
+
+// ===== УЛУЧШЕНИЕ ПРОИЗВОДИТЕЛЬНОСТИ НА МОБИЛЬНЫХ =====
+if ('ontouchstart' in window) {
+    // Оптимизация для тач-устройств
+    document.body.classList.add('touch-device');
+    
+    // Отключаем hover-эффекты на тач-устройствах
+    const touchStyle = document.createElement('style');
+    touchStyle.textContent = `
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover,
+            .nav-link:hover,
+            .expert-card:hover,
+            .help-card:hover,
+            .level-card:hover {
+                transform: none !important;
+            }
+            
+            .btn-primary:hover,
+            .btn-level:hover,
+            .btn-outline:hover,
+            .btn-secondary:hover {
+                box-shadow: none !important;
+            }
+            
+            .slide-buttons .btn-level:hover i {
+                transform: none !important;
+            }
+        }
+    `;
+    document.head.appendChild(touchStyle);
+    
+    // Оптимизация анимаций для слайдера на мобильных
+    const slides = document.querySelectorAll('.slide');
+    slides.forEach(slide => {
+        slide.style.transition = 'opacity 0.5s ease';
+    });
+}
