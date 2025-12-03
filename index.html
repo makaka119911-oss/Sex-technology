@@ -2,27 +2,30 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Терапия любви и желаний | Секс-терапия для женщин</title>
-    <meta name="description" content="Безопасное пространство для женщин, которые хотят больше удовольствия, близости с собой и уверенности в своей сексуальности">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Терапия любви и желаний | Премиум секс-терапия для женщин</title>
+    <meta name="description" content="Эксклюзивное пространство для женщин, стремящихся к гармонии в сексуальности, отношениях и принятии себя. Премиум подход.">
     
-    <!-- Шрифты -->
+    <!-- Премиум шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Marcellus&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Стили -->
+    <!-- Премиум стили -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Фавикон -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%235a0017'/%3E%3Cstop offset='100%25' stop-color='%23800020'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' d='M50,90 C30,75 10,55 10,35 C10,15 30,5 50,15 C70,5 90,15 90,35 C90,55 70,75 50,90 Z'/%3E%3Cpath fill='white' opacity='0.3' d='M60,25 C65,20 70,15 75,20 C80,25 85,30 85,40 C85,50 75,60 65,70 L50,85 L35,70 C25,60 15,50 15,40 C15,30 20,25 25,20 C30,15 35,20 40,25 L50,35 Z'/%3E%3C/svg%3E">
+    <!-- Премиум фавикон -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     
     <style>
-        /* Прелоадер */
-        .cinematic-preloader {
+        /* Премиум прелоадер */
+        .luxury-preloader {
             position: fixed;
             top: 0;
             left: 0;
@@ -34,333 +37,502 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .cinematic-preloader-logo {
-            font-family: 'Sora', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #E8B4BC 0%, #FF9A8B 100%);
+        .luxury-preloader-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D06F 50%, #D4AF37 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 2rem;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            position: relative;
         }
         
-        .film-reel {
+        .luxury-preloader-logo::after {
+            content: '✦';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #D4AF37;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+        
+        .diamond-loader {
             width: 60px;
             height: 60px;
-            border: 3px solid #E8B4BC;
-            border-radius: 50%;
             position: relative;
-            animation: rotateFilm 2s linear infinite;
+            transform: rotate(45deg);
         }
         
-        .film-reel:before {
-            content: '';
+        .diamond-loader span {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #E8B4BC;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #D4AF37;
+            animation: diamondMove 2s ease-in-out infinite;
         }
         
-        @keyframes rotateFilm {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Эффект плёнки на весь сайт */
-        body::after {
-            content: '';
-            position: fixed;
+        .diamond-loader span:nth-child(1) {
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, transparent 20%, rgba(0, 0, 0, 0.1) 100%),
-                radial-gradient(circle at 80% 70%, transparent 20%, rgba(0, 0, 0, 0.1) 100%);
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.3;
-            mix-blend-mode: overlay;
+            animation-delay: 0s;
+        }
+        
+        .diamond-loader span:nth-child(2) {
+            top: 0;
+            right: 0;
+            animation-delay: 0.5s;
+        }
+        
+        .diamond-loader span:nth-child(3) {
+            bottom: 0;
+            left: 0;
+            animation-delay: 1s;
+        }
+        
+        .diamond-loader span:nth-child(4) {
+            bottom: 0;
+            right: 0;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes diamondMove {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.5); opacity: 0.5; }
+        }
+        
+        /* Премиум модальное окно */
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 100px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Мобильные улучшения */
+        @media (max-width: 768px) {
+            .luxury-preloader-logo {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+            
+            .diamond-loader {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .hero-slider {
+                height: 100vh !important;
+                min-height: -webkit-fill-available !important;
+            }
+            
+            .slide-content {
+                padding-top: 80px !important;
+            }
         }
     </style>
 </head>
-<body>
-    <!-- Прелоадер -->
-    <div class="cinematic-preloader">
-        <div class="cinematic-preloader-logo">Терапия любви</div>
-        <div class="film-reel"></div>
+<body class="premium-theme">
+    <!-- Премиум прелоадер -->
+    <div class="luxury-preloader">
+        <div class="luxury-preloader-logo">Терапия любви</div>
+        <div class="diamond-loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
 
-    <!-- Навигация -->
-    <header class="header">
+    <!-- Премиум навигация -->
+    <header class="luxury-header">
         <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <span class="logo-title">Терапия любви</span>
-                    <span class="logo-subtitle">и желаний</span>
+            <nav class="navbar premium-navbar">
+                <a href="#" class="logo premium-logo">
+                    <span class="logo-icon">✦</span>
+                    <div class="logo-text">
+                        <span class="logo-title">Терапия любви</span>
+                        <span class="logo-subtitle">и желаний</span>
+                    </div>
                 </a>
                 
-                <div class="nav-menu">
-                    <a href="#about" class="nav-link"><span>О нас</span></a>
-                    <a href="#help" class="nav-link"><span>С чем помогаем</span></a>
-                    <a href="#levels" class="nav-link"><span>Уровни погружения</span></a>
-                    <a href="#circles" class="nav-link"><span>Женские круги</span></a>
-                    <a href="#gallery" class="nav-link"><span>Галерея</span></a>
-                    <a href="#testimonials" class="nav-link"><span>Отзывы</span></a>
-                    <a href="#contact" class="nav-cta">Записаться</a>
+                <div class="nav-menu premium-menu">
+                    <a href="#about" class="nav-link premium-link">
+                        <i class="fas fa-gem"></i>
+                        <span>О нас</span>
+                    </a>
+                    <a href="#help" class="nav-link premium-link">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Помощь</span>
+                    </a>
+                    <a href="#levels" class="nav-link premium-link">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Уровни</span>
+                    </a>
+                    <a href="#circles" class="nav-link premium-link">
+                        <i class="fas fa-heart-circle"></i>
+                        <span>Круги</span>
+                    </a>
+                    <a href="#contact" class="nav-cta premium-cta">
+                        <i class="fas fa-crown"></i>
+                        <span>Записаться</span>
+                    </a>
                 </div>
                 
-                <button class="burger-menu" aria-label="Открыть меню">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button class="burger-menu premium-burger" aria-label="Открыть меню">
+                    <span class="burger-line line-1"></span>
+                    <span class="burger-line line-2"></span>
+                    <span class="burger-line line-3"></span>
                 </button>
             </nav>
         </div>
+        
+        <!-- Премиум декоративная линия -->
+        <div class="header-divider">
+            <div class="divider-line"></div>
+            <div class="divider-ornament">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
     </header>
 
-    <!-- Герой с кинематографическим слайдером -->
-    <section class="hero-slider">
-        <div class="slider-container">
+    <!-- Премиум герой с кинематографическим слайдером -->
+    <section class="hero-slider premium-hero">
+        <div class="slider-container premium-slider">
             <!-- Слайд 1 -->
-            <div class="slide active" data-slide="1">
-                <div class="slide-background" style="background-image: url('фото 2х сексологов вместе.jpg')">
-                    <div class="parallax-layer" data-depth="0.2"></div>
+            <div class="slide premium-slide active" data-slide="1">
+                <div class="slide-background premium-bg" style="background-image: url('фото 2х сексологов вместе.jpg')">
+                    <div class="premium-overlay"></div>
                 </div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <div class="slide-subtitle">
+                <div class="slide-content premium-content">
+                    <div class="slide-text premium-text">
+                        <div class="slide-subtitle premium-subtitle">
                             <span class="line"></span>
-                            <span>Секс-терапия для женщин</span>
+                            <span><i class="fas fa-crown"></i> Премиум секс-терапия</span>
                             <span class="line"></span>
                         </div>
-                        <h1 class="slide-title">
-                            <span class="title-line">Терапия любви</span>
-                            <span class="title-line">и желаний</span>
+                        <h1 class="slide-title premium-title">
+                            <span class="title-line gold-text">Терапия любви</span>
+                            <span class="title-line velvet-text">и желаний</span>
                         </h1>
-                        <p class="slide-description">Безопасное пространство для женщин, которые хотят больше удовольствия, близости с собой и уверенности в своей сексуальности.</p>
-                        <div class="slide-buttons">
-                            <a href="#contact" class="btn btn-primary">
+                        <p class="slide-description premium-description">Эксклюзивное пространство для женщин, стремящихся к гармонии в сексуальности, отношениях и принятии себя.</p>
+                        
+                        <div class="premium-badges">
+                            <span class="badge"><i class="fas fa-lock"></i> Конфиденциально</span>
+                            <span class="badge"><i class="fas fa-star"></i> Индивидуально</span>
+                            <span class="badge"><i class="fas fa-heart"></i> Поддерживающе</span>
+                        </div>
+                        
+                        <div class="slide-buttons premium-buttons">
+                            <a href="#contact" class="btn btn-premium">
+                                <i class="fas fa-crown"></i>
                                 <span>Записаться на консультацию</span>
-                                <i class="fas fa-arrow-right"></i>
                             </a>
-                            <a href="#about" class="btn btn-secondary">
-                                <span>О нас</span>
-                                <i class="fas fa-chevron-down"></i>
+                            <a href="#about" class="btn btn-outline-premium">
+                                <i class="fas fa-gem"></i>
+                                <span>Узнать о нас</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Кинематографические элементы -->
-                <div class="cinematic-elements">
-                    <div class="light-ray ray-1"></div>
-                    <div class="light-ray ray-2"></div>
-                    <div class="particles"></div>
+                <!-- Премиум элементы -->
+                <div class="luxury-elements">
+                    <div class="luxury-particle particle-1"></div>
+                    <div class="luxury-particle particle-2"></div>
+                    <div class="luxury-particle particle-3"></div>
+                    <div class="gold-sparkle"></div>
                 </div>
             </div>
             
             <!-- Слайд 2 -->
-            <div class="slide" data-slide="2">
-                <div class="slide-background" style="background-image: url('фото замка.jpg')">
-                    <div class="parallax-layer" data-depth="0.2"></div>
+            <div class="slide premium-slide" data-slide="2">
+                <div class="slide-background premium-bg" style="background-image: url('фото замка.jpg')">
+                    <div class="premium-overlay"></div>
                 </div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <div class="slide-subtitle">
+                <div class="slide-content premium-content">
+                    <div class="slide-text premium-text">
+                        <div class="slide-subtitle premium-subtitle">
                             <span class="line"></span>
-                            <span>Женские круги</span>
+                            <span><i class="fas fa-users"></i> Женские круги</span>
                             <span class="line"></span>
                         </div>
-                        <h1 class="slide-title">
-                            <span class="title-line">Говорить о сексе</span>
-                            <span class="title-line">без стыда</span>
+                        <h1 class="slide-title premium-title">
+                            <span class="title-line gold-text">Говорить о сексе</span>
+                            <span class="title-line velvet-text">без стыда</span>
                         </h1>
-                        <p class="slide-description">Тёплые и поддерживающие встречи, где можно делиться страхами, желаниями и быть собой без осуждения.</p>
-                        <div class="slide-buttons">
-                            <a href="#circles" class="btn btn-primary">
-                                <span>Узнать о кругах</span>
-                                <i class="fas fa-arrow-right"></i>
+                        <p class="slide-description premium-description">Тёплые и поддерживающие встречи в атмосфере роскоши и принятия, где можно быть собой.</p>
+                        
+                        <div class="premium-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Малая группа (6-8 человек)</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Премиум пространство</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-buttons premium-buttons">
+                            <a href="#circles" class="btn btn-premium">
+                                <i class="fas fa-heart-circle"></i>
+                                <span>Подробнее о кругах</span>
                             </a>
-                            <a href="#contact" class="btn btn-secondary">
-                                <span>Записаться</span>
-                                <i class="fas fa-chevron-down"></i>
+                            <a href="#contact" class="btn btn-outline-premium">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Забронировать место</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="cinematic-elements">
-                    <div class="light-ray ray-1"></div>
-                    <div class="light-ray ray-2"></div>
-                    <div class="particles"></div>
+                <div class="luxury-elements">
+                    <div class="luxury-particle particle-1"></div>
+                    <div class="luxury-particle particle-2"></div>
+                    <div class="luxury-particle particle-3"></div>
+                    <div class="gold-sparkle"></div>
                 </div>
             </div>
             
             <!-- Слайд 3 -->
-            <div class="slide" data-slide="3">
-                <div class="slide-background" style="background-image: url('галерея4.jpg')">
-                    <div class="parallax-layer" data-depth="0.2"></div>
+            <div class="slide premium-slide" data-slide="3">
+                <div class="slide-background premium-bg" style="background-image: url('галерея3.jpg')">
+                    <div class="premium-overlay"></div>
                 </div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <div class="slide-subtitle">
+                <div class="slide-content premium-content">
+                    <div class="slide-text premium-text">
+                        <div class="slide-subtitle premium-subtitle">
                             <span class="line"></span>
-                            <span>Принятие себя</span>
+                            <span><i class="fas fa-dove"></i> Свобода быть собой</span>
                             <span class="line"></span>
                         </div>
-                        <h1 class="slide-title">
-                            <span class="title-line">Разрешить себе</span>
-                            <span class="title-line">желать</span>
+                        <h1 class="slide-title premium-title">
+                            <span class="title-line gold-text">Разрешить себе</span>
+                            <span class="title-line velvet-text">желать</span>
                         </h1>
-                        <p class="slide-description">Свобода от запретов и стыда. Работа с телом, либидо и отношениями в атмосфере принятия и уважения.</p>
-                        <div class="slide-buttons">
-                            <a href="#levels" class="btn btn-primary">
-                                <span>Уровни погружения</span>
-                                <i class="fas fa-arrow-right"></i>
+                        <p class="slide-description premium-description">Путь к осознанной сексуальности через принятие, работу с телом и освобождение от запретов.</p>
+                        
+                        <div class="premium-stats">
+                            <div class="stat">
+                                <span class="stat-number">100+</span>
+                                <span class="stat-label">Довольных клиенток</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">3</span>
+                                <span class="stat-label">Уровня погружения</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Положительных отзывов</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-buttons premium-buttons">
+                            <a href="#levels" class="btn btn-premium">
+                                <i class="fas fa-layer-group"></i>
+                                <span>Выбрать уровень</span>
                             </a>
-                            <a href="#contact" class="btn btn-secondary">
-                                <span>Начать терапию</span>
-                                <i class="fas fa-chevron-down"></i>
+                            <a href="#testimonials" class="btn btn-outline-premium">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>Истории успеха</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="cinematic-elements">
-                    <div class="light-ray ray-1"></div>
-                    <div class="light-ray ray-2"></div>
-                    <div class="particles"></div>
+                <div class="luxury-elements">
+                    <div class="luxury-particle particle-1"></div>
+                    <div class="luxury-particle particle-2"></div>
+                    <div class="luxury-particle particle-3"></div>
+                    <div class="gold-sparkle"></div>
                 </div>
             </div>
             
-            <!-- Навигация слайдера -->
-            <div class="slider-controls">
-                <button class="slider-prev" aria-label="Предыдущий слайд">
+            <!-- Премиум навигация -->
+            <div class="slider-controls premium-controls">
+                <button class="slider-prev premium-prev" aria-label="Предыдущий слайд">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button class="slider-next" aria-label="Следующий слайд">
+                <button class="slider-next premium-next" aria-label="Следующий слайд">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
             
-            <!-- Индикаторы -->
-            <div class="slider-indicators">
-                <div class="indicator active" data-slide="1">
+            <!-- Премиум индикаторы -->
+            <div class="slider-indicators premium-indicators">
+                <div class="indicator premium-indicator active" data-slide="1">
                     <span class="indicator-number">01</span>
                     <span class="indicator-title">Терапия</span>
                 </div>
-                <div class="indicator" data-slide="2">
+                <div class="indicator premium-indicator" data-slide="2">
                     <span class="indicator-number">02</span>
                     <span class="indicator-title">Круги</span>
                 </div>
-                <div class="indicator" data-slide="3">
+                <div class="indicator premium-indicator" data-slide="3">
                     <span class="indicator-number">03</span>
                     <span class="indicator-title">Свобода</span>
                 </div>
             </div>
             
-            <!-- Прогресс бар -->
-            <div class="slider-progress">
-                <div class="progress-bar"></div>
+            <!-- Премиум прогресс бар -->
+            <div class="slider-progress premium-progress">
+                <div class="progress-bar premium-bar"></div>
             </div>
         </div>
         
-        <!-- Индикатор скролла -->
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
+        <!-- Премиум индикатор скролла -->
+        <div class="scroll-indicator premium-scroll">
+            <div class="luxury-mouse">
+                <div class="mouse-wheel"></div>
             </div>
-            <span>Листайте вниз</span>
+            <span>Исследуйте пространство</span>
         </div>
     </section>
 
-    <!-- О нас -->
-    <section class="section about-section" id="about">
+    <!-- Премиум разделитель -->
+    <div class="luxury-divider">
+        <div class="divider-line"></div>
+        <div class="divider-center">
+            <i class="fas fa-gem"></i>
+        </div>
+    </div>
+
+    <!-- Премиум секция "О нас" -->
+    <section class="section premium-section about-section" id="about">
         <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">Знакомство</div>
-                <h2 class="section-title">Кто мы и как работаем</h2>
-                <p class="section-description">Два специалиста, объединённых общей миссией — помогать женщинам обретать свободу в теле, желаниях и отношениях.</p>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-crown"></i>
+                    <span>Премиум подход</span>
+                </div>
+                <h2 class="section-title premium-title">
+                    <span class="title-line">Эксперты в терапии</span>
+                    <span class="title-line">любви и желаний</span>
+                </h2>
+                <p class="section-description premium-description">Профессиональные психологи и сексологи с премиум подходом к каждой клиентке.</p>
             </div>
             
-            <div class="experts-grid">
+            <div class="experts-grid premium-grid">
                 <!-- Эксперт 1 -->
-                <div class="expert-card" data-aos="fade-up">
-                    <div class="expert-image">
+                <div class="expert-card premium-card" data-aos="fade-up">
+                    <div class="expert-badge">
+                        <span>Ведущий специалист</span>
+                    </div>
+                    <div class="expert-image premium-image">
                         <img src="фото Татьяны Солнечной.jpg" alt="Татьяна Солнечная" loading="lazy">
-                        <div class="expert-overlay">
-                            <div class="social-links">
-                                <a href="https://t.me/Tan4ik77G" target="_blank" aria-label="Telegram Татьяны">
+                        <div class="expert-overlay premium-overlay">
+                            <div class="social-links premium-social">
+                                <a href="https://t.me/Tan4ik77G" target="_blank" class="social-link premium-link">
                                     <i class="fab fa-telegram"></i>
                                 </a>
-                                <a href="tel:+79055959996" aria-label="Позвонить Татьяне">
+                                <a href="tel:+79055959996" class="social-link premium-link">
                                     <i class="fas fa-phone"></i>
                                 </a>
-                                <a href="mailto:Tan4ik@gmail.com" aria-label="Написать email Татьяне">
+                                <a href="mailto:Tan4ik@gmail.com" class="social-link premium-link">
                                     <i class="fas fa-envelope"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="expert-info">
-                        <h3>Татьяна Солнечная</h3>
-                        <div class="expert-role">Психолог, сексолог</div>
-                        <p class="expert-bio">Сопровождает женщин в теме желаний, удовольствия и отношений с телом. Работает с травматичным опытом и чувством стыда.</p>
-                        <ul class="expert-specialties">
-                            <li><i class="fas fa-check"></i> Индивидуальная секс-терапия</li>
-                            <li><i class="fas fa-check"></i> Работа с последствиями травм</li>
-                            <li><i class="fas fa-check"></i> Сопровождение после насилия</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline">
-                            <span>Связаться с Татьяной</span>
-                            <i class="fas fa-arrow-right"></i>
+                    <div class="expert-info premium-info">
+                        <div class="expert-header">
+                            <h3 class="expert-name">Татьяна Солнечная</h3>
+                            <div class="expert-role premium-role">Психолог, сексолог</div>
+                        </div>
+                        
+                        <div class="expert-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>12 лет опыта</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>300+ клиенток</span>
+                            </div>
+                        </div>
+                        
+                        <p class="expert-bio premium-bio">Сопровождает женщин в теме желаний, удовольствия и отношений с телом. Специализируется на работе с травматичным опытом и чувством стыда.</p>
+                        
+                        <div class="expert-specialties">
+                            <h4>Экспертиза:</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Индивидуальная секс-терапия</li>
+                                <li><i class="fas fa-check-circle"></i> Работа с последствиями травм</li>
+                                <li><i class="fas fa-check-circle"></i> Сопровождение после насилия</li>
+                            </ul>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-premium btn-block">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Записаться к Татьяне</span>
                         </a>
                     </div>
                 </div>
                 
                 <!-- Эксперт 2 -->
-                <div class="expert-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="expert-image">
+                <div class="expert-card premium-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="expert-badge">
+                        <span>Эксперт по женским кругам</span>
+                    </div>
+                    <div class="expert-image premium-image">
                         <img src="Фото Виктории РУмянцевой.jpg" alt="Виктория Румянцева" loading="lazy">
-                        <div class="expert-overlay">
-                            <div class="social-links">
-                                <a href="https://t.me/ViktoriaRum" target="_blank" aria-label="Telegram Виктории">
+                        <div class="expert-overlay premium-overlay">
+                            <div class="social-links premium-social">
+                                <a href="https://t.me/ViktoriaRum" target="_blank" class="social-link premium-link">
                                     <i class="fab fa-telegram"></i>
                                 </a>
-                                <a href="tel:+79175031333" aria-label="Позвонить Виктории">
+                                <a href="tel:+79175031333" class="social-link premium-link">
                                     <i class="fas fa-phone"></i>
                                 </a>
-                                <a href="mailto:BikRooM@gmail.com" aria-label="Написать email Виктории">
+                                <a href="mailto:BikRooM@gmail.com" class="social-link premium-link">
                                     <i class="fas fa-envelope"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="expert-info">
-                        <h3>Виктория Румянцева</h3>
-                        <div class="expert-role">Психолог, сексолог</div>
-                        <p class="expert-bio">Создаёт безопасные женские круги и поддерживает в проживании желаний. Работает с телесностью и чувственностью.</p>
-                        <ul class="expert-specialties">
-                            <li><i class="fas fa-check"></i> Женские круги онлайн и оффлайн</li>
-                            <li><i class="fas fa-check"></i> Работа с телесностью</li>
-                            <li><i class="fas fa-check"></i> Поддержка в изменениях</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline">
-                            <span>Связаться с Викторией</span>
-                            <i class="fas fa-arrow-right"></i>
+                    <div class="expert-info premium-info">
+                        <div class="expert-header">
+                            <h3 class="expert-name">Виктория Румянцева</h3>
+                            <div class="expert-role premium-role">Психолог, сексолог</div>
+                        </div>
+                        
+                        <div class="expert-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>8 лет опыта</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>50+ кругов</span>
+                            </div>
+                        </div>
+                        
+                        <p class="expert-bio premium-bio">Создаёт безопасные женские круги и поддерживает в проживании желаний. Специализируется на работе с телесностью и чувственностью.</p>
+                        
+                        <div class="expert-specialties">
+                            <h4>Экспертиза:</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Женские круги онлайн и оффлайн</li>
+                                <li><i class="fas fa-check-circle"></i> Работа с телесностью</li>
+                                <li><i class="fas fa-check-circle"></i> Поддержка в изменениях</li>
+                            </ul>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-premium btn-block">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Записаться к Виктории</span>
                         </a>
                     </div>
                 </div>
@@ -368,341 +540,476 @@
         </div>
     </section>
 
-    <!-- Помощь -->
-    <section class="section help-section" id="help">
+    <!-- Премиум секция "Помощь" -->
+    <section class="section premium-section help-section" id="help">
         <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">Наша помощь</div>
-                <h2 class="section-title">С чем мы помогаем</h2>
-                <p class="section-description">Мы работаем с различными аспектами женской сексуальности и психологического благополучия</p>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Наша помощь</span>
+                </div>
+                <h2 class="section-title premium-title">С чем мы помогаем</h2>
+                <p class="section-description premium-description">Комплексный подход к различным аспектам женской сексуальности и психологического благополучия.</p>
             </div>
             
-            <div class="help-cards">
-                <div class="help-card" data-aos="fade-up">
-                    <div class="help-icon">
+            <div class="help-cards premium-cards">
+                <div class="help-card premium-card" data-aos="fade-up">
+                    <div class="card-icon premium-icon">
                         <i class="fas fa-heart"></i>
+                        <div class="icon-bg"></div>
                     </div>
-                    <h3>Либидо и желание</h3>
-                    <p>Когда «ничего не хочется», хотя внутри есть потребность в близости и жизни в теле.</p>
+                    <h3 class="card-title">Либидо и желание</h3>
+                    <p class="card-text">Когда «ничего не хочется», хотя внутри есть потребность в близости и жизни в теле.</p>
+                    <div class="card-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                    </div>
                 </div>
                 
-                <div class="help-card" data-aos="fade-up" data-aos-delay="50">
-                    <div class="help-icon">
+                <div class="help-card premium-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="card-icon premium-icon">
                         <i class="fas fa-star"></i>
+                        <div class="icon-bg"></div>
                     </div>
-                    <h3>Оргазм и удовольствие</h3>
-                    <p>Трудности с достижением оргазма, «застревание» в голове, страх расслабиться и довериться.</p>
+                    <h3 class="card-title">Оргазм и удовольствие</h3>
+                    <p class="card-text">Трудности с достижением оргазма, «застревание» в голове, страх расслабиться.</p>
+                    <div class="card-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                    </div>
                 </div>
                 
-                <div class="help-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="help-icon">
+                <div class="help-card premium-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-icon premium-icon">
                         <i class="fas fa-user"></i>
+                        <div class="icon-bg"></div>
                     </div>
-                    <h3>Стеснение тела</h3>
-                    <p>Стыд за тело, зажимы, сложность показать себя настоящую и принимать комплименты.</p>
+                    <h3 class="card-title">Стеснение тела</h3>
+                    <p class="card-text">Стыд за тело, зажимы, сложность показать себя настоящую и принимать комплименты.</p>
+                    <div class="card-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                    </div>
                 </div>
                 
-                <div class="help-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="help-icon">
+                <div class="help-card premium-card" data-aos="fade-up">
+                    <div class="card-icon premium-icon">
                         <i class="fas fa-hands-helping"></i>
+                        <div class="icon-bg"></div>
                     </div>
-                    <h3>Последствия травм</h3>
-                    <p>Опыт насилия или болезненных отношений, который влияет на интимность и доверие.</p>
+                    <h3 class="card-title">Последствия травм</h3>
+                    <p class="card-text">Опыт насилия или болезненных отношений, который влияет на интимность и доверие.</p>
+                    <div class="card-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                    </div>
                 </div>
                 
-                <div class="help-card" data-aos="fade-up" data-aos-delay="50">
-                    <div class="help-icon">
+                <div class="help-card premium-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="card-icon premium-icon">
                         <i class="fas fa-ban"></i>
+                        <div class="icon-bg"></div>
                     </div>
-                    <h3>Интимные блоки</h3>
-                    <p>Воспитание, религиозные установки, чувство вины за свои фантазии и желания.</p>
+                    <h3 class="card-title">Интимные блоки</h3>
+                    <p class="card-text">Воспитание, религиозные установки, чувство вины за свои фантазии и желания.</p>
+                    <div class="card-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                    </div>
                 </div>
                 
-                <div class="help-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="help-icon">
+                <div class="help-card premium-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-icon premium-icon">
                         <i class="fas fa-comments"></i>
+                        <div class="icon-bg"></div>
                     </div>
-                    <h3>Сложности говорить о сексе</h3>
-                    <p>Страх быть «слишком», «не такой», трудность прямо озвучить, что нравится и чего хочется.</p>
+                    <h3 class="card-title">Сложности говорить о сексе</h3>
+                    <p class="card-text">Страх быть «слишком», трудность прямо озвучить, что нравится и чего хочется.</p>
+                    <div class="card-decoration">
+                        <div class="decoration-dot dot-1"></div>
+                        <div class="decoration-dot dot-2"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3 уровня погружения -->
-    <section class="section levels-section" id="levels">
+    <!-- Премиум секция "Уровни погружения" -->
+    <section class="section premium-section levels-section" id="levels">
         <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">Путь к себе</div>
-                <h2 class="section-title">3 уровня погружения в сексуальность</h2>
-                <p class="section-description">Постепенное и бережное раскрытие вашего потенциала через терапию и практики</p>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Путь к себе</span>
+                </div>
+                <h2 class="section-title premium-title">3 уровня погружения в сексуальность</h2>
+                <p class="section-description premium-description">Постепенное и бережное раскрытие вашего потенциала через премиум терапию и практики.</p>
             </div>
             
-            <div class="levels-container">
+            <div class="levels-container premium-levels">
                 <!-- Уровень 1 -->
-                <div class="level-card" data-aos="fade-up">
-                    <div class="level-header">
-                        <div class="level-number">01</div>
-                        <h3>Уровень 1: Основа</h3>
+                <div class="level-card premium-card" data-aos="fade-up">
+                    <div class="level-header premium-header">
+                        <div class="level-number premium-number">01</div>
+                        <h3 class="level-title">Уровень 1: Основа</h3>
                         <p class="level-subtitle">Познание и принятие себя</p>
                     </div>
-                    <div class="level-content">
-                        <div class="level-icon">
+                    <div class="level-content premium-content">
+                        <div class="level-icon premium-icon">
                             <i class="fas fa-seedling"></i>
                         </div>
-                        <p>Работа с базовыми установками, снятие блоков и страхов, знакомство с телом и его потребностями.</p>
-                        <ul class="level-features">
-                            <li><i class="fas fa-check"></i> Диагностика текущего состояния</li>
-                            <li><i class="fas fa-check"></i> Работа с психологическими блоками</li>
-                            <li><i class="fas fa-check"></i> Базовые телесные практики</li>
-                            <li><i class="fas fa-check"></i> Снятие чувства стыда и вины</li>
-                        </ul>
-                        <div class="level-duration">
-                            <span class="duration-label">Рекомендуемый формат:</span>
-                            <span class="duration-value">Индивидуальные сессии + дневник практик</span>
+                        <p class="level-description">Работа с базовыми установками, снятие блоков и страхов, знакомство с телом и его потребностями.</p>
+                        
+                        <div class="level-features">
+                            <h4>Включает:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Диагностика состояния</li>
+                                <li><i class="fas fa-check"></i> Работа с психоблоками</li>
+                                <li><i class="fas fa-check"></i> Телесные практики</li>
+                                <li><i class="fas fa-check"></i> Снятие стыда и вины</li>
+                            </ul>
                         </div>
-                        <a href="#contact" class="btn btn-level">
+                        
+                        <div class="level-duration">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="duration-label">Формат:</span>
+                                <span class="duration-value">Индивидуальные сессии + дневник</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-premium-level">
+                            <i class="fas fa-play-circle"></i>
                             <span>Начать с этого уровня</span>
-                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
                 
-                <!-- Уровень 2 -->
-                <div class="level-card level-featured" data-aos="fade-up" data-aos-delay="100">
-                    <div class="level-badge">Популярный</div>
-                    <div class="level-header">
-                        <div class="level-number">02</div>
-                        <h3>Уровень 2: Глубина</h3>
+                <!-- Уровень 2 (Премиум) -->
+                <div class="level-card premium-card featured-level" data-aos="fade-up" data-aos-delay="100">
+                    <div class="level-badge premium-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>Популярный выбор</span>
+                    </div>
+                    <div class="level-header premium-header">
+                        <div class="level-number premium-number">02</div>
+                        <h3 class="level-title">Уровень 2: Глубина</h3>
                         <p class="level-subtitle">Исследование желаний и возможностей</p>
                     </div>
-                    <div class="level-content">
-                        <div class="level-icon">
+                    <div class="level-content premium-content">
+                        <div class="level-icon premium-icon">
                             <i class="fas fa-water"></i>
                         </div>
-                        <p>Изучение желаний и фантазий, развитие чувствительности, углубление контакта с телом и эмоциями.</p>
-                        <ul class="level-features">
-                            <li><i class="fas fa-check"></i> Работа с либидо и желаниями</li>
-                            <li><i class="fas fa-check"></i> Развитие оргазмического потенциала</li>
-                            <li><i class="fas fa-check"></i> Практики для пар (опционально)</li>
-                            <li><i class="fas fa-check"></i> Изучение эрогенных зон</li>
-                        </ul>
-                        <div class="level-duration">
-                            <span class="duration-label">Рекомендуемый формат:</span>
-                            <span class="duration-value">Женские круги + индивидуальная терапия</span>
+                        <p class="level-description">Изучение желаний и фантазий, развитие чувствительности, углубление контакта с телом и эмоциями.</p>
+                        
+                        <div class="level-features">
+                            <h4>Включает:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Работа с либидо</li>
+                                <li><i class="fas fa-check"></i> Развитие оргазмического потенциала</li>
+                                <li><i class="fas fa-check"></i> Практики для пар</li>
+                                <li><i class="fas fa-check"></i> Изучение эрогенных зон</li>
+                            </ul>
                         </div>
-                        <a href="#contact" class="btn btn-level">
-    <span>Выбрать этот уровень</span>
-    <i class="fas fa-arrow-right"></i>
-</a>
+                        
+                        <div class="level-duration">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="duration-label">Формат:</span>
+                                <span class="duration-value">Круги + индивидуальная терапия</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-premium-level featured">
+                            <i class="fas fa-crown"></i>
+                            <span>Выбрать этот уровень</span>
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Уровень 3 -->
-                <div class="level-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="level-header">
-                        <div class="level-number">03</div>
-                        <h3>Уровень 3: Свобода</h3>
+                <div class="level-card premium-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="level-header premium-header">
+                        <div class="level-number premium-number">03</div>
+                        <h3 class="level-title">Уровень 3: Свобода</h3>
                         <p class="level-subtitle">Интеграция и свободное выражение</p>
                     </div>
-                    <div class="level-content">
-                        <div class="level-icon">
+                    <div class="level-content premium-content">
+                        <div class="level-icon premium-icon">
                             <i class="fas fa-dove"></i>
                         </div>
-                        <p>Закрепление результатов, формирование нового образа себя, свободное и осознанное выражение сексуальности.</p>
-                        <ul class="level-features">
-                            <li><i class="fas fa-check"></i> Создание личной практики</li>
-                            <li><i class="fas fa-check"></i> Интеграция в повседневную жизнь</li>
-                            <li><i class="fas fa-check"></i> Поддержка на пути развития</li>
-                            <li><i class="fas fa-check"></i> Менторство и обмен опытом</li>
-                        </ul>
-                        <div class="level-duration">
-                            <span class="duration-label">Рекомендуемый формат:</span>
-                            <span class="duration-value">Поддерживающие сессии + сообщество</span>
+                        <p class="level-description">Закрепление результатов, формирование нового образа себя, свободное и осознанное выражение сексуальности.</p>
+                        
+                        <div class="level-features">
+                            <h4>Включает:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Создание личной практики</li>
+                                <li><i class="fas fa-check"></i> Интеграция в жизнь</li>
+                                <li><i class="fas fa-check"></i> Поддержка развития</li>
+                                <li><i class="fas fa-check"></i> Менторство</li>
+                            </ul>
                         </div>
-                        <a href="#contact" class="btn btn-level">
+                        
+                        <div class="level-duration">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="duration-label">Формат:</span>
+                                <span class="duration-value">Поддерживающие сессии + сообщество</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-premium-level">
+                            <i class="fas fa-flag-checkered"></i>
                             <span>Завершить путь</span>
-                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
             
-            <div class="levels-note" data-aos="fade-up">
+            <div class="levels-note premium-note" data-aos="fade-up">
                 <div class="note-icon">
                     <i class="fas fa-lightbulb"></i>
                 </div>
-                <p>Вы можете начать с любого уровня в зависимости от вашей готовности. Мы помогаем определить подходящую точку входа.</p>
+                <p>Мы помогаем определить подходящую точку входа и сопровождаем на каждом этапе вашего преображения.</p>
             </div>
         </div>
     </section>
 
-    <!-- Женские круги -->
-    <section class="section circles-section" id="circles">
+    <!-- Премиум секция "Женские круги" -->
+    <section class="section premium-section circles-section" id="circles">
         <div class="container">
-            <div class="circles-content">
-                <div class="circles-text" data-aos="fade-right">
-                    <div class="section-subtitle">Живые встречи</div>
-                    <h2 class="section-title">Женские круги</h2>
-                    <p>Мы собираем женские круги в тёплой и поддерживающей атмосфере, где можно говорить о сексе, желаниях и страхах без осуждения.</p>
+            <div class="circles-content premium-content">
+                <div class="circles-text premium-text" data-aos="fade-right">
+                    <div class="section-subtitle premium-subtitle">
+                        <i class="fas fa-heart-circle"></i>
+                        <span>Премиум пространство</span>
+                    </div>
+                    <h2 class="section-title premium-title">Женские круги</h2>
+                    <p class="circles-description">Эксклюзивные встречи в атмосфере роскоши, безопасности и глубокого принятия.</p>
                     
-                    <div class="features-list">
-                        <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Формат: практика, разговоры по душам</span>
+                    <div class="circles-features">
+                        <div class="feature premium-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Малая группа</h4>
+                                <p>Всего 6-8 участниц для максимального комфорта и внимания</p>
+                            </div>
                         </div>
-                        <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Ритуалы для контакта с телом</span>
+                        
+                        <div class="feature premium-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Роскошная атмосфера</h4>
+                                <p>Премиум пространство с полным погружением</p>
+                            </div>
                         </div>
-                        <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Атмосфера безопасности и принятия</span>
+                        
+                        <div class="feature premium-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Индивидуальный подход</h4>
+                                <p>Внимание к каждой участнице, ритуалы для контакта с телом</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="note-box">
-                        <div class="note-icon">
-                            <i class="fas fa-info-circle"></i>
-                        </div>
-                        <p>Количество мест ограничено, группа небольшая и безопасная по атмосфере.</p>
+                    <div class="circles-cta">
+                        <a href="#contact" class="btn btn-premium">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>Забронировать место</span>
+                        </a>
+                        <a href="tel:+79175031333" class="btn btn-outline-premium">
+                            <i class="fas fa-phone"></i>
+                            <span>Узнать детали</span>
+                        </a>
                     </div>
-                    
-                    <a href="#contact" class="btn btn-primary">
-                        <span>Узнать о ближайшем круге</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
                 </div>
                 
-                <div class="circles-image" data-aos="fade-left">
+                <div class="circles-image premium-image" data-aos="fade-left">
                     <img src="галерея3.jpg" alt="Женский круг" loading="lazy">
                     <div class="image-decoration">
-                        <div class="decoration-circle circle-1"></div>
-                        <div class="decoration-circle circle-2"></div>
-                        <div class="decoration-circle circle-3"></div>
+                        <div class="decoration-frame"></div>
+                        <div class="decoration-ornament ornament-1"></div>
+                        <div class="decoration-ornament ornament-2"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Галерея -->
-    <section class="section gallery-section" id="gallery">
+    <!-- Премиум галерея -->
+    <section class="section premium-section gallery-section" id="gallery">
         <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">Атмосфера</div>
-                <h2 class="section-title">Наше пространство</h2>
-                <p class="section-description">Уютная и безопасная обстановка для встреч и сессий</p>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-camera"></i>
+                    <span>Наше пространство</span>
+                </div>
+                <h2 class="section-title premium-title">Галерея атмосферы</h2>
+                <p class="section-description premium-description">Эксклюзивная обстановка для встреч, созданная для вашего комфорта и погружения.</p>
             </div>
             
-            <div class="gallery-grid">
-                <div class="gallery-item" data-aos="zoom-in">
+            <div class="gallery-grid premium-grid">
+                <div class="gallery-item premium-item" data-aos="zoom-in">
                     <img src="галерея.jpg" alt="Галерея 1" loading="lazy">
-                    <div class="gallery-overlay">
-                        <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                    <div class="gallery-overlay premium-overlay">
+                        <div class="zoom-icon premium-zoom">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <div class="image-caption">
+                            <h4>Пространство для сессий</h4>
+                            <p>Уютная и безопасная атмосфера</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
+                <div class="gallery-item premium-item" data-aos="zoom-in" data-aos-delay="50">
                     <img src="галерея1.jpg" alt="Галерея 2" loading="lazy">
-                    <div class="gallery-overlay">
-                        <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                    <div class="gallery-overlay premium-overlay">
+                        <div class="zoom-icon premium-zoom">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <div class="image-caption">
+                            <h4>Зона релаксации</h4>
+                            <p>Место для отдыха и размышлений</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                <div class="gallery-item premium-item" data-aos="zoom-in" data-aos-delay="100">
                     <img src="галерея2.jpg" alt="Галерея 3" loading="lazy">
-                    <div class="gallery-overlay">
-                        <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
+                    <div class="gallery-overlay premium-overlay">
+                        <div class="zoom-icon premium-zoom">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <div class="image-caption">
+                            <h4>Рабочая атмосфера</h4>
+                            <p>Профессиональное оборудование</p>
                         </div>
                     </div>
                 </div>
-                
-                <div class="gallery-item" data-aos="zoom-in">
-                    <img src="выпускницы.jpg" alt="Выпускницы" loading="lazy">
-                    <div class="gallery-overlay">
-                        <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
-                    </div>
+            </div>
+            
+            <div class="gallery-navigation">
+                <button class="gallery-nav prev" aria-label="Предыдущее фото">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="gallery-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
                 </div>
-                
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
-                    <img src="галерея5.jpg" alt="Галерея 5" loading="lazy">
-                    <div class="gallery-overlay">
-                        <div class="zoom-icon">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
-                    </div>
-                </div>
+                <button class="gallery-nav next" aria-label="Следующее фото">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Отзывы -->
-    <section class="section testimonials-section" id="testimonials">
+    <!-- Премиум отзывы -->
+    <section class="section premium-section testimonials-section" id="testimonials">
         <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">Истории перемен</div>
-                <h2 class="section-title">Отзывы клиенток</h2>
-                <p class="section-description">Реальные истории женщин, которые прошли терапию</p>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Истории перемен</span>
+                </div>
+                <h2 class="section-title premium-title">Отзывы клиенток</h2>
+                <p class="section-description premium-description">Реальные истории женщин, которые прошли путь трансформации.</p>
             </div>
             
-            <div class="testimonials-slider">
-                <div class="testimonial-slide active">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
+            <div class="testimonials-slider premium-slider">
+                <div class="testimonial-slide premium-slide active">
+                    <div class="testimonial-content premium-content">
+                        <div class="quote-icon premium-quote">
+                            <i class="fas fa-quote-right"></i>
                         </div>
-                        <p class="testimonial-text">"После работы с Татьяной я впервые за 10 лет почувствовала желание. Не просто выполнение супружеского долга, а настоящее желание. Я плакала от счастья."</p>
-                        <div class="client-info">
-                            <h4>Марина, 35 лет</h4>
-                            <p>Курс индивидуальной терапии</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"Женские круги у Виктории стали для меня откровением. Впервые я смогла говорить о сексе без стыда. Спасибо за безопасное пространство!"</p>
-                        <div class="client-info">
-                            <h4>Анна, 28 лет</h4>
-                            <p>Участница женского круга</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"После травматичных отношений я думала, что никогда больше не смогу доверять. Терапия помогла мне не только восстановиться, но и научиться получать удовольствие."</p>
-                        <div class="client-info">
-                            <h4>Елена, 42 года</h4>
-                            <p>Сопровождение после травмы</p>
+                        <p class="testimonial-text premium-text">"После работы с Татьяной я впервые за 10 лет почувствовала настоящее желание. Не просто выполнение супружеского долга, а искреннее желание. Я плакала от счастья и благодарности."</p>
+                        <div class="client-info premium-info">
+                            <div class="client-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="client-details">
+                                <h4 class="client-name">Марина, 35 лет</h4>
+                                <p class="client-program">Курс индивидуальной терапии</p>
+                                <div class="client-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-controls">
-                    <button class="testimonial-prev" aria-label="Предыдущий отзыв">
+                <div class="testimonial-slide premium-slide">
+                    <div class="testimonial-content premium-content">
+                        <div class="quote-icon premium-quote">
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        <p class="testimonial-text premium-text">"Женские круги у Виктории стали для меня откровением. Впервые я смогла говорить о сексе без стыда и страха осуждения. Пространство, созданное Викторией, — это безопасность и принятие."</p>
+                        <div class="client-info premium-info">
+                            <div class="client-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="client-details">
+                                <h4 class="client-name">Анна, 28 лет</h4>
+                                <p class="client-program">Участница женского круга</p>
+                                <div class="client-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide premium-slide">
+                    <div class="testimonial-content premium-content">
+                        <div class="quote-icon premium-quote">
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        <p class="testimonial-text premium-text">"После травматичных отношений я думала, что никогда больше не смогу доверять. Терапия помогла мне не только восстановиться, но и научиться получать удовольствие от близости. Это бесценно."</p>
+                        <div class="client-info premium-info">
+                            <div class="client-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="client-details">
+                                <h4 class="client-name">Елена, 42 года</h4>
+                                <p class="client-program">Сопровождение после травмы</p>
+                                <div class="client-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-controls premium-controls">
+                    <button class="testimonial-prev premium-prev" aria-label="Предыдущий отзыв">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <div class="testimonial-dots">
-                        <button class="testimonial-dot active" aria-label="Отзыв 1"></button>
-                        <button class="testimonial-dot" aria-label="Отзыв 2"></button>
-                        <button class="testimonial-dot" aria-label="Отзыв 3"></button>
+                    <div class="testimonial-dots premium-dots">
+                        <button class="testimonial-dot premium-dot active" aria-label="Отзыв 1"></button>
+                        <button class="testimonial-dot premium-dot" aria-label="Отзыв 2"></button>
+                        <button class="testimonial-dot premium-dot" aria-label="Отзыв 3"></button>
                     </div>
-                    <button class="testimonial-next" aria-label="Следующий отзыв">
+                    <button class="testimonial-next premium-next" aria-label="Следующий отзыв">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -710,206 +1017,395 @@
         </div>
     </section>
 
-    <!-- Контакты -->
-    <section class="section contact-section" id="contact">
+    <!-- Премиум контакты -->
+    <section class="section premium-section contact-section" id="contact">
         <div class="container">
-            <div class="contact-content">
-                <div class="contact-info" data-aos="fade-right">
-                    <div class="section-subtitle">Свяжитесь с нами</div>
-                    <h2 class="section-title">Запишитесь на консультацию</h2>
-                    <p class="contact-description">Оставьте заявку, и мы свяжемся с вами, чтобы подобрать формат работы: индивидуальные сессии или женские круги.</p>
-                    
-                    <div class="contacts-block">
-                        <div class="contact-person">
-                            <h4>Татьяна Солнечная</h4>
-                            <div class="contact-details">
-                                <a href="tel:+79055959996">
-                                    <i class="fas fa-phone"></i>
-                                    <span>+7 905 595 9996</span>
-                                </a>
-                                <a href="https://t.me/Tan4ik77G" target="_blank">
-                                    <i class="fab fa-telegram"></i>
-                                    <span>@Tan4ik77G</span>
-                                </a>
-                                <a href="mailto:Tan4ik@gmail.com">
-                                    <i class="fas fa-envelope"></i>
-                                    <span>Tan4ik@gmail.com</span>
-                                </a>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-envelope"></i>
+                    <span>Свяжитесь с нами</span>
+                </div>
+                <h2 class="section-title premium-title">Запишитесь на консультацию</h2>
+                <p class="section-description premium-description">Оставьте заявку, и мы подберём для вас оптимальный формат работы.</p>
+            </div>
+            
+            <div class="contact-content premium-content">
+                <div class="contact-info premium-info" data-aos="fade-right">
+                    <div class="contact-methods">
+                        <div class="contact-method premium-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Телефон</h4>
+                                <a href="tel:+79055959996">+7 905 595 9996 (Татьяна)</a>
+                                <a href="tel:+79175031333">+7 917 503 13 33 (Виктория)</a>
                             </div>
                         </div>
                         
-                        <div class="contact-person">
-                            <h4>Виктория Румянцева</h4>
-                            <div class="contact-details">
-                                <a href="tel:+79175031333">
-                                    <i class="fas fa-phone"></i>
-                                    <span>+7 917 503 13 33</span>
-                                </a>
-                                <a href="https://t.me/ViktoriaRum" target="_blank">
-                                    <i class="fab fa-telegram"></i>
-                                    <span>@ViktoriaRum</span>
-                                </a>
-                                <a href="mailto:BikRooM@gmail.com">
-                                    <i class="fas fa-envelope"></i>
-                                    <span>BikRooM@gmail.com</span>
-                                </a>
+                        <div class="contact-method premium-method">
+                            <div class="method-icon">
+                                <i class="fab fa-telegram"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Telegram</h4>
+                                <a href="https://t.me/Tan4ik77G" target="_blank">@Tan4ik77G (Татьяна)</a>
+                                <a href="https://t.me/ViktoriaRum" target="_blank">@ViktoriaRum (Виктория)</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method premium-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Email</h4>
+                                <a href="mailto:Tan4ik@gmail.com">Tan4ik@gmail.com</a>
+                                <a href="mailto:BikRooM@gmail.com">BikRooM@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method premium-method">
+                            <div class="method-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Часы работы</h4>
+                                <p>Пн-Пт: 10:00 - 20:00</p>
+                                <p>Сб: 11:00 - 17:00</p>
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="contact-note premium-note">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Конфиденциальность гарантирована. Первая консультация включает знакомство и определение целей работы.</p>
+                    </div>
                 </div>
                 
-                <div class="contact-form" data-aos="fade-left">
-                    <form id="consultationForm">
-                        <h3>Форма записи</h3>
+                <div class="contact-form premium-form" data-aos="fade-left">
+                    <form id="premiumForm">
+                        <h3 class="form-title">
+                            <i class="fas fa-pen-fancy"></i>
+                            <span>Форма записи</span>
+                        </h3>
                         
-                        <div class="form-group">
-                            <label for="name">Ваше имя *</label>
-                            <input type="text" id="name" name="name" required>
+                        <div class="form-group premium-group">
+                            <label for="name">
+                                <i class="fas fa-user"></i>
+                                <span>Ваше имя *</span>
+                            </label>
+                            <input type="text" id="name" name="name" required placeholder="Как к вам обращаться?">
                         </div>
                         
-                        <div class="form-group">
-                            <label for="contact">Как с вами связаться *</label>
-                            <input type="text" id="contact" name="contact" placeholder="Телефон, Telegram или email" required>
+                        <div class="form-row">
+                            <div class="form-group premium-group">
+                                <label for="contact">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Контакты *</span>
+                                </label>
+                                <input type="text" id="contact" name="contact" required placeholder="Телефон или Telegram">
+                            </div>
+                            
+                            <div class="form-group premium-group">
+                                <label for="format">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span>Формат</span>
+                                </label>
+                                <select id="format" name="format">
+                                    <option value="individual">Индивидуальная сессия</option>
+                                    <option value="circle">Женский круг</option>
+                                    <option value="levels">Уровень погружения</option>
+                                    <option value="consultation">Консультация</option>
+                                </select>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="format">Предпочтительный формат</label>
-                            <select id="format" name="format">
-                                <option value="individual">Индивидуальная сессия</option>
-                                <option value="circle">Женский круг</option>
-                                <option value="levels">Уровень погружения</option>
-                                <option value="not_sure">Пока не знаю, нужна консультация</option>
+                        <div class="form-group premium-group">
+                            <label for="specialist">
+                                <i class="fas fa-user-md"></i>
+                                <span>Предпочтительный специалист</span>
+                            </label>
+                            <select id="specialist" name="specialist">
+                                <option value="any">Не важно</option>
+                                <option value="tatiana">Татьяна Солнечная</option>
+                                <option value="victoria">Виктория Румянцева</option>
                             </select>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="message">Ваш запрос</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Напишите пару слов о том, что сейчас волнует"></textarea>
+                        <div class="form-group premium-group">
+                            <label for="message">
+                                <i class="fas fa-comment"></i>
+                                <span>Ваш запрос</span>
+                            </label>
+                            <textarea id="message" name="message" rows="4" placeholder="Опишите, что вас беспокоит или что вы хотите изменить..."></textarea>
                         </div>
                         
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="consent" name="consent" required>
-                            <label for="consent">Я соглашаюсь с обработкой персональных данных</label>
+                        <div class="form-actions">
+                            <div class="checkbox-group premium-checkbox">
+                                <input type="checkbox" id="consent" name="consent" required>
+                                <label for="consent">Я соглашаюсь с обработкой персональных данных</label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-premium btn-block">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Отправить заявку</span>
+                            </button>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <span>Отправить заявку</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                        
-                        <div class="form-status" id="formStatus"></div>
+                        <div class="form-status premium-status" id="formStatus"></div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section faq-section">
+    <!-- Премиум FAQ -->
+    <section class="section premium-section faq-section">
         <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">Ответы на вопросы</div>
-                <h2 class="section-title">Часто спрашивают</h2>
+            <div class="section-header premium-header">
+                <div class="section-subtitle premium-subtitle">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Ответы на вопросы</span>
+                </div>
+                <h2 class="section-title premium-title">Часто спрашивают</h2>
             </div>
             
-            <div class="faq-grid">
-                <div class="faq-item" data-aos="fade-up">
-                    <div class="faq-question">
-                        <h3>Подойдёт ли вам терапия, если я никогда не была у психолога?</h3>
-                        <span class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
+            <div class="faq-container premium-container">
+                <div class="faq-item premium-item" data-aos="fade-up">
+                    <div class="faq-question premium-question">
+                        <h3><i class="fas fa-chevron-right"></i> Подойдёт ли вам терапия, если я никогда не была у психолога?</h3>
                     </div>
-                    <div class="faq-answer">
-                        <p>Да, мы мягко объясняем, как проходит процесс, и вы двигаетесь в своём темпе без давления. Мы создаём комфортные условия для новичков.</p>
+                    <div class="faq-answer premium-answer">
+                        <p>Да, мы создаём комфортные условия для новичков. Процесс объясняется мягко и понятно, вы двигаетесь в своём темпе без давления. Первая консультация всегда адаптируется под ваш уровень подготовки.</p>
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
-                    <div class="faq-question">
-                        <h3>Нужно ли говорить о самых личных деталях?</h3>
-                        <span class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
+                <div class="faq-item premium-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="faq-question premium-question">
+                        <h3><i class="fas fa-chevron-right"></i> Нужно ли говорить о самых личных деталях?</h3>
                     </div>
-                    <div class="faq-answer">
-                        <p>Вы сами решаете, чем делиться. Мы создаём пространство, где можно говорить ровно настолько, насколько вам сейчас безопасно. Никакого давления.</p>
+                    <div class="faq-answer premium-answer">
+                        <p>Вы сами решаете, чем делиться. Мы создаём пространство, где можно говорить ровно настолько, насколько вам сейчас безопасно. Никакого давления, только поддержка и принятие.</p>
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="faq-question">
-                        <h3>Работаете ли вы онлайн?</h3>
-                        <span class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
+                <div class="faq-item premium-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question premium-question">
+                        <h3><i class="fas fa-chevron-right"></i> Работаете ли вы онлайн?</h3>
                     </div>
-                    <div class="faq-answer">
-                        <p>Да, доступны онлайн-сессии и онлайн-круги для женщин, если вы не можете приехать лично. Формат онлайн также эффективен.</p>
+                    <div class="faq-answer premium-answer">
+                        <p>Да, доступны онлайн-сессии и онлайн-круги для женщин из любого города. Формат онлайн не менее эффективен, так как мы создаём такую же безопасную и поддерживающую атмосферу.</p>
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
-                    <div class="faq-question">
-                        <h3>Будете ли вы осуждать мои фантазии и желания?</h3>
-                        <span class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
+                <div class="faq-item premium-item" data-aos="fade-up" data-aos-delay="150">
+                    <div class="faq-question premium-question">
+                        <h3><i class="fas fa-chevron-right"></i> Гарантирована ли конфиденциальность?</h3>
                     </div>
-                    <div class="faq-answer">
-                        <p>Нет. Наша задача — поддерживать, а не оценивать. Мы работаем с принятием и уважением к вашему опыту, без осуждения.</p>
+                    <div class="faq-answer premium-answer">
+                        <p>Абсолютно. Мы соблюдаем профессиональную этику и гарантируем полную конфиденциальность. Ваши данные защищены, сессии проходят в закрытом пространстве.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Футер -->
-    <footer class="footer">
+    <!-- Премиум футер -->
+    <footer class="luxury-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>Терапия любви и желаний</h3>
-                    <p>Секс-терапия для женщин от Татьяны Солнечной и Виктории Румянцевой</p>
+            <div class="footer-content premium-content">
+                <div class="footer-logo premium-logo">
+                    <div class="logo-icon">✦</div>
+                    <div class="logo-text">
+                        <h3>Терапия любви и желаний</h3>
+                        <p>Премиум секс-терапия для женщин</p>
+                    </div>
                 </div>
                 
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Навигация</h4>
-                        <a href="#about">О нас</a>
-                        <a href="#help">С чем помогаем</a>
-                        <a href="#levels">Уровни погружения</a>
-                        <a href="#circles">Женские круги</a>
-                        <a href="#contact">Контакты</a>
+                <div class="footer-links premium-links">
+                    <div class="footer-column premium-column">
+                        <h4><i class="fas fa-compass"></i> Навигация</h4>
+                        <a href="#about"><i class="fas fa-chevron-right"></i> О нас</a>
+                        <a href="#help"><i class="fas fa-chevron-right"></i> Помощь</a>
+                        <a href="#levels"><i class="fas fa-chevron-right"></i> Уровни</a>
+                        <a href="#circles"><i class="fas fa-chevron-right"></i> Круги</a>
                     </div>
                     
-                    <div class="footer-column">
-                        <h4>Контакты</h4>
-                        <a href="tel:+79055959996">Татьяна: +7 905 595 9996</a>
-                        <a href="tel:+79175031333">Виктория: +7 917 503 13 33</a>
-                        <a href="mailto:info@терапия-любви.рф">info@терапия-любви.рф</a>
+                    <div class="footer-column premium-column">
+                        <h4><i class="fas fa-address-book"></i> Контакты</h4>
+                        <a href="tel:+79055959996"><i class="fas fa-phone"></i> +7 905 595 9996</a>
+                        <a href="tel:+79175031333"><i class="fas fa-phone"></i> +7 917 503 13 33</a>
+                        <a href="mailto:info@терапия-любви.рф"><i class="fas fa-envelope"></i> info@терапия-любви.рф</a>
+                    </div>
+                    
+                    <div class="footer-column premium-column">
+                        <h4><i class="fas fa-shield-alt"></i> Гарантии</h4>
+                        <span><i class="fas fa-lock"></i> Конфиденциальность</span>
+                        <span><i class="fas fa-user-check"></i> Профессионализм</span>
+                        <span><i class="fas fa-heart"></i> Поддержка</span>
                     </div>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>© <span id="currentYear">2024</span> Терапия любви и желаний. Все права защищены.</p>
-                <p class="footer-disclaimer">Сайт для взрослых (18+). Информация не заменяет консультацию врача.</p>
+            <div class="footer-divider premium-divider"></div>
+            
+            <div class="footer-bottom premium-bottom">
+                <div class="copyright">
+                    <p>© <span id="currentYear">2024</span> Терапия любви и желаний. Все права защищены.</p>
+                    <p class="disclaimer"><i class="fas fa-exclamation-circle"></i> Сайт для взрослых (18+). Информация не заменяет консультацию врача.</p>
+                </div>
+                
+                <div class="footer-social premium-social">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Модальное окно для галереи -->
-    <div class="modal" id="galleryModal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Закрыть">
+    <!-- Премиум модальное окно -->
+    <div class="modal premium-modal" id="galleryModal">
+        <div class="modal-content premium-content">
+            <button class="modal-close premium-close" aria-label="Закрыть">
                 <i class="fas fa-times"></i>
             </button>
-            <img src="" alt="" class="modal-image">
+            <div class="modal-image-container">
+                <img src="" alt="" class="modal-image premium-image">
+                <div class="image-info">
+                    <h3 class="image-title"></h3>
+                    <p class="image-description"></p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Скрипты -->
+    <!-- Премиум скрипты -->
     <script src="script.js"></script>
+    
+    <script>
+        // Премиум прелоадер
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.luxury-preloader').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.luxury-preloader').style.display = 'none';
+                }, 800);
+            }, 1500);
+        });
+        
+        // Премиум кнопка "Наверх"
+        const scrollToTopBtn = document.createElement('button');
+        scrollToTopBtn.className = 'scroll-to-top premium-scroll-top';
+        scrollToTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        scrollToTopBtn.setAttribute('aria-label', 'Наверх');
+        document.body.appendChild(scrollToTopBtn);
+        
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 500) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        // Премиум текущий год в футере
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Премиум аккордеон FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                item.classList.toggle('active');
+                
+                // Закрываем другие открытые элементы
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Премиум форма
+        document.getElementById('premiumForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const status = document.getElementById('formStatus');
+            status.textContent = 'Заявка отправляется...';
+            status.className = 'form-status premium-status sending';
+            
+            // Имитация отправки
+            setTimeout(() => {
+                status.textContent = '✅ Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.';
+                status.className = 'form-status premium-status success';
+                
+                // Очистка формы через 5 секунд
+                setTimeout(() => {
+                    this.reset();
+                    status.textContent = '';
+                    status.className = 'form-status premium-status';
+                }, 5000);
+            }, 2000);
+        });
+        
+        // Премиум анимация при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+        
+        // Наблюдаем за всеми элементами с атрибутом data-aos
+        document.querySelectorAll('[data-aos]').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Премиум мобильное меню
+        document.querySelector('.premium-burger').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.premium-menu').classList.toggle('active');
+            document.body.style.overflow = document.body.style.overflow === 'hidden' ? '' : 'hidden';
+        });
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.premium-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.premium-burger').classList.remove('active');
+                document.querySelector('.premium-menu').classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Премиум параллакс эффект
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            document.querySelectorAll('.premium-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+                }, index * 50);
+            });
+        });
+    </script>
 </body>
 </html>
