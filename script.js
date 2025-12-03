@@ -8,9 +8,48 @@ window.addEventListener('load', () => {
                 preloader.style.visibility = 'hidden';
                 preloader.remove();
             }, 500);
-        }, 1000);
+        }, 1500);
     }
 });
+
+// ===== AGE VERIFICATION =====
+function initAgeVerification() {
+    const ageVerification = document.getElementById('ageVerification');
+    const ageYesBtn = document.getElementById('ageYes');
+    const ageNoBtn = document.getElementById('ageNo');
+    
+    // Проверяем, соглашался ли пользователь ранее
+    const ageConfirmed = localStorage.getItem('ageConfirmed');
+    
+    if (!ageConfirmed) {
+        // Показываем проверку возраста после прелоадера
+        setTimeout(() => {
+            if (ageVerification) {
+                ageVerification.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }, 1500);
+    }
+    
+    // Обработка кнопки "Да"
+    if (ageYesBtn) {
+        ageYesBtn.addEventListener('click', () => {
+            localStorage.setItem('ageConfirmed', 'true');
+            if (ageVerification) {
+                ageVerification.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+    
+    // Обработка кнопки "Нет"
+    if (ageNoBtn) {
+        ageNoBtn.addEventListener('click', () => {
+            alert('Доступ запрещён. Сайт предназначен для лиц старше 18 лет.');
+            window.location.href = 'about:blank';
+        });
+    }
+}
 
 // ===== MOBILE MENU =====
 const burgerMenu = document.querySelector('.burger-menu');
@@ -91,7 +130,7 @@ class CinematicHeroSlider {
         this.currentSlide = 0;
         this.totalSlides = this.slides.length;
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 7000; // 7 секунд
+        this.autoPlayDelay = 7000;
         
         if (this.slides.length > 0) {
             this.init();
@@ -442,7 +481,7 @@ class ContactForm {
             this.showStatus('Отправляем заявку...', 'loading');
             
             try {
-                // Имитация отправки (в реальном проекте заменить на fetch)
+                // Имитация отправки
                 await this.simulateApiCall();
                 
                 // Успешная отправка
@@ -532,7 +571,6 @@ class ContactForm {
     }
     
     async simulateApiCall() {
-        // Имитация задержки сети
         return new Promise(resolve => {
             setTimeout(resolve, 1500);
         });
@@ -546,7 +584,6 @@ class SmoothScroll {
     }
     
     init() {
-        // Плавный скролл для якорных ссылок
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 const href = anchor.getAttribute('href');
@@ -557,7 +594,7 @@ class SmoothScroll {
                 if (target) {
                     e.preventDefault();
                     
-                    // Закрытие мобильного меню если открыто
+                    // Закрытие мобильного меню
                     if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
                         burgerMenu.classList.remove('active');
                         navMenu.classList.remove('active');
@@ -593,13 +630,11 @@ class ScrollAnimations {
     }
     
     init() {
-        // Создание Intersection Observer
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('aos-animate');
                     
-                    // Обработка задержки
                     const delay = entry.target.dataset.aosDelay;
                     if (delay) {
                         entry.target.style.transitionDelay = `${delay}ms`;
@@ -608,7 +643,6 @@ class ScrollAnimations {
             });
         }, this.observerOptions);
         
-        // Наблюдение за всеми элементами с data-aos
         document.querySelectorAll('[data-aos]').forEach(el => {
             this.observer.observe(el);
         });
@@ -630,7 +664,6 @@ class LevelsInteraction {
             card.addEventListener('mouseenter', () => this.handleMouseEnter(card));
             card.addEventListener('mouseleave', () => this.handleMouseLeave(card));
             
-            // Клик для мобильных устройств
             if (window.innerWidth <= 768) {
                 card.addEventListener('click', (e) => {
                     if (!e.target.closest('a')) {
@@ -642,17 +675,14 @@ class LevelsInteraction {
     }
     
     handleMouseEnter(card) {
-        // Эффект подъема
         card.style.zIndex = '10';
         
-        // Анимация номера уровня
         const number = card.querySelector('.level-number');
         if (number) {
-            number.style.color = 'rgba(232, 180, 188, 0.4)';
+            number.style.color = 'rgba(128, 0, 32, 0.4)';
             number.style.transform = 'scale(1.1)';
         }
         
-        // Анимация иконки
         const icon = card.querySelector('.level-icon');
         if (icon) {
             icon.style.transform = 'rotate(10deg) scale(1.1)';
@@ -675,7 +705,6 @@ class LevelsInteraction {
     }
     
     handleClick(card) {
-        // Для мобильных: переключение активного состояния
         this.levelCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
     }
@@ -688,13 +717,8 @@ class CinematicEffects {
     }
     
     init() {
-        // Эффект мерцания для заголовков
         this.initTitleShine();
-        
-        // Эффект параллакса для фона
         this.initBackgroundParallax();
-        
-        // Эффект свечения для кнопок
         this.initButtonGlow();
     }
     
@@ -728,7 +752,7 @@ class CinematicEffects {
         
         buttons.forEach(button => {
             button.addEventListener('mouseenter', () => {
-                button.style.boxShadow = '0 0 25px rgba(232, 180, 188, 0.6)';
+                button.style.boxShadow = '0 0 25px rgba(128, 0, 32, 0.6)';
             });
             
             button.addEventListener('mouseleave', () => {
@@ -737,6 +761,7 @@ class CinematicEffects {
         });
     }
 }
+
 // ===== WINE EFFECTS =====
 class WineEffects {
     constructor() {
@@ -744,13 +769,8 @@ class WineEffects {
     }
     
     init() {
-        // Эффект винного свечения для кнопок
         this.initWineGlow();
-        
-        // Эффект капель вина для хедера
         this.initWineDrops();
-        
-        // Анимация виноградной лозы
         this.initVineAnimation();
     }
     
@@ -769,7 +789,6 @@ class WineEffects {
     }
     
     initWineDrops() {
-        // Создаём эффект капель вина в хедере при скролле
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset;
             
@@ -784,7 +803,6 @@ class WineEffects {
         const header = document.querySelector('.header');
         if (!header) return;
         
-        // Создаем несколько капель
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 const drop = document.createElement('div');
@@ -803,19 +821,16 @@ class WineEffects {
                 
                 header.appendChild(drop);
                 
-                // Удаляем каплю после анимации
                 setTimeout(() => drop.remove(), 1500);
             }, i * 300);
         }
     }
     
     initVineAnimation() {
-        // Добавляем анимацию виноградной лозы для уровней
         const levelIcons = document.querySelectorAll('.level-icon');
         
         levelIcons.forEach((icon, index) => {
             icon.addEventListener('mouseenter', () => {
-                // Создаем эффект виноградной лозы
                 const vine = document.createElement('div');
                 vine.className = 'vine-effect';
                 vine.style.cssText = `
@@ -837,7 +852,7 @@ class WineEffects {
     }
 }
 
-// Добавляем анимации в CSS через JS
+// Добавляем CSS анимации для винных эффектов
 const wineStyles = document.createElement('style');
 wineStyles.textContent = `
     @keyframes wineDrop {
@@ -868,7 +883,6 @@ wineStyles.textContent = `
         }
     }
     
-    /* Эффект мерцания вина */
     @keyframes wineShimmer {
         0%, 100% {
             filter: brightness(1);
@@ -878,12 +892,10 @@ wineStyles.textContent = `
         }
     }
     
-    /* Анимация для заголовков */
     .slide-title:hover .title-line {
         animation: wineShimmer 2s infinite;
     }
     
-    /* Эффект винной ряби на кнопках */
     .btn-primary:active {
         transform: scale(0.98);
         transition: transform 0.1s;
@@ -891,9 +903,11 @@ wineStyles.textContent = `
 `;
 
 document.head.appendChild(wineStyles);
+
 // ===== INITIALIZE EVERYTHING =====
 document.addEventListener('DOMContentLoaded', () => {
     // Инициализация компонентов
+    initAgeVerification();
     new CinematicHeroSlider();
     new TestimonialsSlider();
     new FAQAccordion();
@@ -904,6 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new LevelsInteraction();
     new CinematicEffects();
     new WineEffects();
+    
     // Добавление текущего года в футер
     const yearSpan = document.querySelector('#currentYear');
     if (yearSpan) {
@@ -957,16 +972,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('consultationForm');
     if (form) {
         form.addEventListener('submit', () => {
-            // Можно добавить аналитику или другие действия
             console.log('Форма отправлена');
         });
     }
 });
+
 // Оптимизация для мобильных устройств
 if ('ontouchstart' in window) {
     document.body.classList.add('touch-device');
     
-    // Отключение hover эффектов на тач-устройствах
     const style = document.createElement('style');
     style.textContent = `
         @media (hover: none) and (pointer: coarse) {
