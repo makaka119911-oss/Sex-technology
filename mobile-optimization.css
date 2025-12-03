@@ -1,0 +1,98 @@
+/* Дополнительные оптимизации для мобильных устройств */
+
+/* Улучшение отзывчивости изображений */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Отключение ненужных анимаций на слабых устройствах */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Улучшение рендеринга шрифтов на мобильных */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Улучшение отображения на устройствах с вырезом */
+@supports (padding: max(0px)) {
+    body, header, .section {
+        padding-left: min(0vmin, env(safe-area-inset-left));
+        padding-right: min(0vmin, env(safe-area-inset-right));
+    }
+}
+
+/* Оптимизация для iOS */
+input,
+textarea,
+select,
+button {
+    font-size: 16px; /* Предотвращает масштабирование iOS */
+}
+
+/* Улучшение нажатий на мобильных */
+.btn,
+.nav-link,
+.slider-prev,
+.slider-next,
+.testimonial-prev,
+.testimonial-next {
+    -webkit-tap-highlight-color: rgba(128, 0, 32, 0.3);
+    tap-highlight-color: rgba(128, 0, 32, 0.3);
+}
+
+/* Улучшение читаемости на темном фоне */
+@media (max-width: 768px) {
+    .section-description,
+    .slide-description,
+    .expert-bio,
+    .help-card p,
+    .level-content p,
+    .testimonial-text,
+    .faq-answer p {
+        line-height: 1.7;
+        font-size: 1.05rem;
+        letter-spacing: 0.3px;
+    }
+}
+
+/* Улучшение контраста на ярком экране */
+@media (prefers-color-scheme: light) {
+    body {
+        background: #0a0a0a;
+    }
+    
+    .slide-title,
+    .section-title {
+        color: #ffffff;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+    }
+}
+
+/* Оптимизация загрузки */
+.lazy-load {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lazy-load.loaded {
+    opacity: 1;
+}
+
+/* Улучшение производительности параллакса на мобильных */
+@media (max-width: 768px) {
+    .parallax-layer {
+        transform: none !important;
+    }
+}
