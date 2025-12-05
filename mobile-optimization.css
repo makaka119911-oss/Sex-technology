@@ -5,16 +5,21 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-/* Отключение ненужных анимаций на слабых устройствах */
-@media (prefers-reduced-motion: reduce) {
+/* Отключение ненужных анимаций на слабых устройствах и мобильных */
+@media (prefers-reduced-motion: reduce), (max-width: 768px) {
     *,
     *::before,
     *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
@@ -23,6 +28,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Улучшение отображения на устройствах с вырезом */
@@ -30,15 +36,21 @@ body {
     body, header, .section {
         padding-left: min(0vmin, env(safe-area-inset-left));
         padding-right: min(0vmin, env(safe-area-inset-right));
+        padding-top: min(0vmin, env(safe-area-inset-top));
+        padding-bottom: min(0vmin, env(safe-area-inset-bottom));
     }
 }
 
-/* Оптимизация для iOS */
+/* Оптимизация для iOS и мобильных устройств */
 input,
 textarea,
 select,
 button {
     font-size: 16px; /* Предотвращает масштабирование iOS */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
 }
 
 /* Улучшение нажатий на мобильных */
@@ -47,12 +59,15 @@ button {
 .slider-prev,
 .slider-next,
 .testimonial-prev,
-.testimonial-next {
-    -webkit-tap-highlight-color: rgba(128, 0, 32, 0.3);
-    tap-highlight-color: rgba(128, 0, 32, 0.3);
+.testimonial-next,
+.faq-question {
+    -webkit-tap-highlight-color: rgba(128, 0, 32, 0.2);
+    tap-highlight-color: rgba(128, 0, 32, 0.2);
+    min-height: 44px; /* Минимальный размер для нажатия */
+    min-width: 44px;
 }
 
-/* Улучшение читаемости на темном фоне */
+/* Улучшение читаемости на мобильных */
 @media (max-width: 768px) {
     .section-description,
     .slide-description,
@@ -60,10 +75,16 @@ button {
     .help-card p,
     .level-content p,
     .testimonial-text,
-    .faq-answer p {
-        line-height: 1.7;
-        font-size: 1.05rem;
-        letter-spacing: 0.3px;
+    .faq-answer p,
+    .contact-description {
+        line-height: 1.6;
+        font-size: 1rem;
+        letter-spacing: 0.2px;
+        text-align: center;
+    }
+    
+    h1, h2, h3, h4 {
+        text-align: center;
     }
 }
 
@@ -80,7 +101,7 @@ button {
     }
 }
 
-/* Оптимизация загрузки */
+/* Оптимизация загрузки для мобильных */
 .lazy-load {
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -90,9 +111,154 @@ button {
     opacity: 1;
 }
 
-/* Улучшение производительности параллакса на мобильных */
+/* Улучшение производительности на мобильных */
 @media (max-width: 768px) {
     .parallax-layer {
         transform: none !important;
+        display: none;
+    }
+    
+    .cinematic-elements,
+    .light-ray,
+    .particles {
+        display: none;
+    }
+    
+    .slider-controls,
+    .slider-indicators {
+        opacity: 0.7;
+    }
+    
+    /* Оптимизация для слайдера на мобильных */
+    .slide-content {
+        padding: 20px 15px;
+    }
+    
+    .luxury-title {
+        font-size: 1.8rem;
+        line-height: 1.1;
+        margin-bottom: 15px;
+    }
+    
+    .slide-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .slide-buttons .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+    }
+}
+
+/* Предотвращение зума при фокусе на iOS */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* Улучшение для очень маленьких экранов */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    .section {
+        padding: 40px 0;
+    }
+    
+    .luxury-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+}
+
+/* Оптимизация для планшетов */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 30px;
+    }
+    
+    .luxury-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .experts-grid {
+        gap: 30px;
+    }
+    
+    .levels-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .level-featured {
+        grid-column: span 2;
+    }
+}
+
+/* Улучшение для ландшафтной ориентации на мобильных */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero-slider {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .slide-content {
+        padding: 40px 20px;
+    }
+    
+    .luxury-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .slide-description {
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Предотвращение нативного перетаскивания изображений на мобильных */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+/* Оптимизация анимаций для устройств с низкой частотой обновления */
+@media (max-width: 768px) {
+    @keyframes slideReveal {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
