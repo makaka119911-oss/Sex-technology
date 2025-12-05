@@ -458,13 +458,16 @@ class FAQAccordion {
     }
 }
 
-// ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ =====
+// ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ С ДВОЙНЫМ КАСАНИЕМ =====
 class GalleryModal {
     constructor() {
         this.modal = document.getElementById('galleryModal');
         this.modalImage = this.modal?.querySelector('.modal-image');
         this.galleryItems = document.querySelectorAll('.gallery-item');
         this.closeBtn = this.modal?.querySelector('.modal-close');
+        this.lastTap = 0;
+        this.doubleTapDelay = 300; // 300ms для двойного тапа
+        this.isScrolling = false;
         
         if (this.modal && this.modalImage && this.galleryItems.length > 0) {
             this.init();
@@ -473,30 +476,36 @@ class GalleryModal {
     
     init() {
         this.galleryItems.forEach(item => {
+            // Десктоп: клик
             item.addEventListener('click', (e) => {
-                const img = item.querySelector('img');
-                if (img) {
-                    this.openModal(img.src, img.alt);
+                if (window.innerWidth > 768) {
+                    const img = item.querySelector('img');
+                    if (img) {
+                        this.openModal(img.src, img.alt);
+                    }
                 }
             });
             
+            // Мобильные: обработка тапов
             if (window.innerWidth <= 768) {
-                item.addEventListener('touchstart', (e) => {
-                    if (e.touches.length === 1) {
-                        const img = item.querySelector('img');
-                        if (img) {
-                            this.openModal(img.src, img.alt);
-                        }
-                    }
-                }, { passive: true });
+                this.initMobileTouchEvents(item);
             }
+        });
+        
+        // Адаптация при изменении размера
+        window.addEventListener('resize', () => {
+            this.updateEventHandlers();
         });
         
         if (this.closeBtn) {
             this.closeBtn.addEventListener('click', () => this.closeModal());
             
+            // Закрытие по тапу на мобильных
             if (window.innerWidth <= 768) {
-                this.closeBtn.addEventListener('touchstart', () => this.closeModal());
+                this.closeBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.closeModal();
+                }, { passive: false });
             }
         }
         
@@ -509,6 +518,81 @@ class GalleryModal {
                 this.closeModal();
             }
         });
+    }
+    
+    initMobileTouchEvents(item) {
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        let tapCount = 0;
+        let tapTimer = null;
+        
+        item.addEventListener('touchstart', (e) => {
+            // Сохраняем начальные координаты для определения скролла
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+        }, { passive: true });
+        
+        item.addEventListener('touchmove', (e) => {
+            // Если происходит движение - это скролл, а не тап
+            const touchMoveY = e.touches[0].clientY;
+            const distanceY = Math.abs(touchMoveY - touchStartY);
+            
+            if (distanceY > 10) {
+                // Это скролл, сбрасываем счетчик тапов
+                tapCount = 0;
+                if (tapTimer) {
+                    clearTimeout(tapTimer);
+                    tapTimer = null;
+                }
+            }
+        }, { passive: true });
+        
+        item.addEventListener('touchend', (e) => {
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+            
+            // Игнорируем долгие касания (удержание) и движения
+            if (touchDuration < 300) {
+                tapCount++;
+                
+                if (tapCount === 1) {
+                    // Первый тап - запускаем таймер
+                    tapTimer = setTimeout(() => {
+                        tapCount = 0;
+                    }, this.doubleTapDelay);
+                } else if (tapCount === 2) {
+                    // Второй тап в пределах времени - открываем модалку
+                    clearTimeout(tapTimer);
+                    tapTimer = null;
+                    
+                    const img = item.querySelector('img');
+                    if (img) {
+                        e.preventDefault();
+                        this.openModal(img.src, img.alt);
+                    }
+                    
+                    tapCount = 0;
+                }
+            }
+        }, { passive: false });
+        
+        // Предотвращаем стандартное поведение на долгий тап
+        item.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+    }
+    
+    updateEventHandlers() {
+        this.galleryItems.forEach(item => {
+            // Удаляем все обработчики
+            const newItem = item.cloneNode(true);
+            item.parentNode.replaceChild(newItem, item);
+        });
+        
+        // Переинициализируем с новыми обработчиками
+        this.galleryItems = document.querySelectorAll('.gallery-item');
+        this.init();
     }
     
     openModal(imgSrc, imgAlt) {
