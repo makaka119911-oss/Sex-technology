@@ -1,5 +1,5 @@
 // ===== ПРЕЛОАДЕР =====
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.querySelector('.cinematic-preloader');
     if (preloader) {
         setTimeout(() => {
@@ -48,10 +48,10 @@ function initAgeVerification() {
 }
 
 // ===== МОБИЛЬНОЕ МЕНЮ =====
-const burgerMenu = document.querySelector('.burger-menu');
-const navMenu = document.querySelector('.nav-menu');
-
 function initMobileMenu() {
+    const burgerMenu = document.querySelector('.burger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    
     if (!burgerMenu || !navMenu) return;
     
     burgerMenu.addEventListener('click', (e) => {
@@ -59,6 +59,10 @@ function initMobileMenu() {
         burgerMenu.classList.toggle('active');
         navMenu.classList.toggle('active');
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        
+        // Обновляем ARIA атрибуты
+        const isExpanded = burgerMenu.classList.contains('active');
+        burgerMenu.setAttribute('aria-expanded', isExpanded);
     });
 
     document.querySelectorAll('.nav-menu a').forEach(link => {
@@ -66,6 +70,7 @@ function initMobileMenu() {
             burgerMenu.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = 'auto';
+            burgerMenu.setAttribute('aria-expanded', 'false');
         });
     });
 
@@ -74,6 +79,7 @@ function initMobileMenu() {
             burgerMenu.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = 'auto';
+            burgerMenu.setAttribute('aria-expanded', 'false');
         }
     });
 
@@ -82,17 +88,18 @@ function initMobileMenu() {
             burgerMenu.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = 'auto';
+            burgerMenu.setAttribute('aria-expanded', 'false');
         }
     });
 }
 
 // ===== ХЕДЕР ПРИ СКРОЛЛЕ =====
-const header = document.querySelector('.header');
-let lastScrollTop = 0;
-let ticking = false;
-
 function initHeaderScroll() {
+    const header = document.querySelector('.header');
     if (!header) return;
+    
+    let lastScrollTop = 0;
+    let ticking = false;
     
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -217,6 +224,7 @@ class CinematicHeroSlider {
         
         this.indicators.forEach(indicator => {
             indicator.classList.remove('active');
+            indicator.setAttribute('aria-selected', 'false');
         });
         
         if (this.slides[index]) {
@@ -225,6 +233,7 @@ class CinematicHeroSlider {
         
         if (this.indicators[index]) {
             this.indicators[index].classList.add('active');
+            this.indicators[index].setAttribute('aria-selected', 'true');
         }
         
         this.currentSlide = index;
@@ -444,6 +453,13 @@ class FAQAccordion {
                     this.toggleItem(item);
                 }
             });
+            
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleItem(item);
+                }
+            });
         });
     }
     
@@ -458,16 +474,13 @@ class FAQAccordion {
     }
 }
 
-// ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ С ДВОЙНЫМ КАСАНИЕМ =====
+// ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ =====
 class GalleryModal {
     constructor() {
         this.modal = document.getElementById('galleryModal');
         this.modalImage = this.modal?.querySelector('.modal-image');
         this.galleryItems = document.querySelectorAll('.gallery-item');
         this.closeBtn = this.modal?.querySelector('.modal-close');
-        this.lastTap = 0;
-        this.doubleTapDelay = 300; // 300ms для двойного тапа
-        this.isScrolling = false;
         
         if (this.modal && this.modalImage && this.galleryItems.length > 0) {
             this.init();
@@ -476,37 +489,16 @@ class GalleryModal {
     
     init() {
         this.galleryItems.forEach(item => {
-            // Десктоп: клик
             item.addEventListener('click', (e) => {
-                if (window.innerWidth > 768) {
-                    const img = item.querySelector('img');
-                    if (img) {
-                        this.openModal(img.src, img.alt);
-                    }
+                const img = item.querySelector('img');
+                if (img) {
+                    this.openModal(img.src, img.alt);
                 }
             });
-            
-            // Мобильные: обработка тапов
-            if (window.innerWidth <= 768) {
-                this.initMobileTouchEvents(item);
-            }
-        });
-        
-        // Адаптация при изменении размера
-        window.addEventListener('resize', () => {
-            this.updateEventHandlers();
         });
         
         if (this.closeBtn) {
             this.closeBtn.addEventListener('click', () => this.closeModal());
-            
-            // Закрытие по тапу на мобильных
-            if (window.innerWidth <= 768) {
-                this.closeBtn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    this.closeModal();
-                }, { passive: false });
-            }
         }
         
         this.modal.addEventListener('click', (e) => {
@@ -520,91 +512,11 @@ class GalleryModal {
         });
     }
     
-    initMobileTouchEvents(item) {
-        let touchStartY = 0;
-        let touchStartTime = 0;
-        let tapCount = 0;
-        let tapTimer = null;
-        
-        item.addEventListener('touchstart', (e) => {
-            // Сохраняем начальные координаты для определения скролла
-            touchStartY = e.touches[0].clientY;
-            touchStartTime = Date.now();
-        }, { passive: true });
-        
-        item.addEventListener('touchmove', (e) => {
-            // Если происходит движение - это скролл, а не тап
-            const touchMoveY = e.touches[0].clientY;
-            const distanceY = Math.abs(touchMoveY - touchStartY);
-            
-            if (distanceY > 10) {
-                // Это скролл, сбрасываем счетчик тапов
-                tapCount = 0;
-                if (tapTimer) {
-                    clearTimeout(tapTimer);
-                    tapTimer = null;
-                }
-            }
-        }, { passive: true });
-        
-        item.addEventListener('touchend', (e) => {
-            const touchEndTime = Date.now();
-            const touchDuration = touchEndTime - touchStartTime;
-            
-            // Игнорируем долгие касания (удержание) и движения
-            if (touchDuration < 300) {
-                tapCount++;
-                
-                if (tapCount === 1) {
-                    // Первый тап - запускаем таймер
-                    tapTimer = setTimeout(() => {
-                        tapCount = 0;
-                    }, this.doubleTapDelay);
-                } else if (tapCount === 2) {
-                    // Второй тап в пределах времени - открываем модалку
-                    clearTimeout(tapTimer);
-                    tapTimer = null;
-                    
-                    const img = item.querySelector('img');
-                    if (img) {
-                        e.preventDefault();
-                        this.openModal(img.src, img.alt);
-                    }
-                    
-                    tapCount = 0;
-                }
-            }
-        }, { passive: false });
-        
-        // Предотвращаем стандартное поведение на долгий тап
-        item.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            return false;
-        });
-    }
-    
-    updateEventHandlers() {
-        this.galleryItems.forEach(item => {
-            // Удаляем все обработчики
-            const newItem = item.cloneNode(true);
-            item.parentNode.replaceChild(newItem, item);
-        });
-        
-        // Переинициализируем с новыми обработчиками
-        this.galleryItems = document.querySelectorAll('.gallery-item');
-        this.init();
-    }
-    
     openModal(imgSrc, imgAlt) {
         this.modalImage.src = imgSrc;
         this.modalImage.alt = imgAlt;
         this.modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
-        if (window.innerWidth <= 768) {
-            this.modalImage.style.maxHeight = '70vh';
-            this.modalImage.style.maxWidth = '90vw';
-        }
     }
     
     closeModal() {
@@ -762,12 +674,17 @@ class SmoothScroll {
                 if (target) {
                     e.preventDefault();
                     
+                    const burgerMenu = document.querySelector('.burger-menu');
+                    const navMenu = document.querySelector('.nav-menu');
+                    
                     if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
                         burgerMenu.classList.remove('active');
                         navMenu.classList.remove('active');
                         document.body.style.overflow = 'auto';
+                        burgerMenu.setAttribute('aria-expanded', 'false');
                     }
                     
+                    const header = document.querySelector('.header');
                     const headerHeight = header ? header.offsetHeight : 80;
                     const targetPosition = target.offsetTop - headerHeight;
                     
@@ -776,249 +693,6 @@ class SmoothScroll {
                         behavior: 'smooth'
                     });
                 }
-            });
-        });
-    }
-}
-
-// ===== АНИМАЦИИ ПРИ СКРОЛЛЕ =====
-class ScrollAnimations {
-    constructor() {
-        this.observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        this.init();
-    }
-    
-    init() {
-        if ('IntersectionObserver' in window) {
-            this.observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('aos-animate');
-                        
-                        const delay = entry.target.dataset.aosDelay;
-                        if (delay) {
-                            entry.target.style.transitionDelay = `${delay}ms`;
-                        }
-                    }
-                });
-            }, this.observerOptions);
-            
-            document.querySelectorAll('[data-aos]').forEach(el => {
-                this.observer.observe(el);
-            });
-        } else {
-            document.querySelectorAll('[data-aos]').forEach(el => {
-                el.classList.add('aos-animate');
-            });
-        }
-    }
-}
-
-// ===== ВЗАИМОДЕЙСТВИЕ С КАРТОЧКАМИ УРОВНЕЙ =====
-class LevelsInteraction {
-    constructor() {
-        this.levelCards = document.querySelectorAll('.level-card');
-        
-        if (this.levelCards.length > 0) {
-            this.init();
-        }
-    }
-    
-    init() {
-        this.levelCards.forEach(card => {
-            if (window.innerWidth > 768) {
-                card.addEventListener('mouseenter', () => this.handleMouseEnter(card));
-                card.addEventListener('mouseleave', () => this.handleMouseLeave(card));
-            } else {
-                card.addEventListener('touchstart', () => {
-                    this.levelCards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                }, { passive: true });
-            }
-        });
-    }
-    
-    handleMouseEnter(card) {
-        card.style.zIndex = '10';
-        
-        const number = card.querySelector('.level-number');
-        if (number) {
-            number.style.color = 'rgba(128, 0, 32, 0.4)';
-            number.style.transform = 'scale(1.1)';
-        }
-        
-        const icon = card.querySelector('.level-icon');
-        if (icon) {
-            icon.style.transform = 'rotate(10deg) scale(1.1)';
-        }
-    }
-    
-    handleMouseLeave(card) {
-        card.style.zIndex = '';
-        
-        const number = card.querySelector('.level-number');
-        if (number) {
-            number.style.color = '';
-            number.style.transform = '';
-        }
-        
-        const icon = card.querySelector('.level-icon');
-        if (icon) {
-            icon.style.transform = '';
-        }
-    }
-}
-
-// ===== КИНЕМАТОГРАФИЧЕСКИЕ ЭФФЕКТЫ =====
-class CinematicEffects {
-    constructor() {
-        this.init();
-    }
-    
-    init() {
-        if (window.innerWidth > 768) {
-            this.initTitleShine();
-            this.initBackgroundParallax();
-            this.initButtonGlow();
-        }
-    }
-    
-    initTitleShine() {
-        const titles = document.querySelectorAll('.title-line, .section-title');
-        
-        titles.forEach(title => {
-            setInterval(() => {
-                const brightness = Math.random() * 0.2 + 0.9;
-                title.style.filter = `brightness(${brightness})`;
-            }, 3000);
-        });
-    }
-    
-    initBackgroundParallax() {
-        const sections = document.querySelectorAll('.section');
-        
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth <= 768) return;
-            
-            const scrollTop = window.pageYOffset;
-            
-            sections.forEach(section => {
-                const speed = 0.5;
-                const yPos = -(scrollTop * speed);
-                section.style.backgroundPosition = `center ${yPos}px`;
-            });
-        });
-    }
-    
-    initButtonGlow() {
-        const buttons = document.querySelectorAll('.btn-primary');
-        
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                button.style.boxShadow = '0 0 25px rgba(128, 0, 32, 0.6)';
-            });
-            
-            button.addEventListener('mouseleave', () => {
-                button.style.boxShadow = '';
-            });
-        });
-    }
-}
-
-// ===== ВИННЫЕ ЭФФЕКТЫ =====
-class WineEffects {
-    constructor() {
-        this.init();
-    }
-    
-    init() {
-        if (window.innerWidth > 768) {
-            this.initWineGlow();
-            this.initWineDrops();
-            this.initVineAnimation();
-        }
-    }
-    
-    initWineGlow() {
-        const buttons = document.querySelectorAll('.btn-primary, .nav-cta');
-        
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                button.style.boxShadow = '0 0 30px rgba(128, 0, 32, 0.7)';
-            });
-            
-            button.addEventListener('mouseleave', () => {
-                button.style.boxShadow = '';
-            });
-        });
-    }
-    
-    initWineDrops() {
-        if (window.innerWidth <= 768) return;
-        
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset;
-            
-            if (scrollTop > 100 && !this.dropsCreated) {
-                this.createWineDrops();
-                this.dropsCreated = true;
-            }
-        });
-    }
-    
-    createWineDrops() {
-        const header = document.querySelector('.header');
-        if (!header) return;
-        
-        for (let i = 0; i < 5; i++) {
-            setTimeout(() => {
-                const drop = document.createElement('div');
-                drop.className = 'wine-drop';
-                drop.style.cssText = `
-                    position: absolute;
-                    width: 3px;
-                    height: 10px;
-                    background: var(--color-primary);
-                    border-radius: 50%;
-                    top: -10px;
-                    left: ${Math.random() * 100}%;
-                    opacity: 0;
-                    animation: wineDrop 1.5s ease-in-out forwards;
-                `;
-                
-                header.appendChild(drop);
-                
-                setTimeout(() => drop.remove(), 1500);
-            }, i * 300);
-        }
-    }
-    
-    initVineAnimation() {
-        const levelIcons = document.querySelectorAll('.level-icon');
-        
-        levelIcons.forEach((icon, index) => {
-            icon.addEventListener('mouseenter', () => {
-                const vine = document.createElement('div');
-                vine.className = 'vine-effect';
-                vine.style.cssText = `
-                    position: absolute;
-                    width: 2px;
-                    height: 0;
-                    background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
-                    top: 100%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    animation: growVine 0.8s ease-out forwards;
-                `;
-                
-                icon.appendChild(vine);
-                
-                setTimeout(() => vine.remove(), 1000);
             });
         });
     }
@@ -1111,20 +785,6 @@ class MobileOptimization {
     }
 }
 
-// ===== ПРЕДЗАГРУЗКА КРИТИЧНЫХ ИЗОБРАЖЕНИЙ =====
-function preloadCriticalImages() {
-    const criticalImages = [
-        'фото 2х сексологов вместе.jpg',
-        'фото Татьяны Солнечной.jpg',
-        'Фото Виктории РУмянцевой.jpg'
-    ];
-    
-    criticalImages.forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
-}
-
 // ===== ИНИЦИАЛИЗАЦИЯ ВСЕГО =====
 document.addEventListener('DOMContentLoaded', () => {
     // Базовые компоненты
@@ -1139,14 +799,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new GalleryModal();
     new ContactForm();
     new SmoothScroll();
-    new ScrollAnimations();
-    new LevelsInteraction();
-    
-    // Эффекты (только для десктопа)
-    if (window.innerWidth > 768) {
-        new CinematicEffects();
-        new WineEffects();
-    }
     
     // Мобильная оптимизация
     new MobileOptimization();
@@ -1155,122 +807,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const yearSpan = document.querySelector('#currentYear');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
-    }
-    
-    // Эффект для карточек помощи
-    const helpCards = document.querySelectorAll('.help-card');
-    helpCards.forEach(card => {
-        if (window.innerWidth > 768) {
-            card.addEventListener('mouseenter', () => {
-                const icon = card.querySelector('.help-icon');
-                if (icon) {
-                    icon.style.transform = 'rotate(15deg) scale(1.1)';
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                const icon = card.querySelector('.help-icon');
-                if (icon) {
-                    icon.style.transform = '';
-                }
-            });
-        }
-    });
-    
-    // Эффект для карточек специалистов
-    const expertCards = document.querySelectorAll('.expert-card');
-    expertCards.forEach(card => {
-        if (window.innerWidth > 768) {
-            card.addEventListener('mouseenter', () => {
-                const image = card.querySelector('.expert-image img');
-                if (image) {
-                    image.style.transform = 'scale(1.05)';
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                const image = card.querySelector('.expert-image img');
-                if (image) {
-                    image.style.transform = '';
-                }
-            });
-        }
-    });
-});
-
-// Запуск после полной загрузки страницы
-window.addEventListener('load', () => {
-    preloadCriticalImages();
-    
-    // Добавляем CSS анимации для винных эффектов (только для десктопа)
-    if (window.innerWidth > 768) {
-        const wineStyles = document.createElement('style');
-        wineStyles.textContent = `
-            @keyframes wineDrop {
-                0% {
-                    transform: translateY(0);
-                    opacity: 0;
-                }
-                20% {
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateY(100px);
-                    opacity: 0;
-                }
-            }
-            
-            @keyframes growVine {
-                0% {
-                    height: 0;
-                    opacity: 0;
-                }
-                50% {
-                    opacity: 1;
-                }
-                100% {
-                    height: 40px;
-                    opacity: 0;
-                }
-            }
-            
-            @keyframes wineShimmer {
-                0%, 100% {
-                    filter: brightness(1);
-                }
-                50% {
-                    filter: brightness(1.3);
-                }
-            }
-            
-            .slide-title:hover .title-line {
-                animation: wineShimmer 2s infinite;
-            }
-            
-            .btn-primary:active {
-                transform: scale(0.98);
-                transition: transform 0.1s;
-            }
-        `;
-        document.head.appendChild(wineStyles);
-    }
-    
-    // Инициализация ленивой загрузки для изображений
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    observer.unobserve(img);
-                }
-            });
-        });
-        
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
     }
 });
 
@@ -1286,6 +822,3 @@ window.addEventListener('resize', () => {
         }
     }, 250);
 });
-
-// Быстрое касание для мобильных устройств
-document.addEventListener('touchstart', function() {}, {passive: true});
