@@ -524,7 +524,6 @@ class GalleryModal {
         document.body.style.overflow = 'auto';
     }
 }
-
 // ===== КОНТАКТНАЯ ФОРМА =====
 class ContactForm {
     constructor() {
@@ -556,10 +555,10 @@ class ContactForm {
             this.showStatus('Отправляем заявку...', 'loading');
             
             try {
-                // ОТПРАВКА В TELEGRAM ПРОИСХОДИТ ЗДЕСЬ
+                // ОТПРАВКА В TELEGRAM (происходит первой)
                 await this._sendToTelegram(data);
                 
-                // Имитация задержки для пользователя (можно уменьшить до 500мс)
+                // Имитация задержки для пользователя (можно уменьшить до 800мс)
                 await this.simulateApiCall();
                 
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
@@ -618,7 +617,6 @@ ${formData.message || '— не указано —'}
         // Логируем ошибку, но НЕ прерываем процесс для пользователя
         if (!result.ok) {
             console.warn('Telegram API Warning:', result.description);
-            // Можно добавить скрытую отправку в резервный сервис
         }
         
         return result;
@@ -717,6 +715,7 @@ ${formData.message || '— не указано —'}
         });
     }
 }
+
 
 // ===== ПЛАВНАЯ ПРОКРУТКА =====
 class SmoothScroll {
