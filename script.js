@@ -1,75 +1,51 @@
-// ===== ПЛАВНЫЙ ПРЕЛОАДЕР И ПРОВЕРКА ВОЗРАСТА =====
-document.addEventListener('DOMContentLoaded', function() {
+// ===== ПРЕЛОАДЕР =====
+document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.querySelector('.cinematic-preloader');
-    const ageCheck = document.getElementById('ageVerification');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.visibility = 'hidden';
+                preloader.remove();
+            }, 500);
+        }, 1500);
+    }
+});
+
+// ===== ПРОВЕРКА ВОЗРАСТА =====
+function initAgeVerification() {
+    const ageVerification = document.getElementById('ageVerification');
     const ageYesBtn = document.getElementById('ageYes');
     const ageNoBtn = document.getElementById('ageNo');
+    
     const ageConfirmed = localStorage.getItem('ageConfirmed');
     
-    // 1. Если возраст УЖЕ подтвержден
-    if (ageConfirmed === 'true') {
-        // Сразу плавно убираем прелоадер
-        if (preloader) {
-            preloader.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-            
-            setTimeout(() => {
-                if (preloader.parentNode) {
-                    preloader.remove();
-                }
-            }, 800);
-        }
-        return; // Выходим, больше ничего не делаем
-    }
-    
-    // 2. Основной сценарий (возраст НЕ подтвержден)
     if (!ageConfirmed) {
-        // Ждем 3 секунды, затем плавно скрываем прелоадер
         setTimeout(() => {
-            if (preloader) {
-                preloader.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-                
-                // Плавно показываем окно проверки возраста
-                setTimeout(() => {
-                    if (ageCheck) {
-                        ageCheck.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
-                        ageCheck.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
-                }, 300);
-                
-                // Удаляем прелоадер из DOM
-                setTimeout(() => {
-                    if (preloader.parentNode) {
-                        preloader.remove();
-                    }
-                }, 800);
+            if (ageVerification) {
+                ageVerification.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
-        }, 3000);
+        }, 1500);
     }
     
-    // 3. Обработчики кнопок
     if (ageYesBtn) {
-        ageYesBtn.addEventListener('click', function() {
+        ageYesBtn.addEventListener('click', () => {
             localStorage.setItem('ageConfirmed', 'true');
-            if (ageCheck) {
-                ageCheck.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
-                ageCheck.classList.remove('active');
+            if (ageVerification) {
+                ageVerification.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         });
     }
     
     if (ageNoBtn) {
-        ageNoBtn.addEventListener('click', function() {
+        ageNoBtn.addEventListener('click', () => {
             alert('Доступ запрещён. Сайт предназначен для лиц старше 18 лет.');
             window.location.href = 'about:blank';
         });
     }
-});
+}
 
 // ===== МОБИЛЬНОЕ МЕНЮ =====
 function initMobileMenu() {
@@ -548,6 +524,7 @@ class GalleryModal {
         document.body.style.overflow = 'auto';
     }
 }
+
 // ===== КОНТАКТНАЯ ФОРМА =====
 class ContactForm {
     constructor() {
@@ -579,10 +556,6 @@ class ContactForm {
             this.showStatus('Отправляем заявку...', 'loading');
             
             try {
-                // ОТПРАВКА В TELEGRAM (происходит первой)
-                await this._sendToTelegram(data);
-                
-                // Имитация задержки для пользователя (можно уменьшить до 800мс)
                 await this.simulateApiCall();
                 
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
@@ -599,62 +572,6 @@ class ContactForm {
         });
         
         this.initMobileInputOptimization();
-    }
-    
-    // ===== ПРИВАТНЫЙ МЕТОД ДЛЯ ОТПРАВКИ В TELEGRAM =====
-    async _sendToTelegram(formData) {
-        const botToken = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
-        const chatId = '-1002313355102'; // Ваш существующий чат
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-        // Красивое форматирование сообщения с эмодзи и HTML-разметкой
-        const message = `
-🆕 <b>НОВАЯ ЗАЯВКА С САЙТА "ТЕРРИТОРИЯ ЛЮБВИ"</b>
-
-<b>👤 ИМЯ:</b>
-${formData.name}
-
-<b>📞 КОНТАКТ:</b>
-${formData.contact}
-
-<b>🎯 ФОРМАТ:</b>
-${this._getFormatName(formData.format)}
-
-<b>💬 СООБЩЕНИЕ:</b>
-${formData.message || '— не указано —'}
-        `.trim();
-
-        const params = {
-            chat_id: chatId,
-            text: message,
-            parse_mode: 'HTML' // Важно! Позволяет использовать жирный шрифт (<b>)
-        };
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(params)
-        });
-        
-        const result = await response.json();
-        
-        // Логируем ошибку, но НЕ прерываем процесс для пользователя
-        if (!result.ok) {
-            console.warn('Telegram API Warning:', result.description);
-        }
-        
-        return result;
-    }
-    
-    // Вспомогательный метод для красивого названия формата
-    _getFormatName(formatValue) {
-        const formats = {
-            'individual': 'Индивидуальная сессия',
-            'circle': 'Женский круг',
-            'levels': 'Уровень погружения',
-            'not_sure': 'Пока не знаю, нужна консультация'
-        };
-        return formats[formatValue] || formatValue;
     }
     
     initMobileInputOptimization() {
@@ -739,7 +656,6 @@ ${formData.message || '— не указано —'}
         });
     }
 }
-
 
 // ===== ПЛАВНАЯ ПРОКРУТКА =====
 class SmoothScroll {
