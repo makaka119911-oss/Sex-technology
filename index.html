@@ -971,41 +971,59 @@
     
     <!-- Критический JavaScript -->
     <script>
+           <script>
         // Критическая функциональность - прелоадер и проверка возраста
         document.addEventListener('DOMContentLoaded', function() {
-            // Прелоадер
             const preloader = document.querySelector('.cinematic-preloader');
-            if (preloader) {
-                setTimeout(() => {
+            const ageCheck = document.getElementById('ageVerification');
+            const ageYesBtn = document.getElementById('ageYes');
+            const ageNoBtn = document.getElementById('ageNo');
+            const ageConfirmed = localStorage.getItem('ageConfirmed');
+
+            // 1. Логика, если проверка возраста УЖЕ пройдена
+            if (ageConfirmed) {
+                // Сразу и плавно убираем прелоадер
+                if (preloader) {
                     preloader.style.opacity = '0';
                     setTimeout(() => {
                         preloader.style.visibility = 'hidden';
                         preloader.remove();
-                    }, 500);
-                }, 1500);
+                    }, 800); // Время должно совпадать с CSS transition (0.8s)
+                }
+                return; // Выходим, больше ничего не делаем
             }
-            
-            // Проверка возраста
-            const ageVerification = document.getElementById('ageVerification');
-            const ageYesBtn = document.getElementById('ageYes');
-            const ageNoBtn = document.getElementById('ageNo');
-            
-            const ageConfirmed = localStorage.getItem('ageConfirmed');
-            
+
+            // 2. Логика, если проверка возраста НЕ пройдена (основной сценарий)
             if (!ageConfirmed) {
+                // Прелоадер висит 3 секунды
                 setTimeout(() => {
-                    if (ageVerification) {
-                        ageVerification.classList.add('active');
-                        document.body.style.overflow = 'hidden';
+                    if (preloader) {
+                        // Плавно скрываем прелоадер (сработает CSS transition из style.css)
+                        preloader.style.opacity = '0';
+                        preloader.style.visibility = 'hidden';
+
+                        // Сразу после начала скрытия прелоадера, показываем окно возраста
+                        setTimeout(() => {
+                            if (ageCheck) {
+                                ageCheck.classList.add('active');
+                                document.body.style.overflow = 'hidden';
+                            }
+                        }, 300); // Небольшая задержка для плавности последовательности
+
+                        // Полное удаление прелоадера из разметки после анимации
+                        setTimeout(() => {
+                            preloader.remove();
+                        }, 800); // 800ms - это время полного завершения CSS-перехода
                     }
-                }, 1500);
+                }, 3000); // Здесь 3000 = 3 секунды показа прелоадера
             }
-            
+
+            // 3. Обработчики кнопок проверки возраста (остаются без изменений)
             if (ageYesBtn) {
                 ageYesBtn.addEventListener('click', () => {
                     localStorage.setItem('ageConfirmed', 'true');
-                    if (ageVerification) {
-                        ageVerification.classList.remove('active');
+                    if (ageCheck) {
+                        ageCheck.classList.remove('active');
                         document.body.style.overflow = 'auto';
                     }
                 });
