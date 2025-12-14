@@ -454,7 +454,8 @@ img {
     padding: 15px;
     background: rgba(128, 0, 32, 0.1);
     border-radius: var(--radius-sm);
-    border: 1px solid rgba(128, 0, 32, 0.2);
+    border: 1px solid 1172
+    ;
 }
 
 /* ===== КНОПКИ ===== */
@@ -1169,7 +1170,7 @@ img {
 .level-number {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 700;
-    color: rgba(128, 0, 32, 0.2);
+    color: rgba(128, 0, 32,0.70rgba(128, 0, 32, 0.2)    rgba(128, 0, 32, 0.7)2);
     line-height: 1;
     margin-bottom: 10px;
     font-family: var(--font-luxury);
