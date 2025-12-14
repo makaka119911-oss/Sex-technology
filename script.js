@@ -1,51 +1,75 @@
-// ===== ПРЕЛОАДЕР =====
-document.addEventListener('DOMContentLoaded', () => {
+// ===== ПЛАВНЫЙ ПРЕЛОАДЕР И ПРОВЕРКА ВОЗРАСТА =====
+document.addEventListener('DOMContentLoaded', function() {
     const preloader = document.querySelector('.cinematic-preloader');
-    if (preloader) {
-        setTimeout(() => {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.visibility = 'hidden';
-                preloader.remove();
-            }, 500);
-        }, 1500);
-    }
-});
-
-// ===== ПРОВЕРКА ВОЗРАСТА =====
-function initAgeVerification() {
-    const ageVerification = document.getElementById('ageVerification');
+    const ageCheck = document.getElementById('ageVerification');
     const ageYesBtn = document.getElementById('ageYes');
     const ageNoBtn = document.getElementById('ageNo');
-    
     const ageConfirmed = localStorage.getItem('ageConfirmed');
     
-    if (!ageConfirmed) {
-        setTimeout(() => {
-            if (ageVerification) {
-                ageVerification.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }, 1500);
+    // 1. Если возраст УЖЕ подтвержден
+    if (ageConfirmed === 'true') {
+        // Сразу плавно убираем прелоадер
+        if (preloader) {
+            preloader.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            
+            setTimeout(() => {
+                if (preloader.parentNode) {
+                    preloader.remove();
+                }
+            }, 800);
+        }
+        return; // Выходим, больше ничего не делаем
     }
     
+    // 2. Основной сценарий (возраст НЕ подтвержден)
+    if (!ageConfirmed) {
+        // Ждем 3 секунды, затем плавно скрываем прелоадер
+        setTimeout(() => {
+            if (preloader) {
+                preloader.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                
+                // Плавно показываем окно проверки возраста
+                setTimeout(() => {
+                    if (ageCheck) {
+                        ageCheck.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
+                        ageCheck.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }, 300);
+                
+                // Удаляем прелоадер из DOM
+                setTimeout(() => {
+                    if (preloader.parentNode) {
+                        preloader.remove();
+                    }
+                }, 800);
+            }
+        }, 3000);
+    }
+    
+    // 3. Обработчики кнопок
     if (ageYesBtn) {
-        ageYesBtn.addEventListener('click', () => {
+        ageYesBtn.addEventListener('click', function() {
             localStorage.setItem('ageConfirmed', 'true');
-            if (ageVerification) {
-                ageVerification.classList.remove('active');
+            if (ageCheck) {
+                ageCheck.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
+                ageCheck.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         });
     }
     
     if (ageNoBtn) {
-        ageNoBtn.addEventListener('click', () => {
+        ageNoBtn.addEventListener('click', function() {
             alert('Доступ запрещён. Сайт предназначен для лиц старше 18 лет.');
             window.location.href = 'about:blank';
         });
     }
-}
+});
 
 // ===== МОБИЛЬНОЕ МЕНЮ =====
 function initMobileMenu() {
