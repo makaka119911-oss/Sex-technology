@@ -2185,3 +2185,20 @@ img {
     opacity: 1;
     transform: translateY(0);
 }
+/* 1. Плавное скрытие прелоадера */
+.cinematic-preloader {
+    transition: opacity 0.8s ease, visibility 0.8s ease; /* Плавное исчезновение */
+}
+
+/* 2. Плавное появление окна проверки возраста */
+.age-verification {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease; /* Плавное появление */
+    display: flex !important; /* Важно для работы transition */
+}
+
+.age-verification.active {
+    opacity: 1;
+    visibility: visible;
+}
