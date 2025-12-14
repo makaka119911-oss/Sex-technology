@@ -556,6 +556,10 @@ class ContactForm {
             this.showStatus('Отправляем заявку...', 'loading');
             
             try {
+                // ОТПРАВКА В TELEGRAM ПРОИСХОДИТ ЗДЕСЬ
+                await this._sendToTelegram(data);
+                
+                // Имитация задержки для пользователя (можно уменьшить до 500мс)
                 await this.simulateApiCall();
                 
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
@@ -572,6 +576,63 @@ class ContactForm {
         });
         
         this.initMobileInputOptimization();
+    }
+    
+    // ===== ПРИВАТНЫЙ МЕТОД ДЛЯ ОТПРАВКИ В TELEGRAM =====
+    async _sendToTelegram(formData) {
+        const botToken = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
+        const chatId = '-1002313355102'; // Ваш существующий чат
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        // Красивое форматирование сообщения с эмодзи и HTML-разметкой
+        const message = `
+🆕 <b>НОВАЯ ЗАЯВКА С САЙТА "ТЕРРИТОРИЯ ЛЮБВИ"</b>
+
+<b>👤 ИМЯ:</b>
+${formData.name}
+
+<b>📞 КОНТАКТ:</b>
+${formData.contact}
+
+<b>🎯 ФОРМАТ:</b>
+${this._getFormatName(formData.format)}
+
+<b>💬 СООБЩЕНИЕ:</b>
+${formData.message || '— не указано —'}
+        `.trim();
+
+        const params = {
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'HTML' // Важно! Позволяет использовать жирный шрифт (<b>)
+        };
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params)
+        });
+        
+        const result = await response.json();
+        
+        // Логируем ошибку, но НЕ прерываем процесс для пользователя
+        if (!result.ok) {
+            console.warn('Telegram API Warning:', result.description);
+            // Можно добавить скрытую отправку в резервный сервис
+        }
+        
+        return result;
+    }
+    
+    // Вспомогательный метод для красивого названия формата
+    _getFormatName(formatValue) {
+        const formats = {
+            'individual': 'Индивидуальная сессия',
+            'circle': 'Женский круг',
+            'levels': 'Уровень погружения',
+            'not_sure': 'Пока не знаю, нужна консультация'
+        };
+        return formats[formatValue] || formatValue;
     }
     
     initMobileInputOptimization() {
