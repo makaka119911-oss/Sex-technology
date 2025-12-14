@@ -341,3 +341,100 @@ img {
         transform: translateY(0);
     }
 }
+/* ===== УЛУЧШЕНИЕ ПЛАВНОСТИ НА МОБИЛЬНЫХ ===== */
+
+/* Убираем рывки при скролле на iOS */
+html, body {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Улучшаем производительность анимаций */
+.slide,
+.slide-background,
+.gallery-item,
+.expert-card,
+.help-card,
+.level-card {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Оптимизация для слабых устройств */
+@media (max-width: 768px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Плавный скролл для всего */
+    .hero-slider,
+    .section,
+    .container {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Упрощаем сложные анимации на мобильных */
+    .slide-background {
+        transition: transform 4s cubic-bezier(0.2, 0.85, 0.4, 1) !important;
+    }
+    
+    .expert-card:hover,
+    .help-card:hover,
+    .level-card:hover,
+    .gallery-item:hover {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    /* Улучшаем отзывчивость тач-событий */
+    .btn,
+    .nav-link,
+    .slider-prev,
+    .slider-next {
+        touch-action: manipulation;
+    }
+    
+    /* Предотвращаем скачки при фокусе */
+    input:focus,
+    textarea:focus,
+    select:focus {
+        font-size: 16px !important;
+    }
+}
+
+/* Исправление для iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .hero-slider {
+        height: -webkit-fill-available;
+    }
+    
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Улучшение плавности параллакса */
+.parallax-layer {
+    will-change: transform;
+}
+
+/* Плавное появление элементов при скролле */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Оптимизация для Android Chrome */
+@media (hover: none) and (pointer: coarse) {
+    .btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+    }
+}
