@@ -1,3 +1,8 @@
+// ===== КОНСТАНТЫ TELEGRAM =====
+const BOT_TOKEN = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
+const CHAT_ID = '-1002313355102';
+const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
 // ===== ПРЕЛОАДЕР =====
 document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.querySelector('.cinematic-preloader');
@@ -530,6 +535,8 @@ class ContactForm {
     constructor() {
         this.form = document.getElementById('consultationForm');
         this.statusEl = document.getElementById('formStatus');
+        this.submitBtn = this.form?.querySelector('button[type="submit"]');
+        this.originalBtnText = '';
         
         if (this.form) {
             this.init();
@@ -550,13 +557,14 @@ class ContactForm {
                 contact: formData.get('contact'),
                 format: formData.get('format'),
                 message: formData.get('message'),
-                date: new Date().toISOString()
+                date: new Date().toLocaleString('ru-RU')
             };
             
             this.showStatus('Отправляем заявку...', 'loading');
+            this.disableForm(true);
             
             try {
-                await this.simulateApiCall();
+                await this.sendToTelegram(data);
                 
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
                 
@@ -568,10 +576,81 @@ class ContactForm {
             } catch (error) {
                 console.error('Form submission error:', error);
                 this.showStatus('Произошла ошибка. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.', 'error');
+            } finally {
+                this.disableForm(false);
             }
         });
         
         this.initMobileInputOptimization();
+    }
+    
+    disableForm(disabled) {
+        if (this.submitBtn) {
+            if (disabled) {
+                this.originalBtnText = this.submitBtn.innerHTML;
+                this.submitBtn.innerHTML = '<span>Отправка...</span><i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
+                this.submitBtn.disabled = true;
+            } else {
+                this.submitBtn.innerHTML = this.originalBtnText;
+                this.submitBtn.disabled = false;
+            }
+        }
+        
+        const formElements = this.form.querySelectorAll('input, textarea, select, button');
+        formElements.forEach(element => {
+            if (element !== this.submitBtn) {
+                element.disabled = disabled;
+            }
+        });
+    }
+    
+    async sendToTelegram(data) {
+        // Форматируем формат для читаемости
+        const formatMap = {
+            'individual': 'Индивидуальная сессия',
+            'circle': 'Женский круг',
+            'levels': 'Уровень погружения',
+            'not_sure': 'Пока не знаю, нужна консультация'
+        };
+        
+        const formatText = formatMap[data.format] || data.format;
+        
+        // Формируем сообщение для Telegram
+        const message = `📝 НОВАЯ ЗАЯВКА С САЙТА
+
+👤 Имя: ${data.name}
+📞 Контакт: ${data.contact}
+🎯 Формат: ${formatText}
+📝 Сообщение: ${data.message || 'Не указано'}
+📅 Дата: ${data.date}
+
+🚀 Отправлено с сайта: ${window.location.hostname}`;
+        
+        const payload = {
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: 'HTML'
+        };
+        
+        const response = await fetch(TELEGRAM_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (!result.ok) {
+            throw new Error(result.description || 'Telegram API error');
+        }
+        
+        return result;
     }
     
     initMobileInputOptimization() {
@@ -648,12 +727,6 @@ class ContactForm {
             this.statusEl.textContent = '';
             this.statusEl.className = 'form-status';
         }
-    }
-    
-    async simulateApiCall() {
-        return new Promise(resolve => {
-            setTimeout(resolve, 1500);
-        });
     }
 }
 
@@ -808,7 +881,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+    
+    // Инициализация Lazy Loading для изображений
+    initLazyLoading();
 });
+
+// Инициализация Lazy Loading
+function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback для старых браузеров
+        lazyImages.forEach(img => {
+            img.classList.add('loaded');
+        });
+    }
+}
 
 // Обработчик изменения размера окна
 let resizeTimeout;
@@ -821,4 +921,14 @@ window.addEventListener('resize', () => {
             document.body.classList.remove('mobile-view');
         }
     }, 250);
+});
+
+// Обработка ошибок загрузки изображений
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            console.warn(`Изображение не загружено: ${this.src}`);
+        });
+    });
 });
