@@ -119,8 +119,7 @@ button {
     }
     
     .cinematic-elements,
-    .light-ray,
-    .particles {
+    .light-ray {
         display: none;
     }
     
@@ -317,27 +316,118 @@ img {
     }
 }
 
-/* Подсказка для пользователя */
-.gallery-mobile-tip {
-    position: fixed;
-    bottom: 80px;
-    left: 0;
-    right: 0;
-    background: linear-gradient(135deg, #800020, #B22234);
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 14px;
-    z-index: 1001;
-    display: none;
-    animation: slideUp 0.5s ease;
+/* Оптимизация для медленных сетей */
+@media (max-width: 768px) {
+    /* Принудительная загрузка критических изображений */
+    .slide-background,
+    .expert-image img,
+    .circles-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    /* Уменьшение качества для фоновых изображений на мобильных */
+    .slide-background {
+        filter: brightness(0.6) contrast(1);
+    }
 }
 
-@keyframes slideUp {
-    from {
-        transform: translateY(100%);
+/* Оптимизация для слабых устройств */
+@media (max-width: 768px) {
+    /* Отключение сложных эффектов */
+    .help-card:hover,
+    .expert-card:hover,
+    .level-card:hover,
+    .testimonial-content:hover {
+        transform: none !important;
     }
-    to {
-        transform: translateY(0);
+    
+    /* Упрощение теней */
+    .help-card,
+    .expert-card,
+    .level-card,
+    .testimonial-content,
+    .contact-form,
+    .contact-person {
+        box-shadow: var(--shadow-sm) !important;
+    }
+    
+    /* Отключение градиентов для лучшей производительности */
+    .luxury-title {
+        background: var(--gold-medium);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Оптимизация для экономии батареи */
+@media (max-width: 768px) {
+    /* Уменьшение частоты анимаций */
+    .heart-loader {
+        animation: heartBeat 3s ease-in-out infinite;
+    }
+    
+    @keyframes textShimmer {
+        0%, 100% {
+            filter: brightness(1) contrast(1);
+            text-shadow: 
+                0px 2px 4px rgba(0, 0, 0, 0.5),
+                0px 4px 20px rgba(212, 175, 55, 0.4);
+        }
+    }
+    
+    .luxury-title {
+        animation: textShimmer 6s ease-in-out infinite alternate;
+    }
+}
+
+/* Оптимизация для ориентации экрана */
+@media (orientation: portrait) and (max-width: 768px) {
+    .hero-slider {
+        min-height: 80vh;
+    }
+    
+    .slide-content {
+        padding-top: 80px;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 768px) {
+    .hero-slider {
+        min-height: 120vh;
+    }
+    
+    .slide-content {
+        padding-top: 60px;
+    }
+}
+
+/* Предотвращение скролла при открытых модальных окнах */
+body.modal-open,
+body.menu-open {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* Оптимизация для медленного интернета */
+.loading-placeholder {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(255, 255, 255, 0.05) 100%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
     }
 }
