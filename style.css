@@ -679,6 +679,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
+      aspect-ratio: 3 / 4;
     opacity: 0;
     visibility: hidden;
     transition: opacity 1s ease;
@@ -690,7 +691,8 @@ img {
 }
 
 .slide-background {
-    position: absolute;
+        position: absolute;
+  object-fit: cover;
     top: -10%;
     left: -10%;
     width: 120%;
@@ -2003,7 +2005,8 @@ img {
 /* ===== АДАПТИВНОСТЬ ===== */
 
 /* Мобильные устройства (до 768px) */
-@media (max-width: 768px) {
+2100
+{
     /* Навигация */
     .nav-menu {
         position: fixed;
