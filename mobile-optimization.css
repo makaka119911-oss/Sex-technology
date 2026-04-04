@@ -82,13 +82,17 @@ button {
         overflow: hidden;
     }
 
+    /* Фон слайда: по ширине экрана без обрезки по бокам (альбомное фото на узком экране).
+       Пустые полосы сверху/снизу закрашиваются — визуально ровнее, чем cover. */
     .slide-background {
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
         height: 100% !important;
-        background-size: cover !important;
+        background-color: #0a0a14 !important;
+        background-size: 100% auto !important;
         background-position: center center !important;
+        background-repeat: no-repeat !important;
     }
 
     .slide.active .slide-background {
@@ -397,8 +401,7 @@ img {
 
 /* Оптимизация для медленных сетей */
 @media (max-width: 768px) {
-    /* Принудительная загрузка критических изображений */
-    .slide-background,
+    /* Чёткость мелких иконок/фото в карточках (фон слайдера без crisp-edges — иначе «ступеньки» на фото) */
     .expert-image img,
     .circles-image img {
         image-rendering: -webkit-optimize-contrast;
@@ -465,9 +468,12 @@ img {
 /* Оптимизация для ориентации экрана */
 @media (orientation: portrait) and (max-width: 768px) {
     .hero-slider {
-        min-height: 80vh;
+        height: 100vh;
+        height: 100dvh;
+        min-height: 100svh;
+        min-height: 100dvh;
     }
-    
+
     .slide-content {
         padding-top: 80px;
     }
