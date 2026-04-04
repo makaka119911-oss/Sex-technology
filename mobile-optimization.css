@@ -97,6 +97,16 @@ button {
         transform: scale(1) !important;
     }
 
+    .slide-background.slide-bg-contain {
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-size: contain !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+    }
+
     /* Контентные <img>: вписываются в контейнер, по центру, пропорции сохраняются */
     main img {
         max-width: 100%;

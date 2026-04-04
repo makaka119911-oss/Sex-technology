@@ -396,8 +396,11 @@ class CinematicHeroSlider {
             
             this.slides.forEach(slide => {
                 const parallaxLayer = slide.querySelector('.parallax-layer');
+                const slideBg = slide.querySelector('.slide-background');
+                const containBg = slideBg && slideBg.classList.contains('slide-bg-contain');
                 if (parallaxLayer && slide.classList.contains('active')) {
-                    parallaxLayer.style.transform = `scale(1.1) translate(${mouseX}px, ${mouseY}px)`;
+                    const scale = containBg ? 1 : 1.1;
+                    parallaxLayer.style.transform = `scale(${scale}) translate(${mouseX}px, ${mouseY}px)`;
                 }
             });
         });
