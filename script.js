@@ -3,6 +3,19 @@ const BOT_TOKEN = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
 const CHAT_ID = '-1002313355102';
 const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
+function isShopDrawerOpen() {
+    const root = document.getElementById('shopDrawerRoot');
+    return !!(root && root.classList.contains('is-open'));
+}
+
+function syncBodyScrollLock() {
+    const navMenu = document.querySelector('.nav-menu');
+    const navOpen = navMenu && navMenu.classList.contains('active');
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryOpen = galleryModal && galleryModal.classList.contains('active');
+    document.body.style.overflow = (navOpen || isShopDrawerOpen() || galleryOpen) ? 'hidden' : '';
+}
+
 // ===== ПРЕЛОАДЕР =====
 document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.querySelector('.cinematic-preloader');
@@ -63,7 +76,7 @@ function initMobileMenu() {
         e.stopPropagation();
         burgerMenu.classList.toggle('active');
         navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        syncBodyScrollLock();
         
         // Обновляем ARIA атрибуты
         const isExpanded = burgerMenu.classList.contains('active');
@@ -74,7 +87,7 @@ function initMobileMenu() {
         link.addEventListener('click', () => {
             burgerMenu.classList.remove('active');
             navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            syncBodyScrollLock();
             burgerMenu.setAttribute('aria-expanded', 'false');
         });
     });
@@ -83,7 +96,7 @@ function initMobileMenu() {
         if (!e.target.closest('.navbar') && navMenu.classList.contains('active')) {
             burgerMenu.classList.remove('active');
             navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            syncBodyScrollLock();
             burgerMenu.setAttribute('aria-expanded', 'false');
         }
     });
@@ -92,9 +105,70 @@ function initMobileMenu() {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             burgerMenu.classList.remove('active');
             navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            syncBodyScrollLock();
             burgerMenu.setAttribute('aria-expanded', 'false');
         }
+    });
+}
+
+// ===== МАГАЗИН (боковая панель) =====
+function initShopDrawer() {
+    const root = document.getElementById('shopDrawerRoot');
+    const openBtn = document.getElementById('shopOpenBtn');
+    const closeBtn = document.getElementById('shopDrawerClose');
+    const overlay = document.getElementById('shopDrawerOverlay');
+    if (!root || !openBtn || !closeBtn || !overlay) return;
+
+    let previouslyFocused = null;
+
+    function openDrawer() {
+        previouslyFocused = document.activeElement;
+        root.classList.add('is-open');
+        root.setAttribute('aria-hidden', 'false');
+        openBtn.setAttribute('aria-expanded', 'true');
+
+        const burgerMenu = document.querySelector('.burger-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            burgerMenu.setAttribute('aria-expanded', 'false');
+        }
+
+        syncBodyScrollLock();
+        closeBtn.focus();
+    }
+
+    function closeDrawer() {
+        root.classList.remove('is-open');
+        root.setAttribute('aria-hidden', 'true');
+        openBtn.setAttribute('aria-expanded', 'false');
+        syncBodyScrollLock();
+        if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+            previouslyFocused.focus();
+        }
+    }
+
+    openBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && root.classList.contains('is-open')) {
+            closeDrawer();
+        }
+    });
+
+    root.querySelectorAll('.shop-product-buy').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const titleEl = btn.closest('.shop-product')?.querySelector('.shop-product-title');
+            const name = titleEl && titleEl.textContent ? titleEl.textContent.trim() : 'товар';
+            alert(`Покупка пока в разработке. Вы выбрали: «${name}». Это тестовый товар без реальной оплаты.`);
+        });
     });
 }
 
@@ -521,12 +595,12 @@ class GalleryModal {
         this.modalImage.src = imgSrc;
         this.modalImage.alt = imgAlt;
         this.modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        syncBodyScrollLock();
     }
     
     closeModal() {
         this.modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        syncBodyScrollLock();
     }
 }
 
@@ -753,7 +827,7 @@ class SmoothScroll {
                     if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
                         burgerMenu.classList.remove('active');
                         navMenu.classList.remove('active');
-                        document.body.style.overflow = 'auto';
+                        syncBodyScrollLock();
                         burgerMenu.setAttribute('aria-expanded', 'false');
                     }
                     
@@ -863,6 +937,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Базовые компоненты
     initAgeVerification();
     initMobileMenu();
+    initShopDrawer();
     initHeaderScroll();
     
     // Слайдеры и интерактивные компоненты

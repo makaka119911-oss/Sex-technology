@@ -56,6 +56,9 @@ button {
 /* Улучшение нажатий на мобильных */
 .btn,
 .nav-link,
+.nav-shop-btn,
+.shop-drawer-close,
+.shop-product-buy,
 .slider-prev,
 .slider-next,
 .testimonial-prev,
@@ -434,5 +437,22 @@ body.menu-open {
     }
     100% {
         background-position: -200% 0;
+    }
+}
+
+/* Магазин: плавная анимация панели на мобильных (поверх глобального сброса transition) */
+@media (max-width: 768px) {
+    .shop-drawer-root .shop-drawer-overlay,
+    .shop-drawer-root .shop-drawer {
+        transition-duration: 0.38s !important;
+        transition-property: opacity, transform !important;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shop-drawer-root .shop-drawer-overlay,
+    .shop-drawer-root .shop-drawer {
+        transition-duration: 0.01ms !important;
     }
 }
