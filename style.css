@@ -2013,12 +2013,16 @@ img {
         background: rgba(10, 10, 26, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;
+        align-items: stretch;
         padding: 20px;
-        gap: 15px;
+        padding-left: max(20px, env(safe-area-inset-left, 0px));
+        padding-right: max(20px, env(safe-area-inset-right, 0px));
+        gap: 12px;
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
+        box-sizing: border-box;
     }
     
     .nav-menu.active {
@@ -2026,17 +2030,34 @@ img {
         opacity: 1;
         visibility: visible;
     }
+
+    .nav-menu .nav-link {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 12px 16px;
+        box-sizing: border-box;
+    }
     
     .nav-cta {
-        margin: 15px 0 0 0;
+        margin: 0;
         width: 100%;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 20px;
+        box-sizing: border-box;
     }
 
     .nav-shop-btn {
         width: 100%;
         justify-content: center;
-        margin: 8px 0 0 0;
+        margin: 0;
+        padding: 14px 20px;
+        box-sizing: border-box;
     }
     
     .burger-menu {
@@ -2228,7 +2249,7 @@ img {
     justify-content: center;
     gap: 8px;
     padding: clamp(8px, 1.5vw, 10px) clamp(14px, 2vw, 20px);
-    margin-left: 6px;
+    margin: 0;
     background: transparent;
     border: 2px solid rgba(212, 175, 55, 0.65);
     color: var(--gold-light);
@@ -2303,7 +2324,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
     padding: clamp(18px, 3vw, 24px) clamp(18px, 3vw, 22px);
     padding-top: max(clamp(18px, 3vw, 24px), env(safe-area-inset-top, 0px));
     border-bottom: 1px solid rgba(128, 0, 32, 0.35);
@@ -2315,6 +2336,10 @@ img {
     font-size: clamp(1.5rem, 4vw, 1.85rem);
     font-weight: 700;
     margin: 0;
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    line-height: 1.2;
     background: linear-gradient(135deg, var(--gold-light), var(--gold-medium));
     -webkit-background-clip: text;
     background-clip: text;
@@ -2350,6 +2375,7 @@ img {
 .shop-drawer-body {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: clamp(14px, 2.5vw, 20px) clamp(18px, 3vw, 22px) max(clamp(24px, 4vw, 32px), env(safe-area-inset-bottom, 0px));
     -webkit-overflow-scrolling: touch;
 }
@@ -2357,22 +2383,27 @@ img {
 .shop-drawer-note {
     font-size: 0.85rem;
     color: var(--cinematic-text-lighter);
-    margin: 0 0 18px;
-    line-height: 1.5;
-    padding: 12px 14px;
-    border-radius: var(--radius-sm);
+    margin: 0 0 16px;
+    line-height: 1.55;
+    text-align: left;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
     background: rgba(128, 0, 32, 0.12);
     border: 1px solid rgba(128, 0, 32, 0.25);
+    box-sizing: border-box;
 }
 
 .shop-product {
-    padding: 16px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px;
+    margin: 0 0 12px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(128, 0, 32, 0.22);
+    box-sizing: border-box;
 }
 
 .shop-product:last-of-type {
-    border-bottom: none;
-    padding-bottom: 4px;
+    margin-bottom: 0;
 }
 
 .shop-product-title {
@@ -2380,7 +2411,8 @@ img {
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--cinematic-text);
-    margin: 0 0 8px;
+    margin: 0 0 10px;
+    text-align: left;
 }
 
 .shop-product-desc {
@@ -2388,6 +2420,7 @@ img {
     line-height: 1.55;
     color: var(--cinematic-text-light);
     margin: 0 0 14px;
+    text-align: left;
 }
 
 .shop-product-footer {
@@ -2403,6 +2436,7 @@ img {
     font-size: 1.05rem;
     color: var(--gold-medium);
     letter-spacing: 0.02em;
+    flex-shrink: 0;
 }
 
 .shop-product-buy {
@@ -2414,12 +2448,36 @@ img {
 @media (max-width: 768px) {
     .shop-drawer {
         width: 100%;
+        max-width: 100%;
         border-left: none;
+    }
+
+    .shop-drawer-header {
+        padding-left: max(16px, env(safe-area-inset-left, 0px));
+        padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+
+    .shop-drawer-body {
+        padding-top: 16px;
+        padding-left: max(16px, env(safe-area-inset-left, 0px));
+        padding-right: max(16px, env(safe-area-inset-right, 0px));
+        padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+    }
+
+    .shop-product {
+        padding: 16px;
+        margin-bottom: 12px;
     }
 
     .shop-product-footer {
         flex-direction: column;
         align-items: stretch;
+        gap: 10px;
+    }
+
+    .shop-product-price {
+        width: 100%;
+        text-align: left;
     }
 
     .shop-product-buy {
