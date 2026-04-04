@@ -2099,14 +2099,13 @@ img {
         overflow: hidden;
     }
 
-    /* На телефоне — вписываем фото по ширине (меньше обрезки по бокам, см. mobile-optimization.css) */
+    /* Фон слайдов как на большом экране: cover, тот же масштаб слоя */
     .slide-background {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #0a0a14;
-        background-size: 100% auto;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+        background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
     }

@@ -82,15 +82,13 @@ button {
         overflow: hidden;
     }
 
-    /* Фон слайда: по ширине экрана без обрезки по бокам (альбомное фото на узком экране).
-       Пустые полосы сверху/снизу закрашиваются — визуально ровнее, чем cover. */
+    /* Фон слайда как на десктопе: cover + тот же «запас» кадра (обрезка внутри .slide) */
     .slide-background {
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        background-color: #0a0a14 !important;
-        background-size: 100% auto !important;
+        top: -10% !important;
+        left: -10% !important;
+        width: 120% !important;
+        height: 120% !important;
+        background-size: cover !important;
         background-position: center center !important;
         background-repeat: no-repeat !important;
     }
