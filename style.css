@@ -2398,8 +2398,8 @@ img {
     gap: 8px;
     padding: clamp(8px, 1.5vw, 10px) clamp(14px, 2vw, 20px);
     margin: 0;
-    background: transparent;
-    border: 2px solid rgba(212, 175, 55, 0.65);
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.95);
     color: #ffffff;
     border-radius: var(--radius-lg);
     font-family: var(--font-body);
@@ -2410,14 +2410,14 @@ img {
 }
 
 .nav-shop-btn:hover {
-    background: var(--color-primary-transparent);
-    border-color: var(--gold-medium);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
     color: #ffffff;
-    box-shadow: var(--shadow-red);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
 }
 
 .nav-shop-btn:focus-visible {
-    outline: 2px solid var(--gold-medium);
+    outline: 2px solid rgba(255, 255, 255, 0.9);
     outline-offset: 3px;
 }
 
