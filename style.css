@@ -1096,7 +1096,8 @@ img {
 
 .expert-image {
     position: relative;
-    aspect-ratio: 4/3;
+    /* Портретные фото: выше «классического» 4/3, иначе cover сильно съедает макушку */
+    aspect-ratio: 3/4;
     overflow: hidden;
 }
 
@@ -1104,6 +1105,8 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Якорь к верху кадра — голова не обрезается при cover */
+    object-position: center top;
     transition: var(--transition-slow);
 }
 
@@ -2525,11 +2528,16 @@ img {
     }
 
     .gallery-item img,
-    .expert-image img,
     .circles-image img {
         max-width: 100%;
         object-fit: cover;
         object-position: center;
+    }
+
+    .expert-image img {
+        max-width: 100%;
+        object-fit: cover;
+        object-position: center top;
     }
 
     /* Модальное окно галереи */

@@ -126,6 +126,10 @@ button {
         object-position: center;
     }
 
+    .expert-image img {
+        object-position: center top;
+    }
+
     .experts-grid,
     .gallery-grid,
     .circles-content {
