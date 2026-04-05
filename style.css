@@ -2225,40 +2225,40 @@ img {
 
     /* Положение блока с текстом: меняйте класс hero-mobile-layout--* на <section class="hero-slider ..."> */
     .hero-slider .slide-content {
-        align-items: stretch;
+        align-items: center;
         justify-content: var(--hero-mobile-justify, flex-end);
-        padding: var(--hero-mobile-pad-top, 88px) 14px calc(max(22px, env(safe-area-inset-bottom, 0px)) + var(--hero-mobile-pad-bottom-extra, 0px)) 96px;
+        padding: var(--hero-mobile-pad-top, 88px) 16px calc(max(100px, env(safe-area-inset-bottom, 0px)) + var(--hero-mobile-pad-bottom-extra, 0px)) 16px;
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
-    /* Первый слайд: колонка 01–03 слева, заголовки справа (как размер подписей индикаторов, чуть крупнее) */
-    .hero-slider .slide--minimal {
-        --hero-mobile-justify: center;
-    }
-
+    /* Первый слайд: заголовки по центру над кнопками; кнопки по центру внизу */
     .hero-slider .slide--minimal .slide-text {
         max-height: none;
         overflow: visible;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero-slider .slide--minimal .luxury-title-wrapper {
-        align-self: flex-start;
-        text-align: left;
-        padding: 4px 0;
-        margin-bottom: 12px;
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        box-shadow: none;
-        max-width: calc(100vw - 108px);
+        align-self: center;
+        text-align: center;
+        padding: 6px 10px 10px;
+        margin-bottom: 10px;
+        background: rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border-radius: 12px;
+        max-width: min(100%, 420px);
     }
 
     .hero-slider .slide--minimal .luxury-title {
-        font-size: clamp(0.8rem, 3.6vw, 1.1rem);
-        line-height: 1.2;
-        letter-spacing: 0.06em;
-        text-align: left;
-        margin-bottom: 0.25rem;
+        font-size: clamp(0.85rem, 3.8vw, 1.15rem);
+        line-height: 1.22;
+        letter-spacing: 0.05em;
+        text-align: center;
+        margin-bottom: 0.2rem;
     }
 
     .hero-slider.hero-mobile-layout--bottom {
@@ -2281,6 +2281,10 @@ img {
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     /* Заголовки ~на 25% меньше, без лишних вертикальных зазоров */
@@ -2326,7 +2330,12 @@ img {
 
     .hero-slider .slide-buttons {
         gap: 8px;
-        margin-top: 2px;
+        margin-top: 4px;
+        align-items: center;
+        width: 100%;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-slider .slide-buttons .btn {
@@ -2356,14 +2365,19 @@ img {
         display: none;
     }
     
-    /* Индикаторы слева по центру экрана — заголовок первого слайда читается справа от них */
+    /* 01–03 Терапия / Круги / Свобода — правый нижний угол (над полосой прогресса) */
     .hero-slider .slider-indicators {
-        left: 12px;
-        right: auto;
-        top: 50%;
-        bottom: auto;
-        transform: translateY(-50%);
-        gap: 12px;
+        left: auto;
+        right: max(10px, env(safe-area-inset-right, 0px));
+        top: auto;
+        bottom: clamp(52px, 14vw, 72px);
+        transform: none;
+        gap: 8px;
+        align-items: flex-end;
+    }
+
+    .hero-slider .slider-indicators .indicator {
+        justify-content: flex-end;
     }
     
     /* Улучшаем читаемость */
