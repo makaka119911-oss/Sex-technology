@@ -130,29 +130,24 @@
 
     <!-- Основное содержимое -->
     <main id="main">
-        <!-- Герой с кинематографическим слайдером -->
-        <section class="hero-slider" aria-label="Главный слайдер">
+        <!-- Герой: на телефоне положение текста — класс на section: hero-mobile-layout--bottom | hero-mobile-layout--top | hero-mobile-layout--center
+             Сдвиг вниз/вверх (px): style="--hero-mobile-nudge-y: 10px"  |  высота блока текста: --hero-mobile-text-max-h: min(42vh, 340px) -->
+        <section class="hero-slider hero-mobile-layout--bottom" aria-label="Главный слайдер" style="--hero-mobile-nudge-y: 0px; --hero-mobile-text-max-h: min(48vh, 380px);">
             <h1 class="visually-hidden">Территория любви - секс-терапия для женщин</h1>
             
             <div class="slider-container">
                 <!-- Слайд 1 -->
-                <div class="slide active" data-slide="1">
+                <div class="slide active slide--minimal" data-slide="1">
                     <div class="slide-background slide-bg-contain slide-hero-primary" style="--hero-bg-desktop: url('hero-presentation-desktop.png'); --hero-bg-mobile: url('hero-presentation-mobile.png')">
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
                     </div>
                     <div class="slide-overlay"></div>
                     <div class="slide-content">
                         <div class="slide-text">
-                            <div class="slide-subtitle">
-                                <span class="line" aria-hidden="true"></span>
-                                <span>Секс-терапия для женщин</span>
-                                <span class="line" aria-hidden="true"></span>
-                            </div>
                             <div class="luxury-title-wrapper">
                                 <div class="luxury-title">Два взгляда, одна цель</div>
                                 <div class="luxury-title">ваша живая сексуальность</div>
                             </div>
-                            <p class="slide-description">Безопасное пространство для женщин, которые хотят больше удовольствия, близости с собой и уверенности в своей сексуальности.</p>
                             <div class="slide-buttons">
                                 <a href="#contact" class="btn btn-primary">
                                     <span>Записаться на консультацию</span>
