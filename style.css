@@ -853,7 +853,7 @@ img {
         flex: 1 1 auto;
         min-height: 0;
         justify-content: flex-start;
-        padding-top: clamp(40px, 12vh, 100px);
+        padding-top: clamp(32px, 10vh, 88px);
     }
 
     .hero-slider .slide--minimal .slide-buttons {
@@ -2297,7 +2297,7 @@ img {
         justify-content: flex-start;
         gap: 0;
         /* Уровень рук на кадре (середина по вертикали), не у лица/плеч */
-        padding-top: clamp(96px, 36vh, 240px);
+        padding-top: clamp(84px, 32vh, 210px);
         box-sizing: border-box;
     }
 
