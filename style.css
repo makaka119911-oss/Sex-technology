@@ -659,6 +659,10 @@ img {
 }
 
 /* ===== ГЕРОЙ-СЛАЙДЕР ===== */
+/*
+ * Герой слайд 1: hero-presentation-desktop.png (широкий экран) и hero-presentation-mobile.png (9:16).
+ * Рекомендуемые размеры: ПК ~16:9 (например 1920×1080); телефон ~9:16 (1080×1920).
+ */
 .hero-slider {
     position: relative;
     height: 100vh;
@@ -762,6 +766,11 @@ img {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
+}
+
+/* Первый слайд: на ПК и телефоне можно разные кадры (переменные в разметке) */
+.slide-hero-primary {
+    background-image: var(--hero-bg-desktop);
 }
 
 .slide-overlay {
@@ -2146,24 +2155,20 @@ img {
         overflow: hidden;
     }
 
-    /* Фон слайдов как на большом экране: cover, тот же масштаб слоя */
-    .slide-background {
-        top: -10%;
-        left: -10%;
-        width: 120%;
-        height: 120%;
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-    }
-
-    .slide-background.slide-bg-contain {
+    /* Герой на телефоне: кадр целиком (contain), без обрезки как у cover на ПК */
+    .hero-slider .slide-background {
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
         height: 100% !important;
         background-size: contain !important;
         background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-color: #140a0d !important;
+    }
+
+    .hero-slider .slide-hero-primary {
+        background-image: var(--hero-bg-mobile) !important;
     }
 
     .slide.active .slide-background {

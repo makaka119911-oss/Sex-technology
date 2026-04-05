@@ -82,22 +82,8 @@ button {
         overflow: hidden;
     }
 
-    /* Фон слайда как на десктопе: cover + тот же «запас» кадра (обрезка внутри .slide) */
-    .slide-background {
-        top: -10% !important;
-        left: -10% !important;
-        width: 120% !important;
-        height: 120% !important;
-        background-size: cover !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-    }
-
-    .slide.active .slide-background {
-        transform: scale(1) !important;
-    }
-
-    .slide-background.slide-bg-contain {
+    /* Герой: на мобильном — contain (весь кадр), на ПК правила в style.css (cover для 2–3 слайдов) */
+    .hero-slider .slide-background {
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
@@ -105,6 +91,15 @@ button {
         background-size: contain !important;
         background-position: center center !important;
         background-repeat: no-repeat !important;
+        background-color: #140a0d !important;
+    }
+
+    .hero-slider .slide-hero-primary {
+        background-image: var(--hero-bg-mobile) !important;
+    }
+
+    .slide.active .slide-background {
+        transform: scale(1) !important;
     }
 
     /* Контентные <img>: вписываются в контейнер, по центру, пропорции сохраняются */
@@ -416,8 +411,8 @@ img {
         image-rendering: crisp-edges;
     }
     
-    /* Уменьшение качества для фоновых изображений на мобильных */
-    .slide-background {
+    /* Уменьшение яркости фона героя на мобильных */
+    .hero-slider .slide-background {
         filter: brightness(0.6) contrast(1);
     }
 }
