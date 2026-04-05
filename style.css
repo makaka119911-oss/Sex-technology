@@ -2171,6 +2171,51 @@ img {
         background-image: var(--hero-bg-mobile) !important;
     }
 
+    /* Фото лучше видно: сверху почти без маски, снизу затемнение под текст */
+    .hero-slider .slide-overlay {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.06) 0%,
+            rgba(0, 0, 0, 0.1) 32%,
+            rgba(0, 0, 0, 0.38) 62%,
+            rgba(12, 6, 10, 0.9) 100%
+        );
+    }
+
+    .hero-slider .slide-content {
+        align-items: stretch;
+        justify-content: flex-end;
+        padding-top: 96px;
+        padding-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+    }
+
+    .hero-slider .luxury-title-wrapper {
+        padding: 14px 16px;
+        margin-bottom: 14px;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.42);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-slider .slide-subtitle {
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.38);
+        width: fit-content;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-slider .slide-description {
+        background: rgba(0, 0, 0, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 10px 36px rgba(0, 0, 0, 0.4);
+    }
+
     .slide.active .slide-background {
         transform: scale(1);
     }

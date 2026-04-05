@@ -411,9 +411,9 @@ img {
         image-rendering: crisp-edges;
     }
     
-    /* Уменьшение яркости фона героя на мобильных */
+    /* Герой: фото светлее (раньше 0.6 — слишком темнило кадр) */
     .hero-slider .slide-background {
-        filter: brightness(0.6) contrast(1);
+        filter: brightness(0.92) contrast(1.03);
     }
 }
 
