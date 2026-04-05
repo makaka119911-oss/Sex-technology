@@ -2400,7 +2400,7 @@ img {
     margin: 0;
     background: transparent;
     border: 2px solid rgba(212, 175, 55, 0.65);
-    color: var(--gold-light);
+    color: #ffffff;
     border-radius: var(--radius-lg);
     font-family: var(--font-body);
     font-weight: 600;
