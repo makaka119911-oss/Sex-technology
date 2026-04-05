@@ -803,6 +803,10 @@ img {
         margin-bottom: clamp(6px, 1.2vw, 14px);
     }
 
+    .hero-slider .slide--minimal .luxury-title {
+        font-size: clamp(2.12rem, 4vw, 3.15rem);
+    }
+
     .hero-slider .luxury-title-wrapper {
         gap: 0.3rem;
         margin-bottom: clamp(12px, 2vw, 20px);
@@ -2279,7 +2283,7 @@ img {
     }
 
     .hero-slider .slide--minimal .luxury-title {
-        font-size: clamp(0.85rem, 3.8vw, 1.15rem);
+        font-size: clamp(0.95rem, 4.15vw, 1.28rem);
         line-height: 1.22;
         letter-spacing: 0.05em;
         text-align: center;
