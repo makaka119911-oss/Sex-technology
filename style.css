@@ -782,6 +782,47 @@ img {
     background: var(--gradient-overlay);
 }
 
+/* Герой (ПК): слабее затемнение, чуть светлее фото, компактнее заголовки — фон заметнее */
+@media (min-width: 769px) {
+    .hero-slider .slide-overlay {
+        background: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.42) 0%,
+            rgba(128, 0, 32, 0.32) 48%,
+            rgba(178, 34, 52, 0.1) 100%
+        );
+    }
+
+    .hero-slider .slide-background {
+        filter: brightness(0.84) contrast(1.06);
+    }
+
+    .hero-slider .luxury-title {
+        font-size: clamp(2rem, 3.8vw, 3rem);
+        line-height: 1.12;
+        margin-bottom: clamp(6px, 1.2vw, 14px);
+    }
+
+    .hero-slider .luxury-title-wrapper {
+        gap: 0.3rem;
+        margin-bottom: clamp(12px, 2vw, 20px);
+    }
+
+    .hero-slider .slide-subtitle {
+        margin-bottom: 10px;
+    }
+
+    .hero-slider .slide-description {
+        margin-bottom: clamp(16px, 2.5vw, 26px);
+        padding: clamp(12px, 2vw, 18px);
+        font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    }
+
+    .hero-slider .slide-buttons {
+        gap: 10px;
+    }
+}
+
 .slide-content {
     position: relative;
     height: 100%;
@@ -2171,39 +2212,48 @@ img {
         background-image: var(--hero-bg-mobile) !important;
     }
 
-    /* Фото лучше видно: сверху почти без маски, снизу затемнение под текст */
+    /* Фото максимально видно: лёгкая маска, снизу чуть плотнее только под текстом */
     .hero-slider .slide-overlay {
         background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.06) 0%,
-            rgba(0, 0, 0, 0.1) 32%,
-            rgba(0, 0, 0, 0.38) 62%,
-            rgba(12, 6, 10, 0.9) 100%
+            rgba(0, 0, 0, 0.02) 0%,
+            rgba(0, 0, 0, 0.05) 38%,
+            rgba(0, 0, 0, 0.18) 72%,
+            rgba(8, 4, 6, 0.52) 100%
         );
     }
 
     .hero-slider .slide-content {
         align-items: stretch;
         justify-content: flex-end;
-        padding-top: 96px;
-        padding-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+        padding: 88px 14px max(22px, env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Заголовки ~на 25% меньше, без лишних вертикальных зазоров */
+    .hero-slider .luxury-title {
+        font-size: clamp(1.45rem, 4vw, 2rem);
+        line-height: 1.07;
+        margin-bottom: 0.15rem;
     }
 
     .hero-slider .luxury-title-wrapper {
-        padding: 14px 16px;
-        margin-bottom: 14px;
-        border-radius: 14px;
-        background: rgba(0, 0, 0, 0.42);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        padding: 9px 11px;
+        margin-bottom: 8px;
+        gap: 0.15rem;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.26);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
     }
 
     .hero-slider .slide-subtitle {
-        margin-bottom: 12px;
-        padding: 8px 12px;
+        margin-bottom: 6px;
+        padding: 5px 10px;
+        font-size: clamp(0.65rem, 2.6vw, 0.78rem);
+        letter-spacing: 2px;
         border-radius: 999px;
-        background: rgba(0, 0, 0, 0.38);
+        background: rgba(0, 0, 0, 0.28);
         width: fit-content;
         max-width: 100%;
         margin-left: auto;
@@ -2211,9 +2261,23 @@ img {
     }
 
     .hero-slider .slide-description {
-        background: rgba(0, 0, 0, 0.72);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 10px 36px rgba(0, 0, 0, 0.4);
+        margin-bottom: 10px;
+        padding: clamp(9px, 2.5vw, 12px) clamp(10px, 3vw, 14px);
+        font-size: clamp(0.82rem, 3.1vw, 0.95rem);
+        line-height: 1.45;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero-slider .slide-buttons {
+        gap: 8px;
+        margin-top: 2px;
+    }
+
+    .hero-slider .slide-buttons .btn {
+        padding: 12px 16px;
+        font-size: clamp(0.8rem, 3vw, 0.9rem);
     }
 
     .slide.active .slide-background {
@@ -2385,6 +2449,10 @@ img {
     
     .luxury-title {
         font-size: 1.8rem;
+    }
+
+    .hero-slider .luxury-title {
+        font-size: clamp(1.28rem, 5.2vw, 1.72rem);
     }
     
     .help-cards,

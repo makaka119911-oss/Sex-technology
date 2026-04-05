@@ -411,9 +411,9 @@ img {
         image-rendering: crisp-edges;
     }
     
-    /* Герой: фото светлее (раньше 0.6 — слишком темнило кадр) */
+    /* Герой: фото светлее, чтобы просвечивало под текстом */
     .hero-slider .slide-background {
-        filter: brightness(0.92) contrast(1.03);
+        filter: brightness(0.96) contrast(1.02);
     }
 }
 
