@@ -837,6 +837,10 @@ img {
     .hero-slider .slide-buttons {
         gap: 10px;
     }
+
+    .hero-slider .slide--minimal .slide-buttons {
+        margin-top: clamp(20px, 3vw, 36px);
+    }
 }
 
 .slide-content {
@@ -2295,7 +2299,7 @@ img {
     }
 
     .hero-slider .slide--minimal .slide-buttons {
-        margin-top: 10px;
+        margin-top: clamp(22px, 5vw, 36px);
     }
 
     .hero-slider.hero-mobile-layout--bottom {
