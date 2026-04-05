@@ -838,8 +838,27 @@ img {
         gap: 10px;
     }
 
+    /* Первый слайд: плашка с заголовком — у рук на фото, кнопка у нижнего края */
+    .hero-slider .slide--minimal .slide-content {
+        align-items: stretch;
+        justify-content: flex-start;
+        padding-top: clamp(64px, 7vh, 96px);
+        padding-bottom: clamp(24px, 4vw, 48px);
+    }
+
+    .hero-slider .slide--minimal .slide-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1 1 auto;
+        min-height: 0;
+        justify-content: flex-start;
+        padding-top: clamp(40px, 12vh, 100px);
+    }
+
     .hero-slider .slide--minimal .slide-buttons {
-        margin-top: clamp(32px, 4vw, 48px);
+        margin-top: auto;
+        flex-shrink: 0;
     }
 }
 
@@ -2253,7 +2272,7 @@ img {
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
-    /* Первый слайд: заголовок вверху кадра (уровень рук на фото), кнопка — у низа над «Терапия» */
+    /* Первый слайд: заголовок — у рук на фото (padding-top у .slide-text), кнопка — у низа над «Терапия» */
     /* stretch вместо center — иначе .slide-text с flex:1 иногда не растягивается, space-between не даёт зазора */
     .hero-slider .slide--minimal .slide-content {
         justify-content: flex-start;
@@ -2277,7 +2296,8 @@ img {
         align-items: center;
         justify-content: flex-start;
         gap: 0;
-        padding-top: clamp(18px, 5vh, 48px);
+        /* Уровень рук на кадре (середина по вертикали), не у лица/плеч */
+        padding-top: clamp(96px, 36vh, 240px);
         box-sizing: border-box;
     }
 
