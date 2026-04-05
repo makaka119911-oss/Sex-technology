@@ -2253,20 +2253,32 @@ img {
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
-    /* Первый слайд: блок у низа кадра; низ — чуть выше колонки 01–03 (верхняя строка «Терапия») */
+    /* Первый слайд: заголовок вверху кадра (уровень рук на фото), кнопка — у низа над «Терапия» */
+    /* stretch вместо center — иначе .slide-text с flex:1 иногда не растягивается, space-between не даёт зазора */
     .hero-slider .slide--minimal .slide-content {
+        justify-content: flex-start;
+        align-items: stretch;
         padding: 64px 16px calc(env(safe-area-inset-bottom, 0px) + clamp(120px, 32vw, 168px)) 16px;
     }
 
-    /* Первый слайд: заголовки по центру над кнопками; кнопки по центру внизу */
+    /* На всю высоту контента слайда; кнопка внизу через margin-top: auto (надёжнее, чем только space-between) */
     .hero-slider .slide--minimal .slide-text {
         max-height: none;
         overflow: visible;
         width: 100%;
+        flex: 1 1 0%;
+        min-height: 0;
+        height: 100%;
+        max-width: min(900px, 90vw);
+        margin-left: auto;
+        margin-right: auto;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 4px;
+        justify-content: flex-start;
+        gap: 0;
+        padding-top: clamp(4px, 2.5vh, 20px);
+        box-sizing: border-box;
     }
 
     .hero-slider .slide--minimal .luxury-title-wrapper {
@@ -2301,7 +2313,10 @@ img {
     }
 
     .hero-slider .slide--minimal .slide-buttons {
-        margin-top: clamp(40px, 7vw, 58px);
+        margin-top: auto;
+        flex-shrink: 0;
+        width: 100%;
+        max-width: min(100%, 420px);
     }
 
     .hero-slider.hero-mobile-layout--bottom {
