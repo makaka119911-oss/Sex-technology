@@ -2244,16 +2244,18 @@ img {
     }
 
     /* Положение блока с текстом: меняйте класс hero-mobile-layout--* на <section class="hero-slider ..."> */
+    /* column + justify по главной оси: иначе row даёт flex-end по горизонтали и align-items:center по вертикали — блок висит по центру на морде кадра */
     .hero-slider .slide-content {
+        flex-direction: column;
         align-items: center;
         justify-content: var(--hero-mobile-justify, flex-end);
         padding: var(--hero-mobile-pad-top, 88px) 16px calc(max(100px, env(safe-area-inset-bottom, 0px)) + var(--hero-mobile-pad-bottom-extra, 0px)) 16px;
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
-    /* Первый слайд: блок ниже, чтобы голова собаки была видна; низ — чуть выше подписи «Терапия» у индикаторов */
+    /* Первый слайд: блок у низа кадра; низ — чуть выше колонки 01–03 (верхняя строка «Терапия») */
     .hero-slider .slide--minimal .slide-content {
-        padding: 64px 16px max(22px, env(safe-area-inset-bottom, 0px)) 16px;
+        padding: 64px 16px calc(env(safe-area-inset-bottom, 0px) + clamp(120px, 32vw, 168px)) 16px;
     }
 
     /* Первый слайд: заголовки по центру над кнопками; кнопки по центру внизу */
