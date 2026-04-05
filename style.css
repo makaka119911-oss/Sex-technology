@@ -2252,16 +2252,11 @@ img {
         text-align: center;
         padding: 8px 12px 12px;
         margin-bottom: 4px;
-        background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.12) 0%,
-            rgba(128, 0, 32, 0.38) 55%,
-            rgba(178, 34, 52, 0.28) 100%
-        );
+        background: rgba(0, 0, 0, 0.28);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border-radius: 12px;
-        border: 1px solid rgba(178, 34, 52, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
         max-width: min(100%, 420px);
     }
@@ -2276,19 +2271,6 @@ img {
 
     .hero-slider .slide--minimal .luxury-title:last-of-type {
         margin-bottom: 0;
-    }
-
-    /* Полоска под второй строкой — лёгкий прозрачный красный */
-    .hero-slider .slide--minimal .luxury-title:last-of-type::after {
-        content: '';
-        display: block;
-        height: 4px;
-        margin-top: 8px;
-        border-radius: 999px;
-        background: rgba(178, 34, 52, 0.45);
-        max-width: 70%;
-        margin-left: auto;
-        margin-right: auto;
     }
 
     .hero-slider .slide--minimal .slide-buttons {
