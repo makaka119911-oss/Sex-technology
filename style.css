@@ -856,6 +856,11 @@ img {
         padding-top: clamp(32px, 10vh, 88px);
     }
 
+    /* Слайд «Разрешить себе / ЖЕЛАТЬ»: заголовок ниже, чем на слайде 1 */
+    .hero-slider .slide--minimal.slide--desire .slide-text {
+        padding-top: clamp(52px, 17vh, 132px);
+    }
+
     .hero-slider .slide--minimal .slide-buttons {
         margin-top: auto;
         flex-shrink: 0;
@@ -2302,6 +2307,10 @@ img {
         /* Уровень рук на кадре (середина по вертикали), не у лица/плеч */
         padding-top: clamp(84px, 32vh, 210px);
         box-sizing: border-box;
+    }
+
+    .hero-slider .slide--minimal.slide--desire .slide-text {
+        padding-top: clamp(108px, 42vh, 268px);
     }
 
     .hero-slider .slide--minimal .luxury-title-wrapper {
