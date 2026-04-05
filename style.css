@@ -2277,7 +2277,7 @@ img {
         align-items: center;
         justify-content: flex-start;
         gap: 0;
-        padding-top: clamp(4px, 2.5vh, 20px);
+        padding-top: clamp(18px, 5vh, 48px);
         box-sizing: border-box;
     }
 
