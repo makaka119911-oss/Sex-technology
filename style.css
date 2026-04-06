@@ -856,7 +856,7 @@ img {
         gap: 10px;
     }
 
-    /* Слайд 1: кнопка «О нас» закреплена у нижнего края (absolute — не ломается flex-центрированием) */
+    /* Слайд 1: заголовок сразу над кнопкой «О нас», блок у нижнего края */
     .hero-slider .slide--intro .slide-content.slide-content--intro {
         align-items: stretch;
         justify-content: flex-start;
@@ -864,28 +864,51 @@ img {
         flex: 1 1 auto;
         min-height: 0;
         height: 100%;
-        padding-top: clamp(56px, 6vh, 88px);
-        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(52px, 9vh, 88px));
+        padding: clamp(56px, 6vh, 88px) clamp(16px, 3vw, 24px) calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2vh, 24px));
     }
 
-    .hero-slider .slide--intro .slide-text {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex: 0 1 auto;
-        min-height: 0;
-        justify-content: flex-start;
-        padding-top: clamp(28px, 9vh, 80px);
-    }
-
-    .hero-slider .slide--intro .slide-buttons--intro-foot {
+    .hero-slider .slide--intro .slide-intro-bottom {
         position: absolute;
         left: 50%;
         bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2.2vh, 26px));
-        width: min(92vw, 420px);
-        margin: 0;
         transform: translateX(-50%);
+        width: min(92vw, 480px);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: clamp(14px, 2.2vh, 22px);
         z-index: 4;
+    }
+
+    .hero-slider .slide--intro .slide-text--intro {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
+        padding: clamp(14px, 2vw, 22px) clamp(16px, 2.4vw, 28px);
+    }
+
+    .hero-slider .slide--intro .luxury-title {
+        font-size: clamp(2.45rem, 4.7vw, 3.6rem);
+        line-height: 1.08;
+        letter-spacing: 0.04em;
+    }
+
+    .hero-slider .slide--intro .slide-buttons--intro-foot {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        transform: none;
     }
 
     /* Слайд 3: заголовок + кнопки внутри .slide-text */
@@ -2358,43 +2381,52 @@ img {
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
-    /* Слайд 1 intro: кнопка у нижнего края экрана слайда */
+    /* Слайд 1 intro: заголовок над кнопкой, общий блок у низа */
     .hero-slider .slide--intro .slide-content.slide-content--intro {
         justify-content: flex-start;
         align-items: stretch;
         flex: 1 1 auto;
         min-height: 0;
         height: 100%;
-        padding: 52px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(72px, 20vw, 120px)) 14px;
+        padding: 52px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 3vw, 20px)) 14px;
     }
 
-    .hero-slider .slide--intro .slide-text {
-        max-height: none;
-        overflow: visible;
-        width: 100%;
-        flex: 0 1 auto;
-        min-height: 0;
-        height: auto;
-        max-width: min(900px, 90vw);
-        margin-left: auto;
-        margin-right: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 0;
-        padding-top: clamp(64px, 26vh, 168px);
-        box-sizing: border-box;
-    }
-
-    .hero-slider .slide--intro .slide-buttons--intro-foot {
+    .hero-slider .slide--intro .slide-intro-bottom {
         position: absolute;
         left: 50%;
         bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 3.5vw, 22px));
-        width: min(100%, 390px);
-        margin: 0;
         transform: translateX(-50%);
+        width: min(100%, 400px);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: clamp(12px, 3vw, 18px);
         z-index: 4;
+    }
+
+    .hero-slider .slide--intro .slide-text--intro {
+        max-height: none;
+        overflow: visible;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .hero-slider .slide--intro .luxury-title {
+        font-size: clamp(1.08rem, 5.2vw, 1.52rem);
+        line-height: 1.18;
+        letter-spacing: 0.05em;
+    }
+
+    .hero-slider .slide--intro .slide-buttons--intro-foot {
+        position: static;
+        width: 100%;
+        margin: 0;
+        transform: none;
     }
 
     /* Слайд 3: прежняя вёрстка с кнопками внутри .slide-text */
@@ -2427,7 +2459,7 @@ img {
         padding-top: clamp(90px, 36vh, 222px);
     }
 
-    .hero-slider .slide--minimal .luxury-title-wrapper {
+    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title-wrapper {
         align-self: center;
         text-align: center;
         padding: 7px 10px 10px;
@@ -2446,7 +2478,7 @@ img {
         max-width: min(100%, 420px);
     }
 
-    .hero-slider .slide--minimal .luxury-title {
+    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title {
         font-size: clamp(0.92rem, 3.95vw, 1.22rem);
         line-height: 1.2;
         letter-spacing: 0.05em;
@@ -2454,8 +2486,27 @@ img {
         margin-bottom: 0.1rem;
     }
 
-    .hero-slider .slide--minimal .luxury-title:last-of-type {
+    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title:last-of-type {
         margin-bottom: 0;
+    }
+
+    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero {
+        align-self: center;
+        text-align: center;
+        max-width: 100%;
+        margin-bottom: 0;
+        padding: 10px 12px 12px;
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.22) 0%,
+            rgba(90, 0, 23, 0.42) 42%,
+            rgba(128, 0, 32, 0.48) 100%
+        );
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 12px;
+        border: 1px solid rgba(178, 34, 52, 0.42);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.24);
     }
 
     .hero-slider .slide--minimal:not(.slide--intro) .slide-buttons {
@@ -3267,7 +3318,7 @@ img {
 
 .hero-slider .slide--intro .slide-buttons--intro-foot {
     opacity: 0;
-    transform: translateX(-50%) translateY(18px);
+    transform: translateY(18px);
 }
 
 .hero-slider .slide.active .slide-subtitle,
@@ -3283,7 +3334,7 @@ img {
 .hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot) { animation-delay: 270ms; }
 
 .hero-slider .slide--intro.active .slide-buttons--intro-foot {
-    animation: heroIntroFootReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: 270ms;
 }
 
@@ -3295,17 +3346,6 @@ img {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes heroIntroFootReveal {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(18px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
     }
 }
 
@@ -3411,7 +3451,7 @@ img {
     .hero-slider .slide--intro .slide-buttons--intro-foot {
         animation: none !important;
         opacity: 1 !important;
-        transform: translateX(-50%) translateY(0) !important;
+        transform: translateY(0) !important;
     }
 }
 
