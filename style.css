@@ -1897,6 +1897,80 @@ img {
     transition-delay: 0.2s;
 }
 
+/* ===== АФИША МЕРОПРИЯТИЙ ===== */
+.events-section {
+    background: linear-gradient(135deg, rgba(20, 10, 13, 1) 0%, rgba(70, 10, 35, 0.55) 55%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 50px;
+}
+
+@media (min-width: 992px) {
+    .events-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+}
+
+.event-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(128, 0, 32, 0.2);
+    border-radius: var(--radius-xl);
+    padding: clamp(25px, 3vw, 35px);
+    transition: var(--transition-cinematic);
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-lg);
+}
+
+.event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.event-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--cinematic-text);
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+}
+
+.event-meta-item i {
+    color: var(--color-primary);
+    font-size: 14px;
+}
+
+.event-title {
+    color: #ffffff;
+    margin-bottom: 12px;
+    font-size: clamp(1.15rem, 2.1vw, 1.45rem);
+    line-height: 1.25;
+}
+
+.event-desc {
+    color: var(--cinematic-text);
+    line-height: 1.7;
+    font-size: clamp(0.95rem, 1.5vw, 1rem);
+    margin-bottom: 22px;
+}
+
+.event-cta {
+    width: 100%;
+    justify-content: center;
+}
+
 /* ===== ОТЗЫВЫ ===== */
 .testimonials-section {
     background: var(--gradient-black-red);
