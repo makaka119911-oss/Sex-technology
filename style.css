@@ -1007,11 +1007,15 @@ img {
 
 .slider-indicators {
     position: absolute;
-    left: clamp(15px, 3vw, 50px);
-    bottom: clamp(20px, 4vw, 50px);
+    /* Под фиксированной шапкой, правый верх */
+    top: calc(env(safe-area-inset-top, 0px) + clamp(72px, 11vw, 96px));
+    right: max(12px, env(safe-area-inset-right, 0px));
+    left: auto;
+    bottom: auto;
     display: flex;
     flex-direction: column;
-    gap: clamp(10px, 2vw, 20px);
+    align-items: flex-end;
+    gap: clamp(8px, 1.8vw, 16px);
     z-index: 3;
 }
 
@@ -2494,17 +2498,7 @@ img {
         display: none;
     }
     
-    /* 01–03 Терапия / Круги / Свобода — правый нижний угол (чуть выше полосы прогресса, под блоком с текстом) */
-    .hero-slider .slider-indicators {
-        left: auto;
-        right: max(10px, env(safe-area-inset-right, 0px));
-        top: auto;
-        bottom: clamp(48px, 12vw, 68px);
-        transform: none;
-        gap: 8px;
-        align-items: flex-end;
-    }
-
+    /* Индикаторы 01–03: правый верх под шапкой (базовые правила у .slider-indicators) */
     .hero-slider .slider-indicators .indicator {
         justify-content: flex-end;
     }
