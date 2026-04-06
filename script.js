@@ -333,7 +333,9 @@ class CinematicHeroSlider {
         }
 
         if (!prefersReducedMotion) {
-            const animatedItems = activeSlide.querySelectorAll('.slide-subtitle, .luxury-title-wrapper, .slide-description, .slide-buttons');
+            const animatedItems = activeSlide.querySelectorAll(
+                '.slide-subtitle, .luxury-title-wrapper, .slide-description, .slide-buttons, .hero-slide2-eyebrow, .hero-slide2-lead'
+            );
             animatedItems.forEach((item) => {
                 item.style.animation = 'none';
             });

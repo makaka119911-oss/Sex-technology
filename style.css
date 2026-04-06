@@ -985,6 +985,70 @@ img {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Герой, слайд 2: рубрика «Женские круги» + лид — слева сверху под шапкой; без «плашек» slide-subtitle / slide-description */
+.hero-slider .slide--circles .slide-content.slide-content--circles {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 100%;
+    padding: clamp(72px, 10vh, 112px) clamp(16px, 3vw, 28px) calc(env(safe-area-inset-bottom, 0px) + clamp(72px, 18vw, 120px));
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.hero-slider .slide--circles .hero-slide2-top {
+    align-self: flex-start;
+    width: 100%;
+    max-width: min(440px, 94vw);
+}
+
+.hero-slider .slide--circles .hero-slide2-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: clamp(8px, 1.4vw, 14px);
+    margin: 0 0 clamp(10px, 1.8vw, 18px);
+    font-size: clamp(0.78rem, 1.15vw, 0.92rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--color-primary);
+}
+
+.hero-slider .slide--circles .hero-slide2-eyebrow-line {
+    width: clamp(28px, 3.5vw, 44px);
+    height: 1px;
+    background: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.hero-slider .slide--circles .hero-slide2-lead {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    font-size: clamp(0.92rem, 1.5vw, 1.08rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.94);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+}
+
+.hero-slider .slide--circles .slide-text--circles {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+}
+
 .slide-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -2444,6 +2508,39 @@ img {
         padding: 10px 16px;
     }
 
+    /* Слайд 2: рубрика + лид слева сверху (перебивает общий .slide-content на мобилке) */
+    .hero-slider .slide--circles .slide-content.slide-content--circles {
+        justify-content: space-between;
+        align-items: stretch;
+        padding: clamp(68px, 11vw, 96px) 14px calc(env(safe-area-inset-bottom, 0px) + clamp(88px, 24vw, 138px)) 14px;
+        transform: none;
+    }
+
+    .hero-slider .slide--circles .hero-slide2-top {
+        max-width: min(100%, 420px);
+    }
+
+    .hero-slider .slide--circles .hero-slide2-eyebrow {
+        color: #fff;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+        font-size: clamp(0.68rem, 3.1vw, 0.86rem);
+        letter-spacing: 0.18em;
+    }
+
+    .hero-slider .slide--circles .hero-slide2-eyebrow-line {
+        background: rgba(255, 240, 245, 0.88);
+    }
+
+    .hero-slider .slide--circles .hero-slide2-lead {
+        font-size: clamp(0.8rem, 3.05vw, 0.92rem);
+        line-height: 1.48;
+    }
+
+    .hero-slider .slide--circles .slide-text--circles {
+        max-height: none;
+        overflow: visible;
+    }
+
     /* Слайд 3: прежняя вёрстка с кнопками внутри .slide-text */
     .hero-slider .slide--minimal:not(.slide--intro) .slide-content {
         justify-content: flex-start;
@@ -3331,7 +3428,9 @@ img {
 .hero-slider .slide .slide-subtitle,
 .hero-slider .slide .luxury-title-wrapper,
 .hero-slider .slide .slide-description,
-.hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot) {
+.hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot),
+.hero-slider .slide--circles .hero-slide2-eyebrow,
+.hero-slider .slide--circles .hero-slide2-lead {
     opacity: 0;
     transform: translateY(18px);
 }
@@ -3344,7 +3443,9 @@ img {
 .hero-slider .slide.active .slide-subtitle,
 .hero-slider .slide.active .luxury-title-wrapper,
 .hero-slider .slide.active .slide-description,
-.hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot) {
+.hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot),
+.hero-slider .slide--circles.active .hero-slide2-eyebrow,
+.hero-slider .slide--circles.active .hero-slide2-lead {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -3352,6 +3453,11 @@ img {
 .hero-slider .slide.active .luxury-title-wrapper { animation-delay: 140ms; }
 .hero-slider .slide.active .slide-description { animation-delay: 210ms; }
 .hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot) { animation-delay: 270ms; }
+
+.hero-slider .slide--circles.active .hero-slide2-eyebrow { animation-delay: 70ms; }
+.hero-slider .slide--circles.active .hero-slide2-lead { animation-delay: 140ms; }
+.hero-slider .slide--circles.active .luxury-title-wrapper { animation-delay: 180ms; }
+.hero-slider .slide--circles.active .slide-buttons:not(.slide-buttons--intro-foot) { animation-delay: 270ms; }
 
 .hero-slider .slide--intro.active .slide-buttons--intro-foot {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -3462,7 +3568,9 @@ img {
     .hero-slider .slide .slide-subtitle,
     .hero-slider .slide .luxury-title-wrapper,
     .hero-slider .slide .slide-description,
-    .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot) {
+    .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot),
+    .hero-slider .slide--circles .hero-slide2-eyebrow,
+    .hero-slider .slide--circles .hero-slide2-lead {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
