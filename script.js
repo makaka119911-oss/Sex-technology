@@ -1042,6 +1042,73 @@ function initMobileStickyCta() {
     updateCtaState();
 }
 
+// ===== МОБИЛЬНОЕ СВОРАЧИВАНИЕ СПИСКОВ =====
+function initMobileCollapsibleSections() {
+    const toggles = document.querySelectorAll('.mobile-collapsible-toggle .btn[data-target]');
+    if (!toggles.length) return;
+
+    const isMobile = () => window.innerWidth <= 768;
+
+    const updateState = () => {
+        toggles.forEach((btn) => {
+            const targetSelector = btn.getAttribute('data-target');
+            const itemsSelector = btn.getAttribute('data-items') || '.mobile-collapsible-item';
+            const target = targetSelector ? document.querySelector(targetSelector) : null;
+            if (!target) return;
+
+            const items = target.querySelectorAll(itemsSelector);
+            const wrapper = btn.closest('.mobile-collapsible-toggle');
+            if (!items.length || !wrapper) return;
+
+            if (!isMobile()) {
+                items.forEach((item) => item.classList.remove('is-collapsed-mobile'));
+                wrapper.style.display = 'none';
+                btn.setAttribute('aria-expanded', 'true');
+                return;
+            }
+
+            wrapper.style.display = 'flex';
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            items.forEach((item) => item.classList.toggle('is-collapsed-mobile', !expanded));
+            btn.querySelector('span').textContent = expanded ? 'Свернуть' : 'Показать ещё';
+        });
+    };
+
+    toggles.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            updateState();
+        });
+    });
+
+    window.addEventListener('resize', updateState);
+    updateState();
+}
+
+// ===== КНОПКА "НАВЕРХ" =====
+function initBackToTopButton() {
+    const btn = document.getElementById('backToTopBtn');
+    if (!btn) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const updateVisibility = () => {
+        const shouldShow = window.scrollY > window.innerHeight * 0.55;
+        btn.classList.toggle('is-visible', shouldShow);
+    };
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        });
+    });
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility);
+    updateVisibility();
+}
+
 // ===== ИНИЦИАЛИЗАЦИЯ ВСЕГО =====
 document.addEventListener('DOMContentLoaded', () => {
     // Базовые компоненты
@@ -1062,6 +1129,8 @@ document.addEventListener('DOMContentLoaded', () => {
     new MobileOptimization();
     initScrollReveal();
     initMobileStickyCta();
+    initMobileCollapsibleSections();
+    initBackToTopButton();
     
     // Добавление текущего года в футер
     const yearSpan = document.querySelector('#currentYear');

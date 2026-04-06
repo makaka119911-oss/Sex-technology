@@ -391,7 +391,7 @@
                         <p>Стыд за тело, зажимы, сложность показать себя настоящую и принимать комплименты.</p>
                     </article>
                     
-                    <article class="help-card">
+                    <article class="help-card mobile-collapsible-item is-collapsed-mobile">
                         <div class="help-icon">
                             <i class="fas fa-hands-helping" aria-hidden="true"></i>
                         </div>
@@ -399,7 +399,7 @@
                         <p>Опыт насилия или болезненных отношений, который влияет на интимность и доверие.</p>
                     </article>
                     
-                    <article class="help-card">
+                    <article class="help-card mobile-collapsible-item is-collapsed-mobile">
                         <div class="help-icon">
                             <i class="fas fa-ban" aria-hidden="true"></i>
                         </div>
@@ -407,13 +407,19 @@
                         <p>Воспитание, религиозные установки, чувство вины за свои фантазии и желания.</p>
                     </article>
                     
-                    <article class="help-card">
+                    <article class="help-card mobile-collapsible-item is-collapsed-mobile">
                         <div class="help-icon">
                             <i class="fas fa-comments" aria-hidden="true"></i>
                         </div>
                         <h3>Сложности говорить о сексе</h3>
                         <p>Страх быть «слишком», «не такой», трудность прямо озвучить, что нравится и чего хочется.</p>
                     </article>
+                </div>
+                <div class="mobile-collapsible-toggle">
+                    <button type="button" class="btn btn-secondary" data-target="#help" data-items=".mobile-collapsible-item" aria-expanded="false">
+                        <span>Показать ещё</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -800,7 +806,7 @@
         </section>
 
         <!-- FAQ -->
-        <section class="section faq-section">
+        <section class="section faq-section" id="faq">
             <div class="container">
                 <div class="section-header">
                     <div class="section-subtitle">Ответы на вопросы</div>
@@ -844,7 +850,7 @@
                         </div>
                     </article>
                     
-                    <article class="faq-item">
+                    <article class="faq-item mobile-collapsible-item is-collapsed-mobile">
                         <div class="faq-question">
                             <h3>Будете ли вы осуждать мои фантазии и желания?</h3>
                             <span class="faq-icon">
@@ -856,9 +862,19 @@
                         </div>
                     </article>
                 </div>
+                <div class="mobile-collapsible-toggle">
+                    <button type="button" class="btn btn-secondary" data-target="#faq" data-items=".mobile-collapsible-item" aria-expanded="false">
+                        <span>Показать ещё</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </section>
     </main>
+
+    <button class="back-to-top" id="backToTopBtn" aria-label="Наверх">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
 
     <div class="mobile-sticky-cta" id="mobileStickyCta" aria-hidden="true">
         <a href="#contact" class="btn btn-primary">

@@ -2480,6 +2480,11 @@ img {
         width: 100%;
         margin: 5px 0;
     }
+
+    /* Мобильный hero-flow: оставляем одну основную кнопку */
+    .hero-slider .slide .slide-buttons .btn:nth-child(n+2) {
+        display: none;
+    }
     
     /* Убираем ненужные элементы на мобильных */
     .scroll-indicator.desktop-only,
@@ -2663,6 +2668,30 @@ img {
 
     .faq-answer p {
         padding: 0 14px 16px;
+    }
+
+    .mobile-collapsible-item.is-collapsed-mobile {
+        display: none !important;
+    }
+
+    .mobile-collapsible-toggle {
+        margin-top: 14px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-collapsible-toggle .btn {
+        min-width: 180px;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .mobile-collapsible-toggle .btn i {
+        transition: transform 0.22s ease;
+    }
+
+    .mobile-collapsible-toggle .btn[aria-expanded="true"] i {
+        transform: rotate(180deg);
     }
     
     .section-description,
@@ -3178,6 +3207,40 @@ img {
     display: none;
 }
 
+.mobile-collapsible-toggle {
+    display: none;
+}
+
+.back-to-top {
+    position: fixed;
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: calc(max(76px, env(safe-area-inset-bottom, 0px)) + 12px);
+    z-index: 1190;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(8, 8, 12, 0.84);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    border-color: rgba(255, 232, 177, 0.7);
+}
+
 @media (max-width: 768px) {
     .mobile-sticky-cta {
         position: fixed;
@@ -3209,11 +3272,17 @@ img {
     .footer {
         padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
     }
+
+    .back-to-top {
+        bottom: calc(max(84px, env(safe-area-inset-bottom, 0px)) + 14px);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .reveal-on-scroll,
-    .mobile-sticky-cta {
+    .mobile-sticky-cta,
+    .back-to-top,
+    .mobile-collapsible-toggle .btn i {
         transition: none !important;
     }
 
