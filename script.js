@@ -820,6 +820,40 @@ class ContactForm {
     }
 }
 
+// ===== СЕКЦИЯ «ЗНАКОМСТВО»: только по клику на ссылку #about, не из reveal при скролле =====
+function openAboutSection() {
+    const section = document.getElementById('about');
+    const panel = document.getElementById('aboutPanel');
+    if (!section) return;
+    section.classList.add('about-section--expanded');
+    if (panel) panel.setAttribute('aria-hidden', 'false');
+}
+
+function scrollToHashTarget(target, smooth) {
+    const header = document.querySelector('.header');
+    const headerHeight = header ? header.offsetHeight : 80;
+    const targetPosition = Math.max(0, target.offsetTop - headerHeight);
+    window.scrollTo({
+        top: targetPosition,
+        behavior: smooth ? 'smooth' : 'auto'
+    });
+}
+
+/** Если в URL пришёл #about — раскрыть блок и прокрутить (для шаринга ссылки). */
+function initAboutFromHash() {
+    if (window.location.hash !== '#about') return;
+    openAboutSection();
+    const target = document.getElementById('about');
+    if (!target) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const run = () => scrollToHashTarget(target, false);
+    if (prefersReducedMotion) {
+        requestAnimationFrame(run);
+    } else {
+        setTimeout(run, 80);
+    }
+}
+
 // ===== ПЛАВНАЯ ПРОКРУТКА =====
 class SmoothScroll {
     constructor() {
@@ -827,6 +861,7 @@ class SmoothScroll {
     }
     
     init() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 const href = anchor.getAttribute('href');
@@ -846,6 +881,17 @@ class SmoothScroll {
                         syncBodyScrollLock();
                         burgerMenu.setAttribute('aria-expanded', 'false');
                     }
+
+                    if (href === '#about') {
+                        openAboutSection();
+                        const doScroll = () => scrollToHashTarget(target, !prefersReducedMotion);
+                        if (prefersReducedMotion) {
+                            requestAnimationFrame(doScroll);
+                        } else {
+                            setTimeout(doScroll, 70);
+                        }
+                        return;
+                    }
                     
                     const header = document.querySelector('.header');
                     const headerHeight = header ? header.offsetHeight : 80;
@@ -853,7 +899,7 @@ class SmoothScroll {
                     
                     window.scrollTo({
                         top: targetPosition,
-                        behavior: 'smooth'
+                        behavior: prefersReducedMotion ? 'auto' : 'smooth'
                     });
                 }
             });
@@ -955,7 +1001,7 @@ function initScrollReveal() {
         ...document.querySelectorAll(
             '.section-header, .expert-card, .help-card, .level-card, .circles-text, .circles-image, .gallery-item, .testimonial-content, .faq-item, .contact-person, .contact-form'
         )
-    ];
+    ].filter((el) => !el.closest('#about'));
 
     if (!revealTargets.length) return;
 
@@ -1128,6 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Мобильная оптимизация
     new MobileOptimization();
     initScrollReveal();
+    initAboutFromHash();
     initMobileStickyCta();
     initMobileCollapsibleSections();
     initBackToTopButton();

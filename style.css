@@ -856,15 +856,46 @@ img {
         gap: 10px;
     }
 
-    /* Первый слайд: плашка с заголовком — у рук на фото, кнопка у нижнего края */
-    .hero-slider .slide--minimal .slide-content {
+    /* Слайд 1 (intro): заголовок сверху, кнопка «О нас» — у нижнего края слайда */
+    .hero-slider .slide--intro .slide-content.slide-content--intro {
+        align-items: stretch;
+        justify-content: flex-start;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
+        padding-top: clamp(56px, 6vh, 88px);
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(10px, 2.2vh, 22px));
+    }
+
+    .hero-slider .slide--intro .slide-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 0 1 auto;
+        min-height: 0;
+        justify-content: flex-start;
+        padding-top: clamp(28px, 9vh, 80px);
+    }
+
+    .hero-slider .slide--intro .slide-buttons--intro-foot {
+        margin-top: auto;
+        flex-shrink: 0;
+        width: 100%;
+        max-width: min(900px, 92vw);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Слайд 3: заголовок + кнопки внутри .slide-text */
+    .hero-slider .slide--minimal:not(.slide--intro) .slide-content {
         align-items: stretch;
         justify-content: flex-start;
         padding-top: clamp(64px, 7vh, 96px);
         padding-bottom: clamp(24px, 4vw, 48px);
     }
 
-    .hero-slider .slide--minimal .slide-text {
+    .hero-slider .slide--minimal:not(.slide--intro) .slide-text {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -879,7 +910,7 @@ img {
         padding-top: clamp(52px, 17vh, 132px);
     }
 
-    .hero-slider .slide--minimal .slide-buttons {
+    .hero-slider .slide--minimal:not(.slide--intro) .slide-buttons {
         margin-top: auto;
         flex-shrink: 0;
     }
@@ -1090,6 +1121,31 @@ img {
 /* ===== СЕКЦИЯ "О НАС" ===== */
 .about-section {
     background: var(--gradient-dark);
+    scroll-margin-top: clamp(72px, 12vh, 100px);
+}
+
+/* Панель «Знакомство»: скрыта до клика по «О нас» (герой/меню), не раскрывается от скролла */
+.about-section:not(.about-section--expanded) .about-section__panel {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.42s ease,
+        visibility 0.42s;
+}
+
+.about-section.about-section--expanded .about-section__panel {
+    max-height: 10000px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.45s ease 0.06s,
+        visibility 0s;
 }
 
 .experts-grid {
@@ -2302,16 +2358,50 @@ img {
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
-    /* Первый слайд: заголовок — у рук на фото (padding-top у .slide-text), кнопка — у низа над «Терапия» */
-    /* stretch вместо center — иначе .slide-text с flex:1 иногда не растягивается, space-between не даёт зазора */
-    .hero-slider .slide--minimal .slide-content {
+    /* Слайд 1 intro: заголовок у рук, кнопка почти у низа (над индикаторами) */
+    .hero-slider .slide--intro .slide-content.slide-content--intro {
+        justify-content: flex-start;
+        align-items: stretch;
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
+        padding: 52px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(96px, 26vw, 138px)) 14px;
+    }
+
+    .hero-slider .slide--intro .slide-text {
+        max-height: none;
+        overflow: visible;
+        width: 100%;
+        flex: 0 1 auto;
+        min-height: 0;
+        height: auto;
+        max-width: min(900px, 90vw);
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0;
+        padding-top: clamp(64px, 26vh, 168px);
+        box-sizing: border-box;
+    }
+
+    .hero-slider .slide--intro .slide-buttons--intro-foot {
+        margin-top: auto;
+        flex-shrink: 0;
+        width: 100%;
+        max-width: min(100%, 390px);
+    }
+
+    /* Слайд 3: прежняя вёрстка с кнопками внутри .slide-text */
+    .hero-slider .slide--minimal:not(.slide--intro) .slide-content {
         justify-content: flex-start;
         align-items: stretch;
         padding: 54px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(104px, 28vw, 146px)) 14px;
     }
 
-    /* На всю высоту контента слайда; кнопка внизу через margin-top: auto (надёжнее, чем только space-between) */
-    .hero-slider .slide--minimal .slide-text {
+    .hero-slider .slide--minimal:not(.slide--intro) .slide-text {
         max-height: none;
         overflow: visible;
         width: 100%;
@@ -2326,7 +2416,6 @@ img {
         align-items: center;
         justify-content: flex-start;
         gap: 0;
-        /* Уровень рук на кадре (середина по вертикали), не у лица/плеч */
         padding-top: clamp(70px, 28vh, 172px);
         box-sizing: border-box;
     }
@@ -3273,6 +3362,11 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .about-section:not(.about-section--expanded) .about-section__panel,
+    .about-section.about-section--expanded .about-section__panel {
+        transition: none !important;
+    }
+
     .reveal-on-scroll,
     .mobile-sticky-cta,
     .back-to-top,

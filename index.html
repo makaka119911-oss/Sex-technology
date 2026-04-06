@@ -140,23 +140,23 @@
             
             <div class="slider-container">
                 <!-- Слайд 1 -->
-                <div class="slide active slide--minimal" data-slide="1">
+                <div class="slide active slide--minimal slide--intro" data-slide="1">
                     <div class="slide-background slide-bg-contain slide-hero-primary" style="--hero-bg-desktop: url('hero-presentation-desktop.png'); --hero-bg-mobile: url('hero-presentation-mobile.png')">
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
                     </div>
                     <div class="slide-overlay"></div>
-                    <div class="slide-content">
+                    <div class="slide-content slide-content--intro">
                         <div class="slide-text">
                             <div class="luxury-title-wrapper">
                                 <div class="luxury-title">Два взгляда, одна цель</div>
                                 <div class="luxury-title">ваша живая сексуальность</div>
                             </div>
-                            <div class="slide-buttons">
-                                <a href="#about" class="btn btn-secondary">
-                                    <span>О нас</span>
-                                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                                </a>
-                            </div>
+                        </div>
+                        <div class="slide-buttons slide-buttons--intro-foot">
+                            <a href="#about" class="btn btn-secondary">
+                                <span>О нас</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                     
@@ -276,9 +276,10 @@
             </div>
         </section>
 
-        <!-- О нас -->
-        <section class="section about-section" id="about">
+        <!-- О нас: панель раскрывается по клику на «О нас» в герое (не при скролле) -->
+        <section class="section about-section" id="about" aria-label="О нас и знакомство">
             <div class="container">
+                <div class="about-section__panel" id="aboutPanel" aria-hidden="true">
                 <div class="section-header">
                     <div class="section-subtitle">Знакомство</div>
                     <h2 class="section-title">Кто мы и как работаем</h2>
@@ -353,6 +354,7 @@
                             </a>
                         </div>
                     </article>
+                </div>
                 </div>
             </div>
         </section>
