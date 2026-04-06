@@ -988,40 +988,59 @@ img {
 /* Герой, слайд 2: рубрика «Женские круги» + лид — слева сверху под шапкой; без «плашек» slide-subtitle / slide-description */
 .hero-slider .slide--circles .slide-content.slide-content--circles {
     position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
     height: 100%;
-    padding: clamp(72px, 10vh, 112px) clamp(16px, 3vw, 28px) calc(env(safe-area-inset-bottom, 0px) + clamp(72px, 18vw, 120px));
+    /* Ниже фиксированного header + safe-area; справа место под колонку индикаторов */
+    padding-top: calc(env(safe-area-inset-top, 0px) + clamp(88px, 11vh, 120px));
+    padding-left: clamp(16px, 3vw, 28px);
+    padding-right: clamp(16px, 3vw, 28px);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(72px, 18vw, 120px));
     box-sizing: border-box;
     text-align: left;
 }
 
 .hero-slider .slide--circles .hero-slide2-top {
-    align-self: flex-start;
+    position: relative;
+    z-index: 2;
+    align-self: stretch;
     width: 100%;
-    max-width: min(440px, 94vw);
+    max-width: min(calc(100% - clamp(100px, 22vw, 180px)), 440px);
+    padding-right: clamp(0px, 2vw, 12px);
+    box-sizing: border-box;
 }
 
 .hero-slider .slide--circles .hero-slide2-eyebrow {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: clamp(8px, 1.4vw, 14px);
     margin: 0 0 clamp(10px, 1.8vw, 18px);
     font-size: clamp(0.78rem, 1.15vw, 0.92rem);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    color: var(--color-primary);
+    /* Светлый текст + тень — иначе бордовый primary теряется на тёмном кадре */
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+}
+
+.hero-slider .slide--circles .hero-slide2-eyebrow-text {
+    color: inherit;
+    white-space: nowrap;
 }
 
 .hero-slider .slide--circles .hero-slide2-eyebrow-line {
     width: clamp(28px, 3.5vw, 44px);
-    height: 1px;
-    background: var(--color-primary);
+    min-width: 20px;
+    height: 2px;
+    min-height: 2px;
+    background: rgba(255, 240, 245, 0.92);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
     flex-shrink: 0;
 }
 
@@ -2508,23 +2527,41 @@ img {
         padding: 10px 16px;
     }
 
-    /* Слайд 2: рубрика + лид слева сверху (перебивает общий .slide-content на мобилке) */
+    /*
+     * Слайд 2: рубрика + лид слева сверху.
+     * padding-top с safe-area — ниже фиксированной шапки (иначе «Женские круги» уезжает под header).
+     * Справа резерв под колонку 01/02/03 — иначе лид наезжает на индикаторы.
+     * Анимацию hero у рубрики/лида на мобилке отключаем — без залипания opacity:0.
+     */
     .hero-slider .slide--circles .slide-content.slide-content--circles {
         justify-content: space-between;
         align-items: stretch;
-        padding: clamp(68px, 11vw, 96px) 14px calc(env(safe-area-inset-bottom, 0px) + clamp(88px, 24vw, 138px)) 14px;
+        padding-top: calc(env(safe-area-inset-top, 0px) + clamp(92px, 17vw, 118px));
+        padding-left: max(14px, env(safe-area-inset-left, 0px));
+        padding-right: max(14px, env(safe-area-inset-right, 0px));
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(88px, 24vw, 138px));
         transform: none;
     }
 
     .hero-slider .slide--circles .hero-slide2-top {
-        max-width: min(100%, 420px);
+        align-self: stretch;
+        max-width: none;
+        width: 100%;
+        padding-right: clamp(96px, 34vw, 148px);
+        box-sizing: border-box;
     }
 
     .hero-slider .slide--circles .hero-slide2-eyebrow {
+        flex-wrap: wrap;
+        row-gap: 6px;
         color: #fff;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
         font-size: clamp(0.68rem, 3.1vw, 0.86rem);
         letter-spacing: 0.18em;
+        min-height: 1.6em;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
     }
 
     .hero-slider .slide--circles .hero-slide2-eyebrow-line {
@@ -2534,6 +2571,9 @@ img {
     .hero-slider .slide--circles .hero-slide2-lead {
         font-size: clamp(0.8rem, 3.05vw, 0.92rem);
         line-height: 1.48;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
     }
 
     .hero-slider .slide--circles .slide-text--circles {
