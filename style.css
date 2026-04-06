@@ -2649,6 +2649,11 @@ img {
         gap: clamp(14px, 3vh, 26px);
     }
 
+    /* Поднимаем заголовок на слайде 2 чуть выше фиксированных кнопок */
+    .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
+        margin-bottom: clamp(10px, 2.2vh, 16px);
+    }
+
     .hero-slider .slide--circles .slide-text--circles .luxury-title {
         font-size: clamp(1.38rem, 5.9vw, 2.05rem);
         line-height: 1.07;
