@@ -2393,13 +2393,17 @@ img {
 
     .hero-slider .slide--intro .slide-intro-bottom {
         position: absolute;
-        left: 50%;
+        left: max(14px, env(safe-area-inset-left, 0px));
+        right: max(14px, env(safe-area-inset-right, 0px));
         bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 3.5vw, 22px));
-        transform: translateX(-50%);
-        width: min(100%, 400px);
+        width: auto;
+        max-width: min(100%, 400px);
+        margin-left: auto;
+        margin-right: auto;
+        transform: none;
         display: flex;
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         gap: clamp(12px, 3vw, 18px);
         z-index: 4;
     }
@@ -2420,13 +2424,24 @@ img {
         font-size: clamp(1.08rem, 5.2vw, 1.52rem);
         line-height: 1.18;
         letter-spacing: 0.05em;
+        text-align: center;
+        display: block;
+        width: 100%;
     }
 
     .hero-slider .slide--intro .slide-buttons--intro-foot {
         position: static;
-        width: 100%;
+        width: auto;
+        max-width: min(68vw, 240px);
         margin: 0;
+        align-self: center;
         transform: none;
+    }
+
+    .hero-slider .slide--intro .slide-buttons--intro-foot .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 16px;
     }
 
     /* Слайд 3: прежняя вёрстка с кнопками внутри .slide-text */
@@ -2493,9 +2508,14 @@ img {
     .hero-slider .slide--intro .luxury-title-wrapper--intro-hero {
         align-self: center;
         text-align: center;
+        width: 100%;
         max-width: 100%;
         margin-bottom: 0;
         padding: 10px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
         background: linear-gradient(
             180deg,
             rgba(0, 0, 0, 0.22) 0%,
