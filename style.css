@@ -2294,7 +2294,7 @@ img {
         flex-direction: column;
         align-items: center;
         justify-content: var(--hero-mobile-justify, flex-end);
-        padding: var(--hero-mobile-pad-top, 88px) 16px calc(max(100px, env(safe-area-inset-bottom, 0px)) + var(--hero-mobile-pad-bottom-extra, 0px)) 16px;
+        padding: var(--hero-mobile-pad-top, 78px) 14px calc(max(88px, env(safe-area-inset-bottom, 0px)) + var(--hero-mobile-pad-bottom-extra, 0px)) 14px;
         transform: translateY(var(--hero-mobile-nudge-y, 0px));
     }
 
@@ -2303,7 +2303,7 @@ img {
     .hero-slider .slide--minimal .slide-content {
         justify-content: flex-start;
         align-items: stretch;
-        padding: 64px 16px calc(env(safe-area-inset-bottom, 0px) + clamp(120px, 32vw, 168px)) 16px;
+        padding: 54px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(104px, 28vw, 146px)) 14px;
     }
 
     /* На всю высоту контента слайда; кнопка внизу через margin-top: auto (надёжнее, чем только space-between) */
@@ -2323,19 +2323,19 @@ img {
         justify-content: flex-start;
         gap: 0;
         /* Уровень рук на кадре (середина по вертикали), не у лица/плеч */
-        padding-top: clamp(84px, 32vh, 210px);
+        padding-top: clamp(70px, 28vh, 172px);
         box-sizing: border-box;
     }
 
     .hero-slider .slide--minimal.slide--desire .slide-text {
-        padding-top: clamp(108px, 42vh, 268px);
+        padding-top: clamp(90px, 36vh, 222px);
     }
 
     .hero-slider .slide--minimal .luxury-title-wrapper {
         align-self: center;
         text-align: center;
-        padding: 8px 12px 12px;
-        margin-bottom: 4px;
+        padding: 7px 10px 10px;
+        margin-bottom: 2px;
         background: linear-gradient(
             180deg,
             rgba(0, 0, 0, 0.2) 0%,
@@ -2351,11 +2351,11 @@ img {
     }
 
     .hero-slider .slide--minimal .luxury-title {
-        font-size: clamp(0.95rem, 4.15vw, 1.28rem);
-        line-height: 1.22;
+        font-size: clamp(0.92rem, 3.95vw, 1.22rem);
+        line-height: 1.2;
         letter-spacing: 0.05em;
         text-align: center;
-        margin-bottom: 0.15rem;
+        margin-bottom: 0.1rem;
     }
 
     .hero-slider .slide--minimal .luxury-title:last-of-type {
@@ -2366,7 +2366,7 @@ img {
         margin-top: auto;
         flex-shrink: 0;
         width: 100%;
-        max-width: min(100%, 420px);
+        max-width: min(100%, 390px);
     }
 
     .hero-slider.hero-mobile-layout--bottom {
@@ -2384,7 +2384,7 @@ img {
 
     /* Текст не заходит на середину кадра: ограничение высоты + прокрутка при необходимости */
     .hero-slider .slide-text {
-        max-height: var(--hero-mobile-text-max-h, min(48vh, 380px));
+        max-height: var(--hero-mobile-text-max-h, min(44vh, 340px));
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
@@ -2404,8 +2404,8 @@ img {
 
     /* Золотой текст без изменений; за ним — полупрозрачный бордовый фон (слайды 2–3 и общий вид) */
     .hero-slider .luxury-title-wrapper {
-        padding: 10px 14px 12px;
-        margin-bottom: 8px;
+        padding: 8px 12px 10px;
+        margin-bottom: 6px;
         gap: 0.2rem;
         border-radius: 12px;
         background: linear-gradient(
@@ -2443,9 +2443,9 @@ img {
     }
 
     .hero-slider .slide-description {
-        margin-bottom: 10px;
-        padding: clamp(9px, 2.5vw, 12px) clamp(10px, 3vw, 14px);
-        font-size: clamp(0.82rem, 3.1vw, 0.95rem);
+        margin-bottom: 8px;
+        padding: clamp(8px, 2.3vw, 11px) clamp(9px, 2.8vw, 12px);
+        font-size: clamp(0.8rem, 2.9vw, 0.92rem);
         line-height: 1.45;
         background: rgba(0, 0, 0, 0.55);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -2453,18 +2453,18 @@ img {
     }
 
     .hero-slider .slide-buttons {
-        gap: 8px;
-        margin-top: 4px;
+        gap: 7px;
+        margin-top: 2px;
         align-items: center;
         width: 100%;
-        max-width: 400px;
+        max-width: 360px;
         margin-left: auto;
         margin-right: auto;
     }
 
     .hero-slider .slide-buttons .btn {
-        padding: 12px 16px;
-        font-size: clamp(0.8rem, 3vw, 0.9rem);
+        padding: 10px 14px;
+        font-size: clamp(0.76rem, 2.8vw, 0.88rem);
     }
 
     .slide.active .slide-background {
@@ -2494,7 +2494,7 @@ img {
         left: auto;
         right: max(10px, env(safe-area-inset-right, 0px));
         top: auto;
-        bottom: clamp(44px, 11vw, 62px);
+        bottom: clamp(48px, 12vw, 68px);
         transform: none;
         gap: 8px;
         align-items: flex-end;
@@ -2507,6 +2507,162 @@ img {
     /* Улучшаем читаемость */
     .section {
         padding: 50px 0;
+    }
+
+    /* Быстрый мобильный апгрейд: меньше вертикального скролла без потери читаемости */
+    .section-header {
+        margin: 0 auto clamp(24px, 5vw, 34px);
+    }
+
+    .section-subtitle {
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+    }
+
+    .section-title {
+        margin-bottom: 10px;
+    }
+
+    .section-description {
+        margin-bottom: 0.6rem;
+    }
+
+    .experts-grid,
+    .help-cards,
+    .levels-container,
+    .gallery-grid,
+    .faq-grid {
+        gap: 16px;
+    }
+
+    .experts-grid {
+        margin-top: 26px;
+    }
+
+    .expert-info {
+        padding: 18px 14px;
+    }
+
+    .expert-specialties {
+        margin-bottom: 16px;
+    }
+
+    .expert-specialties li {
+        margin-bottom: 8px;
+    }
+
+    .help-card {
+        padding: 18px 14px;
+        border-radius: 18px;
+    }
+
+    .help-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 14px;
+        font-size: 22px;
+    }
+
+    .help-card h3 {
+        margin-bottom: 8px;
+    }
+
+    .level-header {
+        padding: 18px 14px;
+    }
+
+    .level-content {
+        padding: 18px 14px;
+    }
+
+    .level-content p {
+        margin-bottom: 14px;
+    }
+
+    .level-features {
+        margin-bottom: 16px;
+    }
+
+    .level-duration {
+        padding: 14px;
+        margin-bottom: 14px;
+    }
+
+    .levels-note {
+        margin-top: 22px;
+        padding: 14px;
+    }
+
+    .circles-content {
+        gap: 18px;
+    }
+
+    .circles-description {
+        margin-bottom: 14px;
+    }
+
+    .features-list {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .note-box {
+        padding: 14px;
+        margin-bottom: 16px;
+    }
+
+    .testimonial-content {
+        padding: 24px 14px;
+        border-radius: 20px;
+    }
+
+    .testimonial-text {
+        margin-bottom: 16px;
+    }
+
+    .testimonial-controls {
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .contact-content {
+        gap: 18px;
+    }
+
+    .contact-description {
+        margin-bottom: 18px;
+    }
+
+    .contacts-block {
+        gap: 14px;
+    }
+
+    .contact-person {
+        padding: 14px;
+    }
+
+    .contact-person h4 {
+        margin-bottom: 12px;
+    }
+
+    .contact-details {
+        gap: 10px;
+    }
+
+    .contact-form h3 {
+        margin-bottom: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .faq-question {
+        padding: 16px 14px;
+    }
+
+    .faq-answer p {
+        padding: 0 14px 16px;
     }
     
     .section-description,
@@ -2641,7 +2797,7 @@ img {
     }
     
     .section {
-        padding: 40px 0;
+        padding: 34px 0;
     }
     
     .section-title {
@@ -2664,6 +2820,18 @@ img {
     .btn {
         padding: 12px 16px;
         font-size: 14px;
+    }
+
+    .testimonial-content {
+        padding: 20px 12px;
+    }
+
+    .help-card,
+    .level-header,
+    .level-content,
+    .contact-person {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 }
 
@@ -2954,16 +3122,115 @@ img {
     }
 }
 
-/* Анимации при скролле */
-[data-aos] {
+/* Плавные reveal-анимации для секций/карточек */
+.reveal-on-scroll {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(26px);
+    filter: blur(7px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
 }
 
-[data-aos].aos-animate {
+.reveal-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
+}
+
+.reveal-on-scroll.reveal-delay-1 { transition-delay: 70ms; }
+.reveal-on-scroll.reveal-delay-2 { transition-delay: 140ms; }
+.reveal-on-scroll.reveal-delay-3 { transition-delay: 210ms; }
+
+/* Каскад появления контента активного hero-слайда */
+.hero-slider .slide .slide-subtitle,
+.hero-slider .slide .luxury-title-wrapper,
+.hero-slider .slide .slide-description,
+.hero-slider .slide .slide-buttons {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+.hero-slider .slide.active .slide-subtitle,
+.hero-slider .slide.active .luxury-title-wrapper,
+.hero-slider .slide.active .slide-description,
+.hero-slider .slide.active .slide-buttons {
+    animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-slider .slide.active .slide-subtitle { animation-delay: 70ms; }
+.hero-slider .slide.active .luxury-title-wrapper { animation-delay: 140ms; }
+.hero-slider .slide.active .slide-description { animation-delay: 210ms; }
+.hero-slider .slide.active .slide-buttons { animation-delay: 270ms; }
+
+@keyframes heroItemReveal {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Липкая CTA-кнопка на мобильных */
+.mobile-sticky-cta {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-sticky-cta {
+        position: fixed;
+        left: max(12px, env(safe-area-inset-left, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px));
+        bottom: calc(max(10px, env(safe-area-inset-bottom, 0px)) + 6px);
+        z-index: 1200;
+        display: block;
+        opacity: 0;
+        transform: translateY(18px);
+        pointer-events: none;
+        transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .mobile-sticky-cta.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .mobile-sticky-cta .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 13px 16px;
+        border-radius: 999px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .footer {
+        padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll,
+    .mobile-sticky-cta {
+        transition: none !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+    }
+
+    .hero-slider .slide .slide-subtitle,
+    .hero-slider .slide .luxury-title-wrapper,
+    .hero-slider .slide .slide-description,
+    .hero-slider .slide .slide-buttons {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
 
 /* Анимация загрузки для иконки спиннера */

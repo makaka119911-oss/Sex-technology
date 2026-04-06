@@ -11,8 +11,8 @@ img {
     user-select: none;
 }
 
-/* Отключение ненужных анимаций на слабых устройствах и мобильных */
-@media (prefers-reduced-motion: reduce), (max-width: 768px) {
+/* Отключение анимаций только по системному запросу */
+@media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
