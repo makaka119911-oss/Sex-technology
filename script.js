@@ -820,7 +820,7 @@ class ContactForm {
     }
 }
 
-// ===== СЕКЦИЯ «ЗНАКОМСТВО»: только по клику на ссылку #about, не из reveal при скролле =====
+// ===== СЕКЦИЯ «ЗНАКОМСТВО»: только по кнопке на первом слайде (и #about в URL) =====
 function openAboutSection() {
     const section = document.getElementById('about');
     const panel = document.getElementById('aboutPanel');
@@ -854,6 +854,22 @@ function initAboutFromHash() {
     }
 }
 
+function initHeroAboutButton() {
+    const btn = document.getElementById('heroAboutBtn');
+    const about = document.getElementById('about');
+    if (!btn || !about) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    btn.addEventListener('click', () => {
+        openAboutSection();
+        const scroll = () => scrollToHashTarget(about, !prefersReducedMotion);
+        if (prefersReducedMotion) {
+            requestAnimationFrame(scroll);
+        } else {
+            setTimeout(scroll, 50);
+        }
+    });
+}
+
 // ===== ПЛАВНАЯ ПРОКРУТКА =====
 class SmoothScroll {
     constructor() {
@@ -882,17 +898,6 @@ class SmoothScroll {
                         burgerMenu.setAttribute('aria-expanded', 'false');
                     }
 
-                    if (href === '#about') {
-                        openAboutSection();
-                        const doScroll = () => scrollToHashTarget(target, !prefersReducedMotion);
-                        if (prefersReducedMotion) {
-                            requestAnimationFrame(doScroll);
-                        } else {
-                            setTimeout(doScroll, 70);
-                        }
-                        return;
-                    }
-                    
                     const header = document.querySelector('.header');
                     const headerHeight = header ? header.offsetHeight : 80;
                     const targetPosition = target.offsetTop - headerHeight;
@@ -1175,6 +1180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new MobileOptimization();
     initScrollReveal();
     initAboutFromHash();
+    initHeroAboutButton();
     initMobileStickyCta();
     initMobileCollapsibleSections();
     initBackToTopButton();
