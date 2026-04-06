@@ -1061,11 +1061,34 @@ img {
 }
 
 .hero-slider .slide--circles .slide-text--circles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: auto;
     margin-left: auto;
     margin-right: auto;
+    padding-top: clamp(32px, 6vh, 72px);
     text-align: center;
     width: 100%;
+    gap: clamp(14px, 2.8vh, 28px);
+}
+
+.hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
+    margin-bottom: 0;
+}
+
+.hero-slider .slide--circles .slide-buttons {
+    margin-top: 0;
+    width: 100%;
+    max-width: min(300px, 88vw);
+    justify-content: center;
+}
+
+.hero-slider .slide--circles .slide-buttons .btn:first-child {
+    max-width: min(248px, 78vw);
+    width: 100%;
+    align-self: center;
+    box-sizing: border-box;
 }
 
 .slide-buttons {
@@ -2579,6 +2602,12 @@ img {
     .hero-slider .slide--circles .slide-text--circles {
         max-height: none;
         overflow: visible;
+        padding-top: clamp(40px, 9vh, 80px);
+        gap: clamp(16px, 3.5vh, 28px);
+    }
+
+    .hero-slider .slide--circles .slide-buttons .btn:first-child {
+        max-width: min(228px, 74vw);
     }
 
     /* Слайд 3: прежняя вёрстка с кнопками внутри .slide-text */
