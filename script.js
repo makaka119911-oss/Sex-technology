@@ -3,6 +3,25 @@ const BOT_TOKEN = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
 const CHAT_ID = '-1002313355102';
 const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
+/** Экранирование для Telegram parse_mode HTML (имя, контакты, сообщение) */
+function escapeTelegramHtml(text) {
+    return String(text ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+/** fetch с таймаутом: без этого запрос может «висеть» вечно (другой оператор, блокировка API) */
+async function fetchWithTimeout(url, options, timeoutMs = 25000) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+        return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+        clearTimeout(timeoutId);
+    }
+}
+
 function isShopDrawerOpen() {
     const root = document.getElementById('shopDrawerRoot');
     return !!(root && root.classList.contains('is-open'));
@@ -667,7 +686,14 @@ class ContactForm {
                 
             } catch (error) {
                 console.error('Form submission error:', error);
-                this.showStatus('Произошла ошибка. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.', 'error');
+                if (error.name === 'AbortError') {
+                    this.showStatus(
+                        'Не удалось отправить заявку: долго нет ответа (сеть или блокировка). Попробуйте Wi‑Fi, другой браузер или позже. Можно написать в Telegram или по телефону.',
+                        'error'
+                    );
+                } else {
+                    this.showStatus('Произошла ошибка. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.', 'error');
+                }
             } finally {
                 this.disableForm(false);
             }
@@ -706,17 +732,22 @@ class ContactForm {
         };
         
         const formatText = formatMap[data.format] || data.format;
+        const safeName = escapeTelegramHtml(data.name);
+        const safeContact = escapeTelegramHtml(data.contact);
+        const safeFormat = escapeTelegramHtml(formatText);
+        const safeMessage = escapeTelegramHtml(data.message || 'Не указано');
+        const safeDate = escapeTelegramHtml(data.date);
         
         // Формируем сообщение для Telegram
         const message = `📝 НОВАЯ ЗАЯВКА С САЙТА
 
-👤 Имя: ${data.name}
-📞 Контакт: ${data.contact}
-🎯 Формат: ${formatText}
-📝 Сообщение: ${data.message || 'Не указано'}
-📅 Дата: ${data.date}
+👤 Имя: ${safeName}
+📞 Контакт: ${safeContact}
+🎯 Формат: ${safeFormat}
+📝 Сообщение: ${safeMessage}
+📅 Дата: ${safeDate}
 
-🚀 Отправлено с сайта: ${window.location.hostname}`;
+🚀 Отправлено с сайта: ${escapeTelegramHtml(window.location.hostname)}`;
         
         const payload = {
             chat_id: CHAT_ID,
@@ -724,13 +755,13 @@ class ContactForm {
             parse_mode: 'HTML'
         };
         
-        const response = await fetch(TELEGRAM_API_URL, {
+        const response = await fetchWithTimeout(TELEGRAM_API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(payload)
-        });
+        }, 25000);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
