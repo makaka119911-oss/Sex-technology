@@ -1,4 +1,8 @@
-// ===== КОНСТАНТЫ TELEGRAM =====
+// ===== КОНСТАНТЫ ОТПРАВКИ ЗАЯВОК =====
+// Безопасный вариант: отправка в backend endpoint (VK/Telegram ключи хранятся в секретах сервера).
+const LEAD_BACKEND_URL = window.__LEAD_BACKEND_URL__ || '';
+
+// Legacy fallback (небезопасно): оставлено на время миграции, пока backend не включен.
 const BOT_TOKEN = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
 const CHAT_ID = '-1002313355102';
 const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
@@ -675,7 +679,11 @@ class ContactForm {
             this.disableForm(true);
             
             try {
-                await this.sendToTelegram(data);
+                if (LEAD_BACKEND_URL) {
+                    await this.sendToBackend(data);
+                } else {
+                    await this.sendToTelegram(data);
+                }
                 
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
                 
@@ -722,6 +730,27 @@ class ContactForm {
         });
     }
     
+    async sendToBackend(data) {
+        const response = await fetchWithTimeout(LEAD_BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }, 25000);
+
+        if (!response.ok) {
+            throw new Error(`Backend HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        if (!result.ok) {
+            throw new Error(result.error || 'Backend lead send error');
+        }
+
+        return result;
+    }
+
     async sendToTelegram(data) {
         // Форматируем формат для читаемости
         const formatMap = {

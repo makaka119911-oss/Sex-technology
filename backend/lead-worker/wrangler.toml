@@ -1,0 +1,9 @@
+name = "sex-technology-lead-worker"
+main = "src/index.js"
+compatibility_date = "2026-04-09"
+
+[vars]
+# VK user id получателя заявок (можно менять без редеплоя кода)
+VK_USER_ID = "34157047"
+# Разрешенные Origin через запятую (ваш сайт + localhost для теста)
+ALLOWED_ORIGINS = "https://makaka119911-oss.github.io,http://localhost:8787"
