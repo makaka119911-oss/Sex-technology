@@ -6,4 +6,4 @@ compatibility_date = "2026-04-09"
 # VK user id получателя заявок (можно менять без редеплоя кода)
 VK_USER_ID = "34157047"
 # Разрешенные Origin через запятую (ваш сайт + localhost для теста)
-ALLOWED_ORIGINS = "https://makaka119911-oss.github.io,http://localhost:8787"
+ALLOWED_ORIGINS = "https://makaka119911-oss.github.io,https://xn--c1adkgfrbtc9l.com,http://localhost:8787"
