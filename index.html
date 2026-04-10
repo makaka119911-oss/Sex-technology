@@ -29,12 +29,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-1" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-1" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-2" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-2" as="style">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-1">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-1">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-2">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-2">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -141,7 +141,7 @@
             <div class="slider-container">
                 <!-- Слайд 1 -->
                 <div class="slide active slide--minimal slide--intro" data-slide="1">
-                    <div class="slide-background slide-bg-contain slide-hero-primary" style="--hero-bg-desktop: url('assets/images/hero-presentation-desktop.png?v=hero-apr2026'); --hero-bg-mobile: url('assets/images/hero-presentation-mobile.png?v=hero-apr2026')">
+                    <div class="slide-background slide-bg-contain slide-hero-primary" style="--hero-bg-desktop: url('../images/hero-presentation-desktop.png?v=hero-apr2026'); --hero-bg-mobile: url('../images/hero-presentation-mobile.png?v=hero-apr2026')">
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
                     </div>
                     <div class="slide-overlay"></div>
@@ -1173,7 +1173,8 @@
     <!-- Модальное окно для галереи -->
     <div class="modal" id="galleryModal" role="dialog" aria-modal="true" aria-labelledby="modalImageTitle">
         <div class="modal-content">
-            <button class="modal-close" aria-label="Закрыть">
+            <span id="modalImageTitle" class="visually-hidden">Просмотр фотографии</span>
+            <button type="button" class="modal-close" aria-label="Закрыть">
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
             <img src="" alt="" class="modal-image" id="modalImage" decoding="async">
@@ -1185,6 +1186,6 @@
         window.__LEAD_BACKEND_URL__ = 'https://sex-technology-lead-worker.territory-love.workers.dev';
     </script>
     <!-- Скрипты -->
-    <script src="assets/js/script.js?v=layout-1" defer></script>
+    <script src="assets/js/script.js?v=layout-2" defer></script>
 </body>
 </html>

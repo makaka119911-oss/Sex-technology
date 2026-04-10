@@ -608,12 +608,18 @@ class GalleryModal {
     }
     
     init() {
-        this.galleryItems.forEach(item => {
-            item.addEventListener('click', (e) => {
+        this.galleryItems.forEach((item) => {
+            item.setAttribute('role', 'button');
+            item.tabIndex = 0;
+            item.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                e.preventDefault();
                 const img = item.querySelector('img');
-                if (img) {
-                    this.openModal(img.src, img.alt);
-                }
+                if (img) this.openModal(img.currentSrc || img.src, img.alt);
+            });
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                if (img) this.openModal(img.currentSrc || img.src, img.alt);
             });
         });
         
@@ -633,10 +639,18 @@ class GalleryModal {
     }
     
     openModal(imgSrc, imgAlt) {
+        if (!imgSrc) return;
+        this.modalImage.style.display = '';
+        this.modalImage.style.opacity = '';
+        this.modalImage.alt = imgAlt || '';
         this.modalImage.src = imgSrc;
-        this.modalImage.alt = imgAlt;
         this.modal.classList.add('active');
         syncBodyScrollLock();
+        requestAnimationFrame(() => {
+            this.closeBtn?.focus({ preventScroll: true });
+        });
+        const dec = this.modalImage.decode?.();
+        if (dec && typeof dec.then === 'function') dec.catch(() => {});
     }
     
     closeModal() {
@@ -1294,10 +1308,11 @@ window.addEventListener('resize', () => {
     }, 250);
 });
 
-// Обработка ошибок загрузки изображений
+// Обработка ошибок загрузки изображений (не трогаем lightbox: пустой src даёт error и скрывал бы модалку)
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('error', function() {
+    document.querySelectorAll('img').forEach((img) => {
+        img.addEventListener('error', function () {
+            if (this.id === 'modalImage' || this.closest('#galleryModal')) return;
             this.style.display = 'none';
             console.warn(`Изображение не загружено: ${this.src}`);
         });
