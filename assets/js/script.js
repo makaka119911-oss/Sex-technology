@@ -1,0 +1,1305 @@
+// ===== КОНСТАНТЫ ОТПРАВКИ ЗАЯВОК =====
+// Безопасный вариант: отправка в backend endpoint (VK/Telegram ключи хранятся в секретах сервера).
+const LEAD_BACKEND_URL = window.__LEAD_BACKEND_URL__ || '';
+
+// Legacy fallback (небезопасно): оставлено на время миграции, пока backend не включен.
+const BOT_TOKEN = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
+const CHAT_ID = '-1002313355102';
+const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+/** Экранирование для Telegram parse_mode HTML (имя, контакты, сообщение) */
+function escapeTelegramHtml(text) {
+    return String(text ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+/** fetch с таймаутом: без этого запрос может «висеть» вечно (другой оператор, блокировка API) */
+async function fetchWithTimeout(url, options, timeoutMs = 25000) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+        return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+        clearTimeout(timeoutId);
+    }
+}
+
+function isShopDrawerOpen() {
+    const root = document.getElementById('shopDrawerRoot');
+    return !!(root && root.classList.contains('is-open'));
+}
+
+function syncBodyScrollLock() {
+    const navMenu = document.querySelector('.nav-menu');
+    const navOpen = navMenu && navMenu.classList.contains('active');
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryOpen = galleryModal && galleryModal.classList.contains('active');
+    document.body.style.overflow = (navOpen || isShopDrawerOpen() || galleryOpen) ? 'hidden' : '';
+}
+
+// ===== ПРЕЛОАДЕР =====
+document.addEventListener('DOMContentLoaded', () => {
+    const preloader = document.querySelector('.cinematic-preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.visibility = 'hidden';
+                preloader.remove();
+            }, 500);
+        }, 1500);
+    }
+});
+
+// ===== ПРОВЕРКА ВОЗРАСТА =====
+function initAgeVerification() {
+    const ageVerification = document.getElementById('ageVerification');
+    const ageYesBtn = document.getElementById('ageYes');
+    const ageNoBtn = document.getElementById('ageNo');
+    
+    const ageConfirmed = localStorage.getItem('ageConfirmed');
+    
+    if (!ageConfirmed) {
+        setTimeout(() => {
+            if (ageVerification) {
+                ageVerification.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }, 1500);
+    }
+    
+    if (ageYesBtn) {
+        ageYesBtn.addEventListener('click', () => {
+            localStorage.setItem('ageConfirmed', 'true');
+            if (ageVerification) {
+                ageVerification.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+    
+    if (ageNoBtn) {
+        ageNoBtn.addEventListener('click', () => {
+            alert('Доступ запрещён. Сайт предназначен для лиц старше 18 лет.');
+            window.location.href = 'about:blank';
+        });
+    }
+}
+
+// ===== МОБИЛЬНОЕ МЕНЮ =====
+function initMobileMenu() {
+    const burgerMenu = document.querySelector('.burger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (!burgerMenu || !navMenu) return;
+    
+    burgerMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        burgerMenu.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        syncBodyScrollLock();
+        
+        // Обновляем ARIA атрибуты
+        const isExpanded = burgerMenu.classList.contains('active');
+        burgerMenu.setAttribute('aria-expanded', isExpanded);
+    });
+
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            syncBodyScrollLock();
+            burgerMenu.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.navbar') && navMenu.classList.contains('active')) {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            syncBodyScrollLock();
+            burgerMenu.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            syncBodyScrollLock();
+            burgerMenu.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+// ===== МАГАЗИН (боковая панель) =====
+function initShopDrawer() {
+    const root = document.getElementById('shopDrawerRoot');
+    const openBtn = document.getElementById('shopOpenBtn');
+    const closeBtn = document.getElementById('shopDrawerClose');
+    const overlay = document.getElementById('shopDrawerOverlay');
+    if (!root || !openBtn || !closeBtn || !overlay) return;
+
+    let previouslyFocused = null;
+
+    function openDrawer() {
+        previouslyFocused = document.activeElement;
+        root.classList.add('is-open');
+        root.setAttribute('aria-hidden', 'false');
+        openBtn.setAttribute('aria-expanded', 'true');
+
+        const burgerMenu = document.querySelector('.burger-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
+            burgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            burgerMenu.setAttribute('aria-expanded', 'false');
+        }
+
+        syncBodyScrollLock();
+        closeBtn.focus();
+    }
+
+    function closeDrawer() {
+        root.classList.remove('is-open');
+        root.setAttribute('aria-hidden', 'true');
+        openBtn.setAttribute('aria-expanded', 'false');
+        syncBodyScrollLock();
+        if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+            previouslyFocused.focus();
+        }
+    }
+
+    openBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && root.classList.contains('is-open')) {
+            closeDrawer();
+        }
+    });
+
+    root.querySelectorAll('.shop-product-buy').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const titleEl = btn.closest('.shop-product')?.querySelector('.shop-product-title');
+            const name = titleEl && titleEl.textContent ? titleEl.textContent.trim() : 'товар';
+            alert(`Покупка пока в разработке. Вы выбрали: «${name}». Это тестовый товар без реальной оплаты.`);
+        });
+    });
+}
+
+// ===== ХЕДЕР ПРИ СКРОЛЛЕ =====
+function initHeaderScroll() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    
+    let lastScrollTop = 0;
+    let ticking = false;
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                if (scrollTop > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+                ticking = false;
+            });
+            
+            ticking = true;
+        }
+    });
+}
+
+// ===== КИНЕМАТОГРАФИЧЕСКИЙ СЛАЙДЕР ГЕРОЯ =====
+class CinematicHeroSlider {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.indicators = document.querySelectorAll('.indicator');
+        this.progressBar = document.querySelector('.progress-bar');
+        this.prevBtn = document.querySelector('.slider-prev');
+        this.nextBtn = document.querySelector('.slider-next');
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        this.autoPlayInterval = null;
+        this.autoPlayDelay = 7000;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.touchThreshold = 50;
+        
+        if (this.slides.length > 0) {
+            this.init();
+        }
+    }
+    
+    init() {
+        this.showSlide(this.currentSlide);
+        
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+        
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+        
+        this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => this.goToSlide(index));
+        });
+        
+        this.startAutoPlay();
+        
+        this.slides.forEach(slide => {
+            slide.addEventListener('mouseenter', () => this.stopAutoPlay());
+            slide.addEventListener('mouseleave', () => this.startAutoPlay());
+            
+            slide.addEventListener('touchstart', (e) => {
+                this.touchStartX = e.changedTouches[0].screenX;
+                this.stopAutoPlay();
+            }, { passive: true });
+            
+            slide.addEventListener('touchend', (e) => {
+                this.touchEndX = e.changedTouches[0].screenX;
+                this.handleSwipe();
+                setTimeout(() => this.startAutoPlay(), 3000);
+            }, { passive: true });
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') this.prevSlide();
+            if (e.key === 'ArrowRight') this.nextSlide();
+        });
+        
+        this.initParallax();
+        this.initResponsiveBehaviors();
+    }
+    
+    handleSwipe() {
+        const diff = this.touchStartX - this.touchEndX;
+        
+        if (Math.abs(diff) > this.touchThreshold) {
+            if (diff > 0) {
+                this.nextSlide();
+            } else {
+                this.prevSlide();
+            }
+        }
+    }
+    
+    initResponsiveBehaviors() {
+        const checkMobile = () => window.innerWidth <= 768;
+        
+        const handleResize = () => {
+            if (checkMobile()) {
+                this.stopAutoPlay();
+            } else {
+                this.startAutoPlay();
+            }
+        };
+        
+        window.addEventListener('resize', handleResize);
+        handleResize();
+    }
+    
+    showSlide(index) {
+        this.slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+        
+        this.indicators.forEach(indicator => {
+            indicator.classList.remove('active');
+            indicator.setAttribute('aria-selected', 'false');
+        });
+        
+        if (this.slides[index]) {
+            this.slides[index].classList.add('active');
+        }
+        
+        if (this.indicators[index]) {
+            this.indicators[index].classList.add('active');
+            this.indicators[index].setAttribute('aria-selected', 'true');
+        }
+        
+        this.currentSlide = index;
+        this.updateProgressBar();
+        this.animateContent();
+    }
+    
+    animateContent() {
+        const activeSlide = this.slides[this.currentSlide];
+        const content = activeSlide.querySelector('.slide-text');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (content) {
+            content.style.animation = 'none';
+            setTimeout(() => {
+                content.style.animation = 'slideReveal 1s ease forwards';
+            }, 10);
+        }
+
+        if (!prefersReducedMotion) {
+            const animatedItems = activeSlide.querySelectorAll(
+                '.slide-subtitle, .luxury-title-wrapper, .slide-description, .slide-buttons, .hero-slide2-eyebrow, .hero-slide2-lead'
+            );
+            animatedItems.forEach((item) => {
+                item.style.animation = 'none';
+            });
+            // Reflow для перезапуска CSS keyframes при каждом переключении слайда
+            void activeSlide.offsetWidth;
+            animatedItems.forEach((item) => {
+                item.style.animation = '';
+            });
+        }
+        
+        this.animateElements();
+    }
+    
+    animateElements() {
+        const rays = document.querySelectorAll('.light-ray');
+        rays.forEach((ray, index) => {
+            ray.style.animation = 'none';
+            setTimeout(() => {
+                ray.style.animation = `rayMove 15s infinite ease-in-out ${index * 2}s`;
+            }, 10);
+        });
+    }
+    
+    nextSlide() {
+        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
+        this.showSlide(nextIndex);
+        this.resetAutoPlay();
+    }
+    
+    prevSlide() {
+        const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+        this.showSlide(prevIndex);
+        this.resetAutoPlay();
+    }
+    
+    goToSlide(index) {
+        if (index >= 0 && index < this.totalSlides) {
+            this.showSlide(index);
+            this.resetAutoPlay();
+        }
+    }
+    
+    updateProgressBar() {
+        if (this.progressBar) {
+            const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+            this.progressBar.style.width = `${progress}%`;
+        }
+    }
+    
+    startAutoPlay() {
+        if (this.totalSlides > 1 && window.innerWidth > 768) {
+            this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
+        }
+    }
+    
+    stopAutoPlay() {
+        clearInterval(this.autoPlayInterval);
+    }
+    
+    resetAutoPlay() {
+        this.stopAutoPlay();
+        this.startAutoPlay();
+    }
+    
+    initParallax() {
+        if (window.innerWidth <= 768) return;
+        
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth <= 768) return;
+            
+            const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+            const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            this.slides.forEach(slide => {
+                const parallaxLayer = slide.querySelector('.parallax-layer');
+                const slideBg = slide.querySelector('.slide-background');
+                const containBg = slideBg && slideBg.classList.contains('slide-bg-contain');
+                if (parallaxLayer && slide.classList.contains('active')) {
+                    const scale = containBg ? 1 : 1.1;
+                    parallaxLayer.style.transform = `scale(${scale}) translate(${mouseX}px, ${mouseY}px)`;
+                }
+            });
+        });
+    }
+}
+
+// ===== СЛАЙДЕР ОТЗЫВОВ =====
+class TestimonialsSlider {
+    constructor() {
+        this.slides = document.querySelectorAll('.testimonial-slide');
+        this.dots = document.querySelectorAll('.testimonial-dot');
+        this.prevBtn = document.querySelector('.testimonial-prev');
+        this.nextBtn = document.querySelector('.testimonial-next');
+        this.currentSlide = 0;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.touchThreshold = 50;
+        
+        if (this.slides.length > 0) {
+            this.init();
+        }
+    }
+    
+    init() {
+        this.showSlide(this.currentSlide);
+        
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+        
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+        
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+        
+        this.initTouchEvents();
+        
+        if (this.slides.length > 1 && window.innerWidth > 768) {
+            setInterval(() => this.nextSlide(), 8000);
+        }
+    }
+    
+    initTouchEvents() {
+        const sliderContainer = document.querySelector('.testimonials-slider');
+        if (!sliderContainer) return;
+        
+        sliderContainer.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        sliderContainer.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+        }, { passive: true });
+    }
+    
+    handleSwipe() {
+        const diff = this.touchStartX - this.touchEndX;
+        
+        if (Math.abs(diff) > this.touchThreshold) {
+            if (diff > 0) {
+                this.nextSlide();
+            } else {
+                this.prevSlide();
+            }
+        }
+    }
+    
+    showSlide(index) {
+        this.slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+        
+        this.dots.forEach(dot => {
+            dot.classList.remove('active');
+        });
+        
+        if (this.slides[index]) {
+            this.slides[index].classList.add('active');
+        }
+        
+        if (this.dots[index]) {
+            this.dots[index].classList.add('active');
+        }
+        
+        this.currentSlide = index;
+    }
+    
+    nextSlide() {
+        const nextIndex = (this.currentSlide + 1) % this.slides.length;
+        this.showSlide(nextIndex);
+    }
+    
+    prevSlide() {
+        const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.showSlide(prevIndex);
+    }
+    
+    goToSlide(index) {
+        if (index >= 0 && index < this.slides.length) {
+            this.showSlide(index);
+        }
+    }
+}
+
+// ===== FAQ АККОРДЕОН =====
+class FAQAccordion {
+    constructor() {
+        this.faqItems = document.querySelectorAll('.faq-item');
+        
+        if (this.faqItems.length > 0) {
+            this.init();
+        }
+    }
+    
+    init() {
+        this.faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            if (window.innerWidth <= 768) {
+                question.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.toggleItem(item);
+                }, { passive: false });
+            }
+            
+            question.addEventListener('click', () => {
+                if (window.innerWidth > 768) {
+                    this.toggleItem(item);
+                }
+            });
+            
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleItem(item);
+                }
+            });
+        });
+    }
+    
+    toggleItem(clickedItem) {
+        this.faqItems.forEach(item => {
+            if (item !== clickedItem && item.classList.contains('active')) {
+                item.classList.remove('active');
+            }
+        });
+        
+        clickedItem.classList.toggle('active');
+    }
+}
+
+// ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ =====
+class GalleryModal {
+    constructor() {
+        this.modal = document.getElementById('galleryModal');
+        this.modalImage = this.modal?.querySelector('.modal-image');
+        this.galleryItems = document.querySelectorAll('.gallery-item');
+        this.closeBtn = this.modal?.querySelector('.modal-close');
+        
+        if (this.modal && this.modalImage && this.galleryItems.length > 0) {
+            this.init();
+        }
+    }
+    
+    init() {
+        this.galleryItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const img = item.querySelector('img');
+                if (img) {
+                    this.openModal(img.src, img.alt);
+                }
+            });
+        });
+        
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+        
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) this.closeModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    }
+    
+    openModal(imgSrc, imgAlt) {
+        this.modalImage.src = imgSrc;
+        this.modalImage.alt = imgAlt;
+        this.modal.classList.add('active');
+        syncBodyScrollLock();
+    }
+    
+    closeModal() {
+        this.modal.classList.remove('active');
+        syncBodyScrollLock();
+    }
+}
+
+// ===== КОНТАКТНАЯ ФОРМА =====
+class ContactForm {
+    constructor() {
+        this.form = document.getElementById('consultationForm');
+        this.statusEl = document.getElementById('formStatus');
+        this.submitBtn = this.form?.querySelector('button[type="submit"]');
+        this.originalBtnText = '';
+        
+        if (this.form) {
+            this.init();
+        }
+    }
+    
+    init() {
+        this.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!this.validateForm()) {
+                return;
+            }
+            
+            const formData = new FormData(this.form);
+            const data = {
+                name: formData.get('name'),
+                contact: formData.get('contact'),
+                format: formData.get('format'),
+                message: formData.get('message'),
+                date: new Date().toLocaleString('ru-RU')
+            };
+            
+            this.showStatus('Отправляем заявку...', 'loading');
+            this.disableForm(true);
+            
+            try {
+                if (LEAD_BACKEND_URL) {
+                    await this.sendToBackend(data);
+                } else {
+                    await this.sendToTelegram(data);
+                }
+                
+                this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
+                
+                setTimeout(() => {
+                    this.form.reset();
+                    this.clearStatus();
+                }, 5000);
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                if (error.name === 'AbortError') {
+                    this.showStatus(
+                        'Не удалось отправить заявку: долго нет ответа (сеть или блокировка). Попробуйте Wi‑Fi, другой браузер или позже. Можно написать в Telegram или по телефону.',
+                        'error'
+                    );
+                } else {
+                    this.showStatus('Произошла ошибка. Пожалуйста, попробуйте еще раз или свяжитесь с нами напрямую.', 'error');
+                }
+            } finally {
+                this.disableForm(false);
+            }
+        });
+        
+        this.initMobileInputOptimization();
+    }
+    
+    disableForm(disabled) {
+        if (this.submitBtn) {
+            if (disabled) {
+                this.originalBtnText = this.submitBtn.innerHTML;
+                this.submitBtn.innerHTML = '<span>Отправка...</span><i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
+                this.submitBtn.disabled = true;
+            } else {
+                this.submitBtn.innerHTML = this.originalBtnText;
+                this.submitBtn.disabled = false;
+            }
+        }
+        
+        const formElements = this.form.querySelectorAll('input, textarea, select, button');
+        formElements.forEach(element => {
+            if (element !== this.submitBtn) {
+                element.disabled = disabled;
+            }
+        });
+    }
+    
+    async sendToBackend(data) {
+        const response = await fetchWithTimeout(LEAD_BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }, 25000);
+
+        if (!response.ok) {
+            throw new Error(`Backend HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        if (!result.ok) {
+            throw new Error(result.error || 'Backend lead send error');
+        }
+
+        return result;
+    }
+
+    async sendToTelegram(data) {
+        // Форматируем формат для читаемости
+        const formatMap = {
+            'individual': 'Индивидуальная сессия',
+            'circle': 'Женский круг',
+            'levels': 'Уровень погружения',
+            'not_sure': 'Пока не знаю, нужна консультация'
+        };
+        
+        const formatText = formatMap[data.format] || data.format;
+        const safeName = escapeTelegramHtml(data.name);
+        const safeContact = escapeTelegramHtml(data.contact);
+        const safeFormat = escapeTelegramHtml(formatText);
+        const safeMessage = escapeTelegramHtml(data.message || 'Не указано');
+        const safeDate = escapeTelegramHtml(data.date);
+        
+        // Формируем сообщение для Telegram
+        const message = `📝 НОВАЯ ЗАЯВКА С САЙТА
+
+👤 Имя: ${safeName}
+📞 Контакт: ${safeContact}
+🎯 Формат: ${safeFormat}
+📝 Сообщение: ${safeMessage}
+📅 Дата: ${safeDate}
+
+🚀 Отправлено с сайта: ${escapeTelegramHtml(window.location.hostname)}`;
+        
+        const payload = {
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: 'HTML'
+        };
+        
+        const response = await fetchWithTimeout(TELEGRAM_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        }, 25000);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (!result.ok) {
+            throw new Error(result.description || 'Telegram API error');
+        }
+        
+        return result;
+    }
+    
+    initMobileInputOptimization() {
+        if (window.innerWidth <= 768) {
+            const inputs = this.form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    setTimeout(() => {
+                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                });
+            });
+        }
+    }
+    
+    validateForm() {
+        const name = this.form.querySelector('#name');
+        const contact = this.form.querySelector('#contact');
+        const consent = this.form.querySelector('#consent');
+        
+        let isValid = true;
+        
+        this.clearErrors();
+        
+        if (!name.value.trim()) {
+            this.showError(name, 'Пожалуйста, введите ваше имя');
+            isValid = false;
+        }
+        
+        if (!contact.value.trim()) {
+            this.showError(contact, 'Пожалуйста, введите контактные данные');
+            isValid = false;
+        }
+        
+        if (!consent.checked) {
+            this.showError(consent.parentElement, 'Необходимо согласие на обработку данных');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    showError(element, message) {
+        element.classList.add('error');
+        
+        const errorEl = document.createElement('div');
+        errorEl.className = 'error-message';
+        errorEl.textContent = message;
+        errorEl.style.cssText = 'color: #F44336; font-size: 14px; margin-top: 8px; font-weight: 500;';
+        
+        element.parentElement.appendChild(errorEl);
+    }
+    
+    clearErrors() {
+        this.form.querySelectorAll('.error').forEach(el => {
+            el.classList.remove('error');
+        });
+        
+        this.form.querySelectorAll('.error-message').forEach(el => {
+            el.remove();
+        });
+    }
+    
+    showStatus(message, type = 'info') {
+        if (this.statusEl) {
+            this.statusEl.textContent = message;
+            this.statusEl.className = 'form-status';
+            this.statusEl.classList.add(type);
+        }
+    }
+    
+    clearStatus() {
+        if (this.statusEl) {
+            this.statusEl.textContent = '';
+            this.statusEl.className = 'form-status';
+        }
+    }
+}
+
+// ===== СЕКЦИЯ «ЗНАКОМСТВО»: только по кнопке на первом слайде (и #about в URL) =====
+function openAboutSection() {
+    const section = document.getElementById('about');
+    const panel = document.getElementById('aboutPanel');
+    if (!section) return;
+    section.classList.add('about-section--expanded');
+    if (panel) panel.setAttribute('aria-hidden', 'false');
+}
+
+function scrollToHashTarget(target, smooth) {
+    const header = document.querySelector('.header');
+    const headerHeight = header ? header.offsetHeight : 80;
+    const targetPosition = Math.max(0, target.offsetTop - headerHeight);
+    window.scrollTo({
+        top: targetPosition,
+        behavior: smooth ? 'smooth' : 'auto'
+    });
+}
+
+/** Если в URL пришёл #about — раскрыть блок и прокрутить (для шаринга ссылки). */
+function initAboutFromHash() {
+    if (window.location.hash !== '#about') return;
+    openAboutSection();
+    const target = document.getElementById('about');
+    if (!target) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const run = () => scrollToHashTarget(target, false);
+    if (prefersReducedMotion) {
+        requestAnimationFrame(run);
+    } else {
+        setTimeout(run, 80);
+    }
+}
+
+function initHeroAboutButton() {
+    const btn = document.getElementById('heroAboutBtn');
+    const about = document.getElementById('about');
+    if (!btn || !about) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    btn.addEventListener('click', () => {
+        openAboutSection();
+        const scroll = () => scrollToHashTarget(about, !prefersReducedMotion);
+        if (prefersReducedMotion) {
+            requestAnimationFrame(scroll);
+        } else {
+            setTimeout(scroll, 50);
+        }
+    });
+}
+
+// ===== ПЛАВНАЯ ПРОКРУТКА =====
+class SmoothScroll {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                const href = anchor.getAttribute('href');
+                
+                if (href === '#' || href === '#0') return;
+                
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    
+                    const burgerMenu = document.querySelector('.burger-menu');
+                    const navMenu = document.querySelector('.nav-menu');
+                    
+                    if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
+                        burgerMenu.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        syncBodyScrollLock();
+                        burgerMenu.setAttribute('aria-expanded', 'false');
+                    }
+
+                    const header = document.querySelector('.header');
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+                    });
+                }
+            });
+        });
+    }
+}
+
+// ===== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ =====
+class MobileOptimization {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.detectTouchDevice();
+        this.optimizeImages();
+        this.preventZoomOnInput();
+        this.optimizeAnimations();
+    }
+    
+    detectTouchDevice() {
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.body.classList.add('touch-device');
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @media (hover: none) and (pointer: coarse) {
+                    .level-card:hover, .help-card:hover, .expert-card:hover {
+                        transform: none !important;
+                    }
+                    
+                    .btn:hover {
+                        transform: none !important;
+                        box-shadow: none !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+    
+    optimizeImages() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            if (!img.hasAttribute('loading')) {
+                img.setAttribute('loading', 'lazy');
+            }
+        });
+    }
+    
+    preventZoomOnInput() {
+        if (window.innerWidth <= 768) {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: input.getBoundingClientRect().top + window.pageYOffset - 100,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                });
+            });
+        }
+    }
+    
+    optimizeAnimations() {
+        if (window.innerWidth <= 768) {
+            const style = document.createElement('style');
+            style.textContent = `
+                @media (max-width: 768px) {
+                    * {
+                        animation-duration: 0.5s !important;
+                        transition-duration: 0.3s !important;
+                    }
+                    
+                    .parallax-layer {
+                        transform: none !important;
+                    }
+                }
+                
+                @media (prefers-reduced-motion: reduce) {
+                    * {
+                        animation-duration: 0.01ms !important;
+                        animation-iteration-count: 1 !important;
+                        transition-duration: 0.01ms !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+}
+
+// ===== REVEAL-АНИМАЦИИ ПРИ СКРОЛЛЕ =====
+function initScrollReveal() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealTargets = [
+        ...document.querySelectorAll(
+            '.section-header, .expert-card, .help-card, .level-card, .circles-text, .circles-image, .gallery-item, .testimonial-content, .faq-item, .contact-person, .contact-form'
+        )
+    ].filter((el) => !el.closest('#about'));
+
+    if (!revealTargets.length) return;
+
+    revealTargets.forEach((el) => el.classList.add('reveal-on-scroll'));
+
+    const staggerGroups = document.querySelectorAll('.experts-grid, .help-cards, .levels-container, .gallery-grid, .faq-grid');
+    staggerGroups.forEach((group) => {
+        Array.from(group.children).forEach((child, index) => {
+            if (!child.classList.contains('reveal-on-scroll')) return;
+            child.classList.add(`reveal-delay-${(index % 3) + 1}`);
+        });
+    });
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealTargets.forEach((el) => el.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+            });
+        },
+        {
+            threshold: 0.14,
+            rootMargin: '0px 0px -8% 0px'
+        }
+    );
+
+    revealTargets.forEach((el) => observer.observe(el));
+}
+
+// ===== ЛИПКАЯ CTA-КНОПКА НА МОБИЛЬНЫХ =====
+function initMobileStickyCta() {
+    const cta = document.getElementById('mobileStickyCta');
+    const hero = document.querySelector('.hero-slider');
+    const contactSection = document.getElementById('contact');
+    const footer = document.querySelector('.footer');
+    if (!cta || !hero || !contactSection) return;
+
+    const isMobile = () => window.innerWidth <= 768;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const updateCtaState = () => {
+        if (!isMobile()) {
+            cta.classList.remove('is-visible');
+            cta.setAttribute('aria-hidden', 'true');
+            return;
+        }
+
+        const navMenu = document.querySelector('.nav-menu');
+        const navOpen = !!(navMenu && navMenu.classList.contains('active'));
+        const heroPassed = window.scrollY > hero.offsetHeight * 0.62;
+        const contactRect = contactSection.getBoundingClientRect();
+        const footerRect = footer ? footer.getBoundingClientRect() : null;
+        const contactInView = contactRect.top < window.innerHeight * 0.72;
+        const footerInView = footerRect ? footerRect.top < window.innerHeight : false;
+        const shouldShow = heroPassed && !contactInView && !footerInView && !navOpen && !isShopDrawerOpen();
+
+        cta.classList.toggle('is-visible', shouldShow);
+        cta.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+    };
+
+    let rafScheduled = false;
+    const requestUpdate = () => {
+        if (rafScheduled) return;
+        rafScheduled = true;
+        window.requestAnimationFrame(() => {
+            updateCtaState();
+            rafScheduled = false;
+        });
+    };
+
+    if (prefersReducedMotion) {
+        cta.style.transition = 'none';
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    document.addEventListener('click', requestUpdate);
+    updateCtaState();
+}
+
+// ===== МОБИЛЬНОЕ СВОРАЧИВАНИЕ СПИСКОВ =====
+function initMobileCollapsibleSections() {
+    const toggles = document.querySelectorAll('.mobile-collapsible-toggle .btn[data-target]');
+    if (!toggles.length) return;
+
+    const isMobile = () => window.innerWidth <= 768;
+
+    const updateState = () => {
+        toggles.forEach((btn) => {
+            const targetSelector = btn.getAttribute('data-target');
+            const itemsSelector = btn.getAttribute('data-items') || '.mobile-collapsible-item';
+            const target = targetSelector ? document.querySelector(targetSelector) : null;
+            if (!target) return;
+
+            const items = target.querySelectorAll(itemsSelector);
+            const wrapper = btn.closest('.mobile-collapsible-toggle');
+            if (!items.length || !wrapper) return;
+
+            if (!isMobile()) {
+                items.forEach((item) => item.classList.remove('is-collapsed-mobile'));
+                wrapper.style.display = 'none';
+                btn.setAttribute('aria-expanded', 'true');
+                return;
+            }
+
+            wrapper.style.display = 'flex';
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            items.forEach((item) => item.classList.toggle('is-collapsed-mobile', !expanded));
+            btn.querySelector('span').textContent = expanded ? 'Свернуть' : 'Показать ещё';
+        });
+    };
+
+    toggles.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            updateState();
+        });
+    });
+
+    window.addEventListener('resize', updateState);
+    updateState();
+}
+
+// ===== КНОПКА "НАВЕРХ" =====
+function initBackToTopButton() {
+    const btn = document.getElementById('backToTopBtn');
+    if (!btn) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const updateVisibility = () => {
+        const shouldShow = window.scrollY > window.innerHeight * 0.55;
+        btn.classList.toggle('is-visible', shouldShow);
+    };
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        });
+    });
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility);
+    updateVisibility();
+}
+
+// ===== ИНИЦИАЛИЗАЦИЯ ВСЕГО =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Базовые компоненты
+    initAgeVerification();
+    initMobileMenu();
+    initShopDrawer();
+    initHeaderScroll();
+    
+    // Слайдеры и интерактивные компоненты
+    new CinematicHeroSlider();
+    new TestimonialsSlider();
+    new FAQAccordion();
+    new GalleryModal();
+    new ContactForm();
+    new SmoothScroll();
+    
+    // Мобильная оптимизация
+    new MobileOptimization();
+    initScrollReveal();
+    initAboutFromHash();
+    initHeroAboutButton();
+    initMobileStickyCta();
+    initMobileCollapsibleSections();
+    initBackToTopButton();
+    
+    // Добавление текущего года в футер
+    const yearSpan = document.querySelector('#currentYear');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+    
+    // Инициализация Lazy Loading для изображений
+    initLazyLoading();
+});
+
+// Инициализация Lazy Loading
+function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback для старых браузеров
+        lazyImages.forEach(img => {
+            img.classList.add('loaded');
+        });
+    }
+}
+
+// Обработчик изменения размера окна
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            document.body.classList.add('mobile-view');
+        } else {
+            document.body.classList.remove('mobile-view');
+        }
+    }, 250);
+});
+
+// Обработка ошибок загрузки изображений
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            console.warn(`Изображение не загружено: ${this.src}`);
+        });
+    });
+});

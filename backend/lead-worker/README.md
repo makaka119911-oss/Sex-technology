@@ -1,6 +1,6 @@
 # Lead Worker (VK)
 
-Безопасная отправка заявок с сайта в VK: токен хранится в секретах Cloudflare Worker, а не в `script.js`.
+Безопасная отправка заявок с сайта в VK: токен хранится в секретах Cloudflare Worker, а не в `assets/js/script.js`.
 
 ## 1) Установка
 
