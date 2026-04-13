@@ -1672,15 +1672,98 @@ img {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: var(--gradient-primary);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
+    z-index: 2;
+    color: #fff;
     font-size: clamp(0.7rem, 1.5vw, 0.8rem);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: var(--font-body);
+}
+
+/* «Популярный» — тот же объём и палитра, что у «Отправить заявку», плюс периодическое сверкание */
+.level-badge.level-badge-3d {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(10px, 1.8vw, 13px) clamp(18px, 2.8vw, 24px);
+    border-radius: 9999px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(125% 95% at 50% 0%, rgba(255, 255, 255, 0.46) 0%, rgba(255, 220, 228, 0.1) 38%, transparent 62%),
+        linear-gradient(175deg, rgba(255, 255, 255, 0.16) 0%, transparent 46%, rgba(0, 0, 0, 0.36) 100%),
+        linear-gradient(142deg, var(--color-primary-light) 0%, var(--color-primary) 38%, var(--color-accent-dark) 72%, #1a0308 100%);
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.45),
+        inset 0 -6px 16px rgba(0, 0, 0, 0.45),
+        0 5px 0 #1f0409,
+        0 7px 2px rgba(0, 0, 0, 0.45),
+        0 14px 28px rgba(0, 0, 0, 0.45),
+        0 10px 32px rgba(128, 0, 32, 0.45);
+    transition:
+        transform 0.45s cubic-bezier(0.33, 1.18, 0.48, 1),
+        box-shadow 0.45s cubic-bezier(0.33, 1.18, 0.48, 1),
+        filter 0.4s ease;
+}
+
+.level-badge.level-badge-3d span {
+    position: relative;
     z-index: 2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.level-badge.level-badge-3d::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -80%;
+    width: 48%;
+    height: 220%;
+    background: linear-gradient(
+        102deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 38%,
+        rgba(255, 255, 255, 0.75) 50%,
+        rgba(255, 255, 255, 0) 62%,
+        transparent 100%
+    );
+    transform: rotate(16deg) translateX(-150%);
+    animation: level-badge-shimmer 2.9s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.level-badge.level-badge-3d:hover {
+    transform: translateY(3px) scale(0.99);
+    filter: brightness(1.05) saturate(1.06);
+    box-shadow:
+        inset 0 3px 8px rgba(0, 0, 0, 0.25),
+        inset 0 2px 3px rgba(255, 255, 255, 0.28),
+        inset 0 -2px 10px rgba(0, 0, 0, 0.32),
+        0 2px 0 #1f0409,
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 6px 22px rgba(128, 0, 32, 0.38);
+}
+
+@keyframes level-badge-shimmer {
+    0% {
+        transform: rotate(16deg) translateX(-150%);
+    }
+    100% {
+        transform: rotate(16deg) translateX(380%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .level-badge.level-badge-3d::after {
+        animation: none;
+        opacity: 0;
+    }
+
+    .level-badge.level-badge-3d:hover {
+        transform: none;
+    }
 }
 
 .level-header {
