@@ -4040,8 +4040,10 @@ img {
         padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
     }
 
+    /* На телефоне только нижняя CTA — без второй плавающей кнопки «Наверх» */
     .back-to-top {
-        bottom: calc(max(84px, env(safe-area-inset-bottom, 0px)) + 14px);
+        display: none !important;
+        pointer-events: none;
     }
 }
 

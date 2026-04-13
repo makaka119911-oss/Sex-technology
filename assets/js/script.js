@@ -1213,13 +1213,19 @@ function initMobileCollapsibleSections() {
     updateState();
 }
 
-// ===== КНОПКА "НАВЕРХ" =====
+// ===== КНОПКА "НАВЕРХ" (на мобильных скрыта — там одна нижняя CTA «Записаться») =====
 function initBackToTopButton() {
     const btn = document.getElementById('backToTopBtn');
     if (!btn) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobileMq = window.matchMedia('(max-width: 768px)');
+
     const updateVisibility = () => {
+        if (mobileMq.matches) {
+            btn.classList.remove('is-visible');
+            return;
+        }
         const shouldShow = window.scrollY > window.innerHeight * 0.55;
         btn.classList.toggle('is-visible', shouldShow);
     };
@@ -1233,6 +1239,7 @@ function initBackToTopButton() {
 
     window.addEventListener('scroll', updateVisibility, { passive: true });
     window.addEventListener('resize', updateVisibility);
+    mobileMq.addEventListener('change', updateVisibility);
     updateVisibility();
 }
 
