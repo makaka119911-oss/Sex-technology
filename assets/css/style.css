@@ -1426,7 +1426,7 @@ img {
     overflow: hidden;
 }
 
-/* Плавный переход фото → текст: градиент + лёгкое размытие низа кадра */
+/* Лёгкая кинематографичная виньетка без blur — фото остаются чёткими */
 .expert-image::after {
     content: '';
     position: absolute;
@@ -1439,27 +1439,56 @@ img {
     background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0) 0%,
-        rgba(8, 4, 10, 0.15) 28%,
-        rgba(8, 4, 10, 0.5) 62%,
-        rgba(0, 0, 0, 0.72) 100%
+        rgba(8, 4, 10, 0.1) 32%,
+        rgba(8, 4, 10, 0.28) 66%,
+        rgba(0, 0, 0, 0.5) 100%
     );
-    backdrop-filter: blur(12px) saturate(1.05);
-    -webkit-backdrop-filter: blur(12px) saturate(1.05);
     transition: opacity 0.45s ease;
+}
+
+/* Современный light-sweep эффект на hover */
+.expert-image::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    left: -55%;
+    width: 45%;
+    height: 170%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+        104deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.04) 32%,
+        rgba(255, 255, 255, 0.38) 50%,
+        rgba(255, 255, 255, 0.05) 68%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-180%) rotate(14deg);
+    transition: opacity 0.28s ease;
 }
 
 .expert-card:hover .expert-image::after {
     opacity: 0.92;
 }
 
+.expert-card:hover .expert-image::before {
+    opacity: 1;
+    animation: expert-image-sheen 1s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .expert-image::after {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
+    .expert-image::before {
+        display: none;
     }
 
     .expert-card:hover .expert-image::after {
         opacity: 1;
+    }
+
+    .expert-image img {
+        transition: none;
     }
 }
 
@@ -1469,11 +1498,12 @@ img {
     object-fit: cover;
     /* Якорь к верху кадра — голова не обрезается при cover */
     object-position: center top;
-    transition: var(--transition-slow);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s ease;
 }
 
 .expert-card:hover .expert-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    filter: contrast(1.06) saturate(1.05);
 }
 
 .expert-overlay {
@@ -1493,6 +1523,15 @@ img {
 
 .expert-card:hover .expert-overlay {
     opacity: 1;
+}
+
+@keyframes expert-image-sheen {
+    0% {
+        transform: translateX(-180%) rotate(14deg);
+    }
+    100% {
+        transform: translateX(320%) rotate(14deg);
+    }
 }
 
 .social-links {
