@@ -1753,8 +1753,10 @@ img {
         rgba(255, 255, 255, 0) 62%,
         transparent 100%
     );
-    transform: rotate(16deg) translateX(-150%);
-    animation: level-badge-shimmer 2.9s linear infinite;
+    transform: translate3d(-170%, 0, 0) rotate(16deg);
+    will-change: transform, opacity;
+    opacity: 0;
+    animation: level-badge-shimmer 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
     z-index: 1;
     pointer-events: none;
 }
@@ -1769,11 +1771,21 @@ img {
 }
 
 @keyframes level-badge-shimmer {
-    0% {
-        transform: rotate(16deg) translateX(-150%);
+    0%,
+    58% {
+        opacity: 0;
+        transform: translate3d(-170%, 0, 0) rotate(16deg);
+    }
+    66% {
+        opacity: 0.85;
+    }
+    86% {
+        opacity: 0.85;
+        transform: translate3d(360%, 0, 0) rotate(16deg);
     }
     100% {
-        transform: rotate(16deg) translateX(380%);
+        opacity: 0;
+        transform: translate3d(360%, 0, 0) rotate(16deg);
     }
 }
 
@@ -1785,6 +1797,13 @@ img {
 
     .level-badge.level-badge-3d:hover {
         transform: none;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .level-badge.level-badge-3d::after {
+        animation: none;
+        opacity: 0;
     }
 }
 
