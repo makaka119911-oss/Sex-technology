@@ -3,7 +3,8 @@ import { fetchProducts } from "@/lib/supabase/public"
 
 export const metadata = {
   title: "Магазин",
-  description: "Каталог товаров с деликатной доставкой",
+  description:
+    "Каталог: интим-аксессуары, книги, наборы и сертификаты на терапию — деликатно и конфиденциально",
 }
 
 export default async function ShopPage() {
@@ -19,8 +20,9 @@ export default async function ShopPage() {
           Каталог
         </h1>
         <p className="text-sm leading-relaxed text-white/72 sm:text-base">
-          Фильтры по категориям и дискретная доставка — на этапе оформления
-          заказа.
+          Подборка для взрослых в деликатной подаче: аксессуары, литература,
+          подарочные наборы и сертификаты на терапию. Описания сформулированы
+          нейтрально, без вульгарных формулировок.
         </p>
       </header>
       <ProductGrid products={products} />

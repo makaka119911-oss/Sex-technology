@@ -6,6 +6,7 @@ import { useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/lib/cart-context"
 import { formatRub } from "@/lib/format"
+import { sortCategoriesForFilter } from "@/lib/shop-categories"
 import { cn } from "@/lib/utils"
 import type { Product } from "@/types/shop"
 
@@ -20,7 +21,7 @@ export function ProductGrid({ products }: Props) {
     for (const p of products) {
       if (p.category) set.add(p.category)
     }
-    return ["Все", ...Array.from(set).sort()]
+    return ["Все", ...sortCategoriesForFilter(set)]
   }, [products])
 
   const [cat, setCat] = useState("Все")
@@ -70,11 +71,16 @@ export function ProductGrid({ products }: Props) {
             </div>
             <div className="flex flex-1 flex-col gap-3 p-4">
               <div>
+                {p.category ? (
+                  <p className="mb-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#d4af37]/85">
+                    {p.category}
+                  </p>
+                ) : null}
                 <p className="font-luxury text-lg font-semibold leading-snug text-white">
                   {p.name}
                 </p>
                 {p.description ? (
-                  <p className="mt-1 line-clamp-2 text-sm text-white/72">
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/70">
                     {p.description}
                   </p>
                 ) : null}

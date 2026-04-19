@@ -176,6 +176,37 @@ export function CheckoutForm() {
   return (
     <form onSubmit={onSubmit} className="grid gap-10 lg:grid-cols-[1fr_380px]">
       <div className="space-y-8">
+        <section
+          className="tl-section space-y-4 border border-[#d4af37]/30 bg-[rgba(212,175,55,0.07)] p-6 shadow-[0_0_28px_rgba(212,175,55,0.08)]"
+          aria-labelledby="checkout-privacy-heading"
+        >
+          <h2
+            id="checkout-privacy-heading"
+            className="font-luxury text-lg font-semibold tracking-wide text-[#e8d5a3]"
+          >
+            Анонимность и дискретность
+          </h2>
+          <ul className="space-y-3 text-sm leading-relaxed text-white/88">
+            <li className="flex gap-3">
+              <span className="mt-0.5 shrink-0 text-[#d4af37]" aria-hidden>
+                ●
+              </span>
+              <span>
+                «Ваш заказ будет упакован в нейтральную коробку без
+                опознавательных знаков»
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-0.5 shrink-0 text-[#d4af37]" aria-hidden>
+                ●
+              </span>
+              <span>
+                «В SMS и email уведомлениях не будет названий товаров»
+              </span>
+            </li>
+          </ul>
+        </section>
+
         <section className="tl-section space-y-4 p-6">
           <h2 className="font-luxury text-xl font-semibold text-white">Контакты</h2>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -346,10 +377,11 @@ export function CheckoutForm() {
             />
             <span>
               <span className="font-medium text-white">
-                Дискретная упаковка
+                Дискретная упаковка (рекомендуем)
               </span>
               <span className="block text-white/65">
-                Нейтральная коробка без названия магазина на маркировке
+                Нейтральная коробка без логотипа и без названий товаров на
+                маркировке — как в блоке «Анонимность и дискретность» выше.
               </span>
             </span>
           </label>
@@ -395,7 +427,8 @@ export function CheckoutForm() {
           </Button>
           <p className="mt-3 text-xs text-white/55">
             Нажимая кнопку, вы соглашаетесь с обработкой персональных данных для
-            оформления и доставки заказа.
+            оформления и доставки заказа. Уведомления по SMS и email не
+            содержат наименований позиций — только номер заказа и суммы.
           </p>
         </div>
       </aside>

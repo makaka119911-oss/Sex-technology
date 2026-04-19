@@ -33,7 +33,7 @@ function isShopDrawerOpen() {
 
 const CART_STORAGE_KEY = 'territory-love-cart-v1';
 
-/** Магазин встроен в shop/ (GitHub Pages). При необходимости внешнего URL задайте window.__SHOP_BASE__. */
+/** Опциональное переопределение ссылок через window.__SHOP_BASE__ */
 function applyShopBaseUrls() {
     const raw = window.__SHOP_BASE__ || '';
     const base = String(raw).replace(/\/$/, '');
@@ -172,7 +172,6 @@ function initShopDrawer() {
     const openBtn = document.getElementById('shopOpenBtn');
     const closeBtn = document.getElementById('shopDrawerClose');
     const overlay = document.getElementById('shopDrawerOverlay');
-    /* Магазин открывается на Vercel — боковая панель может отсутствовать */
     if (!root || !openBtn || !closeBtn || !overlay) return;
 
     let previouslyFocused = null;

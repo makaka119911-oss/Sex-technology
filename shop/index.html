@@ -14,7 +14,6 @@
             --border: rgba(128, 0, 32, 0.45);
             --gold: #d4af37;
             --text: rgba(255, 255, 255, 0.92);
-            --muted: rgba(255, 255, 255, 0.65);
         }
         * { box-sizing: border-box; }
         body {
@@ -43,12 +42,6 @@
             font-weight: 600;
             color: var(--gold);
         }
-        .embed-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-        }
         .embed-actions a {
             color: var(--text);
             text-decoration: none;
@@ -61,18 +54,6 @@
         .embed-actions a:hover {
             background: rgba(128, 0, 32, 0.25);
             border-color: rgba(128, 0, 32, 0.55);
-        }
-        .embed-actions a.primary {
-            border-color: rgba(212, 175, 55, 0.5);
-            color: var(--gold);
-        }
-        .embed-hint {
-            width: 100%;
-            font-size: 0.75rem;
-            color: var(--muted);
-            margin: 0;
-            padding: 0 16px 8px;
-            line-height: 1.4;
         }
         .frame-wrap {
             flex: 1;
@@ -94,19 +75,15 @@
 </head>
 <body>
     <div class="embed-bar">
-        <span class="embed-title">Территория любви — магазин</span>
+        <span class="embed-title">Магазин «Территория любви»</span>
         <div class="embed-actions">
             <a href="../index.html">← На главную</a>
-            <a href="#" id="openFullShop" class="primary" target="_blank" rel="noopener noreferrer">Открыть отдельно</a>
         </div>
     </div>
-    <p class="embed-hint">
-        Магазин работает на защищённом хостинге и отображается здесь в окне. Корзина и оформление — внутри окна ниже.
-    </p>
     <div class="frame-wrap">
         <iframe
             id="shopFrame"
-            title="Каталог магазина"
+            title="Каталог"
             src="about:blank"
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin"
@@ -126,9 +103,7 @@
 
             var url = origin + path;
             var frame = document.getElementById('shopFrame');
-            var openFull = document.getElementById('openFullShop');
             if (frame) frame.src = url;
-            if (openFull) openFull.href = url;
         })();
     </script>
 </body>

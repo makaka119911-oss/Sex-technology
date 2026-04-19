@@ -54,6 +54,11 @@ export function CartView() {
             </div>
             <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
+                {product.category ? (
+                  <p className="mb-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#d4af37]/80">
+                    {product.category}
+                  </p>
+                ) : null}
                 <p className="font-luxury font-semibold text-white">
                   {product.name}
                 </p>

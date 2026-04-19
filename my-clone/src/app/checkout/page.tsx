@@ -2,6 +2,8 @@ import { CheckoutForm } from "@/components/shop/checkout-form"
 
 export const metadata = {
   title: "Оформление заказа — Территория любви",
+  description:
+    "Дискретная упаковка и конфиденциальные уведомления без названий товаров",
 }
 
 export default function CheckoutPage() {

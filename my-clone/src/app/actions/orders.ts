@@ -133,18 +133,14 @@ export async function submitOrder(payload: CheckoutPayload) {
         ? "Пункт выдачи"
         : "Почта России"
 
-  const emailLines = rows.map((r) => {
-    const meta = priceMap.get(r.product_id)!
-    return {
-      name: meta.name,
-      quantity: r.quantity,
-      priceAtTime: r.price_at_time,
-    }
-  })
-
-  const linesSummary = emailLines
-    .map((l) => `• ${l.name} ×${l.quantity}`)
+  const linesSummary = rows
+    .map((r) => {
+      const meta = priceMap.get(r.product_id)!
+      return `• ${meta.name} ×${r.quantity}`
+    })
     .join("\n")
+
+  const unitsTotal = rows.reduce((s, r) => s + r.quantity, 0)
 
   try {
     const em = payload.customerEmail.trim()
@@ -154,7 +150,8 @@ export async function submitOrder(payload: CheckoutPayload) {
         orderNumber,
         totalRub: total,
         deliveryRub: deliveryCost,
-        lines: emailLines,
+        uniqueLines: rows.length,
+        unitsTotal,
         deliveryMethodLabel,
       })
     }

@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  /** Разрешаем встраивание каталога в iframe со страницы GitHub Pages (shop/index.html) */
+  /** Разрешаем встраивание каталога в iframe с основного сайта */
   async headers() {
     return [
       {
