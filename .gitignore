@@ -1,5 +1,8 @@
 backend/lead-worker/.wrangler/
 
+# Локальные черновики вне репозитория
+3d-print/
+
 # Next.js магазин (my-clone)
 my-clone/node_modules/
 my-clone/.next/
