@@ -140,6 +140,7 @@ function initShopDrawer() {
     const openBtn = document.getElementById('shopOpenBtn');
     const closeBtn = document.getElementById('shopDrawerClose');
     const overlay = document.getElementById('shopDrawerOverlay');
+    /* Магазин открывается на Vercel — боковая панель может отсутствовать */
     if (!root || !openBtn || !closeBtn || !overlay) return;
 
     let previouslyFocused = null;
