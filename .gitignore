@@ -6,6 +6,9 @@ my-clone/.next/
 my-clone/out/
 my-clone/.vercel/
 my-clone/.env
-my-clone/.env.*
+my-clone/.env.local
+my-clone/.env.development.local
+my-clone/.env.test.local
+my-clone/.env.production.local
 my-clone/*.tsbuildinfo
 my-clone/next-env.d.ts
