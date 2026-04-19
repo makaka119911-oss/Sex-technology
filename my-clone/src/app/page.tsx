@@ -12,34 +12,34 @@ export default function Home() {
         Каталог и заказы
       </h1>
       <p className="mt-4 leading-relaxed text-white/75">
-        Оформление заказа и доставка — здесь. Основной лендинг с информацией о
-        терапии и кругах — на{" "}
+        Подборка для взрослых в деликатной подаче: аксессуары, литература,
+        подарочные наборы и сертификаты. Дискретная доставка и нейтральная
+        упаковка — при оформлении заказа.
+      </p>
+      <p className="mt-4 text-sm leading-relaxed text-white/60">
+        О терапии, консультациях и женских кругах — на{" "}
         <a
-          href="https://xn--c1adkgfrbtc9l.com/"
-          className="text-[#d4af37] underline-offset-4 hover:underline"
+          href="https://сексология.com/"
+          className="text-[#d4af37]/95 underline-offset-4 hover:underline"
           target="_blank"
           rel="noreferrer"
         >
-          территория-любви.рф
+          основном сайте проекта
         </a>
         .
       </p>
-      <div className="tl-note mt-6 text-[13px]">
-        Дизайн страниц магазина совпадает с цветовой схемой основного сайта
-        (тёмный фон, бордо, золото).
-      </div>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link href="/shop" className={buttonVariants({ size: "lg" })}>
           Перейти в каталог
         </Link>
-        <Link
-          href="https://xn--c1adkgfrbtc9l.com/"
+        <a
+          href="https://сексология.com/"
           className={buttonVariants({ variant: "outline", size: "lg" })}
           target="_blank"
           rel="noreferrer"
         >
-          На главный сайт
-        </Link>
+          Терапия и мероприятия
+        </a>
       </div>
     </main>
   )

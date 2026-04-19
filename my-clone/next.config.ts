@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "frame-ancestors 'self' https://makaka119911-oss.github.io http://localhost:3000 http://127.0.0.1:3000;",
+              "frame-ancestors 'self' https://makaka119911-oss.github.io https://сексология.com https://xn--c1adkgfrbtc9l.com http://localhost:3000 http://127.0.0.1:3000;",
           },
         ],
       },
