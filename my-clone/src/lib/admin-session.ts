@@ -4,6 +4,11 @@ import { cookies } from "next/headers"
 const COOKIE = "tl_shop_admin"
 const PEPPER = "::territory-love-admin-v1"
 
+/** Только если в Vercel задано ADMIN_OPEN=1 — вход без пароля (риск: любой по URL /admin). */
+export function isAdminOpenMode(): boolean {
+  return process.env.ADMIN_OPEN?.trim() === "1"
+}
+
 export function adminSessionToken(): string | null {
   const secret = process.env.ORDER_ADMIN_SECRET?.trim()
   if (!secret) return null
@@ -11,6 +16,8 @@ export function adminSessionToken(): string | null {
 }
 
 export async function isAdminSession(): Promise<boolean> {
+  if (isAdminOpenMode()) return true
+
   const expected = adminSessionToken()
   if (!expected) return false
   const jar = await cookies()

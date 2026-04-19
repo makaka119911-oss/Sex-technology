@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
   const pwd =
     body && typeof body === "object" && "secret" in body
-      ? String((body as { secret: unknown }).secret)
+      ? String((body as { secret: unknown }).secret).trim()
       : ""
 
   if (pwd !== secret) {

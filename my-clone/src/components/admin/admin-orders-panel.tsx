@@ -48,9 +48,11 @@ function formatAddress(addr: unknown): string {
 
 type Props = {
   initialOrders: AdminOrderRow[]
+  /** Включено ADMIN_OPEN=1 — без пароля, не для публичного продакшена */
+  openMode?: boolean
 }
 
-export function AdminOrdersPanel({ initialOrders }: Props) {
+export function AdminOrdersPanel({ initialOrders, openMode }: Props) {
   const router = useRouter()
   const [pendingId, setPendingId] = useState<string | null>(null)
   const [msg, setMsg] = useState<string | null>(null)
@@ -79,6 +81,17 @@ export function AdminOrdersPanel({ initialOrders }: Props) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      {openMode ? (
+        <div
+          role="alert"
+          className="mb-6 rounded-[var(--radius-md)] border border-red-500/45 bg-red-950/40 px-4 py-3 text-sm text-red-100"
+        >
+          <strong className="text-red-50">Открытый режим:</strong> задано{" "}
+          <code className="text-red-50">ADMIN_OPEN=1</code> — пароль не требуется, зайти
+          может любой, кто знает URL. Уберите переменную в Vercel и используйте{" "}
+          <code className="text-red-50">ORDER_ADMIN_SECRET</code> для нормального входа.
+        </div>
+      ) : null}
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-luxury text-2xl font-semibold text-white md:text-3xl">
@@ -90,15 +103,19 @@ export function AdminOrdersPanel({ initialOrders }: Props) {
             магазина.
           </p>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => void logout()}
-          disabled={isOut}
-        >
-          Выйти
-        </Button>
+        {!openMode ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => void logout()}
+            disabled={isOut}
+          >
+            Выйти
+          </Button>
+        ) : (
+          <span className="text-xs text-white/45">Выйти: отключите ADMIN_OPEN в Vercel</span>
+        )}
       </div>
 
       {msg ? (

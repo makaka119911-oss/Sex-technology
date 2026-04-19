@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { AdminLoginForm } from "@/components/admin/admin-login-form"
 import { AdminOrdersPanel } from "@/components/admin/admin-orders-panel"
 import { fetchAdminOrders } from "@/lib/admin-orders-data"
-import { isAdminSession } from "@/lib/admin-session"
+import { isAdminOpenMode, isAdminSession } from "@/lib/admin-session"
 
 export const dynamic = "force-dynamic"
 
@@ -27,7 +27,8 @@ export default async function AdminPage() {
             На сервере не задан{" "}
             <code className="text-amber-50">ORDER_ADMIN_SECRET</code>. Добавьте
             длинную случайную строку в Vercel (Production) и сделайте Redeploy —
-            без неё вход в админку отключён.
+            без неё вход в админку отключён. Либо временно для проверки задайте{" "}
+            <code className="text-amber-50">ADMIN_OPEN=1</code> (см. .env.example).
           </div>
         ) : null}
         <AdminLoginForm />
@@ -44,5 +45,10 @@ export default async function AdminPage() {
     )
   }
 
-  return <AdminOrdersPanel initialOrders={data.orders} />
+  return (
+    <AdminOrdersPanel
+      initialOrders={data.orders}
+      openMode={isAdminOpenMode()}
+    />
+  )
 }
