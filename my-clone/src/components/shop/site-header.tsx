@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { ShoppingBag } from "lucide-react"
 
@@ -14,7 +15,26 @@ const links = [
 ]
 
 export function SiteHeader() {
+  const pathname = usePathname()
   const { totalItems, ready } = useCart()
+
+  if (pathname?.startsWith("/admin")) {
+    return (
+      <header className="sticky top-0 z-[1000] border-b border-[rgba(128,0,32,0.35)] bg-[rgba(5,5,12,0.97)] backdrop-blur-[10px]">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+          <span className="text-sm font-semibold tracking-wide text-[#d4af37]/90">
+            Админ заказов
+          </span>
+          <Link
+            href="/"
+            className="text-sm text-white/80 underline-offset-4 hover:text-white hover:underline"
+          >
+            На сайт магазина
+          </Link>
+        </div>
+      </header>
+    )
+  }
 
   return (
     <header className="sticky top-0 z-[1000] border-b border-[rgba(128,0,32,0.3)] bg-[rgba(10,10,26,0.95)] backdrop-blur-[10px]">
