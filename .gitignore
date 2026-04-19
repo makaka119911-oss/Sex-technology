@@ -1,1 +1,11 @@
 backend/lead-worker/.wrangler/
+
+# Next.js магазин (my-clone)
+my-clone/node_modules/
+my-clone/.next/
+my-clone/out/
+my-clone/.vercel/
+my-clone/.env
+my-clone/.env.*
+my-clone/*.tsbuildinfo
+my-clone/next-env.d.ts

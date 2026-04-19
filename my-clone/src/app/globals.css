@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Соответствие лендингу Sex-technology/assets/css/style.css (xn--c1adkgfrbtc9l.com) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-heading: var(--font-luxury), ui-serif, Georgia, serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-tl-gold: var(--tl-gold);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* Палитра как на лендинге */
+  --tl-burgundy: #800020;
+  --tl-burgundy-dark: #5a0017;
+  --tl-accent-red: #b22234;
+  --tl-gold: #d4af37;
+  --tl-gold-light: #ffe8b1;
+  --tl-cinematic-dark: #000000;
+  --tl-panel: rgba(255, 255, 255, 0.04);
+  --tl-border-burgundy: rgba(128, 0, 32, 0.35);
+  --tl-gradient-primary: linear-gradient(135deg, #800020, #b22234);
+
+  --background: #000000;
+  --foreground: rgba(255, 255, 255, 0.97);
+  --card: rgba(10, 10, 26, 0.55);
+  --card-foreground: rgba(255, 255, 255, 0.97);
+  --popover: #0a0a1a;
+  --popover-foreground: rgba(255, 255, 255, 0.97);
+  --primary: #800020;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: rgba(255, 255, 255, 0.72);
+  --accent: rgba(128, 0, 32, 0.18);
+  --accent-foreground: rgba(255, 255, 255, 0.97);
+  --destructive: #f44336;
+  --border: rgba(128, 0, 32, 0.35);
+  --input: rgba(128, 0, 32, 0.28);
+  --ring: #d4af37;
+  --chart-1: #800020;
+  --chart-2: #b22234;
+  --chart-3: #d4af37;
+  --chart-4: rgba(255, 255, 255, 0.5);
+  --chart-5: rgba(255, 255, 255, 0.3);
+  --radius: 1rem;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: rgba(255, 255, 255, 0.97);
+  --sidebar-primary: #800020;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(128, 0, 32, 0.25);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(128, 0, 32, 0.35);
+  --sidebar-ring: #d4af37;
+}
+
+.dark {
+  /* Единая тёмная тема как на сайте; класс .dark для совместимости с shadcn */
+  --background: #000000;
+  --foreground: rgba(255, 255, 255, 0.97);
+  --card: rgba(10, 10, 26, 0.55);
+  --card-foreground: rgba(255, 255, 255, 0.97);
+  --popover: #0a0a1a;
+  --popover-foreground: rgba(255, 255, 255, 0.97);
+  --primary: #800020;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: rgba(255, 255, 255, 0.72);
+  --accent: rgba(128, 0, 32, 0.18);
+  --accent-foreground: rgba(255, 255, 255, 0.97);
+  --destructive: #f44336;
+  --border: rgba(128, 0, 32, 0.35);
+  --input: rgba(128, 0, 32, 0.28);
+  --ring: #d4af37;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    color-scheme: dark;
+    @apply font-sans antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(
+        circle at 20% 30%,
+        transparent 10%,
+        rgba(0, 0, 0, 0.3) 100%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        transparent 10%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-luxury), ui-serif, Georgia, serif;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .font-luxury {
+    font-family: var(--font-luxury), ui-serif, Georgia, serif;
+  }
+
+  /* Заголовок как .shop-drawer-title / luxury */
+  .tl-gradient-title {
+    font-family: var(--font-luxury), ui-serif, Georgia, serif;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--tl-gold-light), var(--tl-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tl-text-gold {
+    color: var(--tl-gold);
+  }
+
+  .tl-card-product {
+    @apply rounded-[var(--radius-md)] border bg-[rgba(255,255,255,0.04)] shadow-[0_2px_15px_rgba(0,0,0,0.5)];
+    border-color: rgba(128, 0, 32, 0.22);
+  }
+
+  .tl-note {
+    @apply rounded-[var(--radius-md)] border px-4 py-3.5 text-left text-sm leading-snug text-[rgba(255,255,255,0.7)];
+    background: rgba(128, 0, 32, 0.12);
+    border-color: rgba(128, 0, 32, 0.25);
+  }
+
+  .tl-input {
+    @apply w-full rounded-[var(--radius-md)] border px-3 py-2 text-white outline-none transition-colors placeholder:text-white/40;
+    border-color: rgba(128, 0, 32, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .tl-input:focus-visible {
+    border-color: #d4af37;
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.45);
+  }
+
+  .tl-section {
+    @apply rounded-[var(--radius-md)] border border-[rgba(128,0,32,0.22)] bg-[rgba(255,255,255,0.04)] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.5)];
+  }
+}

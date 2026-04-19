@@ -1,0 +1,148 @@
+"use server"
+
+import { estimateDeliveryRub } from "@/lib/delivery"
+import { generateOrderNumber } from "@/lib/order-number"
+import { normalizePhone } from "@/lib/phone"
+import { getServiceRoleClient } from "@/lib/supabase/admin"
+import type { DeliveryAddress, DeliveryMethod } from "@/types/shop"
+
+export type CheckoutPayload = {
+  items: { productId: string; quantity: number }[]
+  customerName: string
+  customerPhone: string
+  customerEmail: string
+  deliveryMethod: DeliveryMethod
+  deliveryAddress: DeliveryAddress
+  customerComment: string
+  discreetPackaging: boolean
+  pickupPointLabel?: string
+}
+
+export async function submitOrder(payload: CheckoutPayload) {
+  const admin = getServiceRoleClient()
+  if (!admin) {
+    return {
+      ok: false as const,
+      error:
+        "Сервер заказов недоступен: задайте NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY и SUPABASE_SERVICE_ROLE_KEY.",
+    }
+  }
+
+  if (!payload.items.length) {
+    return { ok: false as const, error: "Корзина пуста" }
+  }
+
+  const ids = [...new Set(payload.items.map((i) => i.productId))]
+  const { data: products, error: pe } = await admin
+    .from("products")
+    .select("id, price")
+    .in("id", ids)
+
+  if (pe || !products?.length) {
+    return { ok: false as const, error: "Не удалось загрузить товары" }
+  }
+
+  const priceMap = new Map(products.map((p) => [p.id, Number(p.price)]))
+
+  let subtotal = 0
+  const rows: {
+    product_id: string
+    quantity: number
+    price_at_time: number
+  }[] = []
+
+  for (const item of payload.items) {
+    const price = priceMap.get(item.productId)
+    if (price == null || item.quantity < 1) {
+      return { ok: false as const, error: "Некорректные позиции в корзине" }
+    }
+    subtotal += price * item.quantity
+    rows.push({
+      product_id: item.productId,
+      quantity: item.quantity,
+      price_at_time: price,
+    })
+  }
+
+  const itemCount = payload.items.reduce((s, i) => s + i.quantity, 0)
+  const deliveryCost = estimateDeliveryRub(
+    payload.deliveryMethod,
+    subtotal,
+    itemCount,
+  )
+  const total = subtotal + deliveryCost
+  const orderNumber = generateOrderNumber()
+
+  const { data: order, error: oe } = await admin
+    .from("orders")
+    .insert({
+      order_number: orderNumber,
+      user_id: null,
+      customer_name: payload.customerName.trim(),
+      customer_phone: normalizePhone(payload.customerPhone),
+      customer_email: payload.customerEmail.trim() || null,
+      delivery_address: payload.deliveryAddress,
+      delivery_method: payload.deliveryMethod,
+      delivery_cost: deliveryCost,
+      total_amount: total,
+      status: "pending",
+      discreet_packaging: payload.discreetPackaging,
+      customer_comment: payload.customerComment.trim() || null,
+      pickup_point_label: payload.pickupPointLabel?.trim() || null,
+    })
+    .select("id, order_number")
+    .single()
+
+  if (oe || !order) {
+    return {
+      ok: false as const,
+      error: oe?.message ?? "Не удалось создать заказ",
+    }
+  }
+
+  const { error: ie } = await admin.from("order_items").insert(
+    rows.map((r) => ({
+      order_id: order.id,
+      product_id: r.product_id,
+      quantity: r.quantity,
+      price_at_time: r.price_at_time,
+    })),
+  )
+
+  if (ie) {
+    return { ok: false as const, error: ie.message }
+  }
+
+  return {
+    ok: true as const,
+    orderId: order.id,
+    orderNumber: order.order_number,
+  }
+}
+
+export async function lookupOrder(orderNumber: string, phone: string) {
+  const admin = getServiceRoleClient()
+  if (!admin) {
+    return { ok: false as const, error: "База данных не настроена" }
+  }
+
+  const on = orderNumber.trim()
+  const ph = normalizePhone(phone)
+  if (!on || !ph) {
+    return { ok: false as const, error: "Укажите номер заказа и телефон" }
+  }
+
+  const { data, error } = await admin
+    .from("orders")
+    .select(
+      "id, order_number, status, total_amount, created_at, delivery_method, delivery_cost",
+    )
+    .eq("order_number", on)
+    .eq("customer_phone", ph)
+    .maybeSingle()
+
+  if (error) return { ok: false as const, error: error.message }
+  if (!data) return { ok: false as const, error: "Заказ не найден" }
+
+  return { ok: true as const, order: data }
+}
