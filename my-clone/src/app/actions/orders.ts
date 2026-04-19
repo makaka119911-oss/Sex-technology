@@ -1,7 +1,9 @@
 "use server"
 
-import { estimateDeliveryRub } from "@/lib/delivery"
+import { calculateDeliveryMvp } from "@/lib/delivery-pricing"
 import { generateOrderNumber } from "@/lib/order-number"
+import { sendOrderConfirmationEmail } from "@/lib/notifications/email"
+import { notifyTelegramNewOrder } from "@/lib/notifications/telegram"
 import { normalizePhone } from "@/lib/phone"
 import { getServiceRoleClient } from "@/lib/supabase/admin"
 import type { DeliveryAddress, DeliveryMethod } from "@/types/shop"
@@ -35,14 +37,16 @@ export async function submitOrder(payload: CheckoutPayload) {
   const ids = [...new Set(payload.items.map((i) => i.productId))]
   const { data: products, error: pe } = await admin
     .from("products")
-    .select("id, price")
+    .select("id, price, name")
     .in("id", ids)
 
   if (pe || !products?.length) {
     return { ok: false as const, error: "Не удалось загрузить товары" }
   }
 
-  const priceMap = new Map(products.map((p) => [p.id, Number(p.price)]))
+  const priceMap = new Map(
+    products.map((p) => [p.id, { price: Number(p.price), name: String(p.name) }]),
+  )
 
   let subtotal = 0
   const rows: {
@@ -52,26 +56,35 @@ export async function submitOrder(payload: CheckoutPayload) {
   }[] = []
 
   for (const item of payload.items) {
-    const price = priceMap.get(item.productId)
-    if (price == null || item.quantity < 1) {
+    const meta = priceMap.get(item.productId)
+    if (!meta || item.quantity < 1) {
       return { ok: false as const, error: "Некорректные позиции в корзине" }
     }
-    subtotal += price * item.quantity
+    subtotal += meta.price * item.quantity
     rows.push({
       product_id: item.productId,
       quantity: item.quantity,
-      price_at_time: price,
+      price_at_time: meta.price,
     })
   }
 
   const itemCount = payload.items.reduce((s, i) => s + i.quantity, 0)
-  const deliveryCost = estimateDeliveryRub(
-    payload.deliveryMethod,
-    subtotal,
+  const city = payload.deliveryAddress.city?.trim() || "Москва"
+  const deliveryCost = calculateDeliveryMvp({
+    method: payload.deliveryMethod,
+    city,
+    subtotalRub: subtotal,
     itemCount,
-  )
+  }).priceRub
   const total = subtotal + deliveryCost
   const orderNumber = generateOrderNumber()
+
+  const pickupLabelParts = [
+    payload.deliveryAddress.pickupPoint?.label,
+    payload.pickupPointLabel?.trim(),
+  ].filter(Boolean)
+  const pickupPointLabelMerged =
+    pickupLabelParts.length > 0 ? pickupLabelParts.join("\n") : null
 
   const { data: order, error: oe } = await admin
     .from("orders")
@@ -88,7 +101,7 @@ export async function submitOrder(payload: CheckoutPayload) {
       status: "pending",
       discreet_packaging: payload.discreetPackaging,
       customer_comment: payload.customerComment.trim() || null,
-      pickup_point_label: payload.pickupPointLabel?.trim() || null,
+      pickup_point_label: pickupPointLabelMerged,
     })
     .select("id, order_number")
     .single()
@@ -111,6 +124,54 @@ export async function submitOrder(payload: CheckoutPayload) {
 
   if (ie) {
     return { ok: false as const, error: ie.message }
+  }
+
+  const deliveryMethodLabel =
+    payload.deliveryMethod === "courier"
+      ? "Курьер"
+      : payload.deliveryMethod === "pickup"
+        ? "Пункт выдачи"
+        : "Почта России"
+
+  const emailLines = rows.map((r) => {
+    const meta = priceMap.get(r.product_id)!
+    return {
+      name: meta.name,
+      quantity: r.quantity,
+      priceAtTime: r.price_at_time,
+    }
+  })
+
+  const linesSummary = emailLines
+    .map((l) => `• ${l.name} ×${l.quantity}`)
+    .join("\n")
+
+  try {
+    const em = payload.customerEmail.trim()
+    if (em) {
+      await sendOrderConfirmationEmail({
+        to: em,
+        orderNumber,
+        totalRub: total,
+        deliveryRub: deliveryCost,
+        lines: emailLines,
+        deliveryMethodLabel,
+      })
+    }
+  } catch (e) {
+    console.error("sendOrderConfirmationEmail", e)
+  }
+
+  try {
+    await notifyTelegramNewOrder({
+      orderNumber,
+      totalRub: total,
+      customerName: payload.customerName.trim(),
+      customerPhone: normalizePhone(payload.customerPhone),
+      linesSummary,
+    })
+  } catch (e) {
+    console.error("notifyTelegramNewOrder", e)
   }
 
   return {

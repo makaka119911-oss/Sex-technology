@@ -2,15 +2,16 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { submitOrder } from "@/app/actions/orders"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { YandexPickupMap } from "@/components/shop/yandex-pickup-map"
 import { useCart } from "@/lib/cart-context"
 import { estimateDeliveryRub } from "@/lib/delivery"
 import { formatRub } from "@/lib/format"
 import { rememberAddress } from "@/components/shop/saved-addresses"
-import type { DeliveryMethod } from "@/types/shop"
+import type { DeliveryMethod, PickupPointSelection } from "@/types/shop"
 import { cn } from "@/lib/utils"
 
 const methods: { id: DeliveryMethod; title: string; hint: string }[] = [
@@ -48,6 +49,8 @@ export function CheckoutForm() {
   const [comment, setComment] = useState("")
   const [method, setMethod] = useState<DeliveryMethod>("courier")
   const [pickupNote, setPickupNote] = useState("")
+  const [pickupSelection, setPickupSelection] =
+    useState<PickupPointSelection | null>(null)
   const [discreet, setDiscreet] = useState(true)
   const [saveAddress, setSaveAddress] = useState(false)
 
@@ -56,10 +59,54 @@ export function CheckoutForm() {
     [lines],
   )
 
-  const deliveryCost = useMemo(
-    () => estimateDeliveryRub(method, subtotal, itemCount),
-    [method, subtotal, itemCount],
+  const [deliveryCost, setDeliveryCost] = useState(() =>
+    estimateDeliveryRub(method, subtotal, itemCount, "Москва"),
   )
+  const [deliveryNote, setDeliveryNote] = useState<string | null>(null)
+
+  const onPickupMapSelect = useCallback((p: PickupPointSelection) => {
+    setPickupSelection(p)
+  }, [])
+
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const res = await fetch("/api/calculate-delivery", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              method,
+              city,
+              subtotalRub: subtotal,
+              itemCount,
+            }),
+          })
+          const data = (await res.json()) as {
+            priceRub?: number
+            note?: string | null
+          }
+          if (res.ok && typeof data.priceRub === "number") {
+            setDeliveryCost(data.priceRub)
+            setDeliveryNote(
+              typeof data.note === "string" ? data.note : null,
+            )
+          } else {
+            setDeliveryCost(
+              estimateDeliveryRub(method, subtotal, itemCount, city),
+            )
+            setDeliveryNote(null)
+          }
+        } catch {
+          setDeliveryCost(
+            estimateDeliveryRub(method, subtotal, itemCount, city),
+          )
+          setDeliveryNote(null)
+        }
+      })()
+    }, 400)
+    return () => window.clearTimeout(t)
+  }, [method, city, subtotal, itemCount])
 
   const total = subtotal + deliveryCost
 
@@ -86,6 +133,8 @@ export function CheckoutForm() {
         building,
         apartment,
         postalCode: method === "post" ? postalCode : undefined,
+        pickupPoint:
+          method === "pickup" && pickupSelection ? pickupSelection : undefined,
       },
       customerComment: comment,
       discreetPackaging: discreet,
@@ -259,16 +308,19 @@ export function CheckoutForm() {
           {method === "pickup" ? (
             <div className="space-y-3 rounded-[var(--radius-md)] border border-dashed border-[rgba(128,0,32,0.45)] bg-[rgba(128,0,32,0.08)] p-4">
               <p className="text-sm text-white/65">
-                Карта пунктов выдачи будет подключена к API СДЭК / Boxberry. Пока
-                укажите город и желаемый район или станцию метро.
+                Выберите пункт на карте (Яндекс.Карты) — координаты и адрес
+                сохранятся в заказе. Для полного расчёта стоимости ПВЗ позже
+                подключим API СДЭК.
               </p>
+              <YandexPickupMap onSelect={onPickupMapSelect} />
               <label className="space-y-1.5 text-sm">
-                <span className="text-white/70">Пункт / комментарий</span>
+                <span className="text-white/70">Комментарий к пункту</span>
                 <textarea
                   value={pickupNote}
                   onChange={(e) => setPickupNote(e.target.value)}
                   rows={3}
                   className="tl-input min-h-[88px]"
+                  placeholder="Например: удобное время, вход со двора…"
                 />
               </label>
             </div>
@@ -314,7 +366,14 @@ export function CheckoutForm() {
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-white/65">Доставка</dt>
-              <dd className="text-white">{formatRub(deliveryCost)}</dd>
+              <dd className="text-right text-white">
+                {formatRub(deliveryCost)}
+                {deliveryNote ? (
+                  <span className="mt-1 block text-xs font-normal text-white/50">
+                    {deliveryNote}
+                  </span>
+                ) : null}
+              </dd>
             </div>
             <div className="flex justify-between gap-4 border-t border-[rgba(128,0,32,0.35)] pt-3 text-base font-semibold">
               <dt className="text-white">К оплате</dt>

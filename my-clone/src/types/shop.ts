@@ -15,10 +15,18 @@ export type CartLine = {
 
 export type DeliveryMethod = "courier" | "pickup" | "post"
 
+export type PickupPointSelection = {
+  lat: number
+  lon: number
+  label: string
+}
+
 export type DeliveryAddress = {
   city: string
   street: string
   building: string
   apartment: string
   postalCode?: string
+  /** Выбор на карте (ПВЗ), опционально */
+  pickupPoint?: PickupPointSelection
 }

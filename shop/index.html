@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин | Территория любви</title>
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a1a;
+            --border: rgba(128, 0, 32, 0.45);
+            --gold: #d4af37;
+            --text: rgba(255, 255, 255, 0.92);
+            --muted: rgba(255, 255, 255, 0.65);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', system-ui, sans-serif;
+        }
+        .embed-bar {
+            flex-shrink: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 10, 26, 0.98);
+        }
+        .embed-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            font-weight: 600;
+            color: var(--gold);
+        }
+        .embed-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .embed-actions a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .embed-actions a:hover {
+            background: rgba(128, 0, 32, 0.25);
+            border-color: rgba(128, 0, 32, 0.55);
+        }
+        .embed-actions a.primary {
+            border-color: rgba(212, 175, 55, 0.5);
+            color: var(--gold);
+        }
+        .embed-hint {
+            width: 100%;
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin: 0;
+            padding: 0 16px 8px;
+            line-height: 1.4;
+        }
+        .frame-wrap {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            background: #050510;
+        }
+        .frame-wrap iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+    <script>
+        window.__SHOP_APP_ORIGIN__ = window.__SHOP_APP_ORIGIN__ || 'https://my-clone-lac-eight.vercel.app';
+    </script>
+</head>
+<body>
+    <div class="embed-bar">
+        <span class="embed-title">Территория любви — магазин</span>
+        <div class="embed-actions">
+            <a href="../index.html">← На главную</a>
+            <a href="#" id="openFullShop" class="primary" target="_blank" rel="noopener noreferrer">Открыть отдельно</a>
+        </div>
+    </div>
+    <p class="embed-hint">
+        Магазин работает на защищённом хостинге и отображается здесь в окне. Корзина и оформление — внутри окна ниже.
+    </p>
+    <div class="frame-wrap">
+        <iframe
+            id="shopFrame"
+            title="Каталог магазина"
+            src="about:blank"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="payment *; fullscreen"
+        ></iframe>
+    </div>
+    <script>
+        (function () {
+            var origin = String(window.__SHOP_APP_ORIGIN__ || '').replace(/\/$/, '');
+            var params = new URLSearchParams(window.location.search);
+            var p = (params.get('p') || 'shop').toLowerCase();
+            var path = '/shop';
+            if (p === 'cart') path = '/cart';
+            else if (p === 'checkout') path = '/checkout';
+            else if (p === 'cabinet') path = '/cabinet';
+            else if (p === 'shop' || p === '') path = '/shop';
+
+            var url = origin + path;
+            var frame = document.getElementById('shopFrame');
+            var openFull = document.getElementById('openFullShop');
+            if (frame) frame.src = url;
+            if (openFull) openFull.href = url;
+        })();
+    </script>
+</body>
+</html>

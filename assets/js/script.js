@@ -31,6 +31,38 @@ function isShopDrawerOpen() {
     return !!(root && root.classList.contains('is-open'));
 }
 
+const CART_STORAGE_KEY = 'territory-love-cart-v1';
+
+/** Магазин встроен в shop/ (GitHub Pages). При необходимости внешнего URL задайте window.__SHOP_BASE__. */
+function applyShopBaseUrls() {
+    const raw = window.__SHOP_BASE__ || '';
+    const base = String(raw).replace(/\/$/, '');
+    if (!base) return;
+    document.querySelectorAll('a[data-shop-link="1"]').forEach((a) => {
+        a.setAttribute('href', `${base}/shop`);
+    });
+    const cart = document.getElementById('landingCartLink');
+    if (cart && cart.hasAttribute('data-remote-cart')) {
+        cart.setAttribute('href', `${base}/cart`);
+    }
+}
+
+function updateLandingCartBadge() {
+    const badge = document.getElementById('landingCartBadge');
+    if (!badge) return;
+    let n = 0;
+    try {
+        const raw = localStorage.getItem(CART_STORAGE_KEY);
+        const lines = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(lines)) {
+            n = lines.reduce((s, line) => s + (Number(line.quantity) || 0), 0);
+        }
+    } catch (e) {
+        console.warn('cart badge', e);
+    }
+    badge.textContent = n > 0 ? String(n) : '';
+}
+
 function syncBodyScrollLock() {
     const navMenu = document.querySelector('.nav-menu');
     const navOpen = navMenu && navMenu.classList.contains('active');
@@ -1251,6 +1283,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initShopDrawer();
     initHeaderScroll();
+    applyShopBaseUrls();
+    updateLandingCartBadge();
+    window.addEventListener('storage', updateLandingCartBadge);
+    window.addEventListener('focus', updateLandingCartBadge);
     
     // Слайдеры и интерактивные компоненты
     new CinematicHeroSlider();

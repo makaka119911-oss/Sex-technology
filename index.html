@@ -41,6 +41,11 @@
     
     <!-- Фавикон -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+
+    <!-- Опционально: полный URL Vercel, если нужны ссылки data-shop-link / data-remote-cart на приложение без встраивания -->
+    <script>
+        window.__SHOP_BASE__ = window.__SHOP_BASE__ || '';
+    </script>
 </head>
 <body>
     <!-- Прелоадер -->
@@ -122,9 +127,13 @@
                         <i class="fas fa-calendar-check" aria-hidden="true"></i>
                         <span>Записаться на консультацию</span>
                     </a>
-                    <a href="https://my-clone-lac-eight.vercel.app/shop" class="nav-shop-btn" target="_blank" rel="noopener noreferrer">
+                    <a href="shop/" class="nav-shop-btn">
                         <i class="fas fa-bag-shopping" aria-hidden="true"></i>
                         <span>Магазин</span>
+                    </a>
+                    <a href="shop/?p=cart" class="nav-shop-btn nav-cart-btn" id="landingCartLink" aria-label="Корзина">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="nav-cart-badge" id="landingCartBadge" aria-live="polite"></span>
                     </a>
                 </div>
             </nav>
@@ -1137,6 +1146,6 @@
         window.__LEAD_BACKEND_URL__ = 'https://sex-technology-lead-worker.territory-love.workers.dev';
     </script>
     <!-- Скрипты -->
-    <script src="assets/js/script.js?v=shop-external-1" defer></script>
+    <script src="assets/js/script.js?v=shop-embed-1" defer></script>
 </body>
 </html>
