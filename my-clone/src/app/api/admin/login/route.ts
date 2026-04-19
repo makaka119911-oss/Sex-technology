@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server"
 
-import { ADMIN_COOKIE_NAME, adminSessionToken } from "@/lib/admin-session"
+import {
+  ADMIN_COOKIE_NAME,
+  adminSessionToken,
+  getOrderAdminSecret,
+} from "@/lib/admin-session"
 
 export async function POST(req: Request) {
-  const secret = process.env.ORDER_ADMIN_SECRET?.trim()
+  const secret = getOrderAdminSecret()
   if (!secret) {
     return NextResponse.json(
-      { error: "ORDER_ADMIN_SECRET не задан на сервере" },
+      {
+        error:
+          "Секрет админки не задан на сервере: задайте ORDER_ADMIN_SECRET (или SHOP_ADMIN_SECRET) в Vercel и Redeploy.",
+      },
       { status: 503 },
     )
   }

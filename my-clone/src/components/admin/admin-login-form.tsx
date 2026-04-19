@@ -1,12 +1,10 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 
 export function AdminLoginForm() {
-  const router = useRouter()
   const [secret, setSecret] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
@@ -18,6 +16,7 @@ export function AdminLoginForm() {
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ secret }),
       })
@@ -28,11 +27,13 @@ export function AdminLoginForm() {
         return
       }
       setSecret("")
-      router.refresh()
+      setPending(false)
+      /* Полная перезагрузка: так браузер гарантированно применит Set-Cookie до RSC */
+      window.location.assign("/admin")
     } catch {
       setError("Сеть недоступна")
+      setPending(false)
     }
-    setPending(false)
   }
 
   return (

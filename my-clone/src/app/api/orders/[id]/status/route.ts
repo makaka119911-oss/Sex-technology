@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 
+import { getOrderAdminSecret } from "@/lib/admin-session"
 import { sendOrderStatusEmail } from "@/lib/notifications/email"
 import { getServiceRoleClient } from "@/lib/supabase/admin"
 
@@ -15,10 +16,10 @@ export async function PATCH(
   req: Request,
   ctx: { params: Promise<{ id: string }> },
 ) {
-  const secret = process.env.ORDER_ADMIN_SECRET
+  const secret = getOrderAdminSecret()
   if (!secret) {
     return NextResponse.json(
-      { error: "ORDER_ADMIN_SECRET не задан" },
+      { error: "ORDER_ADMIN_SECRET (или SHOP_ADMIN_SECRET) не задан" },
       { status: 503 },
     )
   }

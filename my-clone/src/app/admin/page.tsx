@@ -3,7 +3,11 @@ import type { Metadata } from "next"
 import { AdminLoginForm } from "@/components/admin/admin-login-form"
 import { AdminOrdersPanel } from "@/components/admin/admin-orders-panel"
 import { fetchAdminOrders } from "@/lib/admin-orders-data"
-import { isAdminOpenMode, isAdminSession } from "@/lib/admin-session"
+import {
+  getOrderAdminSecret,
+  isAdminOpenMode,
+  isAdminSession,
+} from "@/lib/admin-session"
 
 export const dynamic = "force-dynamic"
 
@@ -16,7 +20,7 @@ export default async function AdminPage() {
   const authed = await isAdminSession()
 
   if (!authed) {
-    const hasSecret = Boolean(process.env.ORDER_ADMIN_SECRET?.trim())
+    const hasSecret = Boolean(getOrderAdminSecret())
     const vercelEnv = process.env.VERCEL_ENV
     return (
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">

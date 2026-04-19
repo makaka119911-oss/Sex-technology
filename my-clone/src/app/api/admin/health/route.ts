@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server"
 
-/** Проверка: видит ли рантайм ORDER_ADMIN_SECRET (значение не раскрывается). */
+import { getOrderAdminSecret } from "@/lib/admin-session"
+
+/** Проверка: видит ли рантайм секрет админки (значение не раскрывается). */
 export async function GET() {
-  const orderAdminSecret = Boolean(process.env.ORDER_ADMIN_SECRET?.trim())
+  const orderAdminSecret = Boolean(getOrderAdminSecret())
   return NextResponse.json({
     orderAdminSecret,
     vercelEnv: process.env.VERCEL_ENV ?? null,
