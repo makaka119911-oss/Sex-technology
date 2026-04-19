@@ -26,7 +26,7 @@ export async function submitOrder(payload: CheckoutPayload) {
     return {
       ok: false as const,
       error:
-        "Сервер заказов недоступен: задайте NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY и SUPABASE_SERVICE_ROLE_KEY.",
+        "Сервер заказов недоступен: в Vercel (Production) задайте NEXT_PUBLIC_SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY; для каталога ещё NEXT_PUBLIC_SUPABASE_ANON_KEY. Сохраните и сделайте Redeploy.",
     }
   }
 
@@ -41,7 +41,12 @@ export async function submitOrder(payload: CheckoutPayload) {
     .in("id", ids)
 
   if (pe || !products?.length) {
-    return { ok: false as const, error: "Не удалось загрузить товары" }
+    return {
+      ok: false as const,
+      error: pe
+        ? `Не удалось загрузить товары: ${pe.message}`
+        : "В корзине устаревшие позиции (например, демо-каталог). Очистите корзину и снова добавьте товары из каталога.",
+    }
   }
 
   const priceMap = new Map(

@@ -11,7 +11,8 @@ import {
 
 import type { CartLine, Product } from "@/types/shop"
 
-const STORAGE_KEY = "territory-love-cart-v1"
+/** v2: сброс после перехода с демо-ID на UUID из Supabase */
+const STORAGE_KEY = "territory-love-cart-v2"
 
 type CartContextValue = {
   lines: CartLine[]

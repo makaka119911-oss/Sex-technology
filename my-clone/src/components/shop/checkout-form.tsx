@@ -12,6 +12,7 @@ import { estimateDeliveryRub } from "@/lib/delivery"
 import { formatRub } from "@/lib/format"
 import { rememberAddress } from "@/components/shop/saved-addresses"
 import type { DeliveryMethod, PickupPointSelection } from "@/types/shop"
+import { isLikelySupabaseProductId } from "@/lib/product-id"
 import { cn } from "@/lib/utils"
 
 const methods: { id: DeliveryMethod; title: string; hint: string }[] = [
@@ -35,6 +36,7 @@ const methods: { id: DeliveryMethod; title: string; hint: string }[] = [
 export function CheckoutForm() {
   const router = useRouter()
   const { lines, subtotal, clear } = useCart()
+  const staleCart = lines.some((l) => !isLikelySupabaseProductId(l.product.id))
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -117,6 +119,12 @@ export function CheckoutForm() {
       setError("Корзина пуста")
       return
     }
+    if (staleCart) {
+      setError(
+        "В корзине старые позиции (не из текущего каталога). Нажмите «Очистить корзину» ниже и добавьте товары заново.",
+      )
+      return
+    }
     setPending(true)
     const res = await submitOrder({
       items: lines.map((l) => ({
@@ -176,6 +184,29 @@ export function CheckoutForm() {
   return (
     <form onSubmit={onSubmit} className="grid gap-10 lg:grid-cols-[1fr_380px]">
       <div className="space-y-8">
+        {staleCart ? (
+          <div
+            role="alert"
+            className="tl-section space-y-3 border border-amber-500/50 bg-amber-950/35 p-5 text-sm text-amber-100"
+          >
+            <p className="font-medium text-amber-50">
+              Корзина не совпадает с каталогом в базе (часто после включения Supabase
+              или смены окружения).
+            </p>
+            <p className="text-amber-100/90">
+              Очистите корзину и добавьте товары снова со страницы «Магазин» — иначе
+              заказ не создать.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button type="button" variant="outline" onClick={() => clear()}>
+                Очистить корзину
+              </Button>
+              <Link href="/shop" className={buttonVariants({ variant: "secondary" })}>
+                В каталог
+              </Link>
+            </div>
+          </div>
+        ) : null}
         <section
           className="tl-section space-y-4 border border-[#d4af37]/30 bg-[rgba(212,175,55,0.07)] p-6 shadow-[0_0_28px_rgba(212,175,55,0.08)]"
           aria-labelledby="checkout-privacy-heading"
@@ -419,7 +450,7 @@ export function CheckoutForm() {
           ) : null}
           <Button
             type="submit"
-            disabled={pending}
+            disabled={pending || staleCart}
             className="mt-6 w-full"
             size="lg"
           >

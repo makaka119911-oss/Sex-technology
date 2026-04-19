@@ -8,10 +8,12 @@ import { Minus, Plus, Trash2 } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { useCart } from "@/lib/cart-context"
 import { formatRub } from "@/lib/format"
+import { isLikelySupabaseProductId } from "@/lib/product-id"
 import { cn } from "@/lib/utils"
 
 export function CartView() {
-  const { lines, ready, remove, setQuantity, subtotal } = useCart()
+  const { lines, ready, remove, setQuantity, subtotal, clear } = useCart()
+  const staleCart = lines.some((l) => !isLikelySupabaseProductId(l.product.id))
 
   if (!ready) {
     return (
@@ -35,6 +37,27 @@ export function CartView() {
 
   return (
     <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-[1fr_320px]">
+      {staleCart ? (
+        <div
+          role="alert"
+          className="lg:col-span-2 rounded-[var(--radius-md)] border border-amber-500/50 bg-amber-950/35 p-4 text-sm text-amber-100"
+        >
+          <p className="font-medium text-amber-50">
+            В корзине устаревшие товары (не из текущего каталога).
+          </p>
+          <p className="mt-2 text-amber-100/90">
+            Очистите корзину и добавьте позиции заново из «Магазин», иначе оформление
+            не пройдёт.
+          </p>
+          <button
+            type="button"
+            className={buttonVariants({ size: "sm", className: "mt-3" })}
+            onClick={() => clear()}
+          >
+            Очистить корзину
+          </button>
+        </div>
+      ) : null}
       <ul className="space-y-4">
         {lines.map(({ product, quantity }) => (
           <li
