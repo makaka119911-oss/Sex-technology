@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  /** Standalone не задаём: на Vercel стандартная сборка; env и serverless стабильнее */
   /** Разрешаем встраивание каталога в iframe с основного сайта */
   async headers() {
     return [
