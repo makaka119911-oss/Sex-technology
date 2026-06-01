@@ -723,6 +723,39 @@ img {
     display: none;
 }
 
+/* Proximity dock (мышь, десктоп): масштаб и яркость от расстояния до курсора */
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+    [data-proximity] > * {
+        --proximity-scale: 1;
+        --proximity-brightness: 1;
+        transform: scale(var(--proximity-scale));
+        filter: brightness(var(--proximity-brightness));
+        transition:
+            transform 0.14s ease-out,
+            filter 0.14s ease-out;
+    }
+
+    .nav-links[data-proximity] > .nav-link {
+        transform-origin: center bottom;
+    }
+
+    .slider-indicators[data-proximity] > .indicator {
+        transform-origin: center right;
+    }
+
+    .slider-controls[data-proximity] > .slider-prev,
+    .slider-controls[data-proximity] > .slider-next {
+        transform-origin: center center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-proximity] > * {
+        transform: none !important;
+        filter: none !important;
+    }
+}
+
 /* ===== Планшет и десктоп: шапка и герой ===== */
 @media (min-width: 769px) {
     :root {

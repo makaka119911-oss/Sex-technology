@@ -1330,7 +1330,90 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Инициализация Lazy Loading для изображений
     initLazyLoading();
+    initProximityDock();
 });
+
+// ===== Proximity dock (меню + слайдер): реакция на расстояние курсора =====
+function initProximityDock() {
+    const mq = window.matchMedia(
+        '(min-width: 769px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+    );
+
+    const groups = () => document.querySelectorAll('[data-proximity]');
+    const bound = new WeakSet();
+
+    function resetGroup(container) {
+        container.querySelectorAll(':scope > *').forEach((el) => {
+            el.style.removeProperty('--proximity-scale');
+            el.style.removeProperty('--proximity-brightness');
+        });
+    }
+
+    function updateGroup(container, clientX, clientY) {
+        const radius = Number(container.dataset.proximityRadius) || 100;
+        const boost = Number(container.dataset.proximityBoost) || 0.1;
+        const darken = Number(container.dataset.proximityDarken) || 0.1;
+
+        container.querySelectorAll(':scope > *').forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dist = Math.hypot(clientX - cx, clientY - cy);
+            const t = Math.max(0, 1 - dist / radius);
+
+            el.style.setProperty('--proximity-scale', String(1 + t * boost));
+            el.style.setProperty('--proximity-brightness', String(1 - t * darken));
+        });
+    }
+
+    function bindGroup(container) {
+        if (bound.has(container)) return;
+        bound.add(container);
+
+        let rafId = 0;
+        let lastX = 0;
+        let lastY = 0;
+
+        const scheduleUpdate = () => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                rafId = 0;
+                updateGroup(container, lastX, lastY);
+            });
+        };
+
+        container.addEventListener('pointerenter', (e) => {
+            if (!mq.matches || e.pointerType !== 'mouse') return;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            scheduleUpdate();
+        });
+
+        container.addEventListener('pointermove', (e) => {
+            if (!mq.matches || e.pointerType !== 'mouse') return;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            scheduleUpdate();
+        });
+
+        container.addEventListener('pointerleave', () => {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = 0;
+            }
+            resetGroup(container);
+        });
+    }
+
+    function syncBindings() {
+        groups().forEach(resetGroup);
+        if (!mq.matches) return;
+        groups().forEach(bindGroup);
+    }
+
+    syncBindings();
+    mq.addEventListener('change', syncBindings);
+}
 
 // Инициализация Lazy Loading
 function initLazyLoading() {
