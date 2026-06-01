@@ -725,22 +725,42 @@ img {
 
 /* Proximity dock (мышь, десктоп): масштаб и яркость от расстояния до курсора */
 @media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+    [data-proximity] {
+        overflow: visible;
+    }
+
     [data-proximity] > * {
         --proximity-scale: 1;
         --proximity-brightness: 1;
+        position: relative;
         transform: scale(var(--proximity-scale));
         filter: brightness(var(--proximity-brightness));
         transition:
-            transform 0.14s ease-out,
-            filter 0.14s ease-out;
+            transform 0.12s ease-out,
+            filter 0.12s ease-out,
+            z-index 0s;
+        will-change: transform;
+    }
+
+    .nav-links[data-proximity] {
+        gap: clamp(10px, 1.1vw, 18px);
+        padding: 4px 2px;
     }
 
     .nav-links[data-proximity] > .nav-link {
         transform-origin: center bottom;
+        z-index: 1;
+    }
+
+    .slider-indicators[data-proximity] {
+        gap: clamp(10px, 1.4vw, 18px);
+        padding: 6px 4px;
+        overflow: visible;
     }
 
     .slider-indicators[data-proximity] > .indicator {
         transform-origin: center right;
+        z-index: 1;
     }
 
     .slider-controls[data-proximity] > .slider-prev,
@@ -795,9 +815,10 @@ img {
         grid-column: 2;
         grid-row: 1;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: flex-end;
-        gap: clamp(16px, 2vw, 28px);
+        gap: clamp(8px, 1.2vw, 16px);
         min-width: 0;
     }
 
@@ -805,9 +826,19 @@ img {
         display: flex;
         align-items: stretch;
         justify-content: center;
-        flex: 1 1 auto;
+        flex: 1 1 100%;
         gap: clamp(6px, 0.9vw, 14px);
         min-width: 0;
+        order: 2;
+    }
+
+    .nav-actions {
+        order: 1;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
     }
 
     .nav-link {
@@ -838,13 +869,6 @@ img {
         pointer-events: none;
     }
 
-    .nav-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-shrink: 0;
-    }
-
     .nav-shop-btn {
         font-size: 0.82rem;
         padding: 9px 14px;
@@ -859,6 +883,23 @@ img {
         display: inline;
     }
 
+    @media (min-width: 1200px) {
+        .nav-menu {
+            flex-wrap: nowrap;
+            gap: clamp(16px, 2vw, 28px);
+        }
+
+        .nav-links {
+            flex: 1 1 auto;
+            order: 0;
+        }
+
+        .nav-actions {
+            order: 0;
+            margin-left: 0;
+        }
+    }
+
     .hero-slider {
         margin-top: 0;
         padding-top: var(--header-height);
@@ -868,8 +909,15 @@ img {
     }
 
     .hero-slider .slider-indicators {
-        top: calc(var(--header-height) + 16px);
+        top: calc(var(--header-height) + 20px);
+        right: max(20px, env(safe-area-inset-right, 0px));
         flex-direction: column;
+        max-width: min(168px, 22vw);
+    }
+
+    .hero-slider .slider-indicators .indicator {
+        width: 100%;
+        justify-content: flex-end;
     }
 
     .hero-slider .slide--circles .slide-background {
@@ -884,12 +932,13 @@ img {
         max-width: 6.75rem;
     }
 
+    /* На десктопе оставляем короткую «Запись», иначе шапка ломается */
     .nav-shop-btn--primary .nav-label-full {
-        display: inline;
+        display: none !important;
     }
 
     .nav-shop-btn--primary .nav-label-short {
-        display: none;
+        display: inline !important;
     }
 }
 
@@ -1220,7 +1269,7 @@ img {
     .hero-slider .slide--minimal.slide--desire .slide-text {
         justify-content: flex-end;
         padding-top: clamp(36px, 6vh, 80px);
-        padding-bottom: calc(var(--hero-cta-from-bottom) + clamp(56px, 10vh, 92px));
+        padding-bottom: calc(var(--hero-cta-from-bottom) + 12px);
     }
 
     .hero-slider .slide--minimal.slide--desire .luxury-title-wrapper {
@@ -1245,27 +1294,42 @@ img {
         flex-shrink: 0;
     }
 
-    /* Кнопки слайда 3 на одной линии с «О нас» / «Узнать о кругах» */
+    /* Слайд 3: кнопки в потоке под заголовком (без наложения) */
+    .hero-slider .slide--minimal.slide--desire .slide-text {
+        justify-content: flex-end;
+        align-items: center;
+        padding-top: clamp(24px, 5vh, 48px);
+        padding-bottom: calc(var(--hero-cta-from-bottom) + 8px);
+        gap: clamp(16px, 2.5vh, 24px);
+    }
+
     .hero-slider .slide--minimal.slide--desire .slide-buttons {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: var(--hero-cta-from-bottom);
-        margin-top: 0;
-        margin-left: auto;
-        margin-right: auto;
-        width: min(100%, 390px);
-        max-width: min(100%, 390px);
+        position: static !important;
+        width: min(100%, 420px);
+        max-width: min(100%, 420px);
+        margin: 0 auto;
+        flex-shrink: 0;
         z-index: 4;
     }
 
-    /*
-     * Desktop hero: cover на всю ширину (без чёрных полей как у contain на 21:9).
-     * На мобилке остаётся contain — см. @media (max-width: 768px).
-     */
+    .hero-slider .slide--intro .slide-intro-bottom {
+        width: min(92vw, 520px);
+    }
+
+    .hero-slider .scroll-indicator.desktop-only {
+        bottom: calc(var(--hero-cta-from-bottom) + 72px);
+        z-index: 2;
+        pointer-events: none;
+    }
+
     .hero-slider {
-        height: clamp(520px, 82vh, 860px);
-        max-height: 860px;
+        overflow-x: clip;
+        overflow-y: hidden;
+    }
+
+    .slider-container,
+    .slide {
+        overflow: hidden;
     }
 
     /* Слайды 2–3: cover; слайд 1 — .slide-hero-duo (два портрета) */
@@ -1324,8 +1388,21 @@ img {
     }
 
     .hero-slider .slide--circles .slide-content.slide-content--circles {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        align-content: stretch;
+        height: 100%;
+        padding-top: calc(var(--header-height) + clamp(12px, 2vh, 20px));
         padding-left: max(clamp(32px, 4vw, 64px), calc((100vw - 1320px) / 2 + 32px));
-        padding-right: max(clamp(140px, 11vw, 200px), calc((100vw - 1320px) / 2 + 140px));
+        padding-right: max(clamp(168px, 14vw, 220px), calc((100vw - 1320px) / 2 + 168px));
+        padding-bottom: calc(var(--hero-cta-from-bottom) + 12px);
+        box-sizing: border-box;
+    }
+
+    .hero-slider .slide--circles .hero-slide2-top {
+        grid-row: 1;
+        align-self: start;
+        justify-self: start;
     }
 
     .hero-slider .slide--circles .hero-slide2-top {
@@ -1349,11 +1426,18 @@ img {
     }
 
     .hero-slider .slide--circles .slide-text--circles {
+        grid-row: 3;
         align-items: center;
-        max-width: min(540px, 94%);
-        padding-top: clamp(16px, 3vh, 32px);
-        padding-bottom: calc(var(--hero-cta-from-bottom) + 8px);
-        gap: clamp(14px, 2vh, 22px);
+        align-self: end;
+        justify-self: start;
+        justify-content: flex-end;
+        max-width: min(520px, 46vw);
+        margin: 0;
+        padding-top: clamp(12px, 2vh, 20px);
+        padding-bottom: 0;
+        gap: clamp(14px, 2vh, 20px);
+        flex: none;
+        text-align: center;
     }
 
     .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
@@ -1361,26 +1445,39 @@ img {
     }
 
     .hero-slider .slide--circles .slide-buttons {
-        position: static;
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: stretch;
         width: 100%;
-        max-width: min(400px, 100%);
-        margin: 0 auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
+        max-width: min(440px, 100%);
+        margin: 0;
+        justify-content: stretch;
         gap: 12px;
+        z-index: 4;
     }
 
     .hero-slider .slide--circles .slide-buttons .btn {
-        flex: 1 1 168px;
-        max-width: none;
-        width: auto;
-        min-width: 0;
+        flex: 1 1 calc(50% - 6px) !important;
+        width: calc(50% - 6px) !important;
+        max-width: calc(50% - 6px) !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+        white-space: nowrap;
+        padding-left: clamp(10px, 1.2vw, 16px);
+        padding-right: clamp(10px, 1.2vw, 16px);
+        font-size: clamp(0.68rem, 1vw, 0.82rem);
     }
 
     .hero-slider .slide--circles .slide-buttons .btn:first-child {
-        max-width: none;
-        width: auto;
+        flex: 1 1 calc(50% - 6px) !important;
+        width: calc(50% - 6px) !important;
+        max-width: calc(50% - 6px) !important;
     }
 
     .hero-slider .slider-controls {
@@ -1388,8 +1485,14 @@ img {
         right: auto;
         width: min(100%, 1400px);
         transform: translate(-50%, -50%);
-        padding-left: clamp(20px, 3vw, 48px);
-        padding-right: clamp(20px, 3vw, 48px);
+        padding-left: clamp(28px, 4vw, 56px);
+        padding-right: clamp(120px, 14vw, 200px);
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    .hero-slider .slider-controls > * {
+        pointer-events: auto;
     }
 }
 
@@ -1514,56 +1617,58 @@ img {
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
 }
 
-/* Нижняя зона: заголовки над кнопкой, кнопка у нижнего края слайда */
-.hero-slider .slide--circles .slide-text--circles {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 1 1 auto;
-    min-height: 0;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: clamp(10px, 2.5vh, 28px);
-    padding-bottom: clamp(56px, 13vh, 92px);
-    text-align: center;
-    width: 100%;
-    gap: clamp(12px, 2.4vh, 24px);
-}
+/* Мобилка: нижняя зона слайда 2 — заголовок над кнопками у низа */
+@media (max-width: 768px) {
+    .hero-slider .slide--circles .slide-text--circles {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        flex: 1 1 auto;
+        min-height: 0;
+        margin-top: 0;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: clamp(10px, 2.5vh, 28px);
+        padding-bottom: clamp(56px, 13vh, 92px);
+        text-align: center;
+        width: 100%;
+        gap: clamp(12px, 2.4vh, 24px);
+    }
 
-.hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
-    margin-bottom: 0;
-    padding: clamp(10px, 1.8vw, 14px) clamp(12px, 2.2vw, 18px) clamp(12px, 2.2vw, 18px);
-}
+    .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
+        margin-bottom: 0;
+        padding: clamp(10px, 1.8vw, 14px) clamp(12px, 2.2vw, 18px) clamp(12px, 2.2vw, 18px);
+    }
 
-.hero-slider .slide--circles .slide-text--circles .luxury-title {
-    font-size: clamp(1.75rem, 4.2vw, 2.65rem);
-    line-height: 1.06;
-    letter-spacing: 0.04em;
-}
+    .hero-slider .slide--circles .slide-text--circles .luxury-title {
+        font-size: clamp(1.75rem, 4.2vw, 2.65rem);
+        line-height: 1.06;
+        letter-spacing: 0.04em;
+    }
 
-.hero-slider .slide--circles .slide-buttons {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: var(--hero-cta-from-bottom);
-    margin-left: auto;
-    margin-right: auto;
-    flex-shrink: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    width: min(300px, 88vw);
-    max-width: min(300px, 88vw);
-    justify-content: center;
-    z-index: 4;
-}
+    .hero-slider .slide--circles .slide-buttons {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: var(--hero-cta-from-bottom);
+        margin-left: auto;
+        margin-right: auto;
+        flex-shrink: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        width: min(300px, 88vw);
+        max-width: min(300px, 88vw);
+        justify-content: center;
+        z-index: 4;
+    }
 
-.hero-slider .slide--circles .slide-buttons .btn:first-child {
-    max-width: min(248px, 78vw);
-    width: 100%;
-    align-self: center;
-    box-sizing: border-box;
+    .hero-slider .slide--circles .slide-buttons .btn:first-child {
+        max-width: min(248px, 78vw);
+        width: 100%;
+        align-self: center;
+        box-sizing: border-box;
+    }
 }
 
 .slide-buttons {

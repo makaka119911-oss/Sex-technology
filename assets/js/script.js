@@ -1346,6 +1346,7 @@ function initProximityDock() {
         container.querySelectorAll(':scope > *').forEach((el) => {
             el.style.removeProperty('--proximity-scale');
             el.style.removeProperty('--proximity-brightness');
+            el.style.removeProperty('z-index');
         });
     }
 
@@ -1363,6 +1364,7 @@ function initProximityDock() {
 
             el.style.setProperty('--proximity-scale', String(1 + t * boost));
             el.style.setProperty('--proximity-brightness', String(1 - t * darken));
+            el.style.zIndex = t > 0.08 ? String(Math.round(10 + t * 20)) : '';
         });
     }
 
