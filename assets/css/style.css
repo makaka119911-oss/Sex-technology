@@ -3821,8 +3821,8 @@ img {
         margin: 5px 0;
     }
 
-    /* Мобильный hero-flow: оставляем одну основную кнопку */
-    .hero-slider .slide .slide-buttons .btn:nth-child(n+2) {
+    /* Мобильный hero-flow: одна кнопка, кроме слайда 3 (две CTA) */
+    .hero-slider .slide .slide-buttons:not(.slide-buttons--desire-foot) .btn:nth-child(n+2) {
         display: none;
     }
     
