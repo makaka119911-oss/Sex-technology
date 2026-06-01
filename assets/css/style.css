@@ -785,16 +785,16 @@ img {
     transform: scale(1);
 }
 
-/* Вертикальное фото (например 1080×1920): на широком экране cover сильно режет верх/низ — показываем картинку целиком */
+/* Вертикальное фото на ПК: cover на всю ширину (contain оставляем только на телефоне) */
 @media (min-width: 769px) {
     .slide-background.slide-bg-portrait {
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
-        background-position: center center;
+        background-position: center 40%;
         background-color: #06060f;
         transform: scale(1);
     }
@@ -804,8 +804,8 @@ img {
     }
 
     .slide-background.slide-bg-portrait .parallax-layer {
-        background-size: contain;
-        background-position: center center;
+        background-size: cover;
+        background-position: center 40%;
     }
 }
 
@@ -1028,6 +1028,91 @@ img {
         width: min(100%, 390px);
         max-width: min(100%, 390px);
         z-index: 4;
+    }
+
+    /*
+     * Desktop hero: cover на всю ширину (без чёрных полей как у contain на 21:9).
+     * На мобилке остаётся contain — см. @media (max-width: 768px).
+     */
+    .hero-slider {
+        height: clamp(520px, 82vh, 860px);
+        max-height: 860px;
+    }
+
+    /* Слайды 2–3: cover на всю ширину; слайд 1 — отдельно (contain), иначе пропадает презентация */
+    .hero-slider .slide-background:not(.slide-hero-primary) {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        transform: scale(1.02);
+    }
+
+    .slide.active .slide-background:not(.slide-hero-primary) {
+        transform: scale(1);
+    }
+
+    .hero-slider .slide--intro .slide-background.slide-hero-primary {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-color: #140a0d;
+        transform: scale(1);
+    }
+
+    .slide.active .slide--intro .slide-background.slide-hero-primary {
+        transform: scale(1);
+    }
+
+    .hero-slider .slide--intro .slide-background.slide-hero-primary .parallax-layer {
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    /* Слайд 2: крупный портрет — чуть выше точка фокуса, меньше «наезд» на глаза */
+    .hero-slider .slide--circles .slide-background {
+        background-position: center 30%;
+    }
+
+    .hero-slider .slide--desire .slide-background {
+        background-position: center 40%;
+    }
+
+    .hero-slider .slide-content {
+        max-width: 1320px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+
+    .hero-slider .slide--circles .slide-content.slide-content--circles {
+        padding-left: max(clamp(32px, 4vw, 64px), calc((100vw - 1320px) / 2 + 32px));
+        padding-right: max(clamp(140px, 11vw, 200px), calc((100vw - 1320px) / 2 + 140px));
+    }
+
+    .hero-slider .slide--circles .hero-slide2-top {
+        max-width: min(440px, 38vw);
+    }
+
+    .hero-slider .slide--circles .slide-text--circles {
+        padding-bottom: calc(var(--hero-cta-from-bottom) + clamp(64px, 9vh, 96px));
+    }
+
+    .hero-slider .slider-controls {
+        left: 50%;
+        right: auto;
+        width: min(100%, 1400px);
+        transform: translate(-50%, -50%);
+        padding-left: clamp(20px, 3vw, 48px);
+        padding-right: clamp(20px, 3vw, 48px);
     }
 }
 
