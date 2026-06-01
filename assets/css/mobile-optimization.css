@@ -82,8 +82,8 @@ button {
         overflow: hidden;
     }
 
-    /* Герой: на мобильном — contain (весь кадр), на ПК правила в style.css (cover для 2–3 слайдов) */
-    .hero-slider .slide-background {
+    /* Герой: на мобильном — contain (весь кадр), слайд 1 — duo grid в style.css */
+    .hero-slider .slide-background:not(.slide-hero-duo) {
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
@@ -94,8 +94,18 @@ button {
         background-color: #140a0d !important;
     }
 
-    .hero-slider .slide-hero-primary {
-        background-image: var(--hero-bg-mobile) !important;
+    .hero-slider .slide-background.slide-hero-duo {
+        background: #140a0d !important;
+        background-size: unset !important;
+    }
+
+    .hero-slider .slide-hero-duo__img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        object-fit: cover !important;
+        object-position: center 20% !important;
     }
 
     .slide.active .slide-background {
