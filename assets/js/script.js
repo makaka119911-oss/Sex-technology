@@ -298,6 +298,7 @@ class CinematicHeroSlider {
         });
         
         this.startAutoPlay();
+        this.applySlideFromQuery();
         
         this.slides.forEach(slide => {
             slide.addEventListener('mouseenter', () => this.stopAutoPlay());
@@ -430,6 +431,23 @@ class CinematicHeroSlider {
         if (index >= 0 && index < this.totalSlides) {
             this.showSlide(index);
             this.resetAutoPlay();
+        }
+    }
+
+    /** Preview: ?slide=2 or #slide-2 opens hero slide by number (1-based) */
+    applySlideFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const fromQuery = params.get('slide');
+        if (fromQuery) {
+            const idx = parseInt(fromQuery, 10) - 1;
+            if (!Number.isNaN(idx) && idx >= 0 && idx < this.totalSlides) {
+                this.goToSlide(idx);
+            }
+            return;
+        }
+        const hash = window.location.hash;
+        if (hash === '#slide-2') {
+            this.goToSlide(1);
         }
     }
     
