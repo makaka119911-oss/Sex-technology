@@ -876,11 +876,11 @@ img {
     }
 
     .nav-shop-btn--primary .nav-label-full {
-        display: none;
+        display: none !important;
     }
 
     .nav-shop-btn--primary .nav-label-short {
-        display: inline;
+        display: inline !important;
     }
 
     @media (min-width: 1200px) {
@@ -1265,61 +1265,93 @@ img {
         padding-top: clamp(32px, 10vh, 88px);
     }
 
-    /* Слайд «Разрешить себе / ЖЕЛАТЬ»: блок заголовка ближе к CTA, крупнее плашка */
-    .hero-slider .slide--minimal.slide--desire .slide-text {
+    /* Слайд 3: как слайд 1 — блок у низа, без наложения с «Листайте вниз» */
+    .hero-slider .slide--desire .slide-content.slide-content--desire {
+        align-items: stretch;
         justify-content: flex-end;
-        padding-top: clamp(36px, 6vh, 80px);
-        padding-bottom: calc(var(--hero-cta-from-bottom) + 12px);
+        height: 100%;
+        padding-left: clamp(16px, 3vw, 28px);
+        padding-right: max(clamp(168px, 14vw, 220px), calc((100vw - 1320px) / 2 + 168px));
+        padding-bottom: calc(var(--hero-cta-from-bottom) + 8px);
+        box-sizing: border-box;
     }
 
-    .hero-slider .slide--minimal.slide--desire .luxury-title-wrapper {
-        max-width: min(92vw, 520px);
+    .hero-slider .slide--desire .slide-desire-bottom {
+        width: min(100%, 520px);
+        max-width: min(100%, 520px);
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: clamp(14px, 2.2vh, 22px);
+        z-index: 4;
+    }
+
+    .hero-slider .slide--desire .slide-text--desire {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .hero-slider .slide--desire .luxury-title-wrapper--desire {
+        max-width: 100%;
+        margin: 0;
         padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 28px) clamp(16px, 2.2vw, 24px);
         border-radius: 16px;
+        text-align: center;
     }
 
-    .hero-slider .slide--minimal.slide--desire .luxury-title {
+    .hero-slider .slide--desire .luxury-title {
         font-size: clamp(1.85rem, 3.2vw, 2.65rem);
         line-height: 1.12;
     }
 
-    .hero-slider .slide--minimal.slide--desire .luxury-title:last-of-type {
+    .hero-slider .slide--desire .luxury-title:last-of-type {
         font-size: clamp(2.35rem, 4.6vw, 3.45rem);
         letter-spacing: 0.06em;
         margin-top: 0.12em;
     }
 
-    .hero-slider .slide--minimal:not(.slide--intro) .slide-buttons {
-        margin-top: auto;
-        flex-shrink: 0;
-    }
-
-    /* Слайд 3: кнопки в потоке под заголовком (без наложения) */
-    .hero-slider .slide--minimal.slide--desire .slide-text {
-        justify-content: flex-end;
-        align-items: center;
-        padding-top: clamp(24px, 5vh, 48px);
-        padding-bottom: calc(var(--hero-cta-from-bottom) + 8px);
-        gap: clamp(16px, 2.5vh, 24px);
-    }
-
-    .hero-slider .slide--minimal.slide--desire .slide-buttons {
+    .hero-slider .slide--desire .slide-buttons--desire-foot {
         position: static !important;
-        width: min(100%, 420px);
-        max-width: min(100%, 420px);
-        margin: 0 auto;
-        flex-shrink: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
         z-index: 4;
+    }
+
+    .hero-slider .slide--desire .slide-buttons--desire-foot .btn {
+        flex: 1 1 calc(50% - 6px) !important;
+        width: calc(50% - 6px) !important;
+        max-width: calc(50% - 6px) !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding-left: clamp(10px, 1.2vw, 16px);
+        padding-right: clamp(10px, 1.2vw, 16px);
+        font-size: clamp(0.68rem, 1vw, 0.82rem);
+        white-space: nowrap;
+        box-sizing: border-box;
     }
 
     .hero-slider .slide--intro .slide-intro-bottom {
         width: min(92vw, 520px);
     }
 
+    /* «Листайте вниз» только на слайде 1 */
     .hero-slider .scroll-indicator.desktop-only {
-        bottom: calc(var(--hero-cta-from-bottom) + 72px);
+        display: none;
+        bottom: calc(var(--hero-cta-from-bottom) + 80px);
         z-index: 2;
         pointer-events: none;
+    }
+
+    .hero-slider:has(.slide--intro.active) .scroll-indicator.desktop-only {
+        display: flex;
     }
 
     .hero-slider {
@@ -1812,7 +1844,7 @@ img {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     color: var(--cinematic-text-light);
@@ -3647,17 +3679,34 @@ img {
         max-width: min(100%, 390px);
     }
 
-    .hero-slider .slide--minimal.slide--desire .slide-buttons {
+    .hero-slider .slide--desire .slide-content.slide-content--desire {
+        justify-content: flex-start;
+        padding: 52px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 3vw, 20px)) 14px;
+    }
+
+    .hero-slider .slide--desire .slide-desire-bottom {
         position: absolute;
-        left: 0;
-        right: 0;
+        left: max(14px, env(safe-area-inset-left, 0px));
+        right: max(14px, env(safe-area-inset-right, 0px));
         bottom: var(--hero-cta-from-bottom);
-        margin-top: 0;
+        width: auto;
+        max-width: min(100%, 400px);
         margin-left: auto;
         margin-right: auto;
-        width: min(100%, 390px);
-        max-width: min(100%, 390px);
-        z-index: 4;
+        gap: clamp(12px, 3vw, 18px);
+    }
+
+    .hero-slider .slide--desire .slide-buttons--desire-foot {
+        position: static !important;
+        flex-direction: column !important;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero-slider .slide--desire .slide-buttons--desire-foot .btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
     }
 
     .hero-slider.hero-mobile-layout--bottom {
@@ -4492,14 +4541,15 @@ img {
 .hero-slider .slide .slide-subtitle,
 .hero-slider .slide .luxury-title-wrapper,
 .hero-slider .slide .slide-description,
-.hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot),
+.hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
 .hero-slider .slide--circles .hero-slide2-eyebrow,
 .hero-slider .slide--circles .hero-slide2-lead {
     opacity: 0;
     transform: translateY(18px);
 }
 
-.hero-slider .slide--intro .slide-buttons--intro-foot {
+.hero-slider .slide--intro .slide-buttons--intro-foot,
+.hero-slider .slide--desire .slide-buttons--desire-foot {
     opacity: 0;
     transform: translateY(18px);
 }
@@ -4507,7 +4557,7 @@ img {
 .hero-slider .slide.active .slide-subtitle,
 .hero-slider .slide.active .luxury-title-wrapper,
 .hero-slider .slide.active .slide-description,
-.hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot),
+.hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
 .hero-slider .slide--circles.active .hero-slide2-eyebrow,
 .hero-slider .slide--circles.active .hero-slide2-lead {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -4516,16 +4566,22 @@ img {
 .hero-slider .slide.active .slide-subtitle { animation-delay: 70ms; }
 .hero-slider .slide.active .luxury-title-wrapper { animation-delay: 140ms; }
 .hero-slider .slide.active .slide-description { animation-delay: 210ms; }
-.hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot) { animation-delay: 270ms; }
+.hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot) { animation-delay: 270ms; }
 
 .hero-slider .slide--circles.active .hero-slide2-eyebrow { animation-delay: 70ms; }
 .hero-slider .slide--circles.active .hero-slide2-lead { animation-delay: 140ms; }
 .hero-slider .slide--circles.active .luxury-title-wrapper { animation-delay: 180ms; }
-.hero-slider .slide--circles.active .slide-buttons:not(.slide-buttons--intro-foot) { animation-delay: 270ms; }
+.hero-slider .slide--circles.active .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot) { animation-delay: 270ms; }
 
-.hero-slider .slide--intro.active .slide-buttons--intro-foot {
+.hero-slider .slide--intro.active .slide-buttons--intro-foot,
+.hero-slider .slide--desire.active .slide-buttons--desire-foot {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: 270ms;
+}
+
+.hero-slider .slide--desire.active .luxury-title-wrapper--desire {
+    animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 140ms;
 }
 
 @keyframes heroItemReveal {
@@ -4634,7 +4690,7 @@ img {
     .hero-slider .slide .slide-subtitle,
     .hero-slider .slide .luxury-title-wrapper,
     .hero-slider .slide .slide-description,
-    .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot),
+    .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
     .hero-slider .slide--circles .hero-slide2-eyebrow,
     .hero-slider .slide--circles .hero-slide2-lead {
         animation: none !important;
@@ -4642,7 +4698,8 @@ img {
         transform: none !important;
     }
 
-    .hero-slider .slide--intro .slide-buttons--intro-foot {
+    .hero-slider .slide--intro .slide-buttons--intro-foot,
+    .hero-slider .slide--desire .slide-buttons--desire-foot {
         animation: none !important;
         opacity: 1 !important;
         transform: translateY(0) !important;
