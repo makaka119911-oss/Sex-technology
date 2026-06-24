@@ -1094,10 +1094,18 @@ img {
     position: absolute;
     inset: 0;
     background-color: #140a0d;
+    background-image: url('../images/slaid1.jpg?v=slaid1-v2');
     background-size: cover;
-    background-position: center 35%;
+    background-position: center 28%;
     background-repeat: no-repeat;
     overflow: hidden;
+}
+
+@media (min-width: 769px) {
+    .slide-hero-generated {
+        background-image: url('../images/gemini-2.5-flash-image_exquisite_high_fashion_photography_of_Wide_cinematic_website_hero_banner_16_9_ul-0.jpg?v=hero-desktop');
+        background-position: center 35%;
+    }
 }
 
 .slide--intro .slide-background.slide-hero-duo::after,
@@ -3531,7 +3539,7 @@ img {
     }
 
     .hero-slider .slide-background.slide-hero-generated {
-        background-image: url('../images/slaid1.jpg?v=slaid1-none-20260624') !important;
+        background-image: url('../images/slaid1.jpg?v=slaid1-v2') !important;
         background-size: cover !important;
         background-position: center 28% !important;
     }
