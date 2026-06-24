@@ -1090,7 +1090,18 @@ img {
     grid-column: 2;
 }
 
-.slide--intro .slide-background.slide-hero-duo::after {
+.slide-hero-generated {
+    position: absolute;
+    inset: 0;
+    background-color: #140a0d;
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.slide--intro .slide-background.slide-hero-duo::after,
+.slide--intro .slide-background.slide-hero-generated::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -3517,6 +3528,11 @@ img {
         background-position: center center !important;
         background-repeat: no-repeat !important;
         background-color: #140a0d !important;
+    }
+
+    .hero-slider .slide-background.slide-hero-generated {
+        background-size: cover !important;
+        background-position: center 32% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {
