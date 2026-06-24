@@ -1141,7 +1141,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 }
 
 .slide-hero-generated,
-.slide-hero-circles {
+.slide-hero-circles,
+.slide-hero-desire {
     position: absolute;
     inset: 0;
     background-color: #140a0d;
@@ -1150,7 +1151,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-picture,
 .slide-hero-generated__img,
-.slide-hero-circles__img {
+.slide-hero-circles__img,
+.slide-hero-desire__img {
     position: absolute;
     inset: 0;
     display: block;
@@ -1168,6 +1170,11 @@ body.hero-slide-1 .header:not(.scrolled) {
     object-position: center 30%;
 }
 
+.slide-hero-desire__img {
+    object-fit: cover;
+    object-position: center 32%;
+}
+
 @media (min-width: 769px) {
     .slide-hero-generated__img {
         object-position: center 35%;
@@ -1175,6 +1182,10 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .slide-hero-circles__img {
         object-position: center 32%;
+    }
+
+    .slide-hero-desire__img {
+        object-position: center 38%;
     }
 }
 
@@ -3629,7 +3640,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     /* Герой на телефоне: кадр целиком (contain), без обрезки как у cover на ПК */
-    .hero-slider .slide-background:not(.slide-hero-duo):not(.slide-hero-generated):not(.slide-hero-circles) {
+    .hero-slider .slide-background:not(.slide-hero-duo):not(.slide-hero-generated):not(.slide-hero-circles):not(.slide-hero-desire) {
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
@@ -3641,7 +3652,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide-background.slide-hero-generated,
-    .hero-slider .slide-background.slide-hero-circles {
+    .hero-slider .slide-background.slide-hero-circles,
+    .hero-slider .slide-background.slide-hero-desire {
         background: #140a0d !important;
     }
 
@@ -3653,6 +3665,11 @@ body.hero-slide-1 .header:not(.scrolled) {
     .hero-slider .slide-hero-circles__img {
         object-fit: cover !important;
         object-position: center 30% !important;
+    }
+
+    .hero-slider .slide-hero-desire__img {
+        object-fit: cover !important;
+        object-position: center 32% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {

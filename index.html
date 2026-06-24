@@ -29,12 +29,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-22" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-22" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-23" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-23" as="style">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-22">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-22">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-23">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-23">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -259,7 +259,18 @@
                 
                 <!-- Слайд 3: только заголовок + кнопки; заголовок ниже обычного минимального слайда -->
                 <div class="slide slide--minimal slide--desire" data-slide="3">
-                    <div class="slide-background" style="background-image: url('assets/images/9C4A1684.jpg?v=slide3-apr2026')">
+                    <div class="slide-background slide-hero-desire" aria-hidden="true">
+                        <picture class="slide-hero-picture">
+                            <img
+                                class="slide-hero-desire__img"
+                                src="assets/images/hero-slide-3-mobile.jpg?v=20260624-1"
+                                alt="Свобода — разрешить себе желать"
+                                width="1080"
+                                height="1350"
+                                decoding="async"
+                                loading="lazy"
+                            >
+                        </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
                     </div>
                     <div class="slide-overlay"></div>
