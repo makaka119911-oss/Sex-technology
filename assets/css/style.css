@@ -1180,14 +1180,14 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-circles__img {
     object-fit: cover;
-    object-position: center 30%;
-    filter: brightness(0.88) contrast(1.05);
+    object-position: center 20%;
+    filter: brightness(0.9) contrast(1.04);
 }
 
 .slide-hero-desire__img {
     object-fit: cover;
-    object-position: center 34%;
-    filter: brightness(0.88) contrast(1.05);
+    object-position: center 40%;
+    filter: brightness(0.9) contrast(1.04);
 }
 
 @media (min-width: 769px) {
@@ -1196,12 +1196,27 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-circles__img {
-        object-position: center 32%;
+        object-position: center 26%;
     }
 
     .slide-hero-desire__img {
-        object-position: center 38%;
+        object-position: center 42%;
     }
+}
+
+.slide--circles .slide-background.slide-hero-circles::after,
+.slide--desire .slide-background.slide-hero-desire::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+        180deg,
+        rgba(8, 4, 6, 0.08) 0%,
+        rgba(8, 4, 6, 0.18) 44%,
+        rgba(8, 4, 6, 0.72) 100%
+    );
 }
 
 .slide--intro .slide-background.slide-hero-duo::after,
@@ -1796,23 +1811,25 @@ body.hero-slide-1 .header:not(.scrolled) {
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
 }
 
-/* Мобилка: нижняя зона слайда 2 — заголовок над кнопками у низа */
+/* Мобилка: нижняя зона слайда 2 — как слайды 1 и 3, блок у низа без пустого зазора */
 @media (max-width: 768px) {
     .hero-slider .slide--circles .slide-text--circles {
+        position: absolute;
+        left: max(14px, env(safe-area-inset-left, 0px));
+        right: max(14px, env(safe-area-inset-right, 0px));
+        bottom: var(--hero-cta-from-bottom);
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
         align-items: center;
-        flex: 1 1 auto;
+        flex: none;
         min-height: 0;
-        margin-top: 0;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: clamp(10px, 2.5vh, 28px);
-        padding-bottom: clamp(56px, 13vh, 92px);
+        margin: 0 auto;
+        padding: 0;
         text-align: center;
-        width: 100%;
-        gap: clamp(12px, 2.4vh, 24px);
+        width: auto;
+        max-width: min(100%, 400px);
+        gap: clamp(12px, 3vw, 18px);
+        z-index: 3;
     }
 
     .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
@@ -1827,19 +1844,16 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide--circles .slide-buttons {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: var(--hero-cta-from-bottom);
-        margin-left: auto;
-        margin-right: auto;
+        position: static !important;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin: 0;
         flex-shrink: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        width: min(300px, 88vw);
+        width: 100%;
         max-width: min(300px, 88vw);
         justify-content: center;
-        z-index: 4;
+        z-index: auto;
     }
 
     .hero-slider .slide--circles .slide-buttons .btn:first-child {
@@ -3679,12 +3693,12 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-circles__img {
         object-fit: cover !important;
-        object-position: center 30% !important;
+        object-position: center 20% !important;
     }
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 34% !important;
+        object-position: center 40% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {
@@ -3835,23 +3849,36 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide--circles .slide-text--circles {
+        position: absolute;
+        left: max(14px, env(safe-area-inset-left, 0px));
+        right: max(14px, env(safe-area-inset-right, 0px));
+        bottom: var(--hero-cta-from-bottom);
         max-height: none;
         overflow: visible;
-        flex: 1 1 auto;
-        justify-content: flex-end;
-        padding-top: clamp(8px, 2vh, 20px);
-        padding-bottom: clamp(52px, 15vw, 92px);
-        gap: clamp(14px, 3vh, 26px);
+        flex: none;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0 auto;
+        padding: 0;
+        width: auto;
+        max-width: min(100%, 400px);
+        gap: clamp(12px, 3vw, 18px);
+        z-index: 3;
     }
 
-    /* Поднимаем заголовок на слайде 2 чуть выше фиксированных кнопок */
     .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
-        margin-bottom: clamp(10px, 2.2vh, 16px);
+        margin-bottom: 0;
     }
 
     .hero-slider .slide--circles .slide-text--circles .luxury-title {
         font-size: clamp(1.38rem, 5.9vw, 2.05rem);
         line-height: 1.07;
+    }
+
+    .hero-slider .slide--circles .slide-buttons {
+        position: static !important;
+        width: 100%;
+        max-width: min(228px, 74vw);
     }
 
     .hero-slider .slide--circles .slide-buttons .btn:first-child {
