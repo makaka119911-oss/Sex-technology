@@ -29,12 +29,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-13" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-13" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-14" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-14" as="style">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-13">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-13">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-14">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-14">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -44,6 +44,7 @@
 
     <script>
         window.__SHOP_BASE__ = window.__SHOP_BASE__ || '';
+        window.__SHOP_APP_ORIGIN__ = window.__SHOP_APP_ORIGIN__ || 'https://my-clone-lac-eight.vercel.app';
     </script>
 </head>
 <body>
@@ -130,7 +131,7 @@
                             <span class="nav-label-full">Записаться на консультацию</span>
                             <span class="nav-label-short">Запись</span>
                         </a>
-                        <a href="shop/" class="nav-shop-btn">
+                        <a href="shop/" class="nav-shop-btn" id="shopOpenBtn" aria-expanded="false" aria-controls="shopDrawerRoot" data-shop-drawer-open>
                             <i class="fas fa-bag-shopping" aria-hidden="true"></i>
                             <span>Магазин</span>
                         </a>
@@ -311,6 +312,47 @@
                 <span>Листайте вниз</span>
             </div>
         </section>
+
+        <!-- Быстрая навигация (мобильные) -->
+        <nav class="mobile-hub" id="mobileHub" aria-label="Быстрая навигация по разделам">
+            <div class="container">
+                <p class="mobile-hub__label">Куда перейти</p>
+                <div class="mobile-hub__grid">
+                    <button type="button" class="mobile-hub__btn" data-hub-about>
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                        <span>О нас</span>
+                    </button>
+                    <a href="#help" class="mobile-hub__btn">
+                        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
+                        <span>Помощь</span>
+                    </a>
+                    <a href="#levels" class="mobile-hub__btn">
+                        <i class="fas fa-layer-group" aria-hidden="true"></i>
+                        <span>Уровни</span>
+                    </a>
+                    <a href="#circles" class="mobile-hub__btn">
+                        <i class="fas fa-people-group" aria-hidden="true"></i>
+                        <span>Круги</span>
+                    </a>
+                    <a href="#gallery" class="mobile-hub__btn">
+                        <i class="fas fa-images" aria-hidden="true"></i>
+                        <span>Галерея</span>
+                    </a>
+                    <a href="#events" class="mobile-hub__btn">
+                        <i class="fas fa-calendar-days" aria-hidden="true"></i>
+                        <span>Афиша</span>
+                    </a>
+                    <a href="#contact" class="mobile-hub__btn mobile-hub__btn--accent">
+                        <i class="fas fa-calendar-check" aria-hidden="true"></i>
+                        <span>Запись</span>
+                    </a>
+                    <button type="button" class="mobile-hub__btn" data-shop-drawer-open>
+                        <i class="fas fa-bag-shopping" aria-hidden="true"></i>
+                        <span>Магазин</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
 
         <!-- О нас: панель раскрывается по клику на «О нас» в герое (не при скролле) -->
         <section class="section about-section" id="about" aria-label="О нас и знакомство">
@@ -502,7 +544,7 @@
                     </article>
                     
                     <!-- Уровень 2 -->
-                    <article class="level-card level-featured">
+                    <article class="level-card level-featured mobile-collapsible-item is-collapsed-mobile">
                         <div class="level-badge level-badge-3d"><span>Популярный</span></div>
                         <div class="level-header">
                             <div class="level-number">02</div>
@@ -532,7 +574,7 @@
                     </article>
                     
                     <!-- Уровень 3 -->
-                    <article class="level-card">
+                    <article class="level-card mobile-collapsible-item is-collapsed-mobile">
                         <div class="level-header">
                             <div class="level-number">03</div>
                             <h3>Уровень 3: Свобода</h3>
@@ -559,6 +601,13 @@
                             </a>
                         </div>
                     </article>
+                </div>
+
+                <div class="mobile-collapsible-toggle">
+                    <button type="button" class="btn btn-secondary" data-target="#levels" data-items=".mobile-collapsible-item" aria-expanded="false">
+                        <span>Показать ещё</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
                 </div>
                 
                 <div class="levels-note">
@@ -814,63 +863,61 @@
                     <p class="section-description">Выберите дату и запишитесь на встречу или терапевтическую программу.</p>
                 </div>
 
-                <div class="events-grid">
-                    <article class="event-card">
-                        <div class="event-meta">
-                            <span class="event-meta-item">
-                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                                <span>12 апреля 2026</span>
-                            </span>
-                            <span class="event-meta-item">
-                                <i class="fas fa-clock" aria-hidden="true"></i>
-                                <span>19:00</span>
-                            </span>
+                <div class="events-grid events-grid--featured">
+                <article class="event-card event-card--featured">
+                    <div class="event-featured-layout">
+                        <div class="event-poster-wrap">
+                            <img
+                                src="assets/images/events/zamok-tri-dveri.png"
+                                alt="Афиша: Ключи от Зачарованного Замка — Три Двери, 4 июля 2026"
+                                class="event-poster"
+                                width="1080"
+                                height="1350"
+                                loading="lazy"
+                                decoding="async"
+                            >
                         </div>
-                        <h3 class="event-title">Женский круг: разговор о желаниях</h3>
-                        <p class="event-desc">Тёплая поддерживающая встреча, где можно говорить о том, чего хочется, без стыда и осуждения.</p>
-                        <a href="#contact" class="btn btn-secondary event-cta">
-                            <span>Записаться</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </article>
+                        <div class="event-featured-body">
+                            <div class="event-meta">
+                                <span class="event-meta-item">
+                                    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                    <span>4 июля 2026</span>
+                                </span>
+                                <span class="event-meta-item">
+                                    <i class="fas fa-clock" aria-hidden="true"></i>
+                                    <span>с 13:00 до 19:00</span>
+                                </span>
+                                <span class="event-meta-item">
+                                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                    <span>Nemchinovka</span>
+                                </span>
+                            </div>
+                            <h3 class="event-title">Ключи от Зачарованного Замка: Три Двери</h3>
+                            <p class="event-desc event-desc--hosts">Ведущие: Татьяна Солнечная и Сулейманова Мадина</p>
+                            <p class="event-desc">Иммерсивный день из трёх пространств — огонь, тень и посвящение. Женский круг, практики, церемония получения личного талисмана-силы.</p>
 
-                    <article class="event-card">
-                        <div class="event-meta">
-                            <span class="event-meta-item">
-                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                                <span>26 апреля 2026</span>
-                            </span>
-                            <span class="event-meta-item">
-                                <i class="fas fa-clock" aria-hidden="true"></i>
-                                <span>18:30</span>
-                            </span>
-                        </div>
-                        <h3 class="event-title">Интерактив: границы и безопасность</h3>
-                        <p class="event-desc">Практика с психологом: учимся обозначать границы, сохранять контакт с телом и бережно выражать желания.</p>
-                        <a href="#contact" class="btn btn-secondary event-cta">
-                            <span>Записаться</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </article>
+                            <div class="event-doors" role="list">
+                                <div class="event-door event-door--fire" role="listitem">
+                                    <h4 class="event-door-title">Сад Богини</h4>
+                                    <p>Женский круг, исцеление звуком, практика волшебных зеркал. Рисунки удовольствия, энергия центра наслаждения. Огненный танец.</p>
+                                </div>
+                                <div class="event-door event-door--shadow" role="listitem">
+                                    <h4 class="event-door-title">Подземелье Теней</h4>
+                                    <p>Сказочная психодрама. Встреча со своей внутренней Богиней. Стражники наших страхов.</p>
+                                </div>
+                                <div class="event-door event-door--tower" role="listitem">
+                                    <h4 class="event-door-title">Башня Посвящения</h4>
+                                    <p>Церемония получения «Ключа» — вашего личного талисмана силы.</p>
+                                </div>
+                            </div>
 
-                    <article class="event-card">
-                        <div class="event-meta">
-                            <span class="event-meta-item">
-                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                                <span>10 мая 2026</span>
-                            </span>
-                            <span class="event-meta-item">
-                                <i class="fas fa-clock" aria-hidden="true"></i>
-                                <span>19:30</span>
-                            </span>
+                            <a href="#contact" class="btn btn-primary event-cta">
+                                <span>Записаться на событие</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
                         </div>
-                        <h3 class="event-title">Терапевтическая поддержка: интеграция</h3>
-                        <p class="event-desc">Мягкое продолжение пути: подводим итоги, закрепляем изменения и выбираем следующий шаг.</p>
-                        <a href="#contact" class="btn btn-secondary event-cta">
-                            <span>Записаться</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </article>
+                    </div>
+                </article>
                 </div>
             </div>
         </section>
@@ -1153,6 +1200,36 @@
         </div>
     </footer>
 
+    <!-- Магазин: выезжающая панель -->
+    <div class="shop-drawer-root" id="shopDrawerRoot" aria-hidden="true">
+        <div class="shop-drawer-overlay" id="shopDrawerOverlay"></div>
+        <aside class="shop-drawer" role="dialog" aria-modal="true" aria-labelledby="shopDrawerTitle">
+            <header class="shop-drawer-header">
+                <h2 class="shop-drawer-title" id="shopDrawerTitle">Магазин «Территория любви»</h2>
+                <button type="button" class="shop-drawer-close" id="shopDrawerClose" aria-label="Закрыть магазин">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </header>
+            <div class="shop-drawer-body shop-drawer-body--embed">
+                <p class="shop-drawer-note">Дискретная доставка. На отдельной странице магазин откроется полностью, если панель не загрузилась.</p>
+                <div class="shop-drawer-frame-wrap">
+                    <iframe
+                        id="shopDrawerFrame"
+                        title="Каталог магазина"
+                        src="about:blank"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="payment *; fullscreen"
+                    ></iframe>
+                </div>
+                <a href="shop/" class="btn btn-secondary shop-drawer-fullpage">
+                    <span>Открыть магазин на весь экран</span>
+                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                </a>
+            </div>
+        </aside>
+    </div>
+
     <!-- Модальное окно для галереи -->
     <div class="modal" id="galleryModal" role="dialog" aria-modal="true" aria-labelledby="modalImageTitle">
         <div class="modal-content">
@@ -1169,6 +1246,6 @@
         window.__LEAD_BACKEND_URL__ = 'https://sex-technology-lead-worker.territory-love.workers.dev';
     </script>
     <!-- Скрипты -->
-    <script src="assets/js/script.js?v=proximity-3" defer></script>
+    <script src="assets/js/script.js?v=layout-14" defer></script>
 </body>
 </html>

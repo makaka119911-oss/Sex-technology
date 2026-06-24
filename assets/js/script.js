@@ -169,18 +169,27 @@ function initMobileMenu() {
 // ===== МАГАЗИН (боковая панель) =====
 function initShopDrawer() {
     const root = document.getElementById('shopDrawerRoot');
-    const openBtn = document.getElementById('shopOpenBtn');
+    const openBtns = document.querySelectorAll('[data-shop-drawer-open], #shopOpenBtn');
     const closeBtn = document.getElementById('shopDrawerClose');
     const overlay = document.getElementById('shopDrawerOverlay');
-    if (!root || !openBtn || !closeBtn || !overlay) return;
+    const frame = document.getElementById('shopDrawerFrame');
+    if (!root || !openBtns.length || !closeBtn || !overlay) return;
 
     let previouslyFocused = null;
+
+    function loadShopFrame() {
+        if (!frame || frame.dataset.loaded === '1') return;
+        const origin = String(window.__SHOP_APP_ORIGIN__ || 'https://my-clone-lac-eight.vercel.app').replace(/\/$/, '');
+        frame.src = `${origin}/shop`;
+        frame.dataset.loaded = '1';
+    }
 
     function openDrawer() {
         previouslyFocused = document.activeElement;
         root.classList.add('is-open');
         root.setAttribute('aria-hidden', 'false');
-        openBtn.setAttribute('aria-expanded', 'true');
+        openBtns.forEach((btn) => btn.setAttribute('aria-expanded', 'true'));
+        loadShopFrame();
 
         const burgerMenu = document.querySelector('.burger-menu');
         const navMenu = document.querySelector('.nav-menu');
@@ -197,16 +206,19 @@ function initShopDrawer() {
     function closeDrawer() {
         root.classList.remove('is-open');
         root.setAttribute('aria-hidden', 'true');
-        openBtn.setAttribute('aria-expanded', 'false');
+        openBtns.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
         syncBodyScrollLock();
         if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
             previouslyFocused.focus();
         }
     }
 
-    openBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openDrawer();
+    openBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openDrawer();
+        });
     });
 
     closeBtn.addEventListener('click', closeDrawer);
@@ -216,14 +228,6 @@ function initShopDrawer() {
         if (e.key === 'Escape' && root.classList.contains('is-open')) {
             closeDrawer();
         }
-    });
-
-    root.querySelectorAll('.shop-product-buy').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const titleEl = btn.closest('.shop-product')?.querySelector('.shop-product-title');
-            const name = titleEl && titleEl.textContent ? titleEl.textContent.trim() : 'товар';
-            alert(`Покупка пока в разработке. Вы выбрали: «${name}». Это тестовый товар без реальной оплаты.`);
-        });
     });
 }
 
@@ -981,11 +985,11 @@ function initAboutFromHash() {
 }
 
 function initHeroAboutButton() {
-    const btn = document.getElementById('heroAboutBtn');
     const about = document.getElementById('about');
-    if (!btn || !about) return;
+    if (!about) return;
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    btn.addEventListener('click', () => {
+    const scrollToAbout = () => {
         openAboutSection();
         const scroll = () => scrollToHashTarget(about, !prefersReducedMotion);
         if (prefersReducedMotion) {
@@ -993,6 +997,29 @@ function initHeroAboutButton() {
         } else {
             setTimeout(scroll, 50);
         }
+    };
+
+    document.querySelectorAll('#heroAboutBtn, [data-hub-about]').forEach((btn) => {
+        btn.addEventListener('click', scrollToAbout);
+    });
+}
+
+// ===== МОБИЛЬНЫЙ ХАБ (скрыт на десктопе через CSS) =====
+function initMobileHub() {
+    const hub = document.getElementById('mobileHub');
+    if (!hub) return;
+
+    hub.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', () => {
+            const burgerMenu = document.querySelector('.burger-menu');
+            const navMenu = document.querySelector('.nav-menu');
+            if (burgerMenu && navMenu && navMenu.classList.contains('active')) {
+                burgerMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+                burgerMenu.setAttribute('aria-expanded', 'false');
+                syncBodyScrollLock();
+            }
+        });
     });
 }
 
@@ -1318,6 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initAboutFromHash();
     initHeroAboutButton();
+    initMobileHub();
     initMobileStickyCta();
     initMobileCollapsibleSections();
     initBackToTopButton();

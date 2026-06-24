@@ -550,3 +550,90 @@ body.menu-open {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ===== Мобильный хаб после героя ===== */
+.mobile-hub {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-hub {
+        display: block;
+        padding: 18px 0 8px;
+        background: linear-gradient(180deg, rgba(20, 10, 13, 0.98) 0%, rgba(10, 10, 26, 0.92) 100%);
+        border-bottom: 1px solid rgba(128, 0, 32, 0.22);
+    }
+
+    .mobile-hub__label {
+        margin: 0 0 12px;
+        text-align: center;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cinematic-text-lighter, rgba(255, 255, 255, 0.55));
+    }
+
+    .mobile-hub__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .mobile-hub__btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 72px;
+        padding: 10px 6px;
+        border-radius: 14px;
+        border: 1px solid rgba(128, 0, 32, 0.28);
+        background: rgba(0, 0, 0, 0.45);
+        color: var(--cinematic-text, rgba(255, 255, 255, 0.9));
+        font-family: var(--font-body, 'Montserrat', sans-serif);
+        font-size: 0.68rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(128, 0, 32, 0.2);
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .mobile-hub__btn i {
+        font-size: 1.05rem;
+        color: var(--gold-medium, #d4af37);
+    }
+
+    .mobile-hub__btn:active {
+        transform: scale(0.97);
+        border-color: rgba(128, 0, 32, 0.55);
+        background: rgba(128, 0, 32, 0.18);
+    }
+
+    .mobile-hub__btn--accent {
+        border-color: rgba(212, 175, 55, 0.45);
+        background: rgba(128, 0, 32, 0.22);
+    }
+
+    .mobile-hub__btn--accent i {
+        color: #fff;
+    }
+
+    .events-section .event-featured-body .section-description,
+    .events-section .event-door,
+    .events-section .event-door-title,
+    .events-section .event-desc {
+        text-align: left;
+    }
+
+    .events-section .event-title {
+        text-align: left;
+    }
+
+    .shop-drawer-frame-wrap {
+        min-height: min(58vh, 520px);
+    }
+}
