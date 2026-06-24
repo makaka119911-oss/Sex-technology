@@ -127,8 +127,8 @@ button {
 
     .hero-slider .slide-hero-circles__img {
         object-fit: cover !important;
-        object-position: center 38% !important;
-        transform: translateY(8vh) scale(1.06) !important;
+        object-position: center 30% !important;
+        transform: translateY(3vh) scale(1.03) !important;
         transform-origin: center center !important;
     }
 

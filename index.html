@@ -29,13 +29,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-31" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-31" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-32" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-32" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-31">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-31">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-32">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-32">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-mobile-crop-fix">
@@ -48,8 +48,8 @@
             }
             .hero-slider .slide-hero-circles__img {
                 object-fit: cover !important;
-                object-position: center 38% !important;
-                transform: translateY(8vh) scale(1.06) !important;
+                object-position: center 30% !important;
+                transform: translateY(3vh) scale(1.03) !important;
                 transform-origin: center center !important;
             }
             .hero-slider .slide-hero-desire__img {
@@ -202,8 +202,11 @@
                             <span>Магазин</span>
                         </a>
                         <a href="shop/?p=cart" class="nav-shop-btn nav-cart-btn" id="landingCartLink" aria-label="Корзина">
-                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="nav-cart-badge" id="landingCartBadge" aria-live="polite"></span>
+                            <span class="nav-cart-icon-wrap" aria-hidden="true">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="nav-cart-badge" id="landingCartBadge" aria-live="polite"></span>
+                            </span>
+                            <span class="nav-cart-label">Корзина</span>
                         </a>
                     </div>
                 </div>
@@ -274,13 +277,12 @@
                         <picture class="slide-hero-picture">
                             <img
                                 class="slide-hero-circles__img"
-                                src="assets/images/slaid2.jpg?v=20260624-7"
+                                src="assets/images/slaid22.jpg?v=20260624-slaid22"
                                 alt="Женский круг — тёплые поддерживающие встречи"
                                 width="1080"
                                 height="1350"
                                 decoding="async"
                                 fetchpriority="high"
-                                style="object-fit:cover;object-position:center 38%;transform:translateY(8vh) scale(1.06);transform-origin:center center"
                             >
                         </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
