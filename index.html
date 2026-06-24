@@ -29,35 +29,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-27" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-27" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-28" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-28" as="style">
     <link rel="preload" href="assets/images/slaid3.jpg?v=20260624-6" as="image">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-27">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-27">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-28">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-28">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-mobile-crop-fix">
         @media (max-width: 768px) {
+            .hero-slider .slide--circles .slide-content.slide-content--circles,
+            .hero-slider .slide--desire .slide-content.slide-content--desire {
+                position: relative !important;
+                height: 100% !important;
+                min-height: 100% !important;
+            }
             .hero-slider .slide-hero-circles__img {
                 object-fit: cover !important;
-                object-position: center 36% !important;
+                object-position: center 38% !important;
+                transform: translateY(8vh) scale(1.06) !important;
+                transform-origin: center center !important;
             }
             .hero-slider .slide-hero-desire__img {
                 object-fit: cover !important;
-                object-position: center 48% !important;
+                object-position: center 38% !important;
+                transform: translateY(10vh) scale(1.06) !important;
+                transform-origin: center center !important;
             }
-            .hero-slider .slide--circles .slide-text--circles {
+            .hero-slider .slide--circles .slide-circles-bottom {
                 position: absolute !important;
                 left: max(14px, env(safe-area-inset-left, 0px)) !important;
                 right: max(14px, env(safe-area-inset-right, 0px)) !important;
                 bottom: var(--hero-cta-from-bottom) !important;
+                width: auto !important;
+                max-width: min(100%, 400px) !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: clamp(12px, 3vw, 18px) !important;
+                z-index: 3 !important;
+            }
+            .hero-slider .slide--circles .slide-text--circles {
+                position: static !important;
                 flex: none !important;
                 padding: 0 !important;
-                margin: 0 auto !important;
-                max-width: min(100%, 400px) !important;
-                gap: clamp(12px, 3vw, 18px) !important;
+                margin: 0 !important;
+                width: 100% !important;
             }
             .hero-slider .slide--circles .slide-buttons {
                 position: static !important;
@@ -238,12 +259,13 @@
                         <picture class="slide-hero-picture">
                             <img
                                 class="slide-hero-circles__img"
-                                src="assets/images/slaid2.jpg?v=20260624-6"
+                                src="assets/images/slaid2.jpg?v=20260624-7"
                                 alt="Женский круг — тёплые поддерживающие встречи"
                                 width="1080"
                                 height="1350"
                                 decoding="async"
                                 fetchpriority="high"
+                                style="object-fit:cover;object-position:center 38%;transform:translateY(8vh) scale(1.06);transform-origin:center center"
                             >
                         </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
@@ -258,25 +280,27 @@
                             </div>
                             <p class="hero-slide2-lead">Тёплые и поддерживающие встречи, где можно делиться страхами, желаниями и быть собой без осуждения.</p>
                         </div>
-                        <div class="slide-text slide-text--circles">
-                            <div class="luxury-title-wrapper">
-                                <div class="luxury-title">Говорить о сексе</div>
-                                <div class="luxury-title-divider" aria-hidden="true">
-                                    <span class="luxury-title-divider__line"></span>
-                                    <span class="luxury-title-divider__gem"></span>
-                                    <span class="luxury-title-divider__line"></span>
+                        <div class="slide-circles-bottom">
+                            <div class="slide-text slide-text--circles">
+                                <div class="luxury-title-wrapper">
+                                    <div class="luxury-title">Говорить о сексе</div>
+                                    <div class="luxury-title-divider" aria-hidden="true">
+                                        <span class="luxury-title-divider__line"></span>
+                                        <span class="luxury-title-divider__gem"></span>
+                                        <span class="luxury-title-divider__line"></span>
+                                    </div>
+                                    <div class="luxury-title">Без стыда</div>
                                 </div>
-                                <div class="luxury-title">Без стыда</div>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="#circles" class="btn btn-secondary">
-                                    <span>Узнать о кругах</span>
-                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                </a>
-                                <a href="#contact" class="btn btn-secondary">
-                                    <span>Записаться</span>
-                                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                                </a>
+                                <div class="slide-buttons">
+                                    <a href="#circles" class="btn btn-secondary">
+                                        <span>Узнать о кругах</span>
+                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#contact" class="btn btn-secondary">
+                                        <span>Записаться</span>
+                                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -293,12 +317,13 @@
                         <picture class="slide-hero-picture">
                             <img
                                 class="slide-hero-desire__img"
-                                src="assets/images/slaid3.jpg?v=20260624-6"
+                                src="assets/images/slaid3.jpg?v=20260624-7"
                                 alt="Свобода — разрешить себе желать"
                                 width="1080"
                                 height="1350"
                                 decoding="async"
                                 fetchpriority="high"
+                                style="object-fit:cover;object-position:center 38%;transform:translateY(10vh) scale(1.06);transform-origin:center center"
                             >
                         </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
