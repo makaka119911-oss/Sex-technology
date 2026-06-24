@@ -3531,9 +3531,9 @@ img {
     }
 
     .hero-slider .slide-background.slide-hero-generated {
-        background-image: url('../images/slaid1.jpg?v=hero-mobile-test-3') !important;
+        background-image: url('../images/slaid1.jpg?v=slaid1-none-20260624') !important;
         background-size: cover !important;
-        background-position: center calc(40% + 2.5rem) !important;
+        background-position: center 28% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {
