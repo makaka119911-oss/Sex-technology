@@ -94,10 +94,25 @@ button {
         background-color: #140a0d !important;
     }
 
+    /* Шапка: полупрозрачная, чтобы не «съедала» лица в hero */
+    .header {
+        background: rgba(10, 10, 26, 0.5) !important;
+        backdrop-filter: blur(16px) saturate(125%);
+        -webkit-backdrop-filter: blur(16px) saturate(125%);
+        border-bottom-color: rgba(128, 0, 32, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .header.scrolled {
+        background: rgba(10, 10, 26, 0.72) !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    }
+
     .hero-slider .slide-background.slide-hero-generated {
-        background-image: url('../images/slaid1.jpg?v=hero-mobile-test-2') !important;
+        background-image: url('../images/slaid1.jpg?v=hero-mobile-test-3') !important;
         background-size: cover !important;
-        background-position: center 24% !important;
+        /* чуть ниже кадр — макушки не под шапкой */
+        background-position: center calc(40% + 2.5rem) !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {
