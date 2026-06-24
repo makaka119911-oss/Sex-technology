@@ -29,13 +29,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-25" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-25" as="style">
-    <link rel="preload" href="assets/images/slaid3.jpg?v=20260624-5" as="image">
+    <link rel="preload" href="assets/css/style.css?v=layout-26" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-26" as="style">
+    <link rel="preload" href="assets/images/slaid3.jpg?v=20260624-6" as="image">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-25">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-25">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-26">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-26">
+
+    <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
+    <style id="hero-mobile-crop-fix">
+        @media (max-width: 768px) {
+            .hero-slider .slide-hero-circles__img {
+                object-fit: cover !important;
+                object-position: center 16% !important;
+            }
+            .hero-slider .slide-hero-desire__img {
+                object-fit: cover !important;
+                object-position: center 42% !important;
+            }
+            .hero-slider .slide--circles .slide-text--circles {
+                position: absolute !important;
+                left: max(14px, env(safe-area-inset-left, 0px)) !important;
+                right: max(14px, env(safe-area-inset-right, 0px)) !important;
+                bottom: var(--hero-cta-from-bottom) !important;
+                flex: none !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                max-width: min(100%, 400px) !important;
+                gap: clamp(12px, 3vw, 18px) !important;
+            }
+            .hero-slider .slide--circles .slide-buttons {
+                position: static !important;
+                width: 100% !important;
+            }
+        }
+    </style>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -209,12 +238,13 @@
                         <picture class="slide-hero-picture">
                             <img
                                 class="slide-hero-circles__img"
-                                src="assets/images/hero-slide-2-mobile.jpg?v=20260624-1"
+                                src="assets/images/slaid2.jpg?v=20260624-6"
                                 alt="Женский круг — тёплые поддерживающие встречи"
                                 width="1080"
                                 height="1350"
                                 decoding="async"
-                                loading="lazy"
+                                fetchpriority="high"
+                                style="object-fit:cover;object-position:center 16%"
                             >
                         </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
@@ -264,12 +294,13 @@
                         <picture class="slide-hero-picture">
                             <img
                                 class="slide-hero-desire__img"
-                                src="assets/images/slaid3.jpg?v=20260624-5"
+                                src="assets/images/slaid3.jpg?v=20260624-6"
                                 alt="Свобода — разрешить себе желать"
                                 width="1080"
                                 height="1350"
                                 decoding="async"
                                 fetchpriority="high"
+                                style="object-fit:cover;object-position:center 42%"
                             >
                         </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>

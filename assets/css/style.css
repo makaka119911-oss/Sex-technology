@@ -1180,13 +1180,13 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-circles__img {
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 16%;
     filter: brightness(0.9) contrast(1.04);
 }
 
 .slide-hero-desire__img {
     object-fit: cover;
-    object-position: center 40%;
+    object-position: center 42%;
     filter: brightness(0.9) contrast(1.04);
 }
 
@@ -1196,11 +1196,11 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-circles__img {
-        object-position: center 26%;
+        object-position: center 24%;
     }
 
     .slide-hero-desire__img {
-        object-position: center 42%;
+        object-position: center 44%;
     }
 }
 
@@ -3693,12 +3693,12 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-circles__img {
         object-fit: cover !important;
-        object-position: center 20% !important;
+        object-position: center 16% !important;
     }
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 40% !important;
+        object-position: center 42% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {

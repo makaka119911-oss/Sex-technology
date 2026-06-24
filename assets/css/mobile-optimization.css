@@ -127,12 +127,12 @@ button {
 
     .hero-slider .slide-hero-circles__img {
         object-fit: cover !important;
-        object-position: center 20% !important;
+        object-position: center 16% !important;
     }
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 40% !important;
+        object-position: center 42% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {
