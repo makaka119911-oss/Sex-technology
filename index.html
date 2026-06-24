@@ -29,12 +29,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-18" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-18" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-20" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-20" as="style">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-18">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-18">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-20">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-20">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -155,10 +155,23 @@
             <div class="slider-container">
                 <!-- Слайд 1 -->
                 <div class="slide active slide--minimal slide--intro" data-slide="1">
-                    <div
-                        class="slide-background slide-hero-generated"
-                        aria-hidden="true"
-                    ></div>
+                    <div class="slide-background slide-hero-generated" aria-hidden="true">
+                        <picture class="slide-hero-picture">
+                            <source
+                                media="(min-width: 769px)"
+                                srcset="assets/images/gemini-2.5-flash-image_exquisite_high_fashion_photography_of_Wide_cinematic_website_hero_banner_16_9_ul-0.jpg?v=hero-desktop"
+                            >
+                            <img
+                                class="slide-hero-generated__img"
+                                src="assets/images/hero-slide-1-mobile.jpg?v=20260624-3"
+                                alt="Татьяна Солнечная и Виктория Румянцева — психологи"
+                                width="1080"
+                                height="1350"
+                                decoding="async"
+                                fetchpriority="high"
+                            >
+                        </picture>
+                    </div>
                     <div class="slide-overlay"></div>
                     <div class="slide-content slide-content--intro">
                         <div class="slide-intro-bottom">
@@ -186,7 +199,18 @@
                 
                 <!-- Слайд 2: рубрика + лид слева сверху; основной заголовок и кнопки ниже -->
                 <div class="slide slide--circles" data-slide="2">
-                    <div class="slide-background" style="background-image: url('assets/images/slide-2-new.png')">
+                    <div class="slide-background slide-hero-circles" aria-hidden="true">
+                        <picture class="slide-hero-picture">
+                            <img
+                                class="slide-hero-circles__img"
+                                src="assets/images/hero-slide-2-mobile.jpg?v=20260624-1"
+                                alt="Женский круг — тёплые поддерживающие встречи"
+                                width="1080"
+                                height="1350"
+                                decoding="async"
+                                loading="lazy"
+                            >
+                        </picture>
                         <div class="parallax-layer" data-depth="0.2" aria-hidden="true"></div>
                     </div>
                     <div class="slide-overlay"></div>
