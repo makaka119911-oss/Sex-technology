@@ -29,13 +29,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-28" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-28" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-29" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-29" as="style">
     <link rel="preload" href="assets/images/slaid3.jpg?v=20260624-6" as="image">
     
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-28">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-28">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-29">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-29">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-mobile-crop-fix">
@@ -83,6 +83,21 @@
             .hero-slider .slide--circles .slide-buttons {
                 position: static !important;
                 width: 100% !important;
+            }
+            .hero-slider .slide--desire .slide-desire-bottom {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: clamp(6px, 1.8vw, 10px) !important;
+            }
+            .hero-slider .slide--minimal.slide--desire .slide-text--desire {
+                flex: none !important;
+                height: auto !important;
+                min-height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .hero-slider .slide--desire .luxury-title-wrapper--desire {
+                margin-bottom: 0 !important;
             }
         }
     </style>

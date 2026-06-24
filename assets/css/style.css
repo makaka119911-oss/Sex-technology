@@ -4058,16 +4058,32 @@ body.hero-slide-1 .header:not(.scrolled) {
         padding: 52px 14px calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 3vw, 20px)) 14px;
     }
 
+    .hero-slider .slide--minimal.slide--desire .slide-text--desire {
+        flex: none;
+        height: auto;
+        min-height: 0;
+        justify-content: flex-end;
+        padding: 0;
+        margin: 0;
+    }
+
     .hero-slider .slide--desire .slide-desire-bottom {
         position: absolute;
         left: max(14px, env(safe-area-inset-left, 0px));
         right: max(14px, env(safe-area-inset-right, 0px));
         bottom: var(--hero-cta-from-bottom);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
         width: auto;
         max-width: min(100%, 400px);
         margin-left: auto;
         margin-right: auto;
-        gap: clamp(12px, 3vw, 18px);
+        gap: clamp(6px, 1.8vw, 10px);
+    }
+
+    .hero-slider .slide--desire .luxury-title-wrapper--desire {
+        margin-bottom: 0;
     }
 
     .hero-slider .slide--desire .slide-buttons--desire-foot {
