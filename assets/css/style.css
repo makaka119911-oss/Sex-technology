@@ -1031,12 +1031,32 @@ body.hero-slide-1 .header:not(.scrolled) {
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 1s ease;
+    pointer-events: none;
+    z-index: 1;
+    transition:
+        opacity 1.4s ease-in-out,
+        visibility 0s linear 1.4s;
 }
 
 .slide.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
+    z-index: 2;
+    transition:
+        opacity 1.4s ease-in-out,
+        visibility 0s linear 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide.active {
+        transition: none;
+    }
+
+    .progress-bar {
+        transition: none !important;
+    }
 }
 
 .slide-background {
@@ -2015,8 +2035,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 .progress-bar {
     height: 100%;
     background: var(--gradient-primary);
-    width: 33.33%;
-    transition: width 0.5s ease;
+    width: 0%;
+    transition: width 7s linear;
 }
 
 .scroll-indicator.desktop-only {
@@ -3953,8 +3973,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--minimal.slide--desire .slide-text {
         justify-content: flex-end;
-        padding-top: clamp(40px, 9vh, 96px);
-        padding-bottom: calc(var(--hero-cta-from-bottom) + clamp(58px, 18vw, 100px));
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
     .hero-slider .slide--minimal:not(.slide--intro) .luxury-title-wrapper {

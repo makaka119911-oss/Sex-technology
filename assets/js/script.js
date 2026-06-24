@@ -316,7 +316,7 @@ class CinematicHeroSlider {
             slide.addEventListener('touchend', (e) => {
                 this.touchEndX = e.changedTouches[0].screenX;
                 this.handleSwipe();
-                setTimeout(() => this.startAutoPlay(), 3000);
+                setTimeout(() => this.startAutoPlay(), this.autoPlayDelay);
             }, { passive: true });
         });
         
@@ -342,16 +342,10 @@ class CinematicHeroSlider {
     }
     
     initResponsiveBehaviors() {
-        const checkMobile = () => window.innerWidth <= 768;
-        
         const handleResize = () => {
-            if (checkMobile()) {
-                this.stopAutoPlay();
-            } else {
-                this.startAutoPlay();
-            }
+            this.resetAutoPlay();
         };
-        
+
         window.addEventListener('resize', handleResize);
         handleResize();
     }
@@ -462,14 +456,23 @@ class CinematicHeroSlider {
     }
     
     updateProgressBar() {
-        if (this.progressBar) {
-            const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
-            this.progressBar.style.width = `${progress}%`;
-        }
+        if (!this.progressBar || this.totalSlides < 1) return;
+
+        const segment = 100 / this.totalSlides;
+        const base = this.currentSlide * segment;
+        const target = base + segment;
+
+        this.progressBar.style.transition = 'none';
+        this.progressBar.style.width = `${base}%`;
+        void this.progressBar.offsetWidth;
+        this.progressBar.style.transition = `width ${this.autoPlayDelay}ms linear`;
+        this.progressBar.style.width = `${target}%`;
     }
-    
+
     startAutoPlay() {
-        if (this.totalSlides > 1 && window.innerWidth > 768) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (this.totalSlides > 1 && !prefersReducedMotion) {
+            this.stopAutoPlay();
             this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
         }
     }
