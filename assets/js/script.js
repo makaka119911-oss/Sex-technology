@@ -377,7 +377,13 @@ class CinematicHeroSlider {
         
         this.currentSlide = index;
         this.updateProgressBar();
+        this.updateHeroSlideBodyClass(index);
         this.animateContent();
+    }
+
+    updateHeroSlideBodyClass(index) {
+        document.body.classList.remove('hero-slide-1', 'hero-slide-2', 'hero-slide-3');
+        document.body.classList.add(`hero-slide-${index + 1}`);
     }
     
     animateContent() {

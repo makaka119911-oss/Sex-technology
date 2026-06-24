@@ -103,6 +103,12 @@ button {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
+    body.hero-slide-1 .header:not(.scrolled) {
+        background: rgba(10, 10, 26, 0.32) !important;
+        border-bottom-color: rgba(128, 0, 32, 0.14);
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+    }
+
     .header.scrolled {
         background: rgba(10, 10, 26, 0.72) !important;
         box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);

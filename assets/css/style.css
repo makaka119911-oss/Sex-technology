@@ -213,8 +213,8 @@ img {
     margin-bottom: clamp(20px, 4vw, 30px);
 }
 
-/* Слайд 1: декоративная обводка под «Два взгляда, одна цель» */
-.intro-hero-divider {
+/* Слайд 1: декоративная обводка под первой строкой заголовка (все hero-слайды) */
+.hero-slider .luxury-title-divider {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,7 +225,7 @@ img {
     box-sizing: border-box;
 }
 
-.intro-hero-divider__line {
+.hero-slider .luxury-title-divider__line {
     flex: 1;
     height: 1px;
     min-width: 28px;
@@ -242,7 +242,7 @@ img {
         0 1px 0 rgba(178, 34, 52, 0.35);
 }
 
-.intro-hero-divider__gem {
+.hero-slider .luxury-title-divider__gem {
     flex-shrink: 0;
     width: 7px;
     height: 7px;
@@ -660,6 +660,13 @@ img {
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
 }
 
+/* Слайд 1: шапка ещё прозрачнее — фото видно сквозь неё */
+body.hero-slide-1 .header:not(.scrolled) {
+    background: rgba(10, 10, 26, 0.32) !important;
+    border-bottom-color: rgba(128, 0, 32, 0.14);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+}
+
 .navbar {
     display: flex;
     align-items: center;
@@ -944,11 +951,11 @@ img {
     }
 
     .hero-slider {
-        margin-top: 0;
-        padding-top: var(--header-height);
+        margin-top: calc(-1 * var(--header-height));
+        padding-top: 0;
         box-sizing: border-box;
-        height: clamp(560px, calc(100vh - var(--header-height)), 880px);
-        max-height: 880px;
+        height: clamp(560px, 100vh, 920px);
+        max-height: 100vh;
     }
 
     .hero-slider .slider-indicators {
@@ -1316,20 +1323,29 @@ img {
         gap: 0.15rem;
     }
 
-    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .intro-hero-divider {
+    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider {
         width: min(100%, 380px);
         margin-top: clamp(6px, 1vw, 10px);
         margin-bottom: clamp(4px, 0.8vw, 8px);
     }
 
-    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .intro-hero-divider__line {
+    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider__line {
         height: 2px;
         box-shadow:
             0 0 14px rgba(212, 175, 55, 0.32),
             0 1px 0 rgba(178, 34, 52, 0.42);
     }
 
-    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .intro-hero-divider__gem {
+    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider__gem {
+        width: 8px;
+        height: 8px;
+    }
+
+    .hero-slider .luxury-title-wrapper .luxury-title-divider__line {
+        height: 2px;
+    }
+
+    .hero-slider .luxury-title-wrapper .luxury-title-divider__gem {
         width: 8px;
         height: 8px;
     }
@@ -3916,10 +3932,16 @@ img {
         box-shadow: 0 6px 24px rgba(0, 0, 0, 0.24);
     }
 
-    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .intro-hero-divider {
+    .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider {
         width: min(100%, 300px);
         margin-top: 6px;
         margin-bottom: 4px;
+    }
+
+    .hero-slider .luxury-title-wrapper .luxury-title-divider {
+        width: min(100%, 300px);
+        margin-top: 5px;
+        margin-bottom: 3px;
     }
 
     .hero-slider .slide--minimal:not(.slide--intro) .slide-buttons {
