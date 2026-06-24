@@ -94,6 +94,12 @@ button {
         background-color: #140a0d !important;
     }
 
+    .hero-slider .slide-background.slide-hero-generated {
+        background-image: url('../images/slaid1.jpg?v=hero-mobile-test-2') !important;
+        background-size: cover !important;
+        background-position: center 24% !important;
+    }
+
     .hero-slider .slide-background.slide-hero-duo {
         background: #140a0d !important;
         background-size: unset !important;
