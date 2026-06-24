@@ -1145,8 +1145,19 @@ body.hero-slide-1 .header:not(.scrolled) {
 .slide-hero-desire {
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: #140a0d;
     overflow: hidden;
+    transform: scale(1);
+    filter: none;
+}
+
+.slide-hero-circles .parallax-layer,
+.slide-hero-desire .parallax-layer {
+    display: none !important;
 }
 
 .slide-hero-picture,
@@ -1158,26 +1169,30 @@ body.hero-slide-1 .header:not(.scrolled) {
     display: block;
     width: 100%;
     height: 100%;
+    z-index: 0;
 }
 
 .slide-hero-generated__img {
     object-fit: cover;
-    object-position: center 28%;
+    object-position: center 38%;
+    filter: brightness(0.88) contrast(1.05);
 }
 
 .slide-hero-circles__img {
     object-fit: cover;
     object-position: center 30%;
+    filter: brightness(0.88) contrast(1.05);
 }
 
 .slide-hero-desire__img {
     object-fit: cover;
-    object-position: center 32%;
+    object-position: center 34%;
+    filter: brightness(0.88) contrast(1.05);
 }
 
 @media (min-width: 769px) {
     .slide-hero-generated__img {
-        object-position: center 35%;
+        object-position: center 42%;
     }
 
     .slide-hero-circles__img {
@@ -1496,8 +1511,8 @@ body.hero-slide-1 .header:not(.scrolled) {
         overflow: hidden;
     }
 
-    /* Слайды 2–3: cover; слайд 1 — .slide-hero-duo (два портрета) */
-    .hero-slider .slide-background:not(.slide-hero-duo) {
+    /* Слайды 2–3: cover; слайд 1 — img hero */
+    .hero-slider .slide-background:not(.slide-hero-duo):not(.slide-hero-generated):not(.slide-hero-circles):not(.slide-hero-desire) {
         top: 0;
         left: 0;
         width: 100%;
@@ -1508,7 +1523,7 @@ body.hero-slide-1 .header:not(.scrolled) {
         transform: scale(1.02);
     }
 
-    .slide.active .slide-background:not(.slide-hero-duo) {
+    .slide.active .slide-background:not(.slide-hero-duo):not(.slide-hero-generated):not(.slide-hero-circles):not(.slide-hero-desire) {
         transform: scale(1);
     }
 
@@ -3659,7 +3674,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-generated__img {
         object-fit: cover !important;
-        object-position: center 28% !important;
+        object-position: center 38% !important;
     }
 
     .hero-slider .slide-hero-circles__img {
@@ -3669,7 +3684,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 32% !important;
+        object-position: center 34% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {

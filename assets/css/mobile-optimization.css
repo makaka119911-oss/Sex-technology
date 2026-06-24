@@ -122,7 +122,7 @@ button {
 
     .hero-slider .slide-hero-generated__img {
         object-fit: cover !important;
-        object-position: center 28% !important;
+        object-position: center 38% !important;
     }
 
     .hero-slider .slide-hero-circles__img {
@@ -132,7 +132,7 @@ button {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 32% !important;
+        object-position: center 34% !important;
     }
 
     .hero-slider .slide-background.slide-hero-duo {
