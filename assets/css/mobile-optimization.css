@@ -134,7 +134,7 @@ button {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 44% !important;
+        object-position: 51% 44% !important;
         transform: translateY(10vh) scale(1.06) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
@@ -288,13 +288,25 @@ button {
     
     .slide-buttons {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
     }
     
-    .slide-buttons .btn {
+    .hero-slider .slide-buttons--desire-foot {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .slide-buttons .btn:not(.btn-hero) {
         width: 100%;
         justify-content: center;
         padding: 14px 20px;
+    }
+
+    .hero-slider .slide-buttons .btn-hero {
+        width: auto;
+        flex: 1 1 auto;
+        min-height: 40px;
+        padding: 9px 12px;
     }
 }
 

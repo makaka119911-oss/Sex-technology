@@ -579,6 +579,85 @@ img {
     color: white;
 }
 
+/* Hero CTA — «кинопилюли» (вариант A) */
+.hero-slider .slide-buttons .btn-hero {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+    font-size: clamp(0.76rem, 2.2vw, 0.88rem);
+    line-height: 1.2;
+    padding: 9px 14px;
+    min-height: 40px;
+    border-radius: 999px;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.hero-slider .slide-buttons .btn-hero--ghost {
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    color: rgba(255, 255, 255, 0.96);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 2px 10px rgba(0, 0, 0, 0.28);
+}
+
+.hero-slider .slide-buttons .btn-hero--ghost:hover {
+    background: rgba(0, 0, 0, 0.52);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.38),
+        0 4px 14px rgba(0, 0, 0, 0.34);
+}
+
+.hero-slider .slide-buttons .btn-hero--primary {
+    background: linear-gradient(
+        135deg,
+        var(--color-primary-light) 0%,
+        var(--color-primary) 42%,
+        var(--color-accent-dark) 100%
+    );
+    border: none;
+    color: #fff;
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.4),
+        0 2px 12px rgba(128, 0, 32, 0.38);
+}
+
+.hero-slider .slide-buttons .btn-hero--primary:hover {
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.58),
+        0 4px 16px rgba(128, 0, 32, 0.48);
+    filter: brightness(1.04);
+}
+
+.hero-slider .slide-buttons .btn-hero:active:not([disabled]) {
+    transform: scale(0.96);
+}
+
+.hero-slider .slide-buttons .btn-hero--primary:active:not([disabled]) {
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.45),
+        0 1px 8px rgba(128, 0, 32, 0.42);
+}
+
+.hero-slider .slide-buttons .btn-hero i {
+    font-size: 0.68rem;
+    opacity: 0.9;
+    transition: transform 0.2s ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .hero-slider .slide-buttons .btn-hero:hover i {
+        transform: translateX(2px);
+    }
+}
+
+.hero-slider .slide-buttons .btn-hero:has(> i:last-child) {
+    padding-right: 12px;
+}
+
 .btn-level {
     background: var(--gradient-dark);
     color: white;
@@ -1227,7 +1306,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-desire__img {
     object-fit: cover;
-    object-position: center 38%;
+    object-position: 51% 38%;
     filter: brightness(0.9) contrast(1.04);
 }
 
@@ -1241,7 +1320,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-desire__img {
-        object-position: center 42%;
+        object-position: 51% 42%;
     }
 }
 
@@ -1521,23 +1600,22 @@ body.hero-slide-1 .header:not(.scrolled) {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: nowrap !important;
-        gap: 12px;
+        gap: 8px;
         width: 100%;
         max-width: 100%;
         margin: 0;
         z-index: 4;
     }
 
-    .hero-slider .slide--desire .slide-buttons--desire-foot .btn {
-        flex: 1 1 calc(50% - 6px) !important;
-        width: calc(50% - 6px) !important;
-        max-width: calc(50% - 6px) !important;
+    .hero-slider .slide--desire .slide-buttons--desire-foot .btn-hero {
+        flex: 1 1 calc(50% - 4px) !important;
+        width: auto !important;
+        max-width: none !important;
         min-width: 0 !important;
         margin: 0 !important;
-        padding-left: clamp(10px, 1.2vw, 16px);
-        padding-right: clamp(10px, 1.2vw, 16px);
-        font-size: clamp(0.68rem, 1vw, 0.82rem);
-        white-space: nowrap;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: clamp(0.7rem, 2.1vw, 0.82rem);
         box-sizing: border-box;
     }
 
@@ -1696,23 +1774,17 @@ body.hero-slide-1 .header:not(.scrolled) {
         z-index: 4;
     }
 
-    .hero-slider .slide--circles .slide-buttons .btn {
+    .hero-slider .slide--circles .slide-buttons .btn-hero {
         flex: 1 1 calc(50% - 6px) !important;
-        width: calc(50% - 6px) !important;
-        max-width: calc(50% - 6px) !important;
+        width: auto !important;
+        max-width: none !important;
         min-width: 0 !important;
         margin: 0 !important;
         box-sizing: border-box;
-        white-space: nowrap;
-        padding-left: clamp(10px, 1.2vw, 16px);
-        padding-right: clamp(10px, 1.2vw, 16px);
-        font-size: clamp(0.68rem, 1vw, 0.82rem);
     }
 
-    .hero-slider .slide--circles .slide-buttons .btn:first-child {
+    .hero-slider .slide--circles .slide-buttons .btn-hero:first-child {
         flex: 1 1 calc(50% - 6px) !important;
-        width: calc(50% - 6px) !important;
-        max-width: calc(50% - 6px) !important;
     }
 
     .hero-slider .slider-controls {
@@ -3915,7 +3987,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 44% !important;
+        object-position: 51% 44% !important;
         transform: translateY(10vh) scale(1.06) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
@@ -4014,10 +4086,9 @@ body.hero-slide-1 .header:not(.scrolled) {
         transform: none;
     }
 
-    .hero-slider .slide--intro .slide-buttons--intro-foot .btn {
+    .hero-slider .slide--intro .slide-buttons--intro-foot .btn-hero {
         width: 100%;
         justify-content: center;
-        padding: 10px 16px;
     }
 
     /*
@@ -4116,11 +4187,12 @@ body.hero-slide-1 .header:not(.scrolled) {
     .hero-slider .slide--circles .slide-buttons {
         position: static !important;
         width: 100%;
-        max-width: min(228px, 74vw);
+        max-width: min(320px, 92vw);
+        flex-direction: row !important;
     }
 
-    .hero-slider .slide--circles .slide-buttons .btn:first-child {
-        max-width: min(228px, 74vw);
+    .hero-slider .slide--circles .slide-buttons .btn-hero:first-child {
+        max-width: none;
     }
 
     /* Слайд 3: прежняя вёрстка с кнопками внутри .slide-text */
@@ -4286,15 +4358,21 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--desire .slide-buttons--desire-foot {
         position: static !important;
-        flex-direction: column !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
         width: 100%;
-        max-width: 100%;
+        max-width: min(360px, 94vw);
+        gap: 8px;
     }
 
-    .hero-slider .slide--desire .slide-buttons--desire-foot .btn {
-        width: 100% !important;
-        max-width: 100% !important;
-        flex: none !important;
+    .hero-slider .slide--desire .slide-buttons--desire-foot .btn-hero {
+        flex: 1 1 calc(50% - 4px) !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        font-size: clamp(0.68rem, 2vw, 0.8rem);
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     .hero-slider.hero-mobile-layout--bottom {
@@ -4381,18 +4459,23 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide-buttons {
-        gap: 7px;
+        gap: 8px;
         margin-top: 2px;
-        align-items: center;
+        align-items: stretch;
         width: 100%;
-        max-width: 360px;
+        max-width: min(360px, 94vw);
         margin-left: auto;
         margin-right: auto;
     }
 
-    .hero-slider .slide-buttons .btn {
-        padding: 10px 14px;
-        font-size: clamp(0.76rem, 2.8vw, 0.88rem);
+    .hero-slider .slide-buttons--intro-foot,
+    .hero-slider .slide-buttons--desire-foot {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .hero-slider .slide-buttons .btn-hero {
+        margin: 0;
     }
 
     .slide.active .slide-background {
@@ -4404,13 +4487,19 @@ body.hero-slide-1 .header:not(.scrolled) {
         align-items: stretch;
     }
     
-    .slide-buttons .btn {
+    .hero-slider .slide-buttons--desire-foot,
+    .hero-slider .slide-buttons:not(.slide-buttons--intro-foot) {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .slide-buttons .btn:not(.btn-hero) {
         width: 100%;
         margin: 5px 0;
     }
 
-    /* Мобильный hero-flow: одна кнопка, кроме слайда 3 (две CTA) */
-    .hero-slider .slide .slide-buttons:not(.slide-buttons--desire-foot) .btn:nth-child(n+2) {
+    /* Мобильный hero-flow: одна кнопка, кроме слайда 3 (две CTA в ряд) */
+    .hero-slider .slide .slide-buttons:not(.slide-buttons--desire-foot) .btn-hero:nth-child(n+2) {
         display: none;
     }
     
