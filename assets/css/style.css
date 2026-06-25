@@ -670,6 +670,19 @@ img {
     padding-right: 12px;
 }
 
+.hero-slider .slide-buttons--single {
+    justify-content: center;
+    max-width: min(240px, 72vw);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-slider .slide-buttons--single .btn-hero {
+    width: 100%;
+    flex: none;
+    justify-content: center;
+}
+
 .btn-level {
     background: var(--gradient-dark);
     color: white;
