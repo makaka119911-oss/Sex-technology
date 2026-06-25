@@ -5122,11 +5122,13 @@ body.hero-slide-1 .header:not(.scrolled) {
 @media (max-width: 768px) {
     .mobile-sticky-cta {
         position: fixed;
-        left: max(12px, env(safe-area-inset-left, 0px));
-        right: max(12px, env(safe-area-inset-right, 0px));
+        left: max(10px, env(safe-area-inset-left, 0px));
+        right: auto;
         bottom: calc(max(10px, env(safe-area-inset-bottom, 0px)) + 6px);
         z-index: 1200;
         display: block;
+        width: auto;
+        max-width: min(46vw, 168px);
         opacity: 0;
         transform: translateY(18px);
         pointer-events: none;
@@ -5140,15 +5142,22 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .mobile-sticky-cta .btn {
-        width: 100%;
+        width: auto;
         justify-content: center;
-        padding: 13px 16px;
+        padding: 8px 12px;
+        font-size: 0.76rem;
+        gap: 6px;
         border-radius: 999px;
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+        white-space: nowrap;
+    }
+
+    .mobile-sticky-cta .btn i {
+        font-size: 0.85rem;
     }
 
     .footer {
-        padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
     }
 
     /* На телефоне только нижняя CTA — без второй плавающей кнопки «Наверх» */
