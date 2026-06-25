@@ -613,23 +613,34 @@ img {
 
 .hero-slider .slide-buttons .btn-hero--primary {
     background: linear-gradient(
-        135deg,
-        var(--color-primary-light) 0%,
-        var(--color-primary) 42%,
-        var(--color-accent-dark) 100%
+        165deg,
+        rgba(255, 232, 177, 0.16) 0%,
+        rgba(128, 0, 32, 0.28) 42%,
+        rgba(50, 8, 22, 0.44) 100%
     );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: none;
-    color: #fff;
+    color: rgba(255, 245, 238, 0.98);
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     box-shadow:
-        0 0 0 1px rgba(212, 175, 55, 0.4),
-        0 2px 12px rgba(128, 0, 32, 0.38);
+        0 0 0 1px rgba(212, 175, 55, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 .hero-slider .slide-buttons .btn-hero--primary:hover {
+    background: linear-gradient(
+        165deg,
+        rgba(255, 232, 177, 0.22) 0%,
+        rgba(128, 0, 32, 0.34) 42%,
+        rgba(50, 8, 22, 0.52) 100%
+    );
     box-shadow:
-        0 0 0 1px rgba(212, 175, 55, 0.58),
-        0 4px 16px rgba(128, 0, 32, 0.48);
-    filter: brightness(1.04);
+        0 0 0 1px rgba(212, 175, 55, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 4px 14px rgba(0, 0, 0, 0.26);
 }
 
 .hero-slider .slide-buttons .btn-hero:active:not([disabled]) {
@@ -638,8 +649,9 @@ img {
 
 .hero-slider .slide-buttons .btn-hero--primary:active:not([disabled]) {
     box-shadow:
-        0 0 0 1px rgba(212, 175, 55, 0.45),
-        0 1px 8px rgba(128, 0, 32, 0.42);
+        0 0 0 1px rgba(212, 175, 55, 0.24),
+        inset 0 1px 3px rgba(0, 0, 0, 0.2),
+        0 1px 8px rgba(0, 0, 0, 0.18);
 }
 
 .hero-slider .slide-buttons .btn-hero i {
