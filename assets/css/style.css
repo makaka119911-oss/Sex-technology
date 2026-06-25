@@ -1331,7 +1331,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-desire__img {
     object-fit: cover;
-    object-position: center 40%;
+    object-position: center 38%;
     filter: brightness(0.9) contrast(1.04);
 }
 
@@ -1345,7 +1345,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-desire__img {
-        object-position: center 42%;
+        object-position: center 38%;
     }
 }
 
@@ -4115,8 +4115,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 42% !important;
-        transform: translateY(10vh) scale(1.06) !important;
+        object-position: center 38% !important;
+        transform: translateY(8vh) scale(1.05) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
         min-height: 100% !important;
