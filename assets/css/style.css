@@ -4145,8 +4145,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 36% !important;
-        transform: translateY(8vh) scale(1.02) !important;
+        object-position: 46% 36% !important;
+        transform: translate(-2.5vw, 8vh) scale(1.02) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
         min-height: 100% !important;
@@ -4476,33 +4476,21 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--desire .slide-desire-bottom {
         position: absolute;
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
+        left: max(14px, env(safe-area-inset-left, 0px));
+        right: max(14px, env(safe-area-inset-right, 0px));
         bottom: var(--hero-cta-from-bottom);
         display: flex;
         flex-direction: column;
-        align-items: center;
-        width: min(calc(100% - 28px), 400px);
+        align-items: stretch;
+        width: auto;
         max-width: min(100%, 400px);
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: auto;
+        margin-right: auto;
         gap: clamp(6px, 1.8vw, 10px);
-    }
-
-    .hero-slider .slide--desire .slide-text--desire {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     .hero-slider .slide--desire .luxury-title-wrapper--desire {
         margin-bottom: 0;
-        width: 100%;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
     }
 
     .hero-slider .slide--desire .slide-buttons--desire-foot {

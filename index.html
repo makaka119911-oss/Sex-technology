@@ -29,13 +29,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-55" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-55" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-56" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-56" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-55">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-55">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-56">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-56">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-mobile-crop-fix">
@@ -54,8 +54,8 @@
             }
             .hero-slider .slide-hero-desire__img {
                 object-fit: cover !important;
-                object-position: center 36% !important;
-                transform: translateY(8vh) scale(1.02) !important;
+                object-position: 46% 36% !important;
+                transform: translate(-2.5vw, 8vh) scale(1.02) !important;
                 transform-origin: center center !important;
                 min-width: 100% !important;
                 min-height: 100% !important;
@@ -87,20 +87,9 @@
                 width: 100% !important;
             }
             .hero-slider .slide--desire .slide-desire-bottom {
-                position: absolute !important;
-                left: 50% !important;
-                right: auto !important;
-                transform: translateX(-50%) !important;
-                bottom: var(--hero-cta-from-bottom) !important;
-                width: min(calc(100% - 28px), 400px) !important;
-                max-width: min(100%, 400px) !important;
-                margin-left: 0 !important;
-                margin-right: 0 !important;
                 display: flex !important;
                 flex-direction: column !important;
-                align-items: center !important;
                 gap: clamp(6px, 1.8vw, 10px) !important;
-                z-index: 4 !important;
             }
             .hero-slider .slide--minimal.slide--desire .slide-text--desire {
                 flex: none !important;
