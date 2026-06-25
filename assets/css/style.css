@@ -1200,7 +1200,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-circles__img {
     object-fit: cover;
-    object-position: center 30%;
+    object-position: center 36%;
     filter: brightness(0.9) contrast(1.04);
 }
 
@@ -1220,7 +1220,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-desire__img {
-        object-position: center 44%;
+        object-position: 54% 44%;
     }
 }
 
@@ -1795,9 +1795,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    /* Светлый текст + тень — иначе бордовый primary теряется на тёмном кадре */
-    color: #fff;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+    color: var(--cinematic-text-light);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
 .hero-slider .slide--circles .hero-slide2-eyebrow-text {
@@ -1810,8 +1809,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     min-width: 20px;
     height: 2px;
     min-height: 2px;
-    background: rgba(255, 240, 245, 0.92);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+    background: var(--cinematic-text-light);
+    box-shadow: none;
     flex-shrink: 0;
 }
 
@@ -1996,23 +1995,24 @@ body.hero-slide-1 .header:not(.scrolled) {
     display: flex;
     align-items: center;
     gap: clamp(8px, 1.5vw, 15px);
-    color: var(--cinematic-text-lighter);
+    color: #ffffff;
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .indicator.active {
-    color: white;
+    color: #ffffff;
 }
 
 .indicator.active .indicator-number {
-    color: var(--color-primary);
+    color: #ffffff;
 }
 
 .indicator-number {
     font-family: var(--font-luxury);
     font-weight: 700;
     font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    color: inherit;
     transition: var(--transition-fast);
 }
 
@@ -2020,6 +2020,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     font-size: clamp(0.7rem, 1.5vw, 0.9rem);
     text-transform: uppercase;
     letter-spacing: 2px;
+    color: inherit;
 }
 
 .slider-progress {
@@ -3739,15 +3740,15 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-circles__img {
         object-fit: cover !important;
-        object-position: center 30% !important;
-        transform: translateY(3vh) scale(1.03) !important;
+        object-position: center 44% !important;
+        transform: translateY(11vh) scale(1.04) !important;
         transform-origin: center center !important;
     }
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: center 38% !important;
-        transform: translateY(10vh) scale(1.06) !important;
+        object-position: 58% 42% !important;
+        transform: translateY(5vh) scale(1.04) !important;
         transform-origin: center center !important;
     }
 
@@ -3879,8 +3880,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     .hero-slider .slide--circles .hero-slide2-eyebrow {
         flex-wrap: wrap;
         row-gap: 6px;
-        color: #fff;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+        color: var(--cinematic-text-light);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
         font-size: clamp(0.68rem, 3.1vw, 0.86rem);
         letter-spacing: 0.18em;
         min-height: 1.6em;
@@ -3890,7 +3891,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide--circles .hero-slide2-eyebrow-line {
-        background: rgba(255, 240, 245, 0.88);
+        background: var(--cinematic-text-light);
     }
 
     .hero-slider .slide--circles .hero-slide2-lead {
