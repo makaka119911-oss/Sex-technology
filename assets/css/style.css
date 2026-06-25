@@ -1575,19 +1575,37 @@ body.hero-slide-1 .header:not(.scrolled) {
     /* Слайд 3: как слайд 1 — блок у низа, без наложения с «Листайте вниз» */
     .hero-slider .slide--desire .slide-content.slide-content--desire {
         align-items: stretch;
-        justify-content: flex-start;
-        flex-direction: column;
+        justify-content: flex-end;
         height: 100%;
         padding-left: clamp(16px, 3vw, 28px);
         padding-right: max(clamp(168px, 14vw, 220px), calc((100vw - 1320px) / 2 + 168px));
-        padding-top: clamp(64px, 7vh, 96px);
         padding-bottom: calc(var(--hero-cta-from-bottom) + 8px);
         box-sizing: border-box;
     }
 
-    .hero-slider .slide--desire .hero-slide3-top {
-        align-self: flex-start;
-        margin-top: clamp(8px, 2vh, 24px);
+    .hero-slider .slide--desire .slide-text--desire {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .hero-slider .slide--desire .luxury-title-wrapper--desire {
+        max-width: 100%;
+        margin: 0;
+        padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 28px) clamp(16px, 2.2vw, 24px);
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    .hero-slider .slide--desire .luxury-title {
+        font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+        line-height: 1.12;
+    }
+
+    .hero-slider .slide--desire .luxury-title:last-of-type {
+        font-size: clamp(2.35rem, 4.6vw, 3.45rem);
+        letter-spacing: 0.06em;
+        margin-top: 0.12em;
     }
 
     .hero-slider .slide--desire .slide-desire-bottom {
@@ -1595,7 +1613,6 @@ body.hero-slide-1 .header:not(.scrolled) {
         max-width: min(100%, 520px);
         margin-left: auto;
         margin-right: auto;
-        margin-top: auto;
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -4338,20 +4355,52 @@ body.hero-slide-1 .header:not(.scrolled) {
         padding-bottom: 0;
     }
 
-    .hero-slider .slide--desire .hero-slide3-top {
-        position: absolute;
-        top: calc(env(safe-area-inset-top, 0px) + clamp(92px, 17vw, 118px));
-        left: max(14px, env(safe-area-inset-left, 0px));
-        right: max(14px, env(safe-area-inset-right, 0px));
-        padding-right: clamp(88px, 20vw, 148px);
-        z-index: 3;
-        max-width: none;
+    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title-wrapper {
+        align-self: center;
+        text-align: center;
+        padding: 7px 10px 10px;
+        margin-bottom: 2px;
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(90, 0, 23, 0.4) 42%,
+            rgba(128, 0, 32, 0.46) 100%
+        );
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 12px;
+        border: 1px solid rgba(178, 34, 52, 0.4);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
+        max-width: min(100%, 420px);
     }
 
-    .hero-slider .slide--desire .hero-slide3-lead {
-        font-size: clamp(1.02rem, 4.1vw, 1.28rem);
-        line-height: 1.42;
-        padding: clamp(12px, 3vw, 16px) clamp(14px, 3.5vw, 18px);
+    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title {
+        font-size: clamp(0.92rem, 3.95vw, 1.22rem);
+        line-height: 1.2;
+        letter-spacing: 0.05em;
+        text-align: center;
+        margin-bottom: 0.1rem;
+    }
+
+    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .hero-slider .slide--minimal.slide--desire .luxury-title-wrapper {
+        max-width: min(100%, 480px);
+        padding: clamp(12px, 3.2vw, 18px) clamp(14px, 3.8vw, 22px) clamp(14px, 3.8vw, 22px);
+        border-radius: 14px;
+    }
+
+    .hero-slider .slide--minimal.slide--desire .luxury-title {
+        font-size: clamp(1.05rem, 4.6vw, 1.38rem);
+        line-height: 1.18;
+    }
+
+    .hero-slider .slide--minimal.slide--desire .luxury-title:last-of-type {
+        font-size: clamp(1.48rem, 7.2vw, 2.25rem);
+        letter-spacing: 0.07em;
+        margin-top: 0.14em;
     }
 
     .hero-slider .slide--intro .luxury-title-wrapper--intro-hero {
@@ -4422,12 +4471,16 @@ body.hero-slide-1 .header:not(.scrolled) {
         bottom: var(--hero-cta-from-bottom);
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         width: auto;
         max-width: min(100%, 400px);
         margin-left: auto;
         margin-right: auto;
         gap: clamp(6px, 1.8vw, 10px);
+    }
+
+    .hero-slider .slide--desire .luxury-title-wrapper--desire {
+        margin-bottom: 0;
     }
 
     .hero-slider .slide--desire .slide-buttons--desire-foot {
@@ -5309,8 +5362,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 .hero-slider .slide .slide-description,
 .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
 .hero-slider .slide--circles .hero-slide2-eyebrow,
-.hero-slider .slide--circles .hero-slide2-lead,
-.hero-slider .slide--desire .hero-slide3-lead {
+.hero-slider .slide--circles .hero-slide2-lead {
     opacity: 0;
     transform: translateY(18px);
 }
@@ -5326,8 +5378,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 .hero-slider .slide.active .slide-description,
 .hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
 .hero-slider .slide--circles.active .hero-slide2-eyebrow,
-.hero-slider .slide--circles.active .hero-slide2-lead,
-.hero-slider .slide--desire.active .hero-slide3-lead {
+.hero-slider .slide--circles.active .hero-slide2-lead {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -5344,11 +5395,12 @@ body.hero-slide-1 .header:not(.scrolled) {
 .hero-slider .slide--intro.active .slide-buttons--intro-foot,
 .hero-slider .slide--desire.active .slide-buttons--desire-foot {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: 220ms;
+    animation-delay: 270ms;
 }
 
-.hero-slider .slide--desire.active .hero-slide3-lead {
-    animation-delay: 80ms;
+.hero-slider .slide--desire.active .luxury-title-wrapper--desire {
+    animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 140ms;
 }
 
 @keyframes heroItemReveal {
@@ -5468,16 +5520,10 @@ body.hero-slide-1 .header:not(.scrolled) {
     .hero-slider .slide .slide-description,
     .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
     .hero-slider .slide--circles .hero-slide2-eyebrow,
-    .hero-slider .slide--circles .hero-slide2-lead,
-    .hero-slider .slide--desire .hero-slide3-lead {
+    .hero-slider .slide--circles .hero-slide2-lead {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
-    }
-
-    .hero-slider .slide--desire .hero-slide3-lead--wow::after {
-        animation: none !important;
-        opacity: 0 !important;
     }
 
     .hero-slider .slide--desire.active .slide-hero-desire__img {
