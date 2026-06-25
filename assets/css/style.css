@@ -2972,6 +2972,56 @@ body.hero-slide-1 .header:not(.scrolled) {
     border-color: rgba(60, 160, 90, 0.35);
 }
 
+.event-doors--keys {
+    grid-template-columns: 1fr;
+}
+
+.event-door--sensorium {
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+.event-door--reflex {
+    border-color: rgba(128, 0, 32, 0.45);
+}
+
+.event-door--sound {
+    border-color: rgba(90, 140, 200, 0.4);
+}
+
+.event-door--flame {
+    border-color: rgba(220, 90, 40, 0.45);
+}
+
+.event-desc--lead {
+    font-weight: 600;
+    color: var(--gold-medium);
+    margin-top: 8px;
+}
+
+.event-desc--highlight {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.event-desc--price {
+    color: var(--gold-light);
+    font-weight: 500;
+}
+
+.event-desc--contacts {
+    margin-bottom: 8px;
+}
+
+.event-contact-link {
+    color: var(--gold-medium);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.event-contact-link:hover {
+    color: var(--gold-light);
+}
+
 @media (min-width: 992px) {
     .event-featured-layout {
         grid-template-columns: minmax(280px, 42%) 1fr;
@@ -2988,6 +3038,10 @@ body.hero-slide-1 .header:not(.scrolled) {
     .event-doors {
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
+    }
+
+    .event-doors--keys {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
