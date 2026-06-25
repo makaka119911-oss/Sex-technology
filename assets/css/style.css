@@ -3747,7 +3747,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: 56% 44% !important;
+        object-position: 59% 44% !important;
         transform: translateY(10vh) scale(1.06) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
