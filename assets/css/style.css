@@ -1331,7 +1331,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-desire__img {
     object-fit: cover;
-    object-position: 51% 38%;
+    object-position: center 40%;
     filter: brightness(0.9) contrast(1.04);
 }
 
@@ -1345,7 +1345,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-desire__img {
-        object-position: 51% 42%;
+        object-position: center 42%;
     }
 }
 
@@ -1575,12 +1575,19 @@ body.hero-slide-1 .header:not(.scrolled) {
     /* Слайд 3: как слайд 1 — блок у низа, без наложения с «Листайте вниз» */
     .hero-slider .slide--desire .slide-content.slide-content--desire {
         align-items: stretch;
-        justify-content: flex-end;
+        justify-content: flex-start;
+        flex-direction: column;
         height: 100%;
         padding-left: clamp(16px, 3vw, 28px);
         padding-right: max(clamp(168px, 14vw, 220px), calc((100vw - 1320px) / 2 + 168px));
+        padding-top: clamp(64px, 7vh, 96px);
         padding-bottom: calc(var(--hero-cta-from-bottom) + 8px);
         box-sizing: border-box;
+    }
+
+    .hero-slider .slide--desire .hero-slide3-top {
+        align-self: flex-start;
+        margin-top: clamp(8px, 2vh, 24px);
     }
 
     .hero-slider .slide--desire .slide-desire-bottom {
@@ -1588,36 +1595,12 @@ body.hero-slide-1 .header:not(.scrolled) {
         max-width: min(100%, 520px);
         margin-left: auto;
         margin-right: auto;
+        margin-top: auto;
         display: flex;
         flex-direction: column;
         align-items: stretch;
         gap: clamp(14px, 2.2vh, 22px);
         z-index: 4;
-    }
-
-    .hero-slider .slide--desire .slide-text--desire {
-        padding: 0;
-        margin: 0;
-        width: 100%;
-    }
-
-    .hero-slider .slide--desire .luxury-title-wrapper--desire {
-        max-width: 100%;
-        margin: 0;
-        padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 28px) clamp(16px, 2.2vw, 24px);
-        border-radius: 16px;
-        text-align: center;
-    }
-
-    .hero-slider .slide--desire .luxury-title {
-        font-size: clamp(1.85rem, 3.2vw, 2.65rem);
-        line-height: 1.12;
-    }
-
-    .hero-slider .slide--desire .luxury-title:last-of-type {
-        font-size: clamp(2.35rem, 4.6vw, 3.45rem);
-        letter-spacing: 0.06em;
-        margin-top: 0.12em;
     }
 
     .hero-slider .slide--desire .slide-buttons--desire-foot {
@@ -1946,6 +1929,109 @@ body.hero-slide-1 .header:not(.scrolled) {
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.94);
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+}
+
+/* Слайд 3 «Свобода» — одна надпись сверху */
+.hero-slider .slide--desire .hero-slide3-top {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    align-self: stretch;
+    width: 100%;
+    max-width: min(calc(100% - clamp(100px, 22vw, 180px)), 460px);
+    padding-right: clamp(0px, 2vw, 12px);
+    box-sizing: border-box;
+}
+
+.hero-slider .slide--desire .hero-slide3-lead {
+    margin: 0;
+    padding: clamp(14px, 2vw, 20px) clamp(16px, 2.4vw, 24px);
+    max-width: 100%;
+    font-family: var(--font-luxury);
+    font-size: clamp(1.05rem, 2vw, 1.42rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.48;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+    color: rgba(255, 248, 242, 0.97);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+    border-left: 3px solid var(--gold-medium);
+    border-radius: 0 clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px) 0;
+    background: linear-gradient(
+        105deg,
+        rgba(0, 0, 0, 0.42) 0%,
+        rgba(70, 10, 35, 0.28) 55%,
+        rgba(0, 0, 0, 0.18) 100%
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.12),
+        0 10px 32px rgba(0, 0, 0, 0.28);
+}
+
+.hero-slider .slide--desire .hero-slide3-lead--wow {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-slider .slide--desire .hero-slide3-lead--wow::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -120%;
+    width: 45%;
+    height: 220%;
+    background: linear-gradient(
+        102deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 232, 177, 0.22) 50%,
+        rgba(255, 255, 255, 0) 60%,
+        transparent 100%
+    );
+    transform: translate3d(-120%, 0, 0) rotate(12deg);
+    pointer-events: none;
+    animation: hero-slide3-lead-shimmer 5.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hero-slide3-lead-shimmer {
+    0%,
+    62% {
+        transform: translate3d(-120%, 0, 0) rotate(12deg);
+        opacity: 0;
+    }
+    72% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(320%, 0, 0) rotate(12deg);
+        opacity: 0;
+    }
+}
+
+.hero-slider .slide--desire.active .slide-hero-desire__img {
+    animation: heroDesireKenBurns 14s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+    .hero-slider .slide--desire.active .slide-hero-desire__img {
+        animation: none;
+    }
+}
+
+@keyframes heroDesireKenBurns {
+    from {
+        transform: scale(1.04);
+    }
+    to {
+        transform: scale(1.09);
+    }
+}
+
+.hero-slider .slide--desire .slide-desire-bottom--solo {
+    margin-top: auto;
 }
 
 /* Мобилка: нижняя зона слайда 2 — как слайд 3, блок у низа слайда */
@@ -4012,7 +4098,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: 51% 44% !important;
+        object-position: center 42% !important;
         transform: translateY(10vh) scale(1.06) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
@@ -4252,53 +4338,20 @@ body.hero-slide-1 .header:not(.scrolled) {
         padding-bottom: 0;
     }
 
-    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title-wrapper {
-        align-self: center;
-        text-align: center;
-        padding: 7px 10px 10px;
-        margin-bottom: 2px;
-        background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.2) 0%,
-            rgba(90, 0, 23, 0.4) 42%,
-            rgba(128, 0, 32, 0.46) 100%
-        );
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 12px;
-        border: 1px solid rgba(178, 34, 52, 0.4);
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
-        max-width: min(100%, 420px);
+    .hero-slider .slide--desire .hero-slide3-top {
+        position: absolute;
+        top: calc(env(safe-area-inset-top, 0px) + clamp(92px, 17vw, 118px));
+        left: max(14px, env(safe-area-inset-left, 0px));
+        right: max(14px, env(safe-area-inset-right, 0px));
+        padding-right: clamp(88px, 20vw, 148px);
+        z-index: 3;
+        max-width: none;
     }
 
-    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title {
-        font-size: clamp(0.92rem, 3.95vw, 1.22rem);
-        line-height: 1.2;
-        letter-spacing: 0.05em;
-        text-align: center;
-        margin-bottom: 0.1rem;
-    }
-
-    .hero-slider .slide--minimal:not(.slide--intro) .luxury-title:last-of-type {
-        margin-bottom: 0;
-    }
-
-    /* Слайд 3: крупнее плашка и строки — после общих правил minimal, иначе перебиваются */
-    .hero-slider .slide--minimal.slide--desire .luxury-title-wrapper {
-        max-width: min(100%, 480px);
-        padding: clamp(12px, 3.2vw, 18px) clamp(14px, 3.8vw, 22px) clamp(14px, 3.8vw, 22px);
-        border-radius: 14px;
-    }
-
-    .hero-slider .slide--minimal.slide--desire .luxury-title {
-        font-size: clamp(1.05rem, 4.6vw, 1.38rem);
-        line-height: 1.18;
-    }
-
-    .hero-slider .slide--minimal.slide--desire .luxury-title:last-of-type {
-        font-size: clamp(1.48rem, 7.2vw, 2.25rem);
-        letter-spacing: 0.07em;
-        margin-top: 0.14em;
+    .hero-slider .slide--desire .hero-slide3-lead {
+        font-size: clamp(1.02rem, 4.1vw, 1.28rem);
+        line-height: 1.42;
+        padding: clamp(12px, 3vw, 16px) clamp(14px, 3.5vw, 18px);
     }
 
     .hero-slider .slide--intro .luxury-title-wrapper--intro-hero {
@@ -4369,7 +4422,7 @@ body.hero-slide-1 .header:not(.scrolled) {
         bottom: var(--hero-cta-from-bottom);
         display: flex;
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         width: auto;
         max-width: min(100%, 400px);
         margin-left: auto;
@@ -4377,27 +4430,23 @@ body.hero-slide-1 .header:not(.scrolled) {
         gap: clamp(6px, 1.8vw, 10px);
     }
 
-    .hero-slider .slide--desire .luxury-title-wrapper--desire {
-        margin-bottom: 0;
-    }
-
     .hero-slider .slide--desire .slide-buttons--desire-foot {
         position: static !important;
         flex-direction: row !important;
-        flex-wrap: nowrap !important;
+        justify-content: center !important;
         width: 100%;
-        max-width: min(360px, 94vw);
+        max-width: min(240px, 72vw);
         gap: 8px;
     }
 
     .hero-slider .slide--desire .slide-buttons--desire-foot .btn-hero {
-        flex: 1 1 calc(50% - 4px) !important;
-        width: auto !important;
-        max-width: none !important;
+        flex: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
         min-width: 0 !important;
-        font-size: clamp(0.68rem, 2vw, 0.8rem);
-        padding-left: 8px;
-        padding-right: 8px;
+        font-size: clamp(0.76rem, 2.2vw, 0.86rem);
+        padding-left: 14px;
+        padding-right: 14px;
     }
 
     .hero-slider.hero-mobile-layout--bottom {
@@ -5260,7 +5309,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 .hero-slider .slide .slide-description,
 .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
 .hero-slider .slide--circles .hero-slide2-eyebrow,
-.hero-slider .slide--circles .hero-slide2-lead {
+.hero-slider .slide--circles .hero-slide2-lead,
+.hero-slider .slide--desire .hero-slide3-lead {
     opacity: 0;
     transform: translateY(18px);
 }
@@ -5276,7 +5326,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 .hero-slider .slide.active .slide-description,
 .hero-slider .slide.active .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
 .hero-slider .slide--circles.active .hero-slide2-eyebrow,
-.hero-slider .slide--circles.active .hero-slide2-lead {
+.hero-slider .slide--circles.active .hero-slide2-lead,
+.hero-slider .slide--desire.active .hero-slide3-lead {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -5293,12 +5344,11 @@ body.hero-slide-1 .header:not(.scrolled) {
 .hero-slider .slide--intro.active .slide-buttons--intro-foot,
 .hero-slider .slide--desire.active .slide-buttons--desire-foot {
     animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: 270ms;
+    animation-delay: 220ms;
 }
 
-.hero-slider .slide--desire.active .luxury-title-wrapper--desire {
-    animation: heroItemReveal 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: 140ms;
+.hero-slider .slide--desire.active .hero-slide3-lead {
+    animation-delay: 80ms;
 }
 
 @keyframes heroItemReveal {
@@ -5418,10 +5468,20 @@ body.hero-slide-1 .header:not(.scrolled) {
     .hero-slider .slide .slide-description,
     .hero-slider .slide .slide-buttons:not(.slide-buttons--intro-foot):not(.slide-buttons--desire-foot),
     .hero-slider .slide--circles .hero-slide2-eyebrow,
-    .hero-slider .slide--circles .hero-slide2-lead {
+    .hero-slider .slide--circles .hero-slide2-lead,
+    .hero-slider .slide--desire .hero-slide3-lead {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .hero-slider .slide--desire .hero-slide3-lead--wow::after {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+
+    .hero-slider .slide--desire.active .slide-hero-desire__img {
+        animation: none !important;
     }
 
     .hero-slider .slide--intro .slide-buttons--intro-foot,
