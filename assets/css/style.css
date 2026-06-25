@@ -4664,6 +4664,11 @@ body.hero-slide-1 .header:not(.scrolled) {
         box-sizing: border-box;
     }
 
+    /* Слайд 1: три строки в плашке — рельсу чуть выше, чем на 2–3 (заголовок не ужимаем) */
+    .hero-slider:has(.slide--intro.active) {
+        --hero-mobile-ui-rail: calc(var(--hero-cta-from-bottom) + clamp(186px, 32vh, 256px));
+    }
+
     .hero-slider .slider-indicators .indicator {
         width: auto;
         flex-direction: column;
