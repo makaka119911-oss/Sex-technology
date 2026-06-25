@@ -1220,7 +1220,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-desire__img {
-        object-position: 54% 44%;
+        object-position: 48% 42%;
     }
 }
 
@@ -1995,17 +1995,17 @@ body.hero-slide-1 .header:not(.scrolled) {
     display: flex;
     align-items: center;
     gap: clamp(8px, 1.5vw, 15px);
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.75);
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .indicator.active {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .indicator.active .indicator-number {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .indicator-number {
@@ -3747,8 +3747,8 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: 58% 42% !important;
-        transform: translateY(5vh) scale(1.04) !important;
+        object-position: 44% 38% !important;
+        transform: translate(-7vw, 6vh) scale(1.04) !important;
         transform-origin: center center !important;
     }
 
