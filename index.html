@@ -29,13 +29,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-41" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-41" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-42" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-42" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-41">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-41">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-42">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-42">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-mobile-crop-fix">
@@ -54,7 +54,7 @@
             }
             .hero-slider .slide-hero-desire__img {
                 object-fit: cover !important;
-                object-position: 59% 44% !important;
+                object-position: center 44% !important;
                 transform: translateY(10vh) scale(1.06) !important;
                 transform-origin: center center !important;
                 min-width: 100% !important;
@@ -336,7 +336,7 @@
                         <picture class="slide-hero-picture">
                             <img
                                 class="slide-hero-desire__img"
-                                src="assets/images/slaid3.jpg?v=20260625-center"
+                                src="assets/images/slaid3.jpg?v=20260625-center-v2"
                                 alt="Свобода — разрешить себе желать"
                                 width="1080"
                                 height="1350"
@@ -1006,6 +1006,8 @@
                             <h3 class="event-title">Мистерия чувственности и сексуальности</h3>
                             <p class="event-desc event-desc--hosts">Ведущие: Татьяна Солнечная и Виктория Румянцева</p>
                             <p class="event-desc">Это не откровение, а возвращение — к той версии себя, которая говорила на языке вздохов, понимала шёпот кожи и помнила, как цвести, подобно цветку.</p>
+
+                            <div class="event-body-more mobile-collapsible-item is-collapsed-mobile">
                             <p class="event-desc">Путь от головы — к телу. От вопросов «как должно быть» — к тихому удивлению: «А что, если вот так?». От ожидания финала — к бесконечному, сладкому процессу.</p>
                             <p class="event-desc event-desc--lead">Четыре ключа, которые мы повернём вместе:</p>
 
@@ -1030,9 +1032,18 @@
 
                             <p class="event-desc">Эта встреча — про то, чтобы перестать искать вовне то, что уже цветёт в самой глубине. Про разрешение на наслаждение, на игру, на ту самую дикую, тихую, настоящую нежность к себе.</p>
                             <p class="event-desc event-desc--highlight">Это не тренинг. Это — посвящение себе-чувствующей, себе-страстной, себе-целостной.</p>
+                            <p class="event-desc">Ждём тебя в кругу доверия, тепла и трансформации. Где единственное, что требуется, — смелость чувствовать.</p>
+                            </div>
+
+                            <div class="mobile-collapsible-toggle mobile-collapsible-toggle--events">
+                                <button type="button" class="btn btn-secondary" data-target="#events" data-items=".event-body-more" data-expand-label="Читать полностью" data-collapse-label="Свернуть" aria-expanded="false">
+                                    <span>Читать полностью</span>
+                                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
                             <p class="event-desc event-desc--price">3000 ₽ — входит трансфер, еда, материалы для практик. Подарки для каждой участницы.</p>
                             <p class="event-desc event-desc--contacts">Запись: <a href="https://t.me/ViktoriaRum" class="event-contact-link" target="_blank" rel="noopener noreferrer">@ViktoriaRum</a> · <a href="https://t.me/Tan4ik77G" class="event-contact-link" target="_blank" rel="noopener noreferrer">@Tan4ik77G</a></p>
-                            <p class="event-desc">Ждём тебя в кругу доверия, тепла и трансформации. Где единственное, что требуется, — смелость чувствовать.</p>
 
                             <a href="#contact" class="btn btn-primary event-cta">
                                 <span>Записаться на событие</span>

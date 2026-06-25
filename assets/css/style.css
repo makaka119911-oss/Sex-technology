@@ -62,6 +62,7 @@
     --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-cinematic: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-btn: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out, filter 0.2s ease-out;
+    --transition-form: border-color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
 
     /* Поверхности (dark UI — make-interfaces-feel-better) */
     --shadow-surface-dark: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 10px rgba(0, 0, 0, 0.32);
@@ -513,7 +514,7 @@ img {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: clamp(12px, 2vw, 16px) clamp(24px, 3vw, 32px);
+    padding: clamp(12px, 2vw, 16px) clamp(26px, 3.2vw, 34px) clamp(12px, 2vw, 16px) clamp(24px, 3vw, 32px);
     border-radius: var(--radius-lg);
     font-family: var(--font-body);
     font-weight: 600;
@@ -528,6 +529,10 @@ img {
 
 .btn:active:not([disabled]) {
     transform: scale(0.96);
+}
+
+.btn:has(> i:last-child) {
+    padding-right: clamp(20px, 2.5vw, 28px);
 }
 
 .btn i {
@@ -1236,7 +1241,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-desire__img {
-        object-position: 48% 42%;
+        object-position: center 42%;
     }
 }
 
@@ -2422,20 +2427,20 @@ body.hero-slide-1 .header:not(.scrolled) {
 .level-card {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(128, 0, 32, 0.2);
+    border: none;
     border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-surface-dark);
     overflow: hidden;
-    transition: var(--transition-cinematic);
+    transition: box-shadow 0.25s ease-out, transform 0.25s ease-out;
 }
 
 .level-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-surface-dark-hover), var(--shadow-lg);
 }
 
 .level-featured {
-    border: 2px solid var(--color-primary);
+    box-shadow: 0 0 0 1px rgba(128, 0, 32, 0.55), var(--shadow-surface-dark);
     position: relative;
     overflow: hidden;
 }
@@ -2633,7 +2638,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 .level-duration {
     background: rgba(128, 0, 32, 0.1);
     padding: 20px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     margin-bottom: 25px;
     border-left: 3px solid var(--color-primary);
 }
@@ -3086,6 +3091,14 @@ body.hero-slide-1 .header:not(.scrolled) {
     color: var(--gold-light);
 }
 
+.mobile-collapsible-toggle--events {
+    margin: 8px 0 20px;
+}
+
+.event-body-more:not(.is-collapsed-mobile) + .mobile-collapsible-toggle--events {
+    margin-top: 4px;
+}
+
 @media (min-width: 992px) {
     .event-featured-layout {
         grid-template-columns: minmax(280px, 42%) 1fr;
@@ -3162,16 +3175,17 @@ body.hero-slide-1 .header:not(.scrolled) {
 .testimonial-content {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(128, 0, 32, 0.2);
+    border: none;
     border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-surface-dark);
     padding: clamp(35px, 5vw, 50px) clamp(25px, 4vw, 40px);
     position: relative;
-    transition: var(--transition-slow);
+    transition: box-shadow 0.25s ease-out, transform 0.25s ease-out;
 }
 
 .testimonial-content:hover {
-    border-color: var(--color-primary);
-    transform: translateY(-5px);
+    box-shadow: var(--shadow-surface-dark-hover);
+    transform: translateY(-4px);
 }
 
 .quote-icon {
@@ -3195,6 +3209,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     color: var(--cinematic-text);
     margin-bottom: 30px;
     line-height: 1.7;
+    text-wrap: pretty;
 }
 
 .client-info h4 {
@@ -3218,24 +3233,43 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .testimonial-prev,
 .testimonial-next {
+    position: relative;
     width: 45px;
     height: 45px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
     border-radius: 50%;
     color: white;
     font-size: 16px;
     cursor: pointer;
-    transition: var(--transition-fast);
+    box-shadow: var(--shadow-surface-dark);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.testimonial-prev::after,
+.testimonial-next::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+}
+
 .testimonial-prev:hover,
 .testimonial-next:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--color-primary-light);
+    box-shadow: var(--shadow-surface-dark-hover);
+}
+
+.testimonial-prev:active,
+.testimonial-next:active {
+    transform: scale(0.96);
 }
 
 .testimonial-dots {
@@ -3244,18 +3278,29 @@ body.hero-slide-1 .header:not(.scrolled) {
 }
 
 .testimonial-dot {
+    position: relative;
     width: 10px;
     height: 10px;
     background: rgba(255, 255, 255, 0.2);
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.testimonial-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
 }
 
 .testimonial-dot.active {
     background: var(--color-primary);
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
 /* ===== КОНТАКТЫ ===== */
@@ -3335,8 +3380,9 @@ body.hero-slide-1 .header:not(.scrolled) {
 .contact-form {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(128, 0, 32, 0.2);
+    border: none;
     border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-surface-dark);
     padding: clamp(30px, 4vw, 40px) clamp(20px, 3vw, 30px);
 }
 
@@ -3364,20 +3410,24 @@ body.hero-slide-1 .header:not(.scrolled) {
     width: 100%;
     padding: 15px 20px;
     background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
     font-family: var(--font-body);
     font-size: clamp(14px, 1.5vw, 15px);
     color: white;
-    transition: var(--transition-fast);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    transition: var(--transition-form);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
-    background: rgba(0, 0, 0, 0.8);
+    border-color: var(--color-primary-light);
+    background: rgba(0, 0, 0, 0.85);
+    box-shadow:
+        0 0 0 3px rgba(128, 0, 32, 0.28),
+        0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .form-group textarea {
@@ -3865,7 +3915,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: 59% 44% !important;
+        object-position: center 44% !important;
         transform: translateY(10vh) scale(1.06) !important;
         transform-origin: center center !important;
         min-width: 100% !important;

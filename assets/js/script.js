@@ -1283,7 +1283,12 @@ function initMobileCollapsibleSections() {
             wrapper.style.display = 'flex';
             const expanded = btn.getAttribute('aria-expanded') === 'true';
             items.forEach((item) => item.classList.toggle('is-collapsed-mobile', !expanded));
-            btn.querySelector('span').textContent = expanded ? 'Свернуть' : 'Показать ещё';
+            const expandLabel = btn.getAttribute('data-expand-label') || 'Показать ещё';
+            const collapseLabel = btn.getAttribute('data-collapse-label') || 'Свернуть';
+            const labelEl = btn.querySelector('span');
+            if (labelEl) {
+                labelEl.textContent = expanded ? collapseLabel : expandLabel;
+            }
         });
     };
 
