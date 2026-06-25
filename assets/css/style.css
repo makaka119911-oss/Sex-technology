@@ -16,6 +16,19 @@
     --gold-medium: #D4AF37;
     --gold-dark: #B8860B;
     --gold-gradient: linear-gradient(135deg, var(--gold-light), var(--gold-medium), var(--gold-dark));
+
+    /* Hero: тёплое золотое стекло под заголовками (слайды 1–3) */
+    --hero-gold-glass-bg: linear-gradient(
+        155deg,
+        rgba(255, 232, 177, 0.32) 0%,
+        rgba(212, 175, 55, 0.18) 42%,
+        rgba(42, 24, 10, 0.14) 100%
+    );
+    --hero-gold-glass-ring: rgba(255, 232, 177, 0.22);
+    --hero-gold-glass-shadow:
+        0 0 0 1px var(--hero-gold-glass-ring),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 10px 32px rgba(0, 0, 0, 0.24);
     
     /* Кинематографические оттенки */
     --cinematic-dark: #000000;
@@ -221,6 +234,14 @@ img {
     margin-bottom: clamp(20px, 4vw, 30px);
 }
 
+.hero-slider .luxury-title-wrapper {
+    background: var(--hero-gold-glass-bg);
+    border: none;
+    box-shadow: var(--hero-gold-glass-shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
 /* Слайд 1: декоративная обводка под первой строкой заголовка (все hero-слайды) */
 .hero-slider .luxury-title-divider {
     display: flex;
@@ -246,8 +267,8 @@ img {
         transparent 100%
     );
     box-shadow:
-        0 0 10px rgba(212, 175, 55, 0.28),
-        0 1px 0 rgba(178, 34, 52, 0.35);
+        0 0 10px rgba(212, 175, 55, 0.32),
+        0 1px 0 rgba(255, 232, 177, 0.18);
 }
 
 .hero-slider .luxury-title-divider__gem {
@@ -256,7 +277,7 @@ img {
     height: 7px;
     transform: rotate(45deg);
     border: 1px solid rgba(255, 232, 177, 0.88);
-    background: linear-gradient(135deg, rgba(128, 0, 32, 0.55), rgba(178, 34, 52, 0.35));
+    background: linear-gradient(135deg, rgba(255, 232, 177, 0.72), rgba(212, 175, 55, 0.48));
     box-shadow:
         0 0 12px rgba(212, 175, 55, 0.45),
         inset 0 0 4px rgba(255, 232, 177, 0.35);
@@ -594,53 +615,67 @@ img {
 }
 
 .hero-slider .slide-buttons .btn-hero--ghost {
-    background: rgba(0, 0, 0, 0.42);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(
+        165deg,
+        rgba(255, 232, 177, 0.12) 0%,
+        rgba(0, 0, 0, 0.38) 52%,
+        rgba(0, 0, 0, 0.48) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: none;
-    color: rgba(255, 255, 255, 0.96);
+    color: rgba(255, 248, 240, 0.97);
+    transition: var(--transition-btn);
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 2px 10px rgba(0, 0, 0, 0.28);
+        0 0 0 1px rgba(212, 175, 55, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 3px 14px rgba(0, 0, 0, 0.26);
 }
 
 .hero-slider .slide-buttons .btn-hero--ghost:hover {
-    background: rgba(0, 0, 0, 0.52);
+    background: linear-gradient(
+        165deg,
+        rgba(255, 232, 177, 0.18) 0%,
+        rgba(0, 0, 0, 0.44) 52%,
+        rgba(0, 0, 0, 0.54) 100%
+    );
     box-shadow:
-        0 0 0 1px rgba(212, 175, 55, 0.38),
-        0 4px 14px rgba(0, 0, 0, 0.34);
+        0 0 0 1px rgba(255, 232, 177, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 5px 18px rgba(0, 0, 0, 0.32);
 }
 
 .hero-slider .slide-buttons .btn-hero--primary {
     background: linear-gradient(
         165deg,
-        rgba(255, 232, 177, 0.16) 0%,
-        rgba(128, 0, 32, 0.28) 42%,
-        rgba(50, 8, 22, 0.44) 100%
+        rgba(255, 232, 177, 0.26) 0%,
+        rgba(212, 175, 55, 0.16) 40%,
+        rgba(32, 16, 8, 0.36) 100%
     );
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: none;
-    color: rgba(255, 245, 238, 0.98);
+    color: rgba(255, 248, 235, 0.98);
     font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+    transition: var(--transition-btn);
     box-shadow:
-        0 0 0 1px rgba(212, 175, 55, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 2px 12px rgba(0, 0, 0, 0.2);
+        0 0 0 1px rgba(255, 232, 177, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.22);
 }
 
 .hero-slider .slide-buttons .btn-hero--primary:hover {
     background: linear-gradient(
         165deg,
-        rgba(255, 232, 177, 0.22) 0%,
-        rgba(128, 0, 32, 0.34) 42%,
-        rgba(50, 8, 22, 0.52) 100%
+        rgba(255, 232, 177, 0.34) 0%,
+        rgba(212, 175, 55, 0.22) 40%,
+        rgba(32, 16, 8, 0.44) 100%
     );
     box-shadow:
-        0 0 0 1px rgba(212, 175, 55, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 4px 14px rgba(0, 0, 0, 0.26);
+        0 0 0 1px rgba(255, 232, 177, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 6px 20px rgba(0, 0, 0, 0.28);
 }
 
 .hero-slider .slide-buttons .btn-hero:active:not([disabled]) {
@@ -1423,16 +1458,6 @@ body.hero-slide-1 .header:not(.scrolled) {
         margin-bottom: clamp(12px, 2vw, 20px);
         padding: clamp(12px, 1.8vw, 18px) clamp(14px, 2vw, 22px);
         border-radius: 14px;
-        background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.28) 0%,
-            rgba(80, 0, 20, 0.38) 45%,
-            rgba(128, 0, 32, 0.4) 100%
-        );
-        border: 1px solid rgba(178, 34, 52, 0.35);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        box-shadow: 0 10px 36px rgba(0, 0, 0, 0.28);
     }
 
     .hero-slider .slide-subtitle {
@@ -1518,8 +1543,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider__line {
         height: 2px;
         box-shadow:
-            0 0 14px rgba(212, 175, 55, 0.32),
-            0 1px 0 rgba(178, 34, 52, 0.42);
+            0 0 14px rgba(212, 175, 55, 0.36),
+            0 1px 0 rgba(255, 232, 177, 0.2);
     }
 
     .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider__gem {
@@ -4242,7 +4267,7 @@ body.hero-slide-1 .header:not(.scrolled) {
         align-self: stretch;
         max-width: none;
         width: 100%;
-        padding-right: clamp(96px, 34vw, 148px);
+        padding-right: max(14px, env(safe-area-inset-right, 0px));
         box-sizing: border-box;
     }
 
@@ -4360,17 +4385,7 @@ body.hero-slide-1 .header:not(.scrolled) {
         text-align: center;
         padding: 7px 10px 10px;
         margin-bottom: 2px;
-        background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.2) 0%,
-            rgba(90, 0, 23, 0.4) 42%,
-            rgba(128, 0, 32, 0.46) 100%
-        );
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
         border-radius: 12px;
-        border: 1px solid rgba(178, 34, 52, 0.4);
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
         max-width: min(100%, 420px);
     }
 
@@ -4415,17 +4430,7 @@ body.hero-slide-1 .header:not(.scrolled) {
         align-items: center;
         gap: 0.12rem;
         box-sizing: border-box;
-        background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.22) 0%,
-            rgba(90, 0, 23, 0.42) 42%,
-            rgba(128, 0, 32, 0.48) 100%
-        );
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
         border-radius: 12px;
-        border: 1px solid rgba(178, 34, 52, 0.42);
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.24);
     }
 
     .hero-slider .slide--intro .luxury-title-wrapper--intro-hero .luxury-title-divider {
@@ -4535,22 +4540,12 @@ body.hero-slide-1 .header:not(.scrolled) {
         margin-bottom: 0.15rem;
     }
 
-    /* Золотой текст без изменений; за ним — полупрозрачный бордовый фон (слайды 2–3 и общий вид) */
+    /* Золотое стекло под заголовками — см. --hero-gold-glass-* и .hero-slider .luxury-title-wrapper */
     .hero-slider .luxury-title-wrapper {
         padding: 8px 12px 10px;
         margin-bottom: 6px;
         gap: 0.2rem;
         border-radius: 12px;
-        background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.22) 0%,
-            rgba(90, 0, 23, 0.42) 42%,
-            rgba(128, 0, 32, 0.48) 100%
-        );
-        border: 1px solid rgba(178, 34, 52, 0.42);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
     }
 
     .hero-slider .slide-subtitle {
@@ -4638,9 +4633,46 @@ body.hero-slide-1 .header:not(.scrolled) {
         display: none;
     }
     
-    /* Индикаторы 01–03: правый верх под шапкой (базовые правила у .slider-indicators) */
+    /* Индикаторы 01–03: горизонтально над CTA, не перекрывают текст на картинке */
+    .hero-slider .slider-indicators {
+        top: auto;
+        bottom: calc(var(--hero-cta-from-bottom) + clamp(195px, 36vh, 260px));
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(12px, 3.8vw, 22px);
+        max-width: calc(100% - 20px);
+        z-index: 4;
+        opacity: 1;
+    }
+
     .hero-slider .slider-indicators .indicator {
-        justify-content: flex-end;
+        width: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        opacity: 0.68;
+    }
+
+    .hero-slider .slider-indicators .indicator.active {
+        opacity: 1;
+    }
+
+    .hero-slider .slider-indicators .indicator.active .indicator-number {
+        color: var(--gold-light);
+    }
+
+    .hero-slider .slider-indicators .indicator-number {
+        font-size: clamp(0.58rem, 2.2vw, 0.7rem);
+    }
+
+    .hero-slider .slider-indicators .indicator-title {
+        font-size: clamp(0.54rem, 2vw, 0.64rem);
+        letter-spacing: 0.1em;
     }
     
     /* Улучшаем читаемость */

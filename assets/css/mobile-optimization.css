@@ -271,8 +271,8 @@ button {
     }
     
     .slider-controls,
-    .slider-indicators {
-        opacity: 0.7;
+    .hero-slider .slider-indicators {
+        opacity: 1;
     }
     
     /* Оптимизация для слайдера на мобильных */
