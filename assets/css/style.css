@@ -4706,6 +4706,10 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
     
     /* Индикаторы 01–03: прямо над золотыми надписями, по центру */
+    .hero-slider {
+        --hero-mobile-ui-rail: calc(var(--hero-cta-from-bottom) + clamp(118px, 21.5vh, 176px));
+    }
+
     .hero-slider .slider-indicators {
         top: auto;
         bottom: var(--hero-mobile-ui-rail);
