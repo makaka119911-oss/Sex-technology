@@ -1860,10 +1860,15 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 /* ===== Desktop hero alignment fix (comp1/2/3 only on ПК) ===== */
 @media (min-width: 769px) {
+    .hero-slider {
+        --hero-desktop-ui-rail: calc(var(--hero-cta-from-bottom) + clamp(128px, 16vh, 170px));
+    }
+
     /* Кадрируем desktop-изображения мягче, чтобы фигуры читались целиком */
     .hero-slider .slide-hero-generated__img {
-        object-position: center 30%;
-        transform: none !important;
+        object-position: center 38%;
+        transform: translateY(22px) scale(1.015) !important;
+        transform-origin: center center;
     }
 
     .hero-slider .slide-hero-circles__img {
@@ -1878,8 +1883,13 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     /* Слайд 1: блок заголовка/кнопки в нижней безопасной зоне */
     .hero-slider .slide--intro .slide-intro-bottom {
-        bottom: calc(var(--hero-cta-from-bottom) + 4px);
+        bottom: calc(var(--hero-cta-from-bottom) + 2px);
         width: min(92vw, 560px);
+    }
+
+    .hero-slider .slide--intro .luxury-title {
+        font-size: clamp(2.05rem, 4.05vw, 3.05rem);
+        line-height: 1.06;
     }
 
     /* Слайд 2: верхний инфоблок и нижний title-блок балансируем по кадру */
@@ -1914,9 +1924,54 @@ body.hero-slide-1 .header:not(.scrolled) {
         max-width: min(100%, 560px);
     }
 
-    /* Стрелки: визуально по центру hero-кадра (с учётом fixed header) */
+    /* Убираем desktop-подсказку скролла */
+    .hero-slider .scroll-indicator.desktop-only {
+        display: none !important;
+    }
+
+    /* Индикаторы + стрелки как на мобиле: рельса снизу по центру */
+    .hero-slider .slider-indicators {
+        top: auto;
+        bottom: var(--hero-desktop-ui-rail);
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(14px, 2.1vw, 28px);
+        max-width: min(640px, calc(100% - 240px));
+        z-index: 5;
+    }
+
+    .hero-slider .slider-indicators .indicator {
+        width: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        opacity: 0.72;
+    }
+
+    .hero-slider .slider-indicators .indicator.active {
+        opacity: 1;
+    }
+
     .hero-slider .slider-controls {
-        top: 54%;
+        top: auto;
+        bottom: calc(var(--hero-desktop-ui-rail) - 2px);
+        left: 0;
+        right: 0;
+        width: 100%;
+        transform: none;
+        padding-left: clamp(22px, 4vw, 56px);
+        padding-right: clamp(22px, 4vw, 56px);
+        box-sizing: border-box;
+    }
+
+    /* Стрелки: визуально в одной линии с индикаторами */
+    .hero-slider .slider-controls {
+        align-items: center;
     }
 }
 
