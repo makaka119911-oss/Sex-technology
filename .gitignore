@@ -15,3 +15,7 @@ my-clone/.env.test.local
 my-clone/.env.production.local
 my-clone/*.tsbuildinfo
 my-clone/next-env.d.ts
+
+# Оптимизация картинок (корень сайта)
+node_modules/
+assets/images/_originals/

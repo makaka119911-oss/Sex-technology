@@ -1,0 +1,224 @@
+/**
+ * Сжатие картинок для сексология.com (Sex-technology).
+ * Оригиналы → assets/images/_originals/ (один раз, локально).
+ *
+ * npm run images:optimize
+ * npm run images:optimize -- slaid321.jpg
+ * npm run images:optimize:dry
+ */
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+const IMAGES_DIR = path.join(ROOT, 'assets', 'images');
+const ORIGINALS_DIR = path.join(IMAGES_DIR, '_originals');
+
+const EXT = new Set(['.jpg', '.jpeg', '.png', '.webp']);
+const SKIP_MIN_BYTES = 90 * 1024; // hero уже ~90 KB — не трогаем без --all
+
+const args = process.argv.slice(2);
+const dryRun = args.includes('--dry-run');
+const forceAll = args.includes('--all');
+const fileArgs = args.filter((a) => !a.startsWith('--'));
+
+function getProfile(relPath, nameLower) {
+  const inEvents = relPath.startsWith(`events${path.sep}`) || relPath.startsWith('events/');
+
+  if (
+    /^slaid/.test(nameLower) ||
+    nameLower.startsWith('hero-slide') ||
+    nameLower.startsWith('hero-presentation') ||
+    nameLower.includes('gpt-image') ||
+    nameLower.includes('gemini-')
+  ) {
+    return { kind: 'hero', maxWidth: 1200, quality: 86, pngCompression: 9 };
+  }
+
+  if (inEvents || nameLower.startsWith('afisha')) {
+    return { kind: 'event', maxWidth: 1400, quality: 84, pngCompression: 9 };
+  }
+
+  if (
+    nameLower.startsWith('9c4a') ||
+    nameLower.startsWith('img_') ||
+    nameLower.includes('галере') ||
+    nameLower.includes('выпуск') ||
+    nameLower.includes('татьян') ||
+    nameLower.includes('виктор') ||
+    nameLower.includes('румян') ||
+    nameLower.includes('солнеч') ||
+    /^\d{4}-\d{2}-\d{2}/.test(nameLower) ||
+    nameLower.startsWith('photo_')
+  ) {
+    return { kind: 'gallery', maxWidth: 1600, quality: 82, pngCompression: 9 };
+  }
+
+  if (nameLower.startsWith('slide-') && nameLower.endsWith('.png')) {
+    return { kind: 'legacy', maxWidth: 1400, quality: 85, pngCompression: 9 };
+  }
+
+  return { kind: 'default', maxWidth: 1400, quality: 83, pngCompression: 9 };
+}
+
+async function walk(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === '_originals' || entry.name === 'node_modules') continue;
+      files.push(...(await walk(full)));
+      continue;
+    }
+    const ext = path.extname(entry.name).toLowerCase();
+    if (EXT.has(ext)) files.push(full);
+  }
+
+  return files;
+}
+
+async function backupOriginal(absPath, relFromImages) {
+  const dest = path.join(ORIGINALS_DIR, relFromImages);
+  await fs.mkdir(path.dirname(dest), { recursive: true });
+  try {
+    await fs.access(dest);
+  } catch {
+    await fs.copyFile(absPath, dest);
+  }
+}
+
+async function optimizeFile(absPath) {
+  const relFromImages = path.relative(IMAGES_DIR, absPath);
+  const nameLower = path.basename(absPath).toLowerCase();
+  const stat = await fs.stat(absPath);
+
+  if (!forceAll && stat.size < SKIP_MIN_BYTES) {
+    return { relFromImages, skipped: true, reason: 'already-small' };
+  }
+
+  const profile = getProfile(relFromImages, nameLower);
+  const input = await fs.readFile(absPath);
+  const image = sharp(input, { failOn: 'none' });
+  const meta = await image.metadata();
+  const ext = path.extname(absPath).toLowerCase();
+
+  let pipeline = image.rotate();
+  const needsResize = meta.width && meta.width > profile.maxWidth;
+
+  if (needsResize) {
+    pipeline = pipeline.resize({
+      width: profile.maxWidth,
+      withoutEnlargement: true,
+      fit: 'inside',
+    });
+  }
+
+  let output;
+  if (ext === '.png') {
+    output = await pipeline
+      .png({ compressionLevel: profile.pngCompression, adaptiveFiltering: true })
+      .toBuffer();
+  } else if (ext === '.webp') {
+    output = await pipeline.webp({ quality: profile.quality, effort: 4 }).toBuffer();
+  } else {
+    output = await pipeline
+      .jpeg({ quality: profile.quality, mozjpeg: true, progressive: true })
+      .toBuffer();
+  }
+
+  const saved = stat.size - output.length;
+  const savedPct = Math.round((saved / stat.size) * 100);
+
+  if (!forceAll && saved < 8 * 1024 && !needsResize) {
+    return { relFromImages, skipped: true, reason: 'no-meaningful-savings' };
+  }
+
+  if (dryRun) {
+    return {
+      relFromImages,
+      profile: profile.kind,
+      before: stat.size,
+      after: output.length,
+      saved,
+      savedPct,
+      resized: needsResize,
+      dryRun: true,
+    };
+  }
+
+  await backupOriginal(absPath, relFromImages);
+  await fs.writeFile(absPath, output);
+
+  return {
+    relFromImages,
+    profile: profile.kind,
+    before: stat.size,
+    after: output.length,
+    saved,
+    savedPct,
+    resized: needsResize,
+  };
+}
+
+function formatKb(bytes) {
+  return `${Math.round(bytes / 1024)} KB`;
+}
+
+async function main() {
+  let files;
+  if (fileArgs.length) {
+    files = fileArgs.map((f) => path.resolve(IMAGES_DIR, f));
+  } else {
+    files = await walk(IMAGES_DIR);
+  }
+
+  console.log(`\n🖼  optimize-images — ${files.length} file(s)${dryRun ? ' [dry-run]' : ''}\n`);
+
+  let totalBefore = 0;
+  let totalAfter = 0;
+  let optimized = 0;
+  let skipped = 0;
+
+  for (const absPath of files) {
+    try {
+      const result = await optimizeFile(absPath);
+      if (result.skipped) {
+        skipped += 1;
+        console.log(`  skip  ${result.relFromImages} (${result.reason})`);
+        continue;
+      }
+
+      optimized += 1;
+      totalBefore += result.before;
+      totalAfter += result.after;
+      const tag = result.dryRun ? 'would' : 'ok';
+      console.log(
+        `  ${tag}  ${result.relFromImages} [${result.profile}] ${formatKb(result.before)} → ${formatKb(result.after)} (−${result.savedPct}%)${result.resized ? ' resize' : ''}`,
+      );
+    } catch (err) {
+      console.error(`  ERR   ${path.relative(IMAGES_DIR, absPath)}: ${err.message}`);
+    }
+  }
+
+  console.log('\n---');
+  console.log(`Optimized: ${optimized}, skipped: ${skipped}`);
+  if (optimized > 0) {
+    const totalSaved = totalBefore - totalAfter;
+    console.log(
+      `Total: ${formatKb(totalBefore)} → ${formatKb(totalAfter)} (saved ${formatKb(totalSaved)}, −${Math.round((totalSaved / totalBefore) * 100)}%)`,
+    );
+  }
+  if (!dryRun && optimized > 0) {
+    console.log(`\nОригиналы (бэкап): assets/images/_originals/`);
+  }
+  console.log('');
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
