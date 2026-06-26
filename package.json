@@ -7,7 +7,8 @@
     "images:optimize:all": "node scripts/optimize-images.mjs --all",
     "images:optimize:dry": "node scripts/optimize-images.mjs --dry-run",
     "images:webp": "node scripts/optimize-images.mjs --webp-only",
-    "images:picture-html": "node scripts/wrap-index-pictures.mjs"
+    "images:picture-html": "node scripts/wrap-index-pictures.mjs",
+    "og:generate": "node scripts/generate-og-share.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.5"
