@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-84" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-84" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-85" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-85" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-84">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-84">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-85">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-85">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -94,12 +94,13 @@
                 --hero-d3-scale: 1;
 
                 /* Слайд 1: заголовок/кнопка */
-                --hero-d1-title-size: clamp(2.05rem, 4.05vw, 3.05rem);
+                --hero-d1-title-size: clamp(1.72rem, 3.25vw, 2.55rem);
+                --hero-d1-block-max-width: min(92vw, 760px);
                 --hero-d1-bottom-shift: 56px;
                 --hero-d1-about-nudge-y: 0px;
 
                 /* Рельса индикаторов + стрелок (как на мобиле, но для ПК) */
-                --hero-desktop-ui-rail: calc(env(safe-area-inset-bottom, 0px) + 0px);
+                --hero-desktop-ui-rail: calc(env(safe-area-inset-bottom, 0px) + 14px);
                 --hero-desktop-controls-shift: 0px;
 
                 /* Доп. подстройка блока слайда 2 */
@@ -127,10 +128,12 @@
             .hero-slider .slide--intro .luxury-title {
                 font-size: var(--hero-d1-title-size) !important;
                 line-height: 1.06 !important;
+                white-space: nowrap !important;
             }
 
             .hero-slider .slide--intro .slide-intro-bottom {
                 bottom: calc(var(--hero-cta-from-bottom) + var(--hero-d1-bottom-shift)) !important;
+                width: var(--hero-d1-block-max-width) !important;
             }
 
             .hero-slider .slide--intro .slide-buttons--intro-foot {
@@ -264,7 +267,7 @@
                     indicators.style.setProperty('position', 'absolute', 'important');
                     indicators.style.setProperty('top', 'auto', 'important');
                     indicators.style.setProperty('right', '0', 'important');
-                    indicators.style.setProperty('bottom', '0', 'important');
+                    indicators.style.setProperty('bottom', '14px', 'important');
                     indicators.style.setProperty('left', '0', 'important');
                     indicators.style.setProperty('width', 'min(640px, calc(100% - 160px))', 'important');
                     indicators.style.setProperty('margin-left', 'auto', 'important');
@@ -277,7 +280,7 @@
                     controls.style.setProperty('position', 'absolute', 'important');
                     controls.style.setProperty('top', 'auto', 'important');
                     controls.style.setProperty('right', '0', 'important');
-                    controls.style.setProperty('bottom', '0', 'important');
+                    controls.style.setProperty('bottom', '14px', 'important');
                     controls.style.setProperty('left', '0', 'important');
                     controls.style.setProperty('width', '100%', 'important');
                     controls.style.setProperty('transform', 'none', 'important');
@@ -291,11 +294,16 @@
 
                 if (introBottom) {
                     introBottom.style.setProperty('bottom', 'calc(var(--hero-cta-from-bottom) + 56px)', 'important');
+                    introBottom.style.setProperty('width', 'min(92vw, 760px)', 'important');
                 }
 
                 if (aboutBtnWrap) {
                     aboutBtnWrap.style.setProperty('transform', 'translateY(0)', 'important');
                 }
+
+                document.querySelectorAll('.hero-slider .slide--intro .luxury-title').forEach((titleEl) => {
+                    titleEl.style.setProperty('white-space', 'nowrap', 'important');
+                });
             };
 
             document.addEventListener('DOMContentLoaded', applyDesktopHeroForceLayout);
