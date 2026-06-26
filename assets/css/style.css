@@ -1858,6 +1858,68 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 }
 
+/* ===== Desktop hero alignment fix (comp1/2/3 only on ПК) ===== */
+@media (min-width: 769px) {
+    /* Кадрируем desktop-изображения мягче, чтобы фигуры читались целиком */
+    .hero-slider .slide-hero-generated__img {
+        object-position: center 30%;
+        transform: none !important;
+    }
+
+    .hero-slider .slide-hero-circles__img {
+        object-position: center 34%;
+        transform: none !important;
+    }
+
+    .hero-slider .slide-hero-desire__img {
+        object-position: center 34%;
+        transform: none !important;
+    }
+
+    /* Слайд 1: блок заголовка/кнопки в нижней безопасной зоне */
+    .hero-slider .slide--intro .slide-intro-bottom {
+        bottom: calc(var(--hero-cta-from-bottom) + 4px);
+        width: min(92vw, 560px);
+    }
+
+    /* Слайд 2: верхний инфоблок и нижний title-блок балансируем по кадру */
+    .hero-slider .slide--circles .hero-slide2-top {
+        margin-top: clamp(4px, 1.2vh, 14px);
+        max-width: min(430px, 34vw);
+    }
+
+    .hero-slider .slide--circles .slide-text--circles {
+        max-width: min(560px, 48vw);
+    }
+
+    /* Слайд 3: заголовок ниже шапки, кнопка в одной плоскости с остальными слайдами */
+    .hero-slider .slide--desire .slide-content.slide-content--desire {
+        padding-top: clamp(96px, 12vh, 138px);
+        padding-bottom: calc(var(--hero-cta-from-bottom) + 10px);
+    }
+
+    .hero-slider .slide--desire .slide-desire-bottom {
+        bottom: calc(var(--hero-cta-from-bottom) + 6px);
+        width: min(100%, 560px);
+        max-width: min(100%, 560px);
+    }
+
+    .hero-slider .slide--desire .slide-text--desire {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-slider .slide--desire .luxury-title-wrapper--desire {
+        max-width: min(100%, 560px);
+    }
+
+    /* Стрелки: визуально по центру hero-кадра (с учётом fixed header) */
+    .hero-slider .slider-controls {
+        top: 54%;
+    }
+}
+
 .slide-content {
     position: relative;
     height: 100%;
