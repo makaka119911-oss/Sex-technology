@@ -134,8 +134,8 @@ button {
 
     .hero-slider .slide-hero-desire__img {
         object-fit: cover !important;
-        object-position: 45% 36% !important;
-        transform: translate(-3.8vw, 8vh) scale(1.07) !important;
+        object-position: center 38% !important;
+        transform: translateY(2vh) scale(1.03) !important;
         transform-origin: center center !important;
         min-width: 100% !important;
         min-height: 100% !important;
