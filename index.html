@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-83" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-83" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-84" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-84" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-83">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-83">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-84">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-84">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -243,6 +243,65 @@
             }
         }
     </style>
+    <script>
+        (function () {
+            const applyDesktopHeroForceLayout = () => {
+                if (!window.matchMedia('(min-width: 769px)').matches) {
+                    return;
+                }
+
+                const hero = document.querySelector('.hero-slider');
+                const indicators = document.querySelector('.hero-slider .slider-indicators');
+                const controls = document.querySelector('.hero-slider .slider-controls');
+                const introBottom = document.querySelector('.hero-slider .slide--intro .slide-intro-bottom');
+                const aboutBtnWrap = document.querySelector('.hero-slider .slide--intro .slide-buttons--intro-foot');
+
+                if (hero) {
+                    hero.style.setProperty('--hero-desktop-ui-rail', 'calc(env(safe-area-inset-bottom, 0px) + 0px)');
+                }
+
+                if (indicators) {
+                    indicators.style.setProperty('position', 'absolute', 'important');
+                    indicators.style.setProperty('top', 'auto', 'important');
+                    indicators.style.setProperty('right', '0', 'important');
+                    indicators.style.setProperty('bottom', '0', 'important');
+                    indicators.style.setProperty('left', '0', 'important');
+                    indicators.style.setProperty('width', 'min(640px, calc(100% - 160px))', 'important');
+                    indicators.style.setProperty('margin-left', 'auto', 'important');
+                    indicators.style.setProperty('margin-right', 'auto', 'important');
+                    indicators.style.setProperty('transform', 'none', 'important');
+                    indicators.style.setProperty('z-index', '9', 'important');
+                }
+
+                if (controls) {
+                    controls.style.setProperty('position', 'absolute', 'important');
+                    controls.style.setProperty('top', 'auto', 'important');
+                    controls.style.setProperty('right', '0', 'important');
+                    controls.style.setProperty('bottom', '0', 'important');
+                    controls.style.setProperty('left', '0', 'important');
+                    controls.style.setProperty('width', '100%', 'important');
+                    controls.style.setProperty('transform', 'none', 'important');
+                    controls.style.setProperty('padding-left', 'clamp(18px, 3vw, 44px)', 'important');
+                    controls.style.setProperty('padding-right', 'clamp(18px, 3vw, 44px)', 'important');
+                    controls.style.setProperty('box-sizing', 'border-box', 'important');
+                    controls.style.setProperty('justify-content', 'space-between', 'important');
+                    controls.style.setProperty('align-items', 'center', 'important');
+                    controls.style.setProperty('z-index', '10', 'important');
+                }
+
+                if (introBottom) {
+                    introBottom.style.setProperty('bottom', 'calc(var(--hero-cta-from-bottom) + 56px)', 'important');
+                }
+
+                if (aboutBtnWrap) {
+                    aboutBtnWrap.style.setProperty('transform', 'translateY(0)', 'important');
+                }
+            };
+
+            document.addEventListener('DOMContentLoaded', applyDesktopHeroForceLayout);
+            window.addEventListener('resize', applyDesktopHeroForceLayout);
+        })();
+    </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
