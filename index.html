@@ -26,16 +26,16 @@
     <!-- Предзагрузка шрифтов -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-59" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-59" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-61" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-61" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-59">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-59">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-61">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-61">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-mobile-crop-fix">
@@ -230,7 +230,16 @@
                         <picture class="slide-hero-picture">
                             <source
                                 media="(min-width: 769px)"
+                                type="image/webp"
+                                srcset="assets/images/gemini-2.5-flash-image_exquisite_high_fashion_photography_of_Wide_cinematic_website_hero_banner_16_9_ul-0.webp?v=hero-desktop"
+                            >
+                            <source
+                                media="(min-width: 769px)"
                                 srcset="assets/images/gemini-2.5-flash-image_exquisite_high_fashion_photography_of_Wide_cinematic_website_hero_banner_16_9_ul-0.jpg?v=hero-desktop"
+                            >
+                            <source
+                                type="image/webp"
+                                srcset="assets/images/slaid11.webp?v=20260624-slaid11"
                             >
                             <img
                                 class="slide-hero-generated__img"
@@ -277,6 +286,10 @@
                 <div class="slide slide--circles" data-slide="2">
                     <div class="slide-background slide-hero-circles" aria-hidden="true">
                         <picture class="slide-hero-picture">
+                            <source
+                                type="image/webp"
+                                srcset="assets/images/slaid22.webp?v=20260624-slaid22"
+                            >
                             <img
                                 class="slide-hero-circles__img"
                                 src="assets/images/slaid22.jpg?v=20260624-slaid22"
@@ -334,6 +347,10 @@
                 <div class="slide slide--minimal slide--desire" data-slide="3">
                     <div class="slide-background slide-hero-desire" aria-hidden="true">
                         <picture class="slide-hero-picture">
+                            <source
+                                type="image/webp"
+                                srcset="assets/images/slaid321.webp?v=20260625-slaid321"
+                            >
                             <img
                                 class="slide-hero-desire__img"
                                 src="assets/images/slaid321.jpg?v=20260625-slaid321"
@@ -471,7 +488,10 @@
                     <!-- Эксперт 1 -->
                     <article class="expert-card">
                         <div class="expert-image">
-                            <img src="assets/images/Татьяны Солнечной.jpg" alt="Татьяна Солнечная - психолог, сексолог" loading="lazy" decoding="async" class="lazy-load">
+                            <picture>
+                                <source srcset="assets/images/Татьяны Солнечной.webp" type="image/webp">
+                                <img src="assets/images/Татьяны Солнечной.jpg" alt="Татьяна Солнечная - психолог, сексолог" loading="lazy" decoding="async" class="lazy-load">
+                            </picture>
                             <div class="expert-overlay">
                                 <div class="social-links">
                                     <a href="https://t.me/Tan4ik77G" target="_blank" aria-label="Telegram Татьяны Солнечной" rel="noopener noreferrer">
@@ -505,7 +525,10 @@
                     <!-- Эксперт 2 -->
                     <article class="expert-card">
                         <div class="expert-image">
-                            <img src="assets/images/Фото Виктории РУмянцевой.jpg" alt="Виктория Румянцева - психолог, сексолог" loading="lazy" decoding="async" class="lazy-load">
+                            <picture>
+                                <source srcset="assets/images/Фото Виктории РУмянцевой.webp" type="image/webp">
+                                <img src="assets/images/Фото Виктории РУмянцевой.jpg" alt="Виктория Румянцева - психолог, сексолог" loading="lazy" decoding="async" class="lazy-load">
+                            </picture>
                             <div class="expert-overlay">
                                 <div class="social-links">
                                     <a href="https://t.me/ViktoriaRum" target="_blank" aria-label="Telegram Виктории Румянцевой" rel="noopener noreferrer">
@@ -760,7 +783,10 @@
                     </div>
                     
                     <div class="circles-image">
-                        <img src="assets/images/галерея3.jpg" alt="Женский круг - поддерживающая встреча" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/галерея3.webp" type="image/webp">
+                            <img src="assets/images/галерея3.jpg" alt="Женский круг - поддерживающая встреча" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="image-decoration" aria-hidden="true">
                             <div class="decoration-circle circle-1"></div>
                             <div class="decoration-circle circle-2"></div>
@@ -782,7 +808,10 @@
                 
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="assets/images/9C4A0002.jpg" alt="Бра и кристаллы — тёплый свет в зале" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0002.webp" type="image/webp">
+                            <img src="assets/images/9C4A0002.jpg" alt="Бра и кристаллы — тёплый свет в зале" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -791,7 +820,10 @@
                     </div>
                     
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/галерея2.jpg" alt="Уютное пространство для терапии" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/галерея2.webp" type="image/webp">
+                            <img src="assets/images/галерея2.jpg" alt="Уютное пространство для терапии" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -800,7 +832,10 @@
                     </div>
                     
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/галерея3.jpg" alt="Интерьер терапевтического кабинета" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/галерея3.webp" type="image/webp">
+                            <img src="assets/images/галерея3.jpg" alt="Интерьер терапевтического кабинета" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -809,7 +844,10 @@
                     </div>
                     
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/2025-05-01%2006-50-25%20311119.jpeg" alt="Атмосфера женского круга" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/2025-05-01%2006-50-25%20311119.webp" type="image/webp">
+                            <img src="assets/images/2025-05-01%2006-50-25%20311119.jpeg" alt="Атмосфера женского круга" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -818,7 +856,10 @@
                     </div>
                     
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/выпускницы.jpg" alt="Выпускницы терапевтической программы" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/выпускницы.webp" type="image/webp">
+                            <img src="assets/images/выпускницы.jpg" alt="Выпускницы терапевтической программы" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -827,7 +868,10 @@
                     </div>
                     
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/галерея5.jpg" alt="Терапевтическое пространство для сессий" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/галерея5.webp" type="image/webp">
+                            <img src="assets/images/галерея5.jpg" alt="Терапевтическое пространство для сессий" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -836,7 +880,10 @@
                     </div>
                     
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A0032.jpg" alt="Участница в образе в интерьере пространства" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0032.webp" type="image/webp">
+                            <img src="assets/images/9C4A0032.jpg" alt="Участница в образе в интерьере пространства" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -844,7 +891,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A0097.jpg" alt="У зеркала в терапевтическом пространстве" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0097.webp" type="image/webp">
+                            <img src="assets/images/9C4A0097.jpg" alt="У зеркала в терапевтическом пространстве" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -852,7 +902,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A0992.jpg" alt="Интерьер зала и образ участницы" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0992.webp" type="image/webp">
+                            <img src="assets/images/9C4A0992.jpg" alt="Интерьер зала и образ участницы" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -860,7 +913,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A0012.jpg" alt="Деталь мебели — резьба и декор" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0012.webp" type="image/webp">
+                            <img src="assets/images/9C4A0012.jpg" alt="Деталь мебели — резьба и декор" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -868,7 +924,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A2187.jpg" alt="Свет свечей на встрече" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A2187.webp" type="image/webp">
+                            <img src="assets/images/9C4A2187.jpg" alt="Свет свечей на встрече" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -876,7 +935,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A1105.jpg" alt="Мероприятие в зале" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A1105.webp" type="image/webp">
+                            <img src="assets/images/9C4A1105.jpg" alt="Мероприятие в зале" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -884,7 +946,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A0542.jpg" alt="Пространство для встреч и отдыха" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0542.webp" type="image/webp">
+                            <img src="assets/images/9C4A0542.jpg" alt="Пространство для встреч и отдыха" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -892,7 +957,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A1556.jpg" alt="Атмосфера вечера и мероприятия" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A1556.webp" type="image/webp">
+                            <img src="assets/images/9C4A1556.jpg" alt="Атмосфера вечера и мероприятия" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -900,7 +968,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A2191.jpg" alt="Женский круг — группа участниц" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A2191.webp" type="image/webp">
+                            <img src="assets/images/9C4A2191.jpg" alt="Женский круг — группа участниц" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -908,7 +979,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A2188.jpg" alt="Женский круг — практика вместе" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A2188.webp" type="image/webp">
+                            <img src="assets/images/9C4A2188.jpg" alt="Женский круг — практика вместе" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -916,7 +990,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A1853.jpg" alt="Звук и атмосфера встречи" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A1853.webp" type="image/webp">
+                            <img src="assets/images/9C4A1853.jpg" alt="Звук и атмосфера встречи" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -924,7 +1001,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A0453.jpg" alt="Авторский образ участницы" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A0453.webp" type="image/webp">
+                            <img src="assets/images/9C4A0453.jpg" alt="Авторский образ участницы" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -932,7 +1012,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A1874.jpg" alt="Практика со звуком в зале" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A1874.webp" type="image/webp">
+                            <img src="assets/images/9C4A1874.jpg" alt="Практика со звуком в зале" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -940,7 +1023,10 @@
                         </div>
                     </div>
                     <div class="gallery-item mobile-collapsible-item is-collapsed-mobile">
-                        <img src="assets/images/9C4A1586.jpg" alt="Атмосфера показа в интерьере зала" loading="lazy" decoding="async" class="lazy-load">
+                        <picture>
+                            <source srcset="assets/images/9C4A1586.webp" type="image/webp">
+                            <img src="assets/images/9C4A1586.jpg" alt="Атмосфера показа в интерьере зала" loading="lazy" decoding="async" class="lazy-load">
+                        </picture>
                         <div class="gallery-overlay">
                             <div class="zoom-icon">
                                 <i class="fas fa-search-plus" aria-hidden="true"></i>
@@ -970,15 +1056,21 @@
                 <article class="event-card event-card--featured">
                     <div class="event-featured-layout">
                         <div class="event-poster-wrap">
-                            <img
-                                src="assets/images/events/misteriya-14feb-2026.jpg?v=20260214"
-                                alt="Афиша: Мистерия чувственности и сексуальности — 14 февраля 2026, Немчиновка"
-                                class="event-poster"
-                                width="1080"
-                                height="1350"
-                                loading="lazy"
-                                decoding="async"
-                            >
+                            <picture>
+                                <source
+                                    srcset="assets/images/events/misteriya-14feb-2026.webp?v=20260214"
+                                    type="image/webp"
+                                >
+                                <img
+                                    src="assets/images/events/misteriya-14feb-2026.jpg?v=20260214"
+                                    alt="Афиша: Мистерия чувственности и сексуальности — 14 февраля 2026, Немчиновка"
+                                    class="event-poster"
+                                    width="1080"
+                                    height="1350"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            </picture>
                         </div>
                         <div class="event-featured-body">
                             <div class="event-meta">

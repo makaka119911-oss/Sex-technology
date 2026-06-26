@@ -5,7 +5,9 @@
   "scripts": {
     "images:optimize": "node scripts/optimize-images.mjs",
     "images:optimize:all": "node scripts/optimize-images.mjs --all",
-    "images:optimize:dry": "node scripts/optimize-images.mjs --dry-run"
+    "images:optimize:dry": "node scripts/optimize-images.mjs --dry-run",
+    "images:webp": "node scripts/optimize-images.mjs --webp-only",
+    "images:picture-html": "node scripts/wrap-index-pictures.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.5"
