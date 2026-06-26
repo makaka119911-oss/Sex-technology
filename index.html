@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-82" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-82" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-83" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-83" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-82">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-82">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-83">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-83">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -95,11 +95,11 @@
 
                 /* Слайд 1: заголовок/кнопка */
                 --hero-d1-title-size: clamp(2.05rem, 4.05vw, 3.05rem);
-                --hero-d1-bottom-shift: 2px;
-                --hero-d1-about-nudge-y: -24px;
+                --hero-d1-bottom-shift: 56px;
+                --hero-d1-about-nudge-y: 0px;
 
                 /* Рельса индикаторов + стрелок (как на мобиле, но для ПК) */
-                --hero-desktop-ui-rail: calc(env(safe-area-inset-bottom, 0px) + 2px);
+                --hero-desktop-ui-rail: calc(env(safe-area-inset-bottom, 0px) + 0px);
                 --hero-desktop-controls-shift: 0px;
 
                 /* Доп. подстройка блока слайда 2 */
@@ -158,6 +158,7 @@
                 flex-direction: row !important;
                 align-items: center !important;
                 justify-content: center !important;
+                z-index: 7 !important;
             }
 
             .hero-slider .slider-controls {
@@ -173,6 +174,7 @@
                 box-sizing: border-box !important;
                 justify-content: space-between !important;
                 align-items: center !important;
+                z-index: 8 !important;
             }
         }
     </style>
