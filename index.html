@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-74" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-74" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-75" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-75" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-74">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-74">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-75">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-75">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -67,6 +67,99 @@
         .hero-slider .slide--circles .hero-slide2-eyebrow-line {
             background: linear-gradient(90deg, transparent, rgba(255, 232, 177, 0.88) 18%, rgba(255, 248, 242, 0.96) 50%, rgba(255, 232, 177, 0.88) 82%, transparent) !important;
             box-shadow: 0 0 7px rgba(212, 175, 55, 0.36), 0 1px 4px rgba(0, 0, 0, 0.58) !important;
+        }
+    </style>
+    <style id="hero-desktop-tune">
+        /* ===== ДЕСКТОП-ТЮНИНГ HERO (только ПК, мобилу не трогает) =====
+           Как пользоваться:
+           1) Меняешь цифры ниже
+           2) Сохраняешь файл
+           3) Обновляешь страницу (лучше Ctrl+Shift+R)
+        */
+        @media (min-width: 769px) {
+            :root {
+                /* Слайд 1: фото */
+                --hero-d1-pos-y: 38%;
+                --hero-d1-shift-y: 22px;
+                --hero-d1-scale: 1.015;
+
+                /* Слайд 2: фото */
+                --hero-d2-pos-y: 34%;
+                --hero-d2-shift-y: 0px;
+                --hero-d2-scale: 1;
+
+                /* Слайд 3: фото */
+                --hero-d3-pos-y: 34%;
+                --hero-d3-shift-y: 0px;
+                --hero-d3-scale: 1;
+
+                /* Слайд 1: заголовок/кнопка */
+                --hero-d1-title-size: clamp(2.05rem, 4.05vw, 3.05rem);
+                --hero-d1-bottom-shift: 2px;
+
+                /* Рельса индикаторов + стрелок (как на мобиле, но для ПК) */
+                --hero-desktop-ui-rail: calc(var(--hero-cta-from-bottom) + clamp(128px, 16vh, 170px));
+                --hero-desktop-controls-shift: -2px;
+
+                /* Доп. подстройка блока слайда 2 */
+                --hero-d2-top-shift: clamp(4px, 1.2vh, 14px);
+            }
+
+            .hero-slider .slide-hero-generated__img {
+                object-position: center var(--hero-d1-pos-y) !important;
+                transform: translateY(var(--hero-d1-shift-y)) scale(var(--hero-d1-scale)) !important;
+                transform-origin: center center !important;
+            }
+
+            .hero-slider .slide-hero-circles__img {
+                object-position: center var(--hero-d2-pos-y) !important;
+                transform: translateY(var(--hero-d2-shift-y)) scale(var(--hero-d2-scale)) !important;
+                transform-origin: center center !important;
+            }
+
+            .hero-slider .slide-hero-desire__img {
+                object-position: center var(--hero-d3-pos-y) !important;
+                transform: translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
+                transform-origin: center center !important;
+            }
+
+            .hero-slider .slide--intro .luxury-title {
+                font-size: var(--hero-d1-title-size) !important;
+                line-height: 1.06 !important;
+            }
+
+            .hero-slider .slide--intro .slide-intro-bottom {
+                bottom: calc(var(--hero-cta-from-bottom) + var(--hero-d1-bottom-shift)) !important;
+            }
+
+            .hero-slider .slide--circles .hero-slide2-top {
+                margin-top: var(--hero-d2-top-shift) !important;
+            }
+
+            .hero-slider .scroll-indicator.desktop-only {
+                display: none !important;
+            }
+
+            .hero-slider .slider-indicators {
+                top: auto !important;
+                bottom: var(--hero-desktop-ui-rail) !important;
+                left: 50% !important;
+                right: auto !important;
+                transform: translateX(-50%) !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .hero-slider .slider-controls {
+                top: auto !important;
+                bottom: calc(var(--hero-desktop-ui-rail) + var(--hero-desktop-controls-shift)) !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                transform: none !important;
+                align-items: center !important;
+            }
         }
     </style>
     <style id="hero-mobile-crop-fix">
