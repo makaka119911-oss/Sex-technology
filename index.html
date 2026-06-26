@@ -35,29 +35,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-68" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-68" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-69" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-69" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-68">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-68">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-69">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-69">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
-        .hero-slider .slide--circles .hero-slide2-eyebrow { text-shadow: none; }
+        .hero-slider .slide--circles .hero-slide2-eyebrow { text-shadow: none !important; }
         .hero-slider .slide--circles .hero-slide2-eyebrow-text {
-            color: rgba(255, 248, 242, 0.98);
+            color: #FFE8B1 !important;
+            font-weight: 700 !important;
             text-shadow:
-                0 1px 2px rgba(0, 0, 0, 0.95),
-                0 3px 10px rgba(0, 0, 0, 0.72),
-                0 0 18px rgba(128, 0, 32, 0.42),
-                0 0 36px rgba(90, 0, 23, 0.28),
-                0 0 1px rgba(212, 175, 55, 0.55);
+                0 2px 4px rgba(0, 0, 0, 1),
+                0 4px 14px rgba(0, 0, 0, 0.88),
+                0 0 16px rgba(212, 175, 55, 0.95),
+                0 0 32px rgba(212, 175, 55, 0.55),
+                0 0 48px rgba(128, 0, 32, 0.35) !important;
+            filter:
+                drop-shadow(0 0 6px rgba(212, 175, 55, 0.75))
+                drop-shadow(0 3px 10px rgba(0, 0, 0, 0.9)) !important;
         }
         .hero-slider .slide--circles .hero-slide2-eyebrow-line {
-            background: linear-gradient(90deg, transparent, rgba(255, 232, 177, 0.95) 18%, #fff8f2 50%, rgba(255, 232, 177, 0.95) 82%, transparent);
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(128, 0, 32, 0.22), 0 1px 4px rgba(0, 0, 0, 0.65);
+            background: linear-gradient(90deg, transparent, rgba(255, 232, 177, 0.95) 18%, #fff8f2 50%, rgba(255, 232, 177, 0.95) 82%, transparent) !important;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.65), 0 0 20px rgba(212, 175, 55, 0.35), 0 1px 4px rgba(0, 0, 0, 0.7) !important;
         }
     </style>
     <style id="hero-mobile-crop-fix">
@@ -329,7 +333,7 @@
                         <div class="hero-slide2-top">
                             <div class="hero-slide2-eyebrow">
                                 <span class="hero-slide2-eyebrow-line" aria-hidden="true"></span>
-                                <span class="hero-slide2-eyebrow-text">Женские круги</span>
+                                <span class="hero-slide2-eyebrow-text" style="color:#FFE8B1;font-weight:700;text-shadow:0 2px 4px #000,0 0 18px rgba(212,175,55,.95),0 0 36px rgba(212,175,55,.5)">Женские круги</span>
                                 <span class="hero-slide2-eyebrow-line" aria-hidden="true"></span>
                             </div>
                             <p class="hero-slide2-lead">Тёплые и поддерживающие встречи, где можно делиться страхами, желаниями и быть собой без осуждения.</p>
