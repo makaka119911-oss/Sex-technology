@@ -1828,7 +1828,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide--circles .hero-slide2-lead {
-        font-size: clamp(1.05rem, 1.48vw, 1.2rem);
+        font-size: clamp(0.95rem, 1.32vw, 1.08rem);
         line-height: 1.6;
         text-align: left;
         color: rgba(255, 248, 242, 0.5);
@@ -1963,15 +1963,15 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide--desire.active .slide-hero-desire__img {
-        object-position: center 40%;
-        transform: translateY(52px) scale(1) !important;
+        object-position: 48% 40%;
+        transform: translateX(2.5vw) translateY(52px) scale(1) !important;
         transform-origin: center center;
         animation: none !important;
     }
 
     .hero-slider .slide-hero-desire__img {
-        object-position: center 40%;
-        transform: translateY(52px) !important;
+        object-position: 48% 40%;
+        transform: translateX(2.5vw) translateY(52px) !important;
     }
 
     /* Слайд 1: блок заголовка/кнопки в нижней безопасной зоне */
