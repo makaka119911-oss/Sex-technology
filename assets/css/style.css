@@ -1365,7 +1365,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
 .slide-hero-circles__img {
     object-fit: cover;
-    object-position: 56% 36%;
+    object-position: 64% 36%;
     filter: brightness(0.9) contrast(1.04);
 }
 
@@ -1381,7 +1381,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .slide-hero-circles__img {
-        object-position: 56% 30%;
+        object-position: 64% 30%;
     }
 
     .slide-hero-desire__img {
@@ -1769,7 +1769,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--circles .hero-slide2-top {
         position: absolute;
-        top: calc(var(--header-height) + 6px);
+        top: calc(var(--header-height) + 32px);
         left: clamp(20px, 2.2vw, 32px);
         right: auto;
         z-index: 6;
@@ -1914,7 +1914,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     .hero-slider .slide-hero-circles__img {
-        object-position: 56% 34%;
+        object-position: 64% 34%;
         transform: none !important;
     }
 
