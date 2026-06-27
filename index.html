@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-99" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-99" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-100" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-100" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-99">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-99">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-100">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-100">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -90,10 +90,12 @@
                 --hero-d2-shift-y: 0px;
                 --hero-d2-scale: 1.06;
 
-                /* Слайд 3: фото */
-                --hero-d3-pos-y: 34%;
-                --hero-d3-shift-y: 0px;
+                /* Слайд 3: фото + layout */
                 --hero-d3-scale: 1;
+                --hero-d3-bottom-shift: 56px;
+                --hero-d3-block-max-width: min(92vw, 760px);
+                --hero-d3-pos-y: 40%;
+                --hero-d3-shift-y: 52px;
 
                 /* Слайд 1: заголовок/кнопка */
                 --hero-d1-title-size: clamp(1.72rem, 3.25vw, 2.55rem);
@@ -112,10 +114,9 @@
                 --hero-d2-block-max-width: min(440px, 34vw);
                 --hero-d2-eyebrow-size: clamp(0.88rem, 1.35vw, 1.06rem);
                 --hero-d2-lead-size: clamp(1.05rem, 1.48vw, 1.2rem);
-
-                /* Слайд 3: как слайд 1 — блок по центру над индикаторами */
-                --hero-d3-bottom-shift: 56px;
-                --hero-d3-block-max-width: min(92vw, 760px);
+                --hero-d2-panel-bg-start: rgba(18, 6, 10, 0.31);
+                --hero-d2-panel-bg-end: rgba(72, 12, 32, 0.24);
+                --hero-d2-panel-border: rgba(255, 220, 230, 0.07);
             }
 
             .hero-slider .slide-hero-generated__img {
@@ -135,6 +136,13 @@
                 object-position: center var(--hero-d3-pos-y) !important;
                 transform: translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
                 transform-origin: center center !important;
+            }
+
+            .hero-slider .slide--desire.active .slide-hero-desire__img {
+                object-position: center var(--hero-d3-pos-y) !important;
+                transform: translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
+                transform-origin: center center !important;
+                animation: none !important;
             }
 
             .hero-slider .slide--intro .luxury-title {
@@ -163,6 +171,12 @@
                 max-width: var(--hero-d2-block-max-width) !important;
                 z-index: 6 !important;
                 text-align: left !important;
+                background: linear-gradient(
+                    145deg,
+                    var(--hero-d2-panel-bg-start) 0%,
+                    var(--hero-d2-panel-bg-end) 100%
+                ) !important;
+                border-color: var(--hero-d2-panel-border) !important;
             }
 
             .hero-slider .slide--circles .hero-slide2-eyebrow {
