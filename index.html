@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-101" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-101" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-102" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-102" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-101">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-101">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-102">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-102">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -94,7 +94,9 @@
                 --hero-d3-scale: 1;
                 --hero-d3-bottom-shift: 56px;
                 --hero-d3-block-max-width: min(92vw, 760px);
+                --hero-d3-pos-x: 46%;
                 --hero-d3-pos-y: 40%;
+                --hero-d3-shift-x: 4vw;
                 --hero-d3-shift-y: 52px;
 
                 /* Слайд 1: заголовок/кнопка */
@@ -111,9 +113,10 @@
                 --hero-d2-top-inset: calc(var(--header-height, 76px) + 180px);
                 --hero-d2-left-inset: clamp(20px, 2.2vw, 32px);
                 --hero-d2-bottom-shift: 56px;
-                --hero-d2-block-max-width: min(440px, 34vw);
-                --hero-d2-eyebrow-size: clamp(0.88rem, 1.35vw, 1.06rem);
-                --hero-d2-lead-size: clamp(1.05rem, 1.48vw, 1.2rem);
+                --hero-d2-block-max-width: min(380px, 30vw);
+                --hero-d2-eyebrow-size: clamp(0.82rem, 1.22vw, 0.98rem);
+                --hero-d2-lead-size: clamp(0.95rem, 1.32vw, 1.08rem);
+                --hero-d2-panel-padding: clamp(11px, 1.3vw, 16px) clamp(13px, 1.6vw, 20px);
                 --hero-d2-panel-bg-start: rgba(18, 6, 10, 0.31);
                 --hero-d2-panel-bg-end: rgba(72, 12, 32, 0.24);
                 --hero-d2-panel-border: rgba(255, 220, 230, 0.07);
@@ -135,14 +138,14 @@
             }
 
             .hero-slider .slide-hero-desire__img {
-                object-position: center var(--hero-d3-pos-y) !important;
-                transform: translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
+                object-position: var(--hero-d3-pos-x) var(--hero-d3-pos-y) !important;
+                transform: translateX(var(--hero-d3-shift-x)) translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
                 transform-origin: center center !important;
             }
 
             .hero-slider .slide--desire.active .slide-hero-desire__img {
-                object-position: center var(--hero-d3-pos-y) !important;
-                transform: translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
+                object-position: var(--hero-d3-pos-x) var(--hero-d3-pos-y) !important;
+                transform: translateX(var(--hero-d3-shift-x)) translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
                 transform-origin: center center !important;
                 animation: none !important;
             }
@@ -179,6 +182,8 @@
                     var(--hero-d2-panel-bg-end) 100%
                 ) !important;
                 border-color: var(--hero-d2-panel-border) !important;
+                padding: var(--hero-d2-panel-padding) !important;
+                border-radius: 12px !important;
             }
 
             .hero-slider .slide--circles .hero-slide2-eyebrow {
