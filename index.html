@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-87" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-87" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-88" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-88" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-87">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-87">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-88">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-88">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -104,12 +104,18 @@
                 --hero-desktop-controls-shift: 0px;
 
                 /* Доп. подстройка блока слайда 2 */
-                --hero-d2-side-inset: max(clamp(32px, 4vw, 64px), calc((100vw - 1320px) / 2 + 32px));
-                --hero-d2-top-inset: calc(var(--header-height, 76px) + 10px);
+                --hero-d2-side-inset: clamp(32px, 4vw, 64px);
+                --hero-d2-top-inset: calc(var(--header-height, 76px) + 8px);
                 /* Низ блока с кнопками (выше индикаторов) */
-                --hero-d2-bottom-block: 86px;
+                --hero-d2-bottom-block: 96px;
                 /* Зазор между «Говорить о сексе» и кнопками */
-                --hero-d2-title-buttons-gap: 22px;
+                --hero-d2-title-buttons-gap: 28px;
+            }
+
+            @media (min-width: 1320px) {
+                :root {
+                    --hero-d2-side-inset: calc((100vw - 1320px) / 2 + 32px);
+                }
             }
 
             .hero-slider .slide-hero-generated__img {
@@ -145,6 +151,15 @@
                 transform: translateY(var(--hero-d1-about-nudge-y)) !important;
             }
 
+            /* Слайд 2: сетку отключаем — два absolute-блока по углам */
+            .hero-slider .slide--circles .slide-content.slide-content--circles {
+                display: block !important;
+                position: relative !important;
+                height: 100% !important;
+                padding: 0 !important;
+                text-align: left !important;
+            }
+
             /* Слайд 2: «Женские круги» — верхний левый угол */
             .hero-slider .slide--circles .hero-slide2-top {
                 position: absolute !important;
@@ -152,19 +167,21 @@
                 left: var(--hero-d2-side-inset) !important;
                 right: auto !important;
                 margin: 0 !important;
+                width: min(420px, 34vw) !important;
                 max-width: min(420px, 34vw) !important;
                 z-index: 6 !important;
+                text-align: left !important;
             }
 
-            /* Слайд 2: заголовок + CTA чуть выше индикаторов, в одну линию с верхним блоком */
-            .hero-slider .slide--circles .slide-content.slide-content--circles {
-                position: relative !important;
-                padding-top: 0 !important;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-                padding-bottom: 0 !important;
+            .hero-slider .slide--circles .hero-slide2-eyebrow {
+                justify-content: flex-start !important;
             }
 
+            .hero-slider .slide--circles .hero-slide2-lead {
+                text-align: left !important;
+            }
+
+            /* Слайд 2: заголовок + CTA слева снизу, выше индикаторов */
             .hero-slider .slide--circles .slide-circles-bottom {
                 position: absolute !important;
                 left: var(--hero-d2-side-inset) !important;
@@ -178,11 +195,13 @@
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 text-align: left !important;
-                gap: clamp(12px, 1.8vh, 18px) !important;
+                gap: 0 !important;
                 z-index: 6 !important;
             }
 
             .hero-slider .slide--circles .slide-text--circles {
+                display: flex !important;
+                flex-direction: column !important;
                 align-items: flex-start !important;
                 justify-content: flex-start !important;
                 text-align: left !important;
@@ -194,16 +213,39 @@
             }
 
             .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
-                text-align: left !important;
+                display: flex !important;
+                flex-direction: column !important;
                 align-items: flex-start !important;
+                text-align: left !important;
+                width: 100% !important;
+                margin: 0 0 var(--hero-d2-title-buttons-gap) 0 !important;
+                padding: 0 !important;
+            }
+
+            .hero-slider .slide--circles .slide-text--circles .luxury-title {
+                display: block !important;
+                width: 100% !important;
+                text-align: left !important;
+                margin-bottom: 0.12em !important;
+            }
+
+            .hero-slider .slide--circles .slide-text--circles .luxury-title:last-of-type {
                 margin-bottom: 0 !important;
+            }
+
+            .hero-slider .slide--circles .slide-text--circles .luxury-title-divider {
+                margin-left: 0 !important;
+                margin-right: auto !important;
+                justify-content: flex-start !important;
+                width: min(100%, 300px) !important;
             }
 
             .hero-slider .slide--circles .slide-buttons {
                 justify-content: flex-start !important;
+                align-self: flex-start !important;
                 width: 100% !important;
                 max-width: min(440px, 100%) !important;
-                margin: var(--hero-d2-title-buttons-gap) 0 0 0 !important;
+                margin: 0 !important;
             }
 
             .hero-slider .scroll-indicator.desktop-only {
