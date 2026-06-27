@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-98" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-98" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-99" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-99" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-98">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-98">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-99">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-99">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -106,12 +106,16 @@
                 --hero-desktop-controls-shift: 0px;
 
                 /* Слайд 2: верхний блок — левый верхний угол */
-                --hero-d2-top-inset: calc(var(--header-height, 76px) + 200px);
+                --hero-d2-top-inset: calc(var(--header-height, 76px) + 180px);
                 --hero-d2-left-inset: clamp(20px, 2.2vw, 32px);
                 --hero-d2-bottom-shift: 56px;
                 --hero-d2-block-max-width: min(440px, 34vw);
                 --hero-d2-eyebrow-size: clamp(0.88rem, 1.35vw, 1.06rem);
                 --hero-d2-lead-size: clamp(1.05rem, 1.48vw, 1.2rem);
+
+                /* Слайд 3: как слайд 1 — блок по центру над индикаторами */
+                --hero-d3-bottom-shift: 56px;
+                --hero-d3-block-max-width: min(92vw, 760px);
             }
 
             .hero-slider .slide-hero-generated__img {
@@ -232,6 +236,80 @@
             }
 
             .hero-slider .slide--circles .slide-buttons {
+                justify-content: center !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+            }
+
+            /* Слайд 3: заголовок + кнопка — как слайд 1 */
+            .hero-slider .slide--desire .slide-content.slide-content--desire {
+                display: block !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: none !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .hero-slider .slide--desire .slide-desire-bottom {
+                position: absolute !important;
+                left: 50% !important;
+                right: auto !important;
+                bottom: calc(var(--hero-cta-from-bottom) + var(--hero-d3-bottom-shift)) !important;
+                transform: translateX(-50%) !important;
+                width: var(--hero-d3-block-max-width) !important;
+                max-width: var(--hero-d3-block-max-width) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                text-align: center !important;
+                gap: clamp(14px, 2.2vh, 22px) !important;
+                z-index: 6 !important;
+            }
+
+            .hero-slider .slide--desire .slide-text--desire {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .hero-slider .slide--desire .luxury-title-wrapper--desire {
+                align-items: center !important;
+                text-align: center !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .hero-slider .slide--desire .luxury-title {
+                font-size: var(--hero-d1-title-size) !important;
+                line-height: 1.06 !important;
+                text-align: center !important;
+            }
+
+            .hero-slider .slide--desire .luxury-title:last-of-type {
+                font-size: var(--hero-d1-title-size) !important;
+                letter-spacing: 0.04em !important;
+                margin-top: 0.08em !important;
+            }
+
+            .hero-slider .slide--desire .luxury-title-divider {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                justify-content: center !important;
+            }
+
+            .hero-slider .slide--desire .slide-buttons--desire-foot {
+                position: static !important;
                 justify-content: center !important;
                 width: 100% !important;
                 max-width: 100% !important;
