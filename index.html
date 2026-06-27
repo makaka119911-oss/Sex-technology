@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-92" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-92" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-93" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-93" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-92">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-92">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-93">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-93">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -84,7 +84,8 @@
                 --hero-d1-scale: 1.015;
 
                 /* Слайд 2: фото */
-                --hero-d2-pos-x: 64%;
+                --hero-d2-pos-x: 74%;
+                --hero-d2-shift-x: 32px;
                 --hero-d2-pos-y: 34%;
                 --hero-d2-shift-y: 0px;
                 --hero-d2-scale: 1;
@@ -118,7 +119,7 @@
 
             .hero-slider .slide-hero-circles__img {
                 object-position: var(--hero-d2-pos-x) var(--hero-d2-pos-y) !important;
-                transform: translateY(var(--hero-d2-shift-y)) scale(var(--hero-d2-scale)) !important;
+                transform: translateX(var(--hero-d2-shift-x)) translateY(var(--hero-d2-shift-y)) scale(var(--hero-d2-scale)) !important;
                 transform-origin: center center !important;
             }
 
