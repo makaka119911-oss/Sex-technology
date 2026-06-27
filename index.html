@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-90" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-90" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-91" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-91" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-90">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-90">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-91">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-91">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -84,6 +84,7 @@
                 --hero-d1-scale: 1.015;
 
                 /* Слайд 2: фото */
+                --hero-d2-pos-x: 56%;
                 --hero-d2-pos-y: 34%;
                 --hero-d2-shift-y: 0px;
                 --hero-d2-scale: 1;
@@ -103,8 +104,9 @@
                 --hero-desktop-ui-rail: calc(env(safe-area-inset-bottom, 0px) + 14px);
                 --hero-desktop-controls-shift: 0px;
 
-                /* Слайд 2: верхний блок слева; низ — как слайд 1 */
-                --hero-d2-top-inset: calc(var(--header-height, 76px) + 18px);
+                /* Слайд 2: верхний блок — левый верхний угол */
+                --hero-d2-top-inset: calc(var(--header-height, 76px) + 6px);
+                --hero-d2-left-inset: clamp(20px, 2.2vw, 32px);
                 --hero-d2-bottom-shift: 56px;
             }
 
@@ -115,7 +117,7 @@
             }
 
             .hero-slider .slide-hero-circles__img {
-                object-position: center var(--hero-d2-pos-y) !important;
+                object-position: var(--hero-d2-pos-x) var(--hero-d2-pos-y) !important;
                 transform: translateY(var(--hero-d2-shift-y)) scale(var(--hero-d2-scale)) !important;
                 transform-origin: center center !important;
             }
@@ -141,23 +143,17 @@
                 transform: translateY(var(--hero-d1-about-nudge-y)) !important;
             }
 
-            /* Слайд 2: «Женские круги» — верхний левый угол (как отдельный инфоблок) */
+            /* Слайд 2: «Женские круги» — левый верхний угол */
             .hero-slider .slide--circles .hero-slide2-top {
                 position: absolute !important;
                 top: var(--hero-d2-top-inset) !important;
-                left: clamp(32px, 4vw, 64px) !important;
+                left: var(--hero-d2-left-inset) !important;
                 right: auto !important;
                 margin: 0 !important;
-                width: min(420px, 34vw) !important;
-                max-width: min(420px, 34vw) !important;
+                width: min(400px, 32vw) !important;
+                max-width: min(400px, 32vw) !important;
                 z-index: 6 !important;
                 text-align: left !important;
-            }
-
-            @media (min-width: 1320px) {
-                .hero-slider .slide--circles .hero-slide2-top {
-                    left: calc((100vw - 1320px) / 2 + 32px) !important;
-                }
             }
 
             .hero-slider .slide--circles .hero-slide2-eyebrow {
