@@ -1769,12 +1769,12 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--circles .hero-slide2-top {
         position: absolute;
-        top: calc(var(--header-height) + 52px);
+        top: calc(var(--header-height) + 260px);
         left: clamp(20px, 2.2vw, 32px);
         right: auto;
         z-index: 6;
-        width: min(400px, 32vw);
-        max-width: min(400px, 32vw);
+        width: min(440px, 34vw);
+        max-width: min(440px, 34vw);
         margin: 0;
         padding: clamp(14px, 1.6vw, 20px) clamp(16px, 2vw, 24px);
         border-radius: 14px;
@@ -1790,8 +1790,12 @@ body.hero-slide-1 .header:not(.scrolled) {
         text-align: left;
     }
 
+    .hero-slider .slide--circles .hero-slide2-eyebrow {
+        font-size: clamp(0.88rem, 1.35vw, 1.06rem);
+    }
+
     .hero-slider .slide--circles .hero-slide2-lead {
-        font-size: clamp(0.95rem, 1.35vw, 1.12rem);
+        font-size: clamp(1.05rem, 1.48vw, 1.2rem);
         line-height: 1.6;
         text-align: left;
     }

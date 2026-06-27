@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-94" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-94" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-97" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-97" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-94">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-94">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-97">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-97">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -106,9 +106,12 @@
                 --hero-desktop-controls-shift: 0px;
 
                 /* Слайд 2: верхний блок — левый верхний угол */
-                --hero-d2-top-inset: calc(var(--header-height, 76px) + 52px);
+                --hero-d2-top-inset: calc(var(--header-height, 76px) + 260px);
                 --hero-d2-left-inset: clamp(20px, 2.2vw, 32px);
                 --hero-d2-bottom-shift: 56px;
+                --hero-d2-block-max-width: min(440px, 34vw);
+                --hero-d2-eyebrow-size: clamp(0.88rem, 1.35vw, 1.06rem);
+                --hero-d2-lead-size: clamp(1.05rem, 1.48vw, 1.2rem);
             }
 
             .hero-slider .slide-hero-generated__img {
@@ -152,18 +155,20 @@
                 left: var(--hero-d2-left-inset) !important;
                 right: auto !important;
                 margin: 0 !important;
-                width: min(400px, 32vw) !important;
-                max-width: min(400px, 32vw) !important;
+                width: var(--hero-d2-block-max-width) !important;
+                max-width: var(--hero-d2-block-max-width) !important;
                 z-index: 6 !important;
                 text-align: left !important;
             }
 
             .hero-slider .slide--circles .hero-slide2-eyebrow {
                 justify-content: flex-start !important;
+                font-size: var(--hero-d2-eyebrow-size) !important;
             }
 
             .hero-slider .slide--circles .hero-slide2-lead {
                 text-align: left !important;
+                font-size: var(--hero-d2-lead-size) !important;
             }
 
             /* Слайд 2: заголовок + кнопки — как слайд 1 (центр, над индикаторами) */
