@@ -35,13 +35,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-89" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-89" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-90" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-90" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-89">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-89">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-90">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-90">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -103,19 +103,9 @@
                 --hero-desktop-ui-rail: calc(env(safe-area-inset-bottom, 0px) + 14px);
                 --hero-desktop-controls-shift: 0px;
 
-                /* Доп. подстройка блока слайда 2 */
-                --hero-d2-side-inset: clamp(32px, 4vw, 64px);
-                --hero-d2-top-inset: calc(var(--header-height, 76px) + 8px);
-                /* Низ блока с кнопками (выше индикаторов) */
-                --hero-d2-bottom-block: 96px;
-                /* Зазор между «Говорить о сексе» и кнопками */
-                --hero-d2-title-buttons-gap: 28px;
-            }
-
-            @media (min-width: 1320px) {
-                :root {
-                    --hero-d2-side-inset: calc((100vw - 1320px) / 2 + 32px);
-                }
+                /* Слайд 2: верхний блок слева; низ — как слайд 1 */
+                --hero-d2-top-inset: calc(var(--header-height, 76px) + 18px);
+                --hero-d2-bottom-shift: 56px;
             }
 
             .hero-slider .slide-hero-generated__img {
@@ -151,26 +141,23 @@
                 transform: translateY(var(--hero-d1-about-nudge-y)) !important;
             }
 
-            /* Слайд 2: сетку отключаем — два absolute-блока по углам */
-            .hero-slider .slide--circles .slide-content.slide-content--circles {
-                display: block !important;
-                position: relative !important;
-                height: 100% !important;
-                padding: 0 !important;
-                text-align: left !important;
-            }
-
-            /* Слайд 2: «Женские круги» — верхний левый угол */
+            /* Слайд 2: «Женские круги» — верхний левый угол (как отдельный инфоблок) */
             .hero-slider .slide--circles .hero-slide2-top {
                 position: absolute !important;
                 top: var(--hero-d2-top-inset) !important;
-                left: var(--hero-d2-side-inset) !important;
+                left: clamp(32px, 4vw, 64px) !important;
                 right: auto !important;
                 margin: 0 !important;
                 width: min(420px, 34vw) !important;
                 max-width: min(420px, 34vw) !important;
                 z-index: 6 !important;
                 text-align: left !important;
+            }
+
+            @media (min-width: 1320px) {
+                .hero-slider .slide--circles .hero-slide2-top {
+                    left: calc((100vw - 1320px) / 2 + 32px) !important;
+                }
             }
 
             .hero-slider .slide--circles .hero-slide2-eyebrow {
@@ -181,70 +168,70 @@
                 text-align: left !important;
             }
 
-            /* Слайд 2: заголовок + CTA слева снизу, выше индикаторов */
+            /* Слайд 2: заголовок + кнопки — как слайд 1 (центр, над индикаторами) */
+            .hero-slider .slide--circles .slide-content.slide-content--circles {
+                display: block !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: none !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
             .hero-slider .slide--circles .slide-circles-bottom {
                 position: absolute !important;
-                left: var(--hero-d2-side-inset) !important;
+                left: 50% !important;
                 right: auto !important;
-                bottom: var(--hero-d2-bottom-block) !important;
-                width: min(560px, 46vw) !important;
-                max-width: min(560px, 46vw) !important;
+                bottom: calc(var(--hero-cta-from-bottom) + var(--hero-d2-bottom-shift)) !important;
+                transform: translateX(-50%) !important;
+                width: min(92vw, 560px) !important;
+                max-width: min(92vw, 560px) !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 display: flex !important;
                 flex-direction: column !important;
-                align-items: flex-start !important;
-                text-align: left !important;
-                gap: 0 !important;
+                align-items: stretch !important;
+                text-align: center !important;
+                gap: clamp(14px, 2.2vh, 22px) !important;
                 z-index: 6 !important;
             }
 
             .hero-slider .slide--circles .slide-text--circles {
                 display: flex !important;
                 flex-direction: column !important;
-                align-items: flex-start !important;
-                justify-content: flex-start !important;
-                text-align: left !important;
+                align-items: center !important;
+                text-align: center !important;
                 width: 100% !important;
-                max-width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 gap: 0 !important;
             }
 
             .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                text-align: left !important;
+                align-items: center !important;
+                text-align: center !important;
                 width: 100% !important;
-                margin: 0 0 var(--hero-d2-title-buttons-gap) 0 !important;
+                margin: 0 0 28px 0 !important;
                 padding: 0 !important;
             }
 
             .hero-slider .slide--circles .slide-text--circles .luxury-title {
                 display: block !important;
                 width: 100% !important;
-                text-align: left !important;
-                margin-bottom: 0.12em !important;
-            }
-
-            .hero-slider .slide--circles .slide-text--circles .luxury-title:last-of-type {
-                margin-bottom: 0 !important;
+                text-align: center !important;
             }
 
             .hero-slider .slide--circles .slide-text--circles .luxury-title-divider {
-                margin-left: 0 !important;
+                margin-left: auto !important;
                 margin-right: auto !important;
-                justify-content: flex-start !important;
-                width: min(100%, 300px) !important;
+                justify-content: center !important;
             }
 
             .hero-slider .slide--circles .slide-buttons {
-                justify-content: flex-start !important;
-                align-self: flex-start !important;
+                justify-content: center !important;
                 width: 100% !important;
-                max-width: min(440px, 100%) !important;
+                max-width: 100% !important;
                 margin: 0 !important;
             }
 

@@ -1769,7 +1769,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--circles .hero-slide2-top {
         position: absolute;
-        top: calc(var(--header-height) + 8px);
+        top: calc(var(--header-height) + 18px);
         left: clamp(32px, 4vw, 64px);
         right: auto;
         z-index: 6;
@@ -1791,8 +1791,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     }
 
     @media (min-width: 1320px) {
-        .hero-slider .slide--circles .hero-slide2-top,
-        .hero-slider .slide--circles .slide-circles-bottom {
+        .hero-slider .slide--circles .hero-slide2-top {
             left: calc((100vw - 1320px) / 2 + 32px);
         }
     }
@@ -1803,27 +1802,29 @@ body.hero-slide-1 .header:not(.scrolled) {
         text-align: left;
     }
 
+    /* Слайд 2: нижний блок — как слайд 1 (по центру, над индикаторами) */
     .hero-slider .slide--circles .slide-circles-bottom {
         position: absolute;
-        left: clamp(32px, 4vw, 64px);
+        left: 50%;
         right: auto;
-        bottom: 96px;
+        bottom: calc(var(--hero-cta-from-bottom) + 56px);
+        transform: translateX(-50%);
         z-index: 6;
-        width: min(560px, 46vw);
-        max-width: min(560px, 46vw);
+        width: min(92vw, 560px);
+        max-width: min(92vw, 560px);
         margin: 0;
         padding: 0;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-        gap: 0;
+        align-items: stretch;
+        text-align: center;
+        gap: clamp(14px, 2.2vh, 22px);
     }
 
     .hero-slider .slide--circles .slide-text--circles {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-start;
         width: 100%;
         max-width: 100%;
@@ -1831,27 +1832,32 @@ body.hero-slide-1 .header:not(.scrolled) {
         padding: 0;
         gap: 0;
         flex: none;
-        text-align: left;
+        text-align: center;
     }
 
     .hero-slider .slide--circles .slide-text--circles .luxury-title-wrapper {
         padding: 0;
         margin: 0 0 28px;
-        align-items: flex-start;
-        text-align: left;
+        align-items: center;
+        text-align: center;
         width: 100%;
     }
 
     .hero-slider .slide--circles .slide-text--circles .luxury-title {
         display: block;
         width: 100%;
-        text-align: left;
+        text-align: center;
     }
 
     .hero-slider .slide--circles .slide-text--circles .luxury-title-divider {
-        margin-left: 0;
+        margin-left: auto;
         margin-right: auto;
-        justify-content: flex-start;
+        justify-content: center;
+    }
+
+    .hero-slider .slide--circles .slide-text--circles .luxury-title {
+        font-size: clamp(2.05rem, 4.05vw, 3.05rem);
+        line-height: 1.06;
     }
 
     .hero-slider .slide--circles .slide-buttons {
