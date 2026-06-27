@@ -1769,7 +1769,7 @@ body.hero-slide-1 .header:not(.scrolled) {
 
     .hero-slider .slide--circles .hero-slide2-top {
         position: absolute;
-        top: calc(var(--header-height) + 260px);
+        top: calc(var(--header-height) + 200px);
         left: clamp(20px, 2.2vw, 32px);
         right: auto;
         z-index: 6;
