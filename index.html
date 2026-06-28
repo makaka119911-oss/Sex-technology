@@ -35,13 +35,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-103" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-103" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-104" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-104" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-103">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-103">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-104">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-104">
+    <link rel="stylesheet" href="assets/css/enhancements.css?v=enhance-4">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -1019,7 +1020,7 @@
                     <p class="section-description">Мы работаем с различными аспектами женской сексуальности и психологического благополучия</p>
                 </div>
                 
-                <div class="help-cards">
+                <div class="help-cards" data-json-mount="services">
                     <article class="help-card">
                         <div class="help-icon">
                             <i class="fas fa-heart" aria-hidden="true"></i>
@@ -1499,7 +1500,7 @@
                     <p class="section-description">Выберите дату и запишитесь на встречу или терапевтическую программу.</p>
                 </div>
 
-                <div class="events-grid events-grid--featured">
+                <div class="events-grid events-grid--featured" data-json-mount="events">
                 <article class="event-card event-card--featured">
                     <div class="event-featured-layout">
                         <div class="event-poster-wrap">
@@ -1913,8 +1914,19 @@
     <!-- Конфиг backend для заявок (заменить URL после деплоя worker) -->
     <script>
         window.__LEAD_BACKEND_URL__ = 'https://sex-technology-lead-worker.territory-love.workers.dev';
+        /* Опциональные улучшения — выключить любой флаг для отката без удаления файлов */
+        window.__SITE_ENHANCEMENTS__ = {
+            sectionRail: true,
+            heroScrollParallax: true,
+            contentJson: true,
+            sectionSnap: true
+        };
     </script>
     <!-- Скрипты -->
     <script src="assets/js/script.js?v=hero-7s" defer></script>
+    <script src="assets/js/section-rail.js?v=enhance-4" defer></script>
+    <script src="assets/js/hero-scroll-parallax.js?v=enhance-4" defer></script>
+    <script src="assets/js/content-render.js?v=enhance-4" defer></script>
+    <script src="assets/js/section-snap.js?v=enhance-4" defer></script>
 </body>
 </html>

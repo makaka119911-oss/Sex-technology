@@ -1117,8 +1117,10 @@ body.hero-slide-1 .header:not(.scrolled) {
         margin-top: calc(-1 * var(--header-height));
         padding-top: 0;
         box-sizing: border-box;
-        height: clamp(560px, 100vh, 920px);
-        max-height: 100vh;
+        /* 100dvh + шапка: иначе снизу просвечивает следующий блок */
+        height: calc(100dvh + var(--header-height));
+        min-height: calc(100dvh + var(--header-height));
+        max-height: none;
     }
 
     .hero-slider .slider-indicators {
@@ -1172,9 +1174,10 @@ body.hero-slide-1 .header:not(.scrolled) {
  */
 .hero-slider {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
+    height: 100svh;
     min-height: 600px;
-    max-height: 1200px;
+    max-height: none;
     overflow: hidden;
     /* Единый отступ первой/нижней CTA от низа слайда (как «О нас» на слайде 1) */
     --hero-cta-from-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2.2vh, 26px));

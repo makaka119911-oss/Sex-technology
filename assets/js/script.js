@@ -967,6 +967,7 @@ function openAboutSection() {
     section.classList.add('about-section--expanded');
     if (panel) panel.setAttribute('aria-hidden', 'false');
 }
+window.openAboutSection = openAboutSection;
 
 function scrollToHashTarget(target, smooth) {
     const header = document.querySelector('.header');
@@ -1256,6 +1257,8 @@ function initMobileStickyCta() {
 }
 
 // ===== МОБИЛЬНОЕ СВОРАЧИВАНИЕ СПИСКОВ =====
+let mobileCollapsibleResizeBound = false;
+
 function initMobileCollapsibleSections() {
     const toggles = document.querySelectorAll('.mobile-collapsible-toggle .btn[data-target]');
     if (!toggles.length) return;
@@ -1263,7 +1266,7 @@ function initMobileCollapsibleSections() {
     const isMobile = () => window.innerWidth <= 768;
 
     const updateState = () => {
-        toggles.forEach((btn) => {
+        document.querySelectorAll('.mobile-collapsible-toggle .btn[data-target]').forEach((btn) => {
             const targetSelector = btn.getAttribute('data-target');
             const itemsSelector = btn.getAttribute('data-items') || '.mobile-collapsible-item';
             const target = targetSelector ? document.querySelector(targetSelector) : null;
@@ -1293,6 +1296,8 @@ function initMobileCollapsibleSections() {
     };
 
     toggles.forEach((btn) => {
+        if (btn.dataset.collapsibleBound === '1') return;
+        btn.dataset.collapsibleBound = '1';
         btn.addEventListener('click', () => {
             const expanded = btn.getAttribute('aria-expanded') === 'true';
             btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
@@ -1300,7 +1305,11 @@ function initMobileCollapsibleSections() {
         });
     });
 
-    window.addEventListener('resize', updateState);
+    if (!mobileCollapsibleResizeBound) {
+        window.addEventListener('resize', updateState);
+        mobileCollapsibleResizeBound = true;
+    }
+
     updateState();
 }
 
@@ -1362,6 +1371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileHub();
     initMobileStickyCta();
     initMobileCollapsibleSections();
+    document.addEventListener('content:hydrated', initMobileCollapsibleSections);
     initBackToTopButton();
     
     // Добавление текущего года в футер
