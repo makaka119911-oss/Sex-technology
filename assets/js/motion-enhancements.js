@@ -59,9 +59,9 @@
 
         if (wipe) {
             const hero = document.querySelector('.hero-slider');
-            if (hero && !hero.querySelector('.hero-golden-wipe')) {
+            if (hero && !hero.querySelector('.hero-wine-wipe')) {
                 wipeEl = document.createElement('div');
-                wipeEl.className = 'hero-golden-wipe';
+                wipeEl.className = 'hero-wine-wipe';
                 wipeEl.setAttribute('aria-hidden', 'true');
                 hero.appendChild(wipeEl);
             }
