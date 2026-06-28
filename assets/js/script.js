@@ -275,7 +275,8 @@ class CinematicHeroSlider {
         this.nextBtn = document.querySelector('.slider-next');
         this.currentSlide = 0;
         this.totalSlides = this.slides.length;
-        this.autoPlayDelay = 7000;
+        this.autoPlayDelayDesktop = 7800;
+        this.autoPlayDelayMobile = 11500;
         this.autoPlayPaused = false;
         this.touchStartX = 0;
         this.touchEndX = 0;
@@ -323,7 +324,7 @@ class CinematicHeroSlider {
             slide.addEventListener('touchend', (e) => {
                 this.touchEndX = e.changedTouches[0].screenX;
                 this.handleSwipe();
-                setTimeout(() => this.startAutoPlay(), 400);
+                setTimeout(() => this.startAutoPlay(), 900);
             }, { passive: true });
         });
         
@@ -507,7 +508,7 @@ class CinematicHeroSlider {
 
         if (this.autoPlayPaused || this.isReducedMotion()) return;
 
-        this.progressBar.style.transition = `width ${this.autoPlayDelay}ms linear`;
+        this.progressBar.style.transition = `width ${this.getAutoPlayDelay()}ms linear`;
         this.progressBar.style.width = `${target}%`;
     }
 
@@ -523,7 +524,7 @@ class CinematicHeroSlider {
         }
 
         const remainingPct = target - currentPct;
-        const remainingMs = Math.max(150, (remainingPct / segment) * this.autoPlayDelay);
+        const remainingMs = Math.max(200, (remainingPct / segment) * this.getAutoPlayDelay());
 
         this.progressBar.style.transition = `width ${remainingMs}ms linear`;
         this.progressBar.style.width = `${target}%`;

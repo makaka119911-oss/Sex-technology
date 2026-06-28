@@ -1216,6 +1216,21 @@ body.hero-slide-1 .header:not(.scrolled) {
         visibility 0s linear 0s;
 }
 
+@media (max-width: 768px) {
+    .hero-slider .slide,
+    .hero-slider .slide.active {
+        transition:
+            opacity 2.1s cubic-bezier(0.25, 1, 0.35, 1),
+            visibility 0s linear 2.1s;
+    }
+
+    .hero-slider .slide.active {
+        transition:
+            opacity 2.1s cubic-bezier(0.25, 1, 0.35, 1),
+            visibility 0s linear 0s;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .slide,
     .slide.active {

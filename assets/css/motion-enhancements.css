@@ -19,15 +19,23 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
 
 @media (max-width: 768px) {
     html.hero-motion-enhanced .hero-slider > .slider-container > .slide {
-        transform: scale(1.018);
+        transform: scale(1.01);
+        transition:
+            opacity 2.1s cubic-bezier(0.25, 1, 0.35, 1),
+            transform 2.1s cubic-bezier(0.25, 1, 0.35, 1),
+            visibility 0s linear 2.1s;
     }
 
     html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
         transform: scale(1);
+        transition:
+            opacity 2.1s cubic-bezier(0.25, 1, 0.35, 1),
+            transform 2.1s cubic-bezier(0.25, 1, 0.35, 1),
+            visibility 0s linear 0s;
     }
 }
 
-/* ===== Hero: винный wipe при смене слайда (палитра сайта) ===== */
+/* ===== Hero: винный wipe — мягкий, в тон градиентам сайта ===== */
 .hero-wine-wipe,
 .hero-golden-wipe {
     position: absolute;
@@ -49,20 +57,18 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(10, 4, 8, 0.2) 8%,
-        rgba(90, 0, 23, 0.42) 20%,
-        rgba(128, 0, 32, 0.68) 36%,
-        rgba(163, 51, 77, 0.82) 46%,
-        rgba(212, 175, 55, 0.22) 50%,
-        rgba(178, 34, 52, 0.88) 54%,
-        rgba(128, 0, 32, 0.68) 64%,
-        rgba(90, 0, 23, 0.42) 80%,
-        rgba(10, 4, 8, 0.2) 92%,
+        rgba(20, 10, 13, 0.14) 10%,
+        rgba(70, 10, 35, 0.28) 24%,
+        rgba(128, 0, 32, 0.38) 40%,
+        rgba(128, 0, 32, 0.44) 50%,
+        rgba(128, 0, 32, 0.38) 60%,
+        rgba(70, 10, 35, 0.28) 76%,
+        rgba(20, 10, 13, 0.14) 90%,
         transparent 100%
     );
     box-shadow:
-        0 0 48px rgba(128, 0, 32, 0.38),
-        0 0 96px rgba(178, 34, 52, 0.18);
+        0 0 40px rgba(128, 0, 32, 0.2),
+        0 0 72px rgba(70, 10, 35, 0.1);
     transform: scaleX(0);
     transform-origin: center center;
     opacity: 0;
@@ -71,7 +77,7 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
 
 .hero-wine-wipe.is-playing::before,
 .hero-golden-wipe.is-playing::before {
-    animation: hero-wine-wipe-sweep 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: hero-wine-wipe-sweep 0.58s cubic-bezier(0.25, 1, 0.35, 1) forwards;
 }
 
 @keyframes hero-wine-wipe-sweep {
@@ -79,11 +85,11 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
         transform: scaleX(0.04);
         opacity: 0;
     }
-    38% {
-        opacity: 1;
+    42% {
+        opacity: 0.72;
     }
     100% {
-        transform: scaleX(1.12);
+        transform: scaleX(1.1);
         opacity: 0;
     }
 }
@@ -91,16 +97,42 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
 @media (max-width: 768px) {
     .hero-wine-wipe::before,
     .hero-golden-wipe::before {
-        width: min(72vw, 420px);
-        margin-left: calc(min(72vw, 420px) / -2);
+        width: min(88vw, 480px);
+        margin-left: calc(min(88vw, 480px) / -2);
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(20, 10, 13, 0.08) 12%,
+            rgba(70, 10, 35, 0.16) 28%,
+            rgba(128, 0, 32, 0.22) 44%,
+            rgba(90, 0, 23, 0.26) 50%,
+            rgba(128, 0, 32, 0.22) 56%,
+            rgba(70, 10, 35, 0.16) 72%,
+            rgba(20, 10, 13, 0.08) 88%,
+            transparent 100%
+        );
         box-shadow:
-            0 0 36px rgba(128, 0, 32, 0.32),
-            0 0 72px rgba(178, 34, 52, 0.14);
+            0 0 28px rgba(128, 0, 32, 0.12),
+            0 0 56px rgba(20, 10, 13, 0.18);
     }
 
     .hero-wine-wipe.is-playing::before,
     .hero-golden-wipe.is-playing::before {
-        animation-duration: 0.44s;
+        animation: hero-wine-wipe-sweep-mobile 0.78s cubic-bezier(0.28, 1, 0.32, 1) forwards;
+    }
+}
+
+@keyframes hero-wine-wipe-sweep-mobile {
+    0% {
+        transform: scaleX(0.02);
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.42;
+    }
+    100% {
+        transform: scaleX(1.06);
+        opacity: 0;
     }
 }
 
