@@ -50,6 +50,15 @@
         rail.classList.toggle('is-visible', show);
     }
 
+    let railRaf = 0;
+    function scheduleRailVisibility() {
+        if (railRaf) return;
+        railRaf = requestAnimationFrame(() => {
+            railRaf = 0;
+            updateRailVisibility();
+        });
+    }
+
     function bindObserver() {
         if (observer) observer.disconnect();
         const panels = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean);
@@ -110,7 +119,7 @@
         document.body.appendChild(rail);
         bindObserver();
         updateRailVisibility();
-        window.addEventListener('scroll', updateRailVisibility, { passive: true });
+        window.addEventListener('scroll', scheduleRailVisibility, { passive: true });
     }
 
     function unmount() {

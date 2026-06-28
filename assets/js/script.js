@@ -1352,6 +1352,15 @@ function initBackToTopButton() {
         btn.classList.toggle('is-visible', shouldShow);
     };
 
+    let backTopRaf = 0;
+    const scheduleVisibility = () => {
+        if (backTopRaf) return;
+        backTopRaf = requestAnimationFrame(() => {
+            backTopRaf = 0;
+            updateVisibility();
+        });
+    };
+
     btn.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
@@ -1359,9 +1368,9 @@ function initBackToTopButton() {
         });
     });
 
-    window.addEventListener('scroll', updateVisibility, { passive: true });
-    window.addEventListener('resize', updateVisibility);
-    mobileMq.addEventListener('change', updateVisibility);
+    window.addEventListener('scroll', scheduleVisibility, { passive: true });
+    window.addEventListener('resize', scheduleVisibility);
+    mobileMq.addEventListener('change', scheduleVisibility);
     updateVisibility();
 }
 
