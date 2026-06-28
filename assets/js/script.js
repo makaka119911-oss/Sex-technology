@@ -275,14 +275,14 @@ class CinematicHeroSlider {
         this.nextBtn = document.querySelector('.slider-next');
         this.currentSlide = 0;
         this.totalSlides = this.slides.length;
-        this.autoPlayDelayDesktop = 7800;
-        this.autoPlayDelayMobile = 11500;
+        this.autoPlayDelayDesktop = 8500;
+        this.autoPlayDelayMobile = 13500;
         this.autoPlayPaused = false;
         this.autoPlayTimer = null;
         this.autoPlayDeadline = 0;
         this.autoPlayRemainingMs = 0;
-        this.userNavigated = false;
-        this._heroAutoAdvancing = false;
+        this._slideLockUntil = 0;
+        this._leaveTimer = null;
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.touchThreshold = 50;
@@ -299,7 +299,7 @@ class CinematicHeroSlider {
     }
 
     getSlideFadeMs() {
-        return window.matchMedia('(max-width: 768px)').matches ? 2600 : 1900;
+        return window.matchMedia('(max-width: 768px)').matches ? 3400 : 2200;
     }
     
     init() {
@@ -314,14 +314,11 @@ class CinematicHeroSlider {
         }
         
         this.indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => this.goToSlide(index));
-        });
-
-        const heroControls = document.querySelector('.hero-slider .slider-controls');
-        const heroIndicators = document.querySelector('.hero-slider .slider-indicators');
-        [heroControls, heroIndicators].forEach((el) => {
-            if (!el) return;
-            el.addEventListener('pointerdown', () => this.markUserHeroInteraction());
+            indicator.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.pickSlide(index);
+            });
         });
 
         this.applySlideFromQuery();
@@ -333,9 +330,12 @@ class CinematicHeroSlider {
             
             slide.addEventListener('touchend', (e) => {
                 this.touchEndX = e.changedTouches[0].screenX;
-                if (Math.abs(this.touchStartX - this.touchEndX) > this.touchThreshold) {
-                    this.markUserHeroInteraction();
-                    this.handleSwipe();
+                const diff = this.touchStartX - this.touchEndX;
+                if (Math.abs(diff) <= this.touchThreshold) return;
+                if (diff > 0) {
+                    this.pickSlide((this.currentSlide + 1) % this.totalSlides);
+                } else {
+                    this.pickSlide((this.currentSlide - 1 + this.totalSlides) % this.totalSlides);
                 }
             }, { passive: true });
         });
@@ -349,18 +349,13 @@ class CinematicHeroSlider {
         this.initResponsiveBehaviors();
     }
     
-    handleSwipe() {
-        const diff = this.touchStartX - this.touchEndX;
-        
-        if (Math.abs(diff) > this.touchThreshold) {
-            if (diff > 0) {
-                this.nextSlide();
-            } else {
-                this.prevSlide();
-            }
-        }
+    pickSlide(index) {
+        if (index < 0 || index >= this.totalSlides || index === this.currentSlide) return;
+        if (Date.now() < this._slideLockUntil) return;
+        this._slideLockUntil = Date.now() + Math.round(this.getSlideFadeMs() * 0.55);
+        this.showSlide(index);
     }
-    
+
     initResponsiveBehaviors() {
         let resizeTimer;
         const handleResize = () => {
@@ -375,17 +370,29 @@ class CinematicHeroSlider {
         window.addEventListener('resize', handleResize);
     }
 
-    markUserHeroInteraction() {
-        this.userNavigated = true;
-        this.autoPlayPaused = false;
-        this.autoPlayRemainingMs = 0;
-    }
+    bootAutoPlayCycle() {
+        if (this.totalSlides <= 1 || this.isReducedMotion()) {
+            this.clearAutoPlayTimer();
+            this.resetProgressToSegmentStart();
+            return;
+        }
 
-    resumeAutoPlayAfterUserNav() {
-        if (this.totalSlides <= 1 || this.isReducedMotion()) return;
         this.autoPlayPaused = false;
         this.autoPlayRemainingMs = 0;
-        this.restartProgressAnimation();
+        this.clearAutoPlayTimer();
+
+        const delay = this.getAutoPlayDelay();
+        const { base, target } = this.getProgressSegment();
+
+        if (this.progressBar) {
+            this.progressBar.style.transition = 'none';
+            this.progressBar.style.width = `${base}%`;
+            void this.progressBar.offsetWidth;
+            this.progressBar.style.transition = `width ${delay}ms linear`;
+            this.progressBar.style.width = `${target}%`;
+        }
+
+        this.scheduleAutoPlay(delay);
     }
 
     clearAutoPlayTimer() {
@@ -411,12 +418,15 @@ class CinematicHeroSlider {
     
     showSlide(index) {
         const prevIndex = this.currentSlide;
-        const isAutoAdvance = this._heroAutoAdvancing === true;
-        this._heroAutoAdvancing = false;
+
+        if (this._leaveTimer) {
+            clearTimeout(this._leaveTimer);
+            this._leaveTimer = null;
+        }
 
         this.slides.forEach((slide, i) => {
             if (i === prevIndex && prevIndex !== index) return;
-            slide.classList.remove('active', 'is-leaving', 'is-leaving-out');
+            slide.classList.remove('active', 'is-leaving', 'is-leaving-out', 'is-entering');
         });
         
         this.indicators.forEach(indicator => {
@@ -434,13 +444,25 @@ class CinematicHeroSlider {
                     leaving.classList.add('is-leaving-out');
                 });
             });
-            window.setTimeout(() => {
+            this._leaveTimer = window.setTimeout(() => {
                 leaving.classList.remove('is-leaving', 'is-leaving-out');
-            }, this.getSlideFadeMs() + 100);
+                this._leaveTimer = null;
+            }, this.getSlideFadeMs() + 120);
         }
         
         if (this.slides[index]) {
-            this.slides[index].classList.add('active');
+            const incoming = this.slides[index];
+            if (prevIndex !== index) {
+                incoming.classList.add('is-entering');
+                incoming.classList.add('active');
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        incoming.classList.remove('is-entering');
+                    });
+                });
+            } else {
+                incoming.classList.add('active');
+            }
         }
         
         if (this.indicators[index]) {
@@ -449,14 +471,12 @@ class CinematicHeroSlider {
         }
         
         this.currentSlide = index;
-        if (this.userNavigated && !isAutoAdvance) {
-            this.resumeAutoPlayAfterUserNav();
-        } else {
-            this.syncProgressAfterSlideChange();
-        }
-        this.userNavigated = false;
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
+
+        window.setTimeout(() => {
+            this.bootAutoPlayCycle();
+        }, 0);
 
         document.dispatchEvent(
             new CustomEvent('hero:slide-change', { detail: { index } })
@@ -473,11 +493,15 @@ class CinematicHeroSlider {
         const content = activeSlide.querySelector('.slide-text');
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
+        const contentDelay = prefersReducedMotion
+            ? 0
+            : (window.matchMedia('(max-width: 768px)').matches ? 720 : 420);
+
         if (content) {
             content.style.animation = 'none';
             setTimeout(() => {
-                content.style.animation = 'slideReveal 1s ease forwards';
-            }, 10);
+                content.style.animation = 'slideReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards';
+            }, contentDelay);
         }
 
         if (!prefersReducedMotion) {
@@ -487,10 +511,10 @@ class CinematicHeroSlider {
             animatedItems.forEach((item) => {
                 item.style.animation = 'none';
             });
-            // Reflow для перезапуска CSS keyframes при каждом переключении слайда
             void activeSlide.offsetWidth;
-            animatedItems.forEach((item) => {
+            animatedItems.forEach((item, i) => {
                 item.style.animation = '';
+                item.style.animationDelay = `${contentDelay + i * 70}ms`;
             });
         }
         
@@ -508,22 +532,15 @@ class CinematicHeroSlider {
     }
     
     nextSlide() {
-        this.markUserHeroInteraction();
-        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
-        this.showSlide(nextIndex);
+        this.pickSlide((this.currentSlide + 1) % this.totalSlides);
     }
     
     prevSlide() {
-        this.markUserHeroInteraction();
-        const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
-        this.showSlide(prevIndex);
+        this.pickSlide((this.currentSlide - 1 + this.totalSlides) % this.totalSlides);
     }
     
     goToSlide(index) {
-        if (index >= 0 && index < this.totalSlides && index !== this.currentSlide) {
-            this.markUserHeroInteraction();
-            this.showSlide(index);
-        }
+        this.pickSlide(index);
     }
 
     /** Preview: ?slide=2 or #slide-2 opens hero slide by number (1-based) */
@@ -576,74 +593,18 @@ class CinematicHeroSlider {
         this.progressBar.style.width = `${base}%`;
     }
 
-    restartProgressAnimation() {
-        if (!this.progressBar || this.totalSlides < 1) return;
-
-        const { base, target, segment } = this.getProgressSegment();
-        const delay = this.getAutoPlayDelay();
-
-        this.progressBar.style.transition = 'none';
-        this.progressBar.style.width = `${base}%`;
-        void this.progressBar.offsetWidth;
-
-        this.clearAutoPlayTimer();
-
-        if (this.autoPlayPaused || this.isReducedMotion()) return;
-
-        this.progressBar.style.transition = `width ${delay}ms linear`;
-        this.progressBar.style.width = `${target}%`;
-        this.autoPlayRemainingMs = delay;
-        this.scheduleAutoPlay(delay);
-    }
-
-    resumeProgressBar() {
-        if (!this.progressBar || this.totalSlides < 1 || this.isReducedMotion()) return;
-
-        const { segment, target } = this.getProgressSegment();
-        const currentPct = this.getProgressPercent();
-        const remainingPct = Math.max(0, target - currentPct);
-
-        if (remainingPct <= 0.5) {
-            this.scheduleAutoPlay(200);
-            return;
-        }
-
-        const remainingMs = Math.max(
-            200,
-            this.autoPlayRemainingMs > 0
-                ? this.autoPlayRemainingMs
-                : (remainingPct / segment) * this.getAutoPlayDelay()
-        );
-
-        this.progressBar.style.transition = `width ${remainingMs}ms linear`;
-        this.progressBar.style.width = `${target}%`;
-        this.autoPlayRemainingMs = remainingMs;
-        this.scheduleAutoPlay(remainingMs);
-    }
-
-    syncProgressAfterSlideChange() {
-        if (this.autoPlayPaused || this.isReducedMotion()) {
-            this.clearAutoPlayTimer();
-            this.resetProgressToSegmentStart();
-            return;
-        }
-        this.restartProgressAnimation();
-    }
-
-    advanceAutoPlay() {
-        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
-        this._heroAutoAdvancing = true;
-        this.showSlide(nextIndex);
-    }
-
     updateProgressBar() {
-        this.syncProgressAfterSlideChange();
+        this.bootAutoPlayCycle();
     }
 
     startAutoPlay() {
-        if (this.totalSlides <= 1 || this.isReducedMotion()) return;
-        this.autoPlayPaused = false;
-        this.resumeProgressBar();
+        this.bootAutoPlayCycle();
+    }
+    
+    advanceAutoPlay() {
+        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
+        this._slideLockUntil = 0;
+        this.showSlide(nextIndex);
     }
     
     stopAutoPlay() {
@@ -658,7 +619,7 @@ class CinematicHeroSlider {
     resetAutoPlay() {
         this.autoPlayPaused = false;
         this.autoPlayRemainingMs = 0;
-        this.restartProgressAnimation();
+        this.bootAutoPlayCycle();
     }
     
     initParallax() {

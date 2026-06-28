@@ -1,48 +1,38 @@
 /* Motion enhancements — отключить флаги в __SITE_ENHANCEMENTS__ */
 
-/* ===== Hero: crossfade + лёгкий zoom (opacity ведёт style.css) ===== */
-html.hero-motion-enhanced .hero-slider > .slider-container > .slide:not(.active):not(.is-leaving) {
-    transform: scale(1.028);
-    transition:
-        opacity var(--hero-slide-fade, 1.9s) var(--hero-slide-ease, cubic-bezier(0.33, 1, 0.68, 1)),
-        transform var(--hero-slide-fade, 1.9s) var(--hero-slide-ease, cubic-bezier(0.33, 1, 0.68, 1)),
-        visibility 0s linear var(--hero-slide-fade, 1.9s);
-}
-
-html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
-    transform: scale(1);
-    transition:
-        opacity var(--hero-slide-fade, 1.9s) var(--hero-slide-ease, cubic-bezier(0.33, 1, 0.68, 1)),
-        transform var(--hero-slide-fade, 1.9s) var(--hero-slide-ease, cubic-bezier(0.33, 1, 0.68, 1)),
-        visibility 0s linear 0s;
-}
-
-html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving {
-    transform: scale(1);
-    transition: none;
-}
-
-html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.is-leaving-out {
-    transform: scale(1.014);
-    transition:
-        opacity var(--hero-slide-fade, 1.9s) var(--hero-slide-ease, cubic-bezier(0.33, 1, 0.68, 1)),
-        transform var(--hero-slide-fade, 1.9s) var(--hero-slide-ease, cubic-bezier(0.33, 1, 0.68, 1)),
-        visibility 0s linear var(--hero-slide-fade, 1.9s);
-}
-
-@media (max-width: 768px) {
-    html.hero-motion-enhanced .hero-slider > .slider-container > .slide:not(.active):not(.is-leaving),
-    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.is-leaving-out {
-        transform: none;
+/* Hero: только лёгкий zoom на десктопе — на мобиле чистый dissolve */
+@media (min-width: 769px) {
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide:not(.active):not(.is-leaving):not(.is-entering) {
+        transform: scale(1.018);
+        transition:
+            opacity var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
+            transform var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
+            visibility 0s linear var(--hero-slide-fade, 2.2s);
     }
 
-    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active,
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active:not(.is-entering) {
+        transform: scale(1);
+        transition:
+            opacity var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
+            transform var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
+            visibility 0s linear 0s;
+    }
+
     html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving {
-        transform: none;
+        transform: scale(1.008);
+        transition: none;
+    }
+
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.is-leaving-out {
+        transform: scale(1.012);
+        transition:
+            opacity var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
+            transform var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
+            visibility 0s linear var(--hero-slide-fade, 2.2s);
     }
 }
 
-/* ===== Hero: винный wipe — мягкий, в тон градиентам сайта ===== */
+/* ===== Hero: винный wipe — только десктоп; на мобиле без вспышки ===== */
 .hero-wine-wipe,
 .hero-golden-wipe {
     position: absolute;
@@ -50,6 +40,13 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.i
     z-index: 8;
     pointer-events: none;
     overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .hero-wine-wipe,
+    .hero-golden-wipe {
+        display: none !important;
+    }
 }
 
 .hero-wine-wipe::before,
@@ -84,7 +81,7 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.i
 
 .hero-wine-wipe.is-playing::before,
 .hero-golden-wipe.is-playing::before {
-    animation: hero-wine-wipe-sweep 0.58s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+    animation: hero-wine-wipe-sweep 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes hero-wine-wipe-sweep {
@@ -93,7 +90,7 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.i
         opacity: 0;
     }
     42% {
-        opacity: 0.72;
+        opacity: 0.55;
     }
     100% {
         transform: scaleX(1.1);
@@ -101,49 +98,7 @@ html.hero-motion-enhanced .hero-slider > .slider-container > .slide.is-leaving.i
     }
 }
 
-@media (max-width: 768px) {
-    .hero-wine-wipe::before,
-    .hero-golden-wipe::before {
-        width: min(88vw, 480px);
-        margin-left: calc(min(88vw, 480px) / -2);
-        background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(20, 10, 13, 0.06) 14%,
-            rgba(70, 10, 35, 0.12) 30%,
-            rgba(128, 0, 32, 0.16) 46%,
-            rgba(90, 0, 23, 0.18) 50%,
-            rgba(128, 0, 32, 0.16) 54%,
-            rgba(70, 10, 35, 0.12) 70%,
-            rgba(20, 10, 13, 0.06) 86%,
-            transparent 100%
-        );
-        box-shadow:
-            0 0 24px rgba(128, 0, 32, 0.08),
-            0 0 48px rgba(20, 10, 13, 0.12);
-    }
-
-    .hero-wine-wipe.is-playing::before,
-    .hero-golden-wipe.is-playing::before {
-        animation: hero-wine-wipe-sweep-mobile 0.9s cubic-bezier(0.28, 1, 0.32, 1) forwards;
-    }
-}
-
-@keyframes hero-wine-wipe-sweep-mobile {
-    0% {
-        transform: scaleX(0.02);
-        opacity: 0;
-    }
-    48% {
-        opacity: 0.32;
-    }
-    100% {
-        transform: scaleX(1.04);
-        opacity: 0;
-    }
-}
-
-/* ===== Stagger карточек (последовательное появление) ===== */
+/* ===== Stagger карточек ===== */
 .reveal-on-scroll.reveal-stagger-0 { transition-delay: 0ms; }
 .reveal-on-scroll.reveal-stagger-1 { transition-delay: 65ms; }
 .reveal-on-scroll.reveal-stagger-2 { transition-delay: 130ms; }

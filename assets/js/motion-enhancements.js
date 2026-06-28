@@ -36,6 +36,7 @@
 
     function playGoldenWipe() {
         if (!wipe || reduced.matches || !wipeEl) return;
+        if (window.matchMedia('(max-width: 768px)').matches) return;
         wipeEl.classList.remove('is-playing');
         void wipeEl.offsetWidth;
         wipeEl.classList.add('is-playing');

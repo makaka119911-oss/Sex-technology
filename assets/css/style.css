@@ -1192,13 +1192,14 @@ body.hero-slide-1 .header:not(.scrolled) {
 }
 
 .hero-slider {
-    --hero-slide-fade: 1.9s;
-    --hero-slide-ease: cubic-bezier(0.33, 1, 0.68, 1);
+    --hero-slide-fade: 2.2s;
+    --hero-slide-ease: cubic-bezier(0.16, 1, 0.32, 1);
 }
 
 @media (max-width: 768px) {
     .hero-slider {
-        --hero-slide-fade: 2.6s;
+        --hero-slide-fade: 3.4s;
+        --hero-slide-ease: cubic-bezier(0.14, 1, 0.28, 1);
     }
 }
 
@@ -1241,6 +1242,22 @@ body.hero-slide-1 .header:not(.scrolled) {
     transition:
         opacity var(--hero-slide-fade) var(--hero-slide-ease),
         visibility 0s linear var(--hero-slide-fade);
+}
+
+.hero-slider .slide.is-entering {
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+    z-index: 2;
+    transition: none;
+}
+
+.hero-slider .slide.is-entering.active {
+    opacity: 0;
+}
+
+.hero-slider .slide.active:not(.is-entering) {
+    opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
