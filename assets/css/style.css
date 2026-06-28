@@ -1191,27 +1191,6 @@ body.hero-slide-1 .header:not(.scrolled) {
     height: 100%;
 }
 
-.hero-slider {
-    --hero-slide-fade: 1.6s;
-    --hero-slide-ease: cubic-bezier(0.25, 1, 0.4, 1);
-}
-
-@media (max-width: 768px) {
-    .hero-slider {
-        --hero-slide-fade: 2s;
-        --hero-slide-ease: cubic-bezier(0.22, 1, 0.38, 1);
-    }
-
-    .slide-background {
-        transform: scale(1);
-        transition: none;
-    }
-
-    .slide.active .slide-background {
-        transform: scale(1);
-    }
-}
-
 .slide {
     position: absolute;
     top: 0;
@@ -1223,8 +1202,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     pointer-events: none;
     z-index: 1;
     transition:
-        opacity var(--hero-slide-fade) var(--hero-slide-ease),
-        visibility 0s linear var(--hero-slide-fade);
+        opacity 1.4s ease-in-out,
+        visibility 0s linear 1.4s;
 }
 
 .slide.active {
@@ -1233,24 +1212,8 @@ body.hero-slide-1 .header:not(.scrolled) {
     pointer-events: auto;
     z-index: 2;
     transition:
-        opacity var(--hero-slide-fade) var(--hero-slide-ease),
+        opacity 1.4s ease-in-out,
         visibility 0s linear 0s;
-}
-
-/* Уходящий слайд — crossfade: сначала 1, потом плавно в 0 */
-.hero-slider .slide.is-leaving {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: none;
-    z-index: 3;
-    transition: none;
-}
-
-.hero-slider .slide.is-leaving.is-leaving-out {
-    opacity: 0;
-    transition:
-        opacity var(--hero-slide-fade) var(--hero-slide-ease),
-        visibility 0s linear var(--hero-slide-fade);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2608,19 +2571,16 @@ body.hero-slide-1 .header:not(.scrolled) {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.14);
-    z-index: 12;
-    pointer-events: none;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 3;
 }
 
 .progress-bar {
     height: 100%;
     background: var(--gradient-primary);
     width: 0%;
-    transition: none;
-    will-change: width;
-    box-shadow: 0 0 8px rgba(128, 0, 32, 0.45);
+    transition: width 7s linear;
 }
 
 .scroll-indicator.desktop-only {

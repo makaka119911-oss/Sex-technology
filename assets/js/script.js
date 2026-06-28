@@ -275,14 +275,8 @@ class CinematicHeroSlider {
         this.nextBtn = document.querySelector('.slider-next');
         this.currentSlide = 0;
         this.totalSlides = this.slides.length;
-        this.autoPlayDelayDesktop = 8000;
-        this.autoPlayDelayMobile = 11000;
-        this.autoPlayPaused = false;
-        this.autoPlayTimer = null;
-        this.autoPlayDeadline = 0;
-        this.autoPlayRemainingMs = 0;
-        this._slideLockUntil = 0;
-        this._leaveTimer = null;
+        this.autoPlayInterval = null;
+        this.autoPlayDelay = 7000;
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.touchThreshold = 50;
@@ -290,16 +284,6 @@ class CinematicHeroSlider {
         if (this.slides.length > 0) {
             this.init();
         }
-    }
-
-    getAutoPlayDelay() {
-        return window.matchMedia('(max-width: 768px)').matches
-            ? this.autoPlayDelayMobile
-            : this.autoPlayDelayDesktop;
-    }
-
-    getSlideFadeMs() {
-        return window.matchMedia('(max-width: 768px)').matches ? 2000 : 1600;
     }
     
     init() {
@@ -314,29 +298,25 @@ class CinematicHeroSlider {
         }
         
         this.indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.pickSlide(index);
-            });
+            indicator.addEventListener('click', () => this.goToSlide(index));
         });
-
+        
+        this.startAutoPlay();
         this.applySlideFromQuery();
         
         this.slides.forEach(slide => {
+            slide.addEventListener('mouseenter', () => this.stopAutoPlay());
+            slide.addEventListener('mouseleave', () => this.startAutoPlay());
+            
             slide.addEventListener('touchstart', (e) => {
                 this.touchStartX = e.changedTouches[0].screenX;
+                this.stopAutoPlay();
             }, { passive: true });
             
             slide.addEventListener('touchend', (e) => {
                 this.touchEndX = e.changedTouches[0].screenX;
-                const diff = this.touchStartX - this.touchEndX;
-                if (Math.abs(diff) <= this.touchThreshold) return;
-                if (diff > 0) {
-                    this.pickSlide((this.currentSlide + 1) % this.totalSlides);
-                } else {
-                    this.pickSlide((this.currentSlide - 1 + this.totalSlides) % this.totalSlides);
-                }
+                this.handleSwipe();
+                setTimeout(() => this.startAutoPlay(), this.autoPlayDelay);
             }, { passive: true });
         });
         
@@ -349,121 +329,36 @@ class CinematicHeroSlider {
         this.initResponsiveBehaviors();
     }
     
-    pickSlide(index) {
-        if (index < 0 || index >= this.totalSlides || index === this.currentSlide) return;
-        if (Date.now() < this._slideLockUntil) return;
-        this._slideLockUntil = Date.now() + Math.round(this.getSlideFadeMs() * 0.55);
-        this.showSlide(index);
+    handleSwipe() {
+        const diff = this.touchStartX - this.touchEndX;
+        
+        if (Math.abs(diff) > this.touchThreshold) {
+            if (diff > 0) {
+                this.nextSlide();
+            } else {
+                this.prevSlide();
+            }
+        }
     }
-
+    
     initResponsiveBehaviors() {
-        let resizeTimer;
         const handleResize = () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                if (!this.autoPlayPaused) {
-                    this.resetAutoPlay();
-                }
-            }, 280);
+            this.resetAutoPlay();
         };
 
         window.addEventListener('resize', handleResize);
-    }
-
-    getProgressTargetPct() {
-        return ((this.currentSlide + 1) / this.totalSlides) * 100;
-    }
-
-    startProgressAnimation(fromPct, toPct, durationMs) {
-        if (!this.progressBar || durationMs <= 0) return;
-
-        const from = Math.max(0, Math.min(100, fromPct));
-        const to = Math.max(0, Math.min(100, toPct));
-
-        this.progressBar.style.transition = 'none';
-        this.progressBar.style.width = `${from}%`;
-        void this.progressBar.offsetWidth;
-        this.progressBar.style.transition = `width ${durationMs}ms linear`;
-        this.progressBar.style.width = `${to}%`;
-    }
-
-    bootAutoPlayCycle() {
-        if (this.totalSlides <= 1 || this.isReducedMotion()) {
-            this.clearAutoPlayTimer();
-            this.resetProgressToSegmentStart();
-            return;
-        }
-
-        this.autoPlayPaused = false;
-        this.autoPlayRemainingMs = 0;
-        this.clearAutoPlayTimer();
-
-        const delay = this.getAutoPlayDelay();
-        const { base, target } = this.getProgressSegment();
-
-        if (this.progressBar) {
-            this.progressBar.style.transition = 'none';
-            this.progressBar.style.width = `${base}%`;
-        }
-
-        this.startProgressAnimation(base, target, delay);
-        this.scheduleAutoPlay(delay);
-    }
-
-    clearAutoPlayTimer() {
-        if (this.autoPlayTimer) {
-            clearTimeout(this.autoPlayTimer);
-            this.autoPlayTimer = null;
-        }
-    }
-
-    scheduleAutoPlay(delayMs) {
-        this.clearAutoPlayTimer();
-        if (this.totalSlides <= 1 || this.isReducedMotion() || this.autoPlayPaused) return;
-
-        const wait = Math.max(200, delayMs);
-        this.autoPlayDeadline = Date.now() + wait;
-        this.autoPlayTimer = setTimeout(() => {
-            this.autoPlayTimer = null;
-            if (!this.autoPlayPaused && !this.isReducedMotion()) {
-                this.advanceAutoPlay();
-            }
-        }, wait);
+        handleResize();
     }
     
     showSlide(index) {
-        const prevIndex = this.currentSlide;
-
-        if (this._leaveTimer) {
-            clearTimeout(this._leaveTimer);
-            this._leaveTimer = null;
-        }
-
-        this.slides.forEach((slide, i) => {
-            if (i === prevIndex && prevIndex !== index) return;
-            slide.classList.remove('active', 'is-leaving', 'is-leaving-out');
+        this.slides.forEach(slide => {
+            slide.classList.remove('active');
         });
         
         this.indicators.forEach(indicator => {
             indicator.classList.remove('active');
             indicator.setAttribute('aria-selected', 'false');
         });
-
-        if (this.slides[prevIndex] && prevIndex !== index) {
-            const leaving = this.slides[prevIndex];
-            leaving.classList.remove('active');
-            leaving.classList.add('is-leaving');
-            leaving.classList.remove('is-leaving-out');
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    leaving.classList.add('is-leaving-out');
-                });
-            });
-            this._leaveTimer = window.setTimeout(() => {
-                leaving.classList.remove('is-leaving', 'is-leaving-out');
-                this._leaveTimer = null;
-            }, this.getSlideFadeMs() + 120);
-        }
         
         if (this.slides[index]) {
             this.slides[index].classList.add('active');
@@ -475,14 +370,9 @@ class CinematicHeroSlider {
         }
         
         this.currentSlide = index;
+        this.updateProgressBar();
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
-
-        this.bootAutoPlayCycle();
-
-        document.dispatchEvent(
-            new CustomEvent('hero:slide-change', { detail: { index } })
-        );
     }
 
     updateHeroSlideBodyClass(index) {
@@ -495,15 +385,11 @@ class CinematicHeroSlider {
         const content = activeSlide.querySelector('.slide-text');
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        const contentDelay = prefersReducedMotion
-            ? 0
-            : (window.matchMedia('(max-width: 768px)').matches ? 380 : 280);
-
         if (content) {
             content.style.animation = 'none';
             setTimeout(() => {
-                content.style.animation = 'slideReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards';
-            }, contentDelay);
+                content.style.animation = 'slideReveal 1s ease forwards';
+            }, 10);
         }
 
         if (!prefersReducedMotion) {
@@ -513,10 +399,10 @@ class CinematicHeroSlider {
             animatedItems.forEach((item) => {
                 item.style.animation = 'none';
             });
+            // Reflow для перезапуска CSS keyframes при каждом переключении слайда
             void activeSlide.offsetWidth;
-            animatedItems.forEach((item, i) => {
+            animatedItems.forEach((item) => {
                 item.style.animation = '';
-                item.style.animationDelay = `${contentDelay + i * 70}ms`;
             });
         }
         
@@ -534,15 +420,22 @@ class CinematicHeroSlider {
     }
     
     nextSlide() {
-        this.pickSlide((this.currentSlide + 1) % this.totalSlides);
+        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
+        this.showSlide(nextIndex);
+        this.resetAutoPlay();
     }
     
     prevSlide() {
-        this.pickSlide((this.currentSlide - 1 + this.totalSlides) % this.totalSlides);
+        const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+        this.showSlide(prevIndex);
+        this.resetAutoPlay();
     }
     
     goToSlide(index) {
-        this.pickSlide(index);
+        if (index >= 0 && index < this.totalSlides) {
+            this.showSlide(index);
+            this.resetAutoPlay();
+        }
     }
 
     /** Preview: ?slide=2 or #slide-2 opens hero slide by number (1-based) */
@@ -562,66 +455,35 @@ class CinematicHeroSlider {
         }
     }
     
-    isReducedMotion() {
-        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
+    updateProgressBar() {
+        if (!this.progressBar || this.totalSlides < 1) return;
 
-    getProgressSegment() {
         const segment = 100 / this.totalSlides;
         const base = this.currentSlide * segment;
-        return { segment, base, target: base + segment };
-    }
+        const target = base + segment;
 
-    getProgressPercent() {
-        if (!this.progressBar) return 0;
-        const track = this.progressBar.parentElement;
-        if (!track) return parseFloat(this.progressBar.style.width) || 0;
-        const trackW = track.getBoundingClientRect().width;
-        if (!trackW) return parseFloat(this.progressBar.style.width) || 0;
-        return (this.progressBar.getBoundingClientRect().width / trackW) * 100;
-    }
-
-    freezeProgressBar() {
-        if (!this.progressBar) return;
-        const pct = this.getProgressPercent();
-        this.progressBar.style.transition = 'none';
-        this.progressBar.style.width = `${pct}%`;
-    }
-
-    resetProgressToSegmentStart() {
-        if (!this.progressBar || this.totalSlides < 1) return;
-        const { base } = this.getProgressSegment();
         this.progressBar.style.transition = 'none';
         this.progressBar.style.width = `${base}%`;
-    }
-
-    updateProgressBar() {
-        this.bootAutoPlayCycle();
+        void this.progressBar.offsetWidth;
+        this.progressBar.style.transition = `width ${this.autoPlayDelay}ms linear`;
+        this.progressBar.style.width = `${target}%`;
     }
 
     startAutoPlay() {
-        this.bootAutoPlayCycle();
-    }
-    
-    advanceAutoPlay() {
-        const nextIndex = (this.currentSlide + 1) % this.totalSlides;
-        this._slideLockUntil = 0;
-        this.showSlide(nextIndex);
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (this.totalSlides > 1 && !prefersReducedMotion) {
+            this.stopAutoPlay();
+            this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
+        }
     }
     
     stopAutoPlay() {
-        this.autoPlayPaused = true;
-        if (this.autoPlayDeadline > 0) {
-            this.autoPlayRemainingMs = Math.max(0, this.autoPlayDeadline - Date.now());
-        }
-        this.clearAutoPlayTimer();
-        this.freezeProgressBar();
+        clearInterval(this.autoPlayInterval);
     }
     
     resetAutoPlay() {
-        this.autoPlayPaused = false;
-        this.autoPlayRemainingMs = 0;
-        this.bootAutoPlayCycle();
+        this.stopAutoPlay();
+        this.startAutoPlay();
     }
     
     initParallax() {
@@ -1305,7 +1167,7 @@ function initScrollReveal() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealTargets = [
         ...document.querySelectorAll(
-            '.section-header, .expert-card, .help-card, .level-card, .event-card, .circles-text, .circles-image, .gallery-item, .testimonial-content, .faq-item, .contact-person, .contact-form'
+            '.section-header, .expert-card, .help-card, .level-card, .circles-text, .circles-image, .gallery-item, .testimonial-content, .faq-item, .contact-person, .contact-form'
         )
     ].filter((el) => !el.closest('#about'));
 
