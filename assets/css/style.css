@@ -1125,10 +1125,15 @@ body.hero-slide-1 .header:not(.scrolled) {
         margin-top: calc(-1 * var(--header-height));
         padding-top: 0;
         box-sizing: border-box;
-        /* 100dvh + шапка: иначе снизу просвечивает следующий блок */
-        height: calc(100dvh + var(--header-height));
-        min-height: calc(100dvh + var(--header-height));
+        /* max(vh,dvh): на Windows иначе снизу просвечивает #help */
+        --hero-viewport-h: max(100vh, 100dvh, 100svh);
+        height: calc(var(--hero-viewport-h) + var(--header-height));
+        min-height: calc(var(--hero-viewport-h) + var(--header-height));
         max-height: none;
+        margin-bottom: -6px;
+        padding-bottom: 6px;
+        z-index: 2;
+        isolation: isolate;
     }
 
     .hero-slider .slider-indicators {
@@ -2624,8 +2629,11 @@ body.hero-slide-1 .header:not(.scrolled) {
  */
 .about-section:not(.about-section--expanded) {
     padding: 0 !important;
+    margin: 0 !important;
     min-height: 0 !important;
+    max-height: 0 !important;
     overflow: hidden;
+    border: none;
 }
 
 .about-section:not(.about-section--expanded) .container {
