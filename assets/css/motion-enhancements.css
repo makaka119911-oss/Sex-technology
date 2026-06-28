@@ -1,0 +1,143 @@
+/* Motion enhancements — отключить флаги в __SITE_ENHANCEMENTS__ */
+
+/* ===== Hero: crossfade + zoom (слайд целиком, не трогаем img-transform) ===== */
+html.hero-motion-enhanced .hero-slider > .slider-container > .slide {
+    transform: scale(1.035);
+    transition:
+        opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 1.15s;
+}
+
+html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
+    transform: scale(1);
+    transition:
+        opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0s;
+}
+
+@media (max-width: 768px) {
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide {
+        transform: scale(1.018);
+    }
+
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
+        transform: scale(1);
+    }
+}
+
+/* ===== Hero: золотой wipe при смене слайда ===== */
+.hero-golden-wipe {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hero-golden-wipe::before {
+    content: '';
+    position: absolute;
+    top: -8%;
+    bottom: -8%;
+    left: 50%;
+    width: min(48vw, 520px);
+    margin-left: calc(min(48vw, 520px) / -2);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(128, 0, 32, 0.12) 10%,
+        rgba(212, 175, 55, 0.22) 28%,
+        rgba(255, 232, 177, 0.62) 50%,
+        rgba(212, 175, 55, 0.22) 72%,
+        rgba(128, 0, 32, 0.12) 90%,
+        transparent 100%
+    );
+    transform: scaleX(0);
+    transform-origin: center center;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.hero-golden-wipe.is-playing::before {
+    animation: hero-golden-wipe-sweep 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes hero-golden-wipe-sweep {
+    0% {
+        transform: scaleX(0.04);
+        opacity: 0;
+    }
+    38% {
+        opacity: 1;
+    }
+    100% {
+        transform: scaleX(1.12);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-golden-wipe::before {
+        width: min(72vw, 420px);
+        margin-left: calc(min(72vw, 420px) / -2);
+    }
+
+    .hero-golden-wipe.is-playing::before {
+        animation-duration: 0.44s;
+    }
+}
+
+/* ===== Stagger карточек (последовательное появление) ===== */
+.reveal-on-scroll.reveal-stagger-0 { transition-delay: 0ms; }
+.reveal-on-scroll.reveal-stagger-1 { transition-delay: 65ms; }
+.reveal-on-scroll.reveal-stagger-2 { transition-delay: 130ms; }
+.reveal-on-scroll.reveal-stagger-3 { transition-delay: 195ms; }
+.reveal-on-scroll.reveal-stagger-4 { transition-delay: 260ms; }
+.reveal-on-scroll.reveal-stagger-5 { transition-delay: 325ms; }
+.reveal-on-scroll.reveal-stagger-6 { transition-delay: 390ms; }
+.reveal-on-scroll.reveal-stagger-7 { transition-delay: 455ms; }
+.reveal-on-scroll.reveal-stagger-8 { transition-delay: 520ms; }
+
+@media (max-width: 768px) {
+    .reveal-on-scroll {
+        filter: none;
+        transform: translateY(18px);
+    }
+
+    .reveal-on-scroll.reveal-stagger-1 { transition-delay: 50ms; }
+    .reveal-on-scroll.reveal-stagger-2 { transition-delay: 100ms; }
+    .reveal-on-scroll.reveal-stagger-3 { transition-delay: 150ms; }
+    .reveal-on-scroll.reveal-stagger-4 { transition-delay: 200ms; }
+    .reveal-on-scroll.reveal-stagger-5 { transition-delay: 250ms; }
+    .reveal-on-scroll.reveal-stagger-6 { transition-delay: 300ms; }
+    .reveal-on-scroll.reveal-stagger-7 { transition-delay: 350ms; }
+    .reveal-on-scroll.reveal-stagger-8 { transition-delay: 400ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide,
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .hero-golden-wipe,
+    .hero-golden-wipe.is-playing::before {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+
+    .reveal-on-scroll.reveal-stagger-0,
+    .reveal-on-scroll.reveal-stagger-1,
+    .reveal-on-scroll.reveal-stagger-2,
+    .reveal-on-scroll.reveal-stagger-3,
+    .reveal-on-scroll.reveal-stagger-4,
+    .reveal-on-scroll.reveal-stagger-5,
+    .reveal-on-scroll.reveal-stagger-6,
+    .reveal-on-scroll.reveal-stagger-7,
+    .reveal-on-scroll.reveal-stagger-8 {
+        transition-delay: 0ms !important;
+    }
+}

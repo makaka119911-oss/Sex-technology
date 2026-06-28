@@ -380,6 +380,10 @@ class CinematicHeroSlider {
         this.syncProgressAfterSlideChange();
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
+
+        document.dispatchEvent(
+            new CustomEvent('hero:slide-change', { detail: { index } })
+        );
     }
 
     updateHeroSlideBodyClass(index) {
@@ -1250,7 +1254,7 @@ function initScrollReveal() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealTargets = [
         ...document.querySelectorAll(
-            '.section-header, .expert-card, .help-card, .level-card, .circles-text, .circles-image, .gallery-item, .testimonial-content, .faq-item, .contact-person, .contact-form'
+            '.section-header, .expert-card, .help-card, .level-card, .event-card, .circles-text, .circles-image, .gallery-item, .testimonial-content, .faq-item, .contact-person, .contact-form'
         )
     ].filter((el) => !el.closest('#about'));
 
