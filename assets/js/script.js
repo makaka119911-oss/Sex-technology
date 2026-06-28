@@ -1250,6 +1250,14 @@ function initMobileStickyCta() {
         cta.style.transition = 'none';
     }
 
+    const topBtn = document.getElementById('mobileStickyTopBtn');
+    topBtn?.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        });
+    });
+
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate);
     document.addEventListener('click', requestUpdate);
