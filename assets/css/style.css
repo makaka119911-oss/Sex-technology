@@ -3398,10 +3398,19 @@ body.hero-slide-1 .header:not(.scrolled) {
     margin-top: 50px;
 }
 
+/* Одна featured-карточка — на всю ширину, иначе на десктопе уезжает в 1-ю колонку из 3 */
+.events-grid--featured {
+    grid-template-columns: 1fr;
+}
+
 @media (min-width: 992px) {
     .events-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
+    }
+
+    .events-grid--featured {
+        grid-template-columns: 1fr;
     }
 }
 
