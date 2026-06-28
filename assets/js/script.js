@@ -278,6 +278,9 @@ class CinematicHeroSlider {
         this.autoPlayDelayDesktop = 7800;
         this.autoPlayDelayMobile = 11500;
         this.autoPlayPaused = false;
+        this.autoPlayTimer = null;
+        this.autoPlayDeadline = 0;
+        this.autoPlayRemainingMs = 0;
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.touchThreshold = 50;
@@ -307,10 +310,6 @@ class CinematicHeroSlider {
         this.indicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => this.goToSlide(index));
         });
-
-        if (this.progressBar) {
-            this.progressBar.addEventListener('transitionend', (e) => this.onProgressTransitionEnd(e));
-        }
 
         this.applySlideFromQuery();
         
@@ -356,12 +355,38 @@ class CinematicHeroSlider {
     }
     
     initResponsiveBehaviors() {
+        let resizeTimer;
         const handleResize = () => {
-            this.resetAutoPlay();
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (!this.autoPlayPaused) {
+                    this.resetAutoPlay();
+                }
+            }, 280);
         };
 
         window.addEventListener('resize', handleResize);
-        handleResize();
+    }
+
+    clearAutoPlayTimer() {
+        if (this.autoPlayTimer) {
+            clearTimeout(this.autoPlayTimer);
+            this.autoPlayTimer = null;
+        }
+    }
+
+    scheduleAutoPlay(delayMs) {
+        this.clearAutoPlayTimer();
+        if (this.totalSlides <= 1 || this.isReducedMotion() || this.autoPlayPaused) return;
+
+        const wait = Math.max(200, delayMs);
+        this.autoPlayDeadline = Date.now() + wait;
+        this.autoPlayTimer = setTimeout(() => {
+            this.autoPlayTimer = null;
+            if (!this.autoPlayPaused && !this.isReducedMotion()) {
+                this.advanceAutoPlay();
+            }
+        }, wait);
     }
     
     showSlide(index) {
@@ -506,16 +531,21 @@ class CinematicHeroSlider {
     restartProgressAnimation() {
         if (!this.progressBar || this.totalSlides < 1) return;
 
-        const { base, target } = this.getProgressSegment();
+        const { base, target, segment } = this.getProgressSegment();
+        const delay = this.getAutoPlayDelay();
 
         this.progressBar.style.transition = 'none';
         this.progressBar.style.width = `${base}%`;
         void this.progressBar.offsetWidth;
 
+        this.clearAutoPlayTimer();
+
         if (this.autoPlayPaused || this.isReducedMotion()) return;
 
-        this.progressBar.style.transition = `width ${this.getAutoPlayDelay()}ms linear`;
+        this.progressBar.style.transition = `width ${delay}ms linear`;
         this.progressBar.style.width = `${target}%`;
+        this.autoPlayRemainingMs = delay;
+        this.scheduleAutoPlay(delay);
     }
 
     resumeProgressBar() {
@@ -523,36 +553,33 @@ class CinematicHeroSlider {
 
         const { segment, target } = this.getProgressSegment();
         const currentPct = this.getProgressPercent();
+        const remainingPct = Math.max(0, target - currentPct);
 
-        if (currentPct >= target - 0.5) {
-            this.advanceAutoPlay();
+        if (remainingPct <= 0.5) {
+            this.scheduleAutoPlay(200);
             return;
         }
 
-        const remainingPct = target - currentPct;
-        const remainingMs = Math.max(200, (remainingPct / segment) * this.getAutoPlayDelay());
+        const remainingMs = Math.max(
+            200,
+            this.autoPlayRemainingMs > 0
+                ? this.autoPlayRemainingMs
+                : (remainingPct / segment) * this.getAutoPlayDelay()
+        );
 
         this.progressBar.style.transition = `width ${remainingMs}ms linear`;
         this.progressBar.style.width = `${target}%`;
+        this.autoPlayRemainingMs = remainingMs;
+        this.scheduleAutoPlay(remainingMs);
     }
 
     syncProgressAfterSlideChange() {
         if (this.autoPlayPaused || this.isReducedMotion()) {
+            this.clearAutoPlayTimer();
             this.resetProgressToSegmentStart();
             return;
         }
         this.restartProgressAnimation();
-    }
-
-    onProgressTransitionEnd(e) {
-        if (e.propertyName !== 'width' || e.target !== this.progressBar) return;
-        if (this.autoPlayPaused || this.isReducedMotion()) return;
-
-        const { target } = this.getProgressSegment();
-        const current = this.getProgressPercent();
-        if (Math.abs(current - target) > 1.5) return;
-
-        this.advanceAutoPlay();
     }
 
     advanceAutoPlay() {
@@ -572,11 +599,16 @@ class CinematicHeroSlider {
     
     stopAutoPlay() {
         this.autoPlayPaused = true;
+        if (this.autoPlayDeadline > 0) {
+            this.autoPlayRemainingMs = Math.max(0, this.autoPlayDeadline - Date.now());
+        }
+        this.clearAutoPlayTimer();
         this.freezeProgressBar();
     }
     
     resetAutoPlay() {
         this.autoPlayPaused = false;
+        this.autoPlayRemainingMs = 0;
         this.restartProgressAnimation();
     }
     
