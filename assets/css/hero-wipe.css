@@ -1,0 +1,89 @@
+/* Монтажный wipe при смене hero — только десктоп. Выключить: __SITE_ENHANCEMENTS__.heroWipe = false */
+
+@media (min-width: 769px) {
+    html.hero-wipe-on .hero-slider .slide {
+        transition:
+            opacity 1.85s cubic-bezier(0.25, 1, 0.38, 1),
+            visibility 0s linear 1.85s;
+    }
+
+    html.hero-wipe-on .hero-slider .slide.active {
+        transition:
+            opacity 1.85s cubic-bezier(0.25, 1, 0.38, 1),
+            visibility 0s linear 0s;
+    }
+}
+
+.hero-wine-wipe {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .hero-wine-wipe {
+        display: none !important;
+    }
+}
+
+.hero-wine-wipe::before {
+    content: '';
+    position: absolute;
+    top: -8%;
+    bottom: -8%;
+    left: 50%;
+    width: min(48vw, 520px);
+    margin-left: calc(min(48vw, 520px) / -2);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(20, 10, 13, 0.14) 10%,
+        rgba(70, 10, 35, 0.28) 24%,
+        rgba(128, 0, 32, 0.38) 40%,
+        rgba(128, 0, 32, 0.44) 50%,
+        rgba(128, 0, 32, 0.38) 60%,
+        rgba(70, 10, 35, 0.28) 76%,
+        rgba(20, 10, 13, 0.14) 90%,
+        transparent 100%
+    );
+    box-shadow:
+        0 0 40px rgba(128, 0, 32, 0.2),
+        0 0 72px rgba(70, 10, 35, 0.1);
+    transform: scaleX(0);
+    transform-origin: center center;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.hero-wine-wipe.is-playing::before {
+    animation: hero-wine-wipe-sweep 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes hero-wine-wipe-sweep {
+    0% {
+        transform: scaleX(0.04);
+        opacity: 0;
+    }
+    42% {
+        opacity: 0.55;
+    }
+    100% {
+        transform: scaleX(1.1);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.hero-wipe-on .hero-slider .slide,
+    html.hero-wipe-on .hero-slider .slide.active {
+        transition: none !important;
+    }
+
+    .hero-wine-wipe,
+    .hero-wine-wipe.is-playing::before {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+}

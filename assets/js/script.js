@@ -351,6 +351,8 @@ class CinematicHeroSlider {
     }
     
     showSlide(index) {
+        const prevIndex = this.currentSlide;
+
         this.slides.forEach(slide => {
             slide.classList.remove('active');
         });
@@ -373,6 +375,12 @@ class CinematicHeroSlider {
         this.updateProgressBar();
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
+
+        if (prevIndex !== index) {
+            document.dispatchEvent(
+                new CustomEvent('hero:slide-change', { detail: { index, prevIndex } })
+            );
+        }
     }
 
     updateHeroSlideBodyClass(index) {
