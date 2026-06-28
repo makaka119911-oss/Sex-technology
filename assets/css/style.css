@@ -1125,15 +1125,6 @@ body.hero-slide-1 .header:not(.scrolled) {
         margin-top: calc(-1 * var(--header-height));
         padding-top: 0;
         box-sizing: border-box;
-        /* max(vh,dvh): на Windows иначе снизу просвечивает #help */
-        --hero-viewport-h: max(100vh, 100dvh, 100svh);
-        height: calc(var(--hero-viewport-h) + var(--header-height));
-        min-height: calc(var(--hero-viewport-h) + var(--header-height));
-        max-height: none;
-        margin-bottom: -6px;
-        padding-bottom: 6px;
-        z-index: 2;
-        isolation: isolate;
     }
 
     .hero-slider .slider-indicators {
@@ -1187,8 +1178,6 @@ body.hero-slide-1 .header:not(.scrolled) {
  */
 .hero-slider {
     position: relative;
-    height: 100dvh;
-    height: 100svh;
     min-height: 600px;
     max-height: none;
     overflow: hidden;
@@ -1196,6 +1185,29 @@ body.hero-slide-1 .header:not(.scrolled) {
     --hero-cta-from-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2.2vh, 26px));
     /* Мобильная «рельса»: индикаторы + стрелки прямо над золотыми надписями */
     --hero-mobile-ui-rail: calc(var(--hero-cta-from-bottom) + clamp(142px, 25vh, 204px));
+}
+
+/* Десктоп: после базового блока — иначе height:100svh ниже перебивает calc */
+@media (min-width: 769px) {
+    .hero-slider {
+        --hero-viewport-h: max(100vh, 100dvh, 100svh);
+        height: calc(var(--hero-viewport-h) + var(--header-height, 76px));
+        min-height: calc(var(--hero-viewport-h) + var(--header-height, 76px));
+        z-index: 2;
+        isolation: isolate;
+    }
+
+    .hero-slider::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 8px;
+        background: #140a0d;
+        z-index: 20;
+        pointer-events: none;
+    }
 }
 
 .slider-container {
