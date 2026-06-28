@@ -281,7 +281,6 @@ class CinematicHeroSlider {
         this.autoPlayTimer = null;
         this.autoPlayDeadline = 0;
         this.autoPlayRemainingMs = 0;
-        this._progressRaf = null;
         this._slideLockUntil = 0;
         this._leaveTimer = null;
         this.touchStartX = 0;
@@ -371,43 +370,26 @@ class CinematicHeroSlider {
         window.addEventListener('resize', handleResize);
     }
 
-    clearProgressRaf() {
-        if (this._progressRaf) {
-            cancelAnimationFrame(this._progressRaf);
-            this._progressRaf = null;
-        }
-    }
-
     getProgressTargetPct() {
         return ((this.currentSlide + 1) / this.totalSlides) * 100;
     }
 
     startProgressAnimation(fromPct, toPct, durationMs) {
-        this.clearProgressRaf();
         if (!this.progressBar || durationMs <= 0) return;
 
         const from = Math.max(0, Math.min(100, fromPct));
         const to = Math.max(0, Math.min(100, toPct));
-        const startTime = performance.now();
 
-        const step = (now) => {
-            if (this.autoPlayPaused) return;
-            const t = Math.min(1, (now - startTime) / durationMs);
-            const pct = from + (to - from) * t;
-            this.progressBar.style.transition = 'none';
-            this.progressBar.style.width = `${pct}%`;
-            if (t < 1) {
-                this._progressRaf = requestAnimationFrame(step);
-            }
-        };
-
-        this._progressRaf = requestAnimationFrame(step);
+        this.progressBar.style.transition = 'none';
+        this.progressBar.style.width = `${from}%`;
+        void this.progressBar.offsetWidth;
+        this.progressBar.style.transition = `width ${durationMs}ms linear`;
+        this.progressBar.style.width = `${to}%`;
     }
 
     bootAutoPlayCycle() {
         if (this.totalSlides <= 1 || this.isReducedMotion()) {
             this.clearAutoPlayTimer();
-            this.clearProgressRaf();
             this.resetProgressToSegmentStart();
             return;
         }
@@ -417,18 +399,14 @@ class CinematicHeroSlider {
         this.clearAutoPlayTimer();
 
         const delay = this.getAutoPlayDelay();
-        const target = this.getProgressTargetPct();
-        let start = this.getProgressPercent();
+        const { base, target } = this.getProgressSegment();
 
-        if (this.currentSlide === 0 && start > 92) {
-            start = 0;
-            if (this.progressBar) {
-                this.progressBar.style.transition = 'none';
-                this.progressBar.style.width = '0%';
-            }
+        if (this.progressBar) {
+            this.progressBar.style.transition = 'none';
+            this.progressBar.style.width = `${base}%`;
         }
 
-        this.startProgressAnimation(start, target, delay);
+        this.startProgressAnimation(base, target, delay);
         this.scheduleAutoPlay(delay);
     }
 
@@ -437,7 +415,6 @@ class CinematicHeroSlider {
             clearTimeout(this.autoPlayTimer);
             this.autoPlayTimer = null;
         }
-        this.clearProgressRaf();
     }
 
     scheduleAutoPlay(delayMs) {
@@ -464,7 +441,7 @@ class CinematicHeroSlider {
 
         this.slides.forEach((slide, i) => {
             if (i === prevIndex && prevIndex !== index) return;
-            slide.classList.remove('active', 'is-leaving', 'is-leaving-out', 'is-entering');
+            slide.classList.remove('active', 'is-leaving', 'is-leaving-out');
         });
         
         this.indicators.forEach(indicator => {
@@ -489,18 +466,7 @@ class CinematicHeroSlider {
         }
         
         if (this.slides[index]) {
-            const incoming = this.slides[index];
-            if (prevIndex !== index) {
-                incoming.classList.add('is-entering');
-                incoming.classList.add('active');
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        incoming.classList.remove('is-entering');
-                    });
-                });
-            } else {
-                incoming.classList.add('active');
-            }
+            this.slides[index].classList.add('active');
         }
         
         if (this.indicators[index]) {

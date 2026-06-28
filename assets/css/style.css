@@ -1201,6 +1201,15 @@ body.hero-slide-1 .header:not(.scrolled) {
         --hero-slide-fade: 2s;
         --hero-slide-ease: cubic-bezier(0.22, 1, 0.38, 1);
     }
+
+    .slide-background {
+        transform: scale(1);
+        transition: none;
+    }
+
+    .slide.active .slide-background {
+        transform: scale(1);
+    }
 }
 
 .slide {
@@ -1242,22 +1251,6 @@ body.hero-slide-1 .header:not(.scrolled) {
     transition:
         opacity var(--hero-slide-fade) var(--hero-slide-ease),
         visibility 0s linear var(--hero-slide-fade);
-}
-
-.hero-slider .slide.is-entering {
-    opacity: 0;
-    visibility: visible;
-    pointer-events: none;
-    z-index: 2;
-    transition: none;
-}
-
-.hero-slider .slide.is-entering.active {
-    opacity: 0;
-}
-
-.hero-slider .slide.active:not(.is-entering) {
-    opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2615,9 +2608,10 @@ body.hero-slide-1 .header:not(.scrolled) {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: 3;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.14);
+    z-index: 12;
+    pointer-events: none;
 }
 
 .progress-bar {
@@ -2626,6 +2620,7 @@ body.hero-slide-1 .header:not(.scrolled) {
     width: 0%;
     transition: none;
     will-change: width;
+    box-shadow: 0 0 8px rgba(128, 0, 32, 0.45);
 }
 
 .scroll-indicator.desktop-only {

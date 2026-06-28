@@ -2,7 +2,7 @@
 
 /* Hero: только лёгкий zoom на десктопе — на мобиле чистый dissolve */
 @media (min-width: 769px) {
-    html.hero-motion-enhanced .hero-slider > .slider-container > .slide:not(.active):not(.is-leaving):not(.is-entering) {
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide:not(.active):not(.is-leaving) {
         transform: scale(1.018);
         transition:
             opacity var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
@@ -10,7 +10,7 @@
             visibility 0s linear var(--hero-slide-fade, 2.2s);
     }
 
-    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active:not(.is-entering) {
+    html.hero-motion-enhanced .hero-slider > .slider-container > .slide.active {
         transform: scale(1);
         transition:
             opacity var(--hero-slide-fade, 2.2s) var(--hero-slide-ease, cubic-bezier(0.16, 1, 0.32, 1)),
