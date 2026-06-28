@@ -1959,7 +1959,7 @@ body.hero-slide-1 .header:not(.scrolled) {
         transform-origin: center center;
     }
 
-    .hero-slider .slide--circles.active .slide-hero-circles__img {
+    .hero-slider .slide--circles .slide-hero-circles__img {
         object-position: 36% 34%;
         transform: translateX(7vw) scale(1.06) !important;
         transform-origin: center center;

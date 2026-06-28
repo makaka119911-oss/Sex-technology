@@ -35,14 +35,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Предзагрузка критического CSS -->
-    <link rel="preload" href="assets/css/style.css?v=layout-106" as="style">
-    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-106" as="style">
+    <link rel="preload" href="assets/css/style.css?v=layout-107" as="style">
+    <link rel="preload" href="assets/css/mobile-optimization.css?v=layout-107" as="style">
     <link rel="preload" href="assets/images/slaid11.jpg?v=20260624-slaid11" as="image" media="(max-width: 768px)">
 
     <!-- Стили -->
-    <link rel="stylesheet" href="assets/css/style.css?v=layout-106">
-    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-106">
-    <link rel="stylesheet" href="assets/css/enhancements.css?v=enhance-4">
+    <link rel="stylesheet" href="assets/css/style.css?v=layout-107">
+    <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-107">
+    <link rel="stylesheet" href="assets/css/enhancements.css?v=enhance-5">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -131,22 +131,22 @@
                 transform-origin: center center !important;
             }
 
-            /* Только активный слайд 2 — жёстко, чтобы не перебивали другие блоки CSS */
-            .hero-slider .slide--circles.active .slide-hero-circles__img {
+            /* Кадр слайда 2 — всегда на десктопе (не только .active), иначе при смене слайда прыгает */
+            .hero-slider .slide--circles .slide-hero-circles__img {
                 object-position: var(--hero-d2-pos-x) var(--hero-d2-pos-y) !important;
-                transform: translateX(var(--hero-d2-shift-x)) translateY(var(--hero-d2-shift-y)) scale(var(--hero-d2-scale)) !important;
+                transform: translateX(var(--hero-d2-shift-x)) translateY(calc(var(--hero-d2-shift-y) + var(--hero-parallax-y, 0px))) scale(var(--hero-d2-scale)) !important;
                 transform-origin: center center !important;
             }
 
             .hero-slider .slide-hero-desire__img {
                 object-position: var(--hero-d3-pos-x) var(--hero-d3-pos-y) !important;
-                transform: translateX(var(--hero-d3-shift-x)) translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
+                transform: translateX(var(--hero-d3-shift-x)) translateY(calc(var(--hero-d3-shift-y) + var(--hero-parallax-y, 0px))) scale(var(--hero-d3-scale)) !important;
                 transform-origin: center center !important;
             }
 
             .hero-slider .slide--desire.active .slide-hero-desire__img {
                 object-position: var(--hero-d3-pos-x) var(--hero-d3-pos-y) !important;
-                transform: translateX(var(--hero-d3-shift-x)) translateY(var(--hero-d3-shift-y)) scale(var(--hero-d3-scale)) !important;
+                transform: translateX(var(--hero-d3-shift-x)) translateY(calc(var(--hero-d3-shift-y) + var(--hero-parallax-y, 0px))) scale(var(--hero-d3-scale)) !important;
                 transform-origin: center center !important;
                 animation: none !important;
             }
@@ -1928,9 +1928,9 @@
     </script>
     <!-- Скрипты -->
     <script src="assets/js/script.js?v=hero-8s" defer></script>
-    <script src="assets/js/section-rail.js?v=enhance-4" defer></script>
-    <script src="assets/js/hero-scroll-parallax.js?v=enhance-4" defer></script>
-    <script src="assets/js/content-render.js?v=enhance-4" defer></script>
-    <script src="assets/js/section-snap.js?v=enhance-4" defer></script>
+    <script src="assets/js/section-rail.js?v=enhance-5" defer></script>
+    <script src="assets/js/hero-scroll-parallax.js?v=enhance-5" defer></script>
+    <script src="assets/js/content-render.js?v=enhance-5" defer></script>
+    <script src="assets/js/section-snap.js?v=enhance-5" defer></script>
 </body>
 </html>

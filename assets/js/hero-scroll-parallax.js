@@ -1,5 +1,6 @@
 /**
  * Лёгкий scroll-parallax на фоне слайдов 2–3 (десктоп).
+ * Смещение через --hero-parallax-y на слайде, не transform контейнера (иначе двойной сдвиг и прыжок при смене).
  * Отключить: window.__SITE_ENHANCEMENTS__.heroScrollParallax = false
  */
 (function initHeroScrollParallax() {
@@ -11,21 +12,23 @@
     );
 
     const hero = document.querySelector('.hero-slider');
-    const backgrounds = [
-        document.querySelector('.slide--circles .slide-background.slide-hero-circles'),
-        document.querySelector('.slide--desire .slide-background.slide-hero-desire'),
+    const parallaxSlides = [
+        document.querySelector('.slide--circles'),
+        document.querySelector('.slide--desire'),
     ].filter(Boolean);
 
-    if (!hero || !backgrounds.length) return;
+    if (!hero || !parallaxSlides.length) return;
 
     let ticking = false;
+
+    function clearParallax(slide) {
+        slide.style.removeProperty('--hero-parallax-y');
+    }
 
     function update() {
         ticking = false;
         if (!mq.matches) {
-            backgrounds.forEach((bg) => {
-                bg.style.transform = '';
-            });
+            parallaxSlides.forEach(clearParallax);
             return;
         }
 
@@ -33,21 +36,18 @@
         const vh = window.innerHeight;
 
         if (rect.bottom <= 0 || rect.top >= vh) {
-            backgrounds.forEach((bg) => {
-                bg.style.transform = '';
-            });
+            parallaxSlides.forEach(clearParallax);
             return;
         }
 
         const progress = Math.max(0, Math.min(1, (-rect.top + vh * 0.15) / (rect.height + vh * 0.2)));
         const y = (progress - 0.5) * 14;
 
-        backgrounds.forEach((bg) => {
-            const slide = bg.closest('.slide');
-            if (slide && slide.classList.contains('active')) {
-                bg.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
+        parallaxSlides.forEach((slide) => {
+            if (slide.classList.contains('active')) {
+                slide.style.setProperty('--hero-parallax-y', `${y.toFixed(2)}px`);
             } else {
-                bg.style.transform = '';
+                clearParallax(slide);
             }
         });
     }
@@ -69,7 +69,7 @@
     }
 
     const slideObserver = new MutationObserver(requestUpdate);
-    document.querySelectorAll('.hero-slider .slide').forEach((slide) => {
+    parallaxSlides.forEach((slide) => {
         slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] });
     });
 

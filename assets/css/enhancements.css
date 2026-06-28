@@ -172,10 +172,10 @@
     }
 }
 
-/* Parallax: плавный переход фона слайдов 2–3 */
+/* Parallax: смещение через --hero-parallax-y на img (см. hero-scroll-parallax.js) */
 @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
-    .slide--circles .slide-background.slide-hero-circles,
-    .slide--desire .slide-background.slide-hero-desire {
+    .slide--circles .slide-hero-circles__img,
+    .slide--desire .slide-hero-desire__img {
         will-change: transform;
         transition: transform 0.12s linear;
     }
