@@ -286,6 +286,12 @@ class CinematicHeroSlider {
             this.init();
         }
     }
+
+    getAutoPlayDelay() {
+        return window.matchMedia('(max-width: 768px)').matches
+            ? this.autoPlayDelayMobile
+            : this.autoPlayDelayDesktop;
+    }
     
     init() {
         this.showSlide(this.currentSlide);
