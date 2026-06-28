@@ -303,10 +303,14 @@ class CinematicHeroSlider {
         
         this.startAutoPlay();
         this.applySlideFromQuery();
-        
+
+        const pauseOnHover = window.matchMedia('(hover: none)').matches;
+
         this.slides.forEach(slide => {
-            slide.addEventListener('mouseenter', () => this.stopAutoPlay());
-            slide.addEventListener('mouseleave', () => this.startAutoPlay());
+            if (pauseOnHover) {
+                slide.addEventListener('mouseenter', () => this.stopAutoPlay());
+                slide.addEventListener('mouseleave', () => this.resumeAutoPlay());
+            }
             
             slide.addEventListener('touchstart', (e) => {
                 this.touchStartX = e.changedTouches[0].screenX;
@@ -316,7 +320,7 @@ class CinematicHeroSlider {
             slide.addEventListener('touchend', (e) => {
                 this.touchEndX = e.changedTouches[0].screenX;
                 this.handleSwipe();
-                setTimeout(() => this.startAutoPlay(), this.autoPlayDelay);
+                setTimeout(() => this.resumeAutoPlay(), this.autoPlayDelay);
             }, { passive: true });
         });
         
@@ -342,17 +346,18 @@ class CinematicHeroSlider {
     }
     
     initResponsiveBehaviors() {
+        let resizeTimer;
         const handleResize = () => {
-            this.resetAutoPlay();
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                this.resetAutoPlay();
+            }, 280);
         };
 
         window.addEventListener('resize', handleResize);
-        handleResize();
     }
     
     showSlide(index) {
-        const prevIndex = this.currentSlide;
-
         this.slides.forEach(slide => {
             slide.classList.remove('active');
         });
@@ -375,12 +380,6 @@ class CinematicHeroSlider {
         this.updateProgressBar();
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
-
-        if (prevIndex !== index) {
-            document.dispatchEvent(
-                new CustomEvent('hero:slide-change', { detail: { index, prevIndex } })
-            );
-        }
     }
 
     updateHeroSlideBodyClass(index) {
@@ -487,11 +486,18 @@ class CinematicHeroSlider {
     
     stopAutoPlay() {
         clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
+    }
+
+    resumeAutoPlay() {
+        this.startAutoPlay();
+        this.updateProgressBar();
     }
     
     resetAutoPlay() {
         this.stopAutoPlay();
         this.startAutoPlay();
+        this.updateProgressBar();
     }
     
     initParallax() {
