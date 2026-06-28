@@ -275,12 +275,13 @@ class CinematicHeroSlider {
         this.nextBtn = document.querySelector('.slider-next');
         this.currentSlide = 0;
         this.totalSlides = this.slides.length;
-        this.autoPlayDelayDesktop = 8500;
-        this.autoPlayDelayMobile = 13500;
+        this.autoPlayDelayDesktop = 8000;
+        this.autoPlayDelayMobile = 11000;
         this.autoPlayPaused = false;
         this.autoPlayTimer = null;
         this.autoPlayDeadline = 0;
         this.autoPlayRemainingMs = 0;
+        this._progressRaf = null;
         this._slideLockUntil = 0;
         this._leaveTimer = null;
         this.touchStartX = 0;
@@ -299,7 +300,7 @@ class CinematicHeroSlider {
     }
 
     getSlideFadeMs() {
-        return window.matchMedia('(max-width: 768px)').matches ? 3400 : 2200;
+        return window.matchMedia('(max-width: 768px)').matches ? 2000 : 1600;
     }
     
     init() {
@@ -370,9 +371,43 @@ class CinematicHeroSlider {
         window.addEventListener('resize', handleResize);
     }
 
+    clearProgressRaf() {
+        if (this._progressRaf) {
+            cancelAnimationFrame(this._progressRaf);
+            this._progressRaf = null;
+        }
+    }
+
+    getProgressTargetPct() {
+        return ((this.currentSlide + 1) / this.totalSlides) * 100;
+    }
+
+    startProgressAnimation(fromPct, toPct, durationMs) {
+        this.clearProgressRaf();
+        if (!this.progressBar || durationMs <= 0) return;
+
+        const from = Math.max(0, Math.min(100, fromPct));
+        const to = Math.max(0, Math.min(100, toPct));
+        const startTime = performance.now();
+
+        const step = (now) => {
+            if (this.autoPlayPaused) return;
+            const t = Math.min(1, (now - startTime) / durationMs);
+            const pct = from + (to - from) * t;
+            this.progressBar.style.transition = 'none';
+            this.progressBar.style.width = `${pct}%`;
+            if (t < 1) {
+                this._progressRaf = requestAnimationFrame(step);
+            }
+        };
+
+        this._progressRaf = requestAnimationFrame(step);
+    }
+
     bootAutoPlayCycle() {
         if (this.totalSlides <= 1 || this.isReducedMotion()) {
             this.clearAutoPlayTimer();
+            this.clearProgressRaf();
             this.resetProgressToSegmentStart();
             return;
         }
@@ -382,16 +417,18 @@ class CinematicHeroSlider {
         this.clearAutoPlayTimer();
 
         const delay = this.getAutoPlayDelay();
-        const { base, target } = this.getProgressSegment();
+        const target = this.getProgressTargetPct();
+        let start = this.getProgressPercent();
 
-        if (this.progressBar) {
-            this.progressBar.style.transition = 'none';
-            this.progressBar.style.width = `${base}%`;
-            void this.progressBar.offsetWidth;
-            this.progressBar.style.transition = `width ${delay}ms linear`;
-            this.progressBar.style.width = `${target}%`;
+        if (this.currentSlide === 0 && start > 92) {
+            start = 0;
+            if (this.progressBar) {
+                this.progressBar.style.transition = 'none';
+                this.progressBar.style.width = '0%';
+            }
         }
 
+        this.startProgressAnimation(start, target, delay);
         this.scheduleAutoPlay(delay);
     }
 
@@ -400,6 +437,7 @@ class CinematicHeroSlider {
             clearTimeout(this.autoPlayTimer);
             this.autoPlayTimer = null;
         }
+        this.clearProgressRaf();
     }
 
     scheduleAutoPlay(delayMs) {
@@ -474,9 +512,7 @@ class CinematicHeroSlider {
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
 
-        window.setTimeout(() => {
-            this.bootAutoPlayCycle();
-        }, 0);
+        this.bootAutoPlayCycle();
 
         document.dispatchEvent(
             new CustomEvent('hero:slide-change', { detail: { index } })
@@ -495,7 +531,7 @@ class CinematicHeroSlider {
         
         const contentDelay = prefersReducedMotion
             ? 0
-            : (window.matchMedia('(max-width: 768px)').matches ? 720 : 420);
+            : (window.matchMedia('(max-width: 768px)').matches ? 380 : 280);
 
         if (content) {
             content.style.animation = 'none';
