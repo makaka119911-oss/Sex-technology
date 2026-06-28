@@ -281,6 +281,8 @@ class CinematicHeroSlider {
         this.autoPlayTimer = null;
         this.autoPlayDeadline = 0;
         this.autoPlayRemainingMs = 0;
+        this.userNavigated = false;
+        this._heroAutoAdvancing = false;
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.touchThreshold = 50;
@@ -294,6 +296,10 @@ class CinematicHeroSlider {
         return window.matchMedia('(max-width: 768px)').matches
             ? this.autoPlayDelayMobile
             : this.autoPlayDelayDesktop;
+    }
+
+    getSlideFadeMs() {
+        return window.matchMedia('(max-width: 768px)').matches ? 2600 : 1900;
     }
     
     init() {
@@ -311,25 +317,26 @@ class CinematicHeroSlider {
             indicator.addEventListener('click', () => this.goToSlide(index));
         });
 
+        const heroControls = document.querySelector('.hero-slider .slider-controls');
+        const heroIndicators = document.querySelector('.hero-slider .slider-indicators');
+        [heroControls, heroIndicators].forEach((el) => {
+            if (!el) return;
+            el.addEventListener('pointerdown', () => this.markUserHeroInteraction());
+        });
+
         this.applySlideFromQuery();
         
         this.slides.forEach(slide => {
-            slide.addEventListener('mouseenter', () => {
-                if (window.matchMedia('(max-width: 768px)').matches) this.stopAutoPlay();
-            });
-            slide.addEventListener('mouseleave', () => {
-                if (window.matchMedia('(max-width: 768px)').matches) this.startAutoPlay();
-            });
-            
             slide.addEventListener('touchstart', (e) => {
                 this.touchStartX = e.changedTouches[0].screenX;
-                this.stopAutoPlay();
             }, { passive: true });
             
             slide.addEventListener('touchend', (e) => {
                 this.touchEndX = e.changedTouches[0].screenX;
-                this.handleSwipe();
-                setTimeout(() => this.startAutoPlay(), 900);
+                if (Math.abs(this.touchStartX - this.touchEndX) > this.touchThreshold) {
+                    this.markUserHeroInteraction();
+                    this.handleSwipe();
+                }
             }, { passive: true });
         });
         
@@ -368,6 +375,19 @@ class CinematicHeroSlider {
         window.addEventListener('resize', handleResize);
     }
 
+    markUserHeroInteraction() {
+        this.userNavigated = true;
+        this.autoPlayPaused = false;
+        this.autoPlayRemainingMs = 0;
+    }
+
+    resumeAutoPlayAfterUserNav() {
+        if (this.totalSlides <= 1 || this.isReducedMotion()) return;
+        this.autoPlayPaused = false;
+        this.autoPlayRemainingMs = 0;
+        this.restartProgressAnimation();
+    }
+
     clearAutoPlayTimer() {
         if (this.autoPlayTimer) {
             clearTimeout(this.autoPlayTimer);
@@ -390,14 +410,34 @@ class CinematicHeroSlider {
     }
     
     showSlide(index) {
-        this.slides.forEach(slide => {
-            slide.classList.remove('active');
+        const prevIndex = this.currentSlide;
+        const isAutoAdvance = this._heroAutoAdvancing === true;
+        this._heroAutoAdvancing = false;
+
+        this.slides.forEach((slide, i) => {
+            if (i === prevIndex && prevIndex !== index) return;
+            slide.classList.remove('active', 'is-leaving', 'is-leaving-out');
         });
         
         this.indicators.forEach(indicator => {
             indicator.classList.remove('active');
             indicator.setAttribute('aria-selected', 'false');
         });
+
+        if (this.slides[prevIndex] && prevIndex !== index) {
+            const leaving = this.slides[prevIndex];
+            leaving.classList.remove('active');
+            leaving.classList.add('is-leaving');
+            leaving.classList.remove('is-leaving-out');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    leaving.classList.add('is-leaving-out');
+                });
+            });
+            window.setTimeout(() => {
+                leaving.classList.remove('is-leaving', 'is-leaving-out');
+            }, this.getSlideFadeMs() + 100);
+        }
         
         if (this.slides[index]) {
             this.slides[index].classList.add('active');
@@ -409,7 +449,12 @@ class CinematicHeroSlider {
         }
         
         this.currentSlide = index;
-        this.syncProgressAfterSlideChange();
+        if (this.userNavigated && !isAutoAdvance) {
+            this.resumeAutoPlayAfterUserNav();
+        } else {
+            this.syncProgressAfterSlideChange();
+        }
+        this.userNavigated = false;
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
 
@@ -463,17 +508,20 @@ class CinematicHeroSlider {
     }
     
     nextSlide() {
+        this.markUserHeroInteraction();
         const nextIndex = (this.currentSlide + 1) % this.totalSlides;
         this.showSlide(nextIndex);
     }
     
     prevSlide() {
+        this.markUserHeroInteraction();
         const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
         this.showSlide(prevIndex);
     }
     
     goToSlide(index) {
-        if (index >= 0 && index < this.totalSlides) {
+        if (index >= 0 && index < this.totalSlides && index !== this.currentSlide) {
+            this.markUserHeroInteraction();
             this.showSlide(index);
         }
     }
@@ -584,6 +632,7 @@ class CinematicHeroSlider {
 
     advanceAutoPlay() {
         const nextIndex = (this.currentSlide + 1) % this.totalSlides;
+        this._heroAutoAdvancing = true;
         this.showSlide(nextIndex);
     }
 
