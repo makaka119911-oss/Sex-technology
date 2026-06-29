@@ -476,12 +476,14 @@ class CinematicHeroSlider {
         const segment = 100 / this.totalSlides;
         const base = this.currentSlide * segment;
         const target = base + segment;
+        const bar = this.progressBar;
 
-        this.progressBar.style.transition = 'none';
-        this.progressBar.style.width = `${base}%`;
-        void this.progressBar.offsetWidth;
-        this.progressBar.style.transition = `width ${this.autoPlayDelay}ms linear`;
-        this.progressBar.style.width = `${target}%`;
+        /* !important — иначе mobile CSS (width 7s linear !important) анимирует откат назад */
+        bar.style.setProperty('transition', 'none', 'important');
+        bar.style.width = `${base}%`;
+        void bar.offsetWidth;
+        bar.style.setProperty('transition', `width ${this.autoPlayDelay}ms linear`, 'important');
+        bar.style.width = `${target}%`;
     }
 
     startAutoPlay() {
