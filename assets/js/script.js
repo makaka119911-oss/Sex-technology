@@ -388,6 +388,10 @@ class CinematicHeroSlider {
     }
     
     animateContent() {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            return;
+        }
+
         const activeSlide = this.slides[this.currentSlide];
         const content = activeSlide.querySelector('.slide-text');
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -417,6 +421,10 @@ class CinematicHeroSlider {
     }
     
     animateElements() {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            return;
+        }
+
         const rays = document.querySelectorAll('.light-ray');
         rays.forEach((ray, index) => {
             ray.style.animation = 'none';
@@ -1156,6 +1164,16 @@ class MobileOptimization {
                     * {
                         animation-duration: 0.5s !important;
                         transition-duration: 0.3s !important;
+                    }
+
+                    .hero-slider .slider-indicators,
+                    .hero-slider .slider-controls,
+                    .hero-slider .slider-progress {
+                        transition: none !important;
+                    }
+
+                    .hero-slider .progress-bar {
+                        transition: width 7s linear !important;
                     }
                     
                     .parallax-layer {

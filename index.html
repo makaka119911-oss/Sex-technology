@@ -402,10 +402,39 @@
                 align-items: center !important;
                 z-index: 8 !important;
             }
+
+            /* Красная полоска автоплея — поверх индикаторов у нижнего края */
+            .hero-slider .slider-progress {
+                z-index: 21 !important;
+                bottom: 0 !important;
+                pointer-events: none !important;
+            }
         }
     </style>
     <style id="hero-mobile-crop-fix">
         @media (max-width: 768px) {
+            /* Полоска и 01–03 не «прыгают» при смене слайда (глобальный transition 0.3s) */
+            .hero-slider .slider-indicators,
+            .hero-slider .slider-controls,
+            .hero-slider .slider-progress {
+                transition: none !important;
+            }
+
+            .hero-slider .progress-bar {
+                transition: width 7s linear !important;
+            }
+
+            /* Без slideReveal — контент не проваливается на слайде 2 */
+            .hero-slider .slide-text,
+            .hero-slider .hero-slide2-eyebrow,
+            .hero-slider .hero-slide2-lead,
+            .hero-slider .luxury-title-wrapper,
+            .hero-slider .slide-buttons {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
             .hero-slider .slide--circles .slide-content.slide-content--circles,
             .hero-slider .slide--desire .slide-content.slide-content--desire {
                 position: relative !important;
@@ -1927,7 +1956,7 @@
         };
     </script>
     <!-- Скрипты -->
-    <script src="assets/js/script.js?v=scroll-1" defer></script>
+    <script src="assets/js/script.js?v=hero-patch-1" defer></script>
     <script src="assets/js/section-rail.js?v=scroll-1" defer></script>
     <script src="assets/js/hero-scroll-parallax.js?v=enhance-5" defer></script>
     <script src="assets/js/content-render.js?v=enhance-5" defer></script>
