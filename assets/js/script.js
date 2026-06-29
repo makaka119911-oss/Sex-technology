@@ -288,6 +288,11 @@ class CinematicHeroSlider {
     
     init() {
         this.showSlide(this.currentSlide);
+
+        const heroRoot = document.querySelector('.hero-slider');
+        if (heroRoot) {
+            requestAnimationFrame(() => heroRoot.classList.add('hero-slider--ready'));
+        }
         
         if (this.prevBtn) {
             this.prevBtn.addEventListener('click', () => this.prevSlide());
@@ -358,28 +363,53 @@ class CinematicHeroSlider {
     }
     
     showSlide(index) {
-        this.slides.forEach(slide => {
-            slide.classList.remove('active');
-        });
-        
+        const nextSlide = this.slides[index];
+        if (!nextSlide) return;
+
+        const prevIndex = this.currentSlide;
+        const prevSlide = this.slides[prevIndex];
+        const cinematic = document.documentElement.classList.contains('hero-motion-enhanced');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const useLeaving = cinematic && prevSlide && prevIndex !== index && !reducedMotion;
+
         this.indicators.forEach(indicator => {
             indicator.classList.remove('active');
             indicator.setAttribute('aria-selected', 'false');
         });
-        
-        if (this.slides[index]) {
-            this.slides[index].classList.add('active');
+
+        if (useLeaving) {
+            this.slides.forEach(slide => {
+                if (slide !== prevSlide && slide !== nextSlide) {
+                    slide.classList.remove('active', 'is-leaving', 'is-leaving-out');
+                }
+            });
+            prevSlide.classList.remove('active');
+            prevSlide.classList.add('is-leaving', 'is-leaving-out');
+            const clearLeaving = () => {
+                prevSlide.classList.remove('is-leaving', 'is-leaving-out');
+            };
+            prevSlide.addEventListener('transitionend', clearLeaving, { once: true });
+            setTimeout(clearLeaving, 2400);
+        } else {
+            this.slides.forEach(slide => {
+                slide.classList.remove('active', 'is-leaving', 'is-leaving-out');
+            });
         }
-        
+
+        nextSlide.classList.add('active');
+        nextSlide.classList.remove('is-leaving', 'is-leaving-out');
+
         if (this.indicators[index]) {
             this.indicators[index].classList.add('active');
             this.indicators[index].setAttribute('aria-selected', 'true');
         }
-        
+
         this.currentSlide = index;
         this.updateProgressBar();
         this.updateHeroSlideBodyClass(index);
         this.animateContent();
+
+        document.dispatchEvent(new CustomEvent('hero:slide-change', { detail: { index } }));
     }
 
     updateHeroSlideBodyClass(index) {
@@ -388,7 +418,9 @@ class CinematicHeroSlider {
     }
     
     animateContent() {
-        if (window.matchMedia('(max-width: 768px)').matches) {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const cinematic = document.documentElement.classList.contains('hero-motion-enhanced');
+        if (isMobile || cinematic) {
             return;
         }
 
@@ -1176,6 +1208,26 @@ class MobileOptimization {
 
                     .hero-slider .progress-bar {
                         transition: width 7s linear !important;
+                    }
+
+                    .hero-slider > .slider-container > .slide {
+                        transition:
+                            opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+                            visibility 0s linear 1s !important;
+                    }
+
+                    .hero-slider > .slider-container > .slide.active {
+                        transition:
+                            opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+                            visibility 0s linear 0s !important;
+                    }
+
+                    .hero-slider .slide-text,
+                    .hero-slider .hero-slide2-eyebrow,
+                    .hero-slider .hero-slide2-lead,
+                    .hero-slider .luxury-title-wrapper,
+                    .hero-slider .slide-buttons {
+                        transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s !important;
                     }
                     
                     .parallax-layer {

@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="assets/css/style.css?v=layout-116">
     <link rel="stylesheet" href="assets/css/mobile-optimization.css?v=layout-111">
     <link rel="stylesheet" href="assets/css/enhancements.css?v=enhance-6">
+    <link rel="stylesheet" href="assets/css/motion-enhancements.css?v=motion-1">
 
     <!-- Критичные правки hero 2–3: в HTML, чтобы пробить кэш CSS на телефоне -->
     <style id="hero-slide2-shadow-fix">
@@ -409,6 +410,36 @@
                 bottom: 0 !important;
                 pointer-events: none !important;
             }
+
+            /* Кинематографичный crossfade + лёгкий zoom (motion-enhancements.js) */
+            html.hero-motion-enhanced {
+                --hero-slide-fade: 1.15s;
+                --hero-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            html.hero-motion-enhanced .hero-slider .slide-text,
+            html.hero-motion-enhanced .hero-slider .hero-slide2-eyebrow,
+            html.hero-motion-enhanced .hero-slider .hero-slide2-lead,
+            html.hero-motion-enhanced .hero-slider .luxury-title-wrapper,
+            html.hero-motion-enhanced .hero-slider .slide-buttons {
+                transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.18s !important;
+            }
+
+            html.hero-motion-enhanced .hero-slider .slide:not(.active) .slide-text,
+            html.hero-motion-enhanced .hero-slider .slide:not(.active) .hero-slide2-eyebrow,
+            html.hero-motion-enhanced .hero-slider .slide:not(.active) .hero-slide2-lead,
+            html.hero-motion-enhanced .hero-slider .slide:not(.active) .luxury-title-wrapper,
+            html.hero-motion-enhanced .hero-slider .slide:not(.active) .slide-buttons {
+                opacity: 0 !important;
+            }
+
+            html.hero-motion-enhanced .hero-slider .slide.active .slide-text,
+            html.hero-motion-enhanced .hero-slider .slide.active .hero-slide2-eyebrow,
+            html.hero-motion-enhanced .hero-slider .slide.active .hero-slide2-lead,
+            html.hero-motion-enhanced .hero-slider .slide.active .luxury-title-wrapper,
+            html.hero-motion-enhanced .hero-slider .slide.active .slide-buttons {
+                opacity: 1 !important;
+            }
         }
     </style>
     <style id="hero-mobile-crop-fix">
@@ -424,15 +455,56 @@
                 transition: width 7s linear !important;
             }
 
-            /* Без slideReveal — контент не проваливается на слайде 2 */
+            /* Плавный dissolve между слайдами (не 0.3s глобального сброса) */
+            .hero-slider > .slider-container > .slide {
+                transition:
+                    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+                    visibility 0s linear 1s !important;
+            }
+
+            .hero-slider > .slider-container > .slide.active {
+                transition:
+                    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+                    visibility 0s linear 0s !important;
+            }
+
+            /* Мягкое появление текста — только opacity, без slideReveal */
             .hero-slider .slide-text,
             .hero-slider .hero-slide2-eyebrow,
             .hero-slider .hero-slide2-lead,
             .hero-slider .luxury-title-wrapper,
             .hero-slider .slide-buttons {
                 animation: none !important;
-                opacity: 1 !important;
                 transform: none !important;
+                opacity: 0;
+                transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s !important;
+            }
+
+            .hero-slider:not(.hero-slider--ready) .slide.active .slide-text,
+            .hero-slider:not(.hero-slider--ready) .slide.active .hero-slide2-eyebrow,
+            .hero-slider:not(.hero-slider--ready) .slide.active .hero-slide2-lead,
+            .hero-slider:not(.hero-slider--ready) .slide.active .luxury-title-wrapper,
+            .hero-slider:not(.hero-slider--ready) .slide.active .slide-buttons {
+                opacity: 1 !important;
+                transition: none !important;
+            }
+
+            .hero-slider .slide.active .slide-text,
+            .hero-slider .slide.active .hero-slide2-eyebrow,
+            .hero-slider .slide.active .hero-slide2-lead,
+            .hero-slider .slide.active .luxury-title-wrapper,
+            .hero-slider .slide.active .slide-buttons {
+                opacity: 1 !important;
+            }
+
+            .hero-slider .slide:not(.active) .slide-text,
+            .hero-slider .slide:not(.active) .hero-slide2-eyebrow,
+            .hero-slider .slide:not(.active) .hero-slide2-lead,
+            .hero-slider .slide:not(.active) .luxury-title-wrapper,
+            .hero-slider .slide:not(.active) .slide-buttons {
+                opacity: 0 !important;
+                transition: opacity 0.35s ease !important;
+                transition-delay: 0s !important;
             }
 
             .hero-slider .slide--circles .slide-content.slide-content--circles,
@@ -1952,11 +2024,15 @@
             sectionRail: true,
             heroScrollParallax: false,
             contentJson: true,
-            sectionSnap: false
+            sectionSnap: false,
+            heroCrossfadeZoom: true,
+            heroGoldenWipe: true,
+            cardStagger: false
         };
     </script>
     <!-- Скрипты -->
-    <script src="assets/js/script.js?v=hero-patch-2" defer></script>
+    <script src="assets/js/script.js?v=hero-patch-3" defer></script>
+    <script src="assets/js/motion-enhancements.js?v=motion-1" defer></script>
     <script src="assets/js/section-rail.js?v=scroll-1" defer></script>
     <script src="assets/js/hero-scroll-parallax.js?v=enhance-5" defer></script>
     <script src="assets/js/content-render.js?v=enhance-5" defer></script>
