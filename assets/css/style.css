@@ -3632,6 +3632,10 @@ body.hero-slide-1 .header:not(.scrolled) {
     font-weight: 500;
 }
 
+.event-desc--price:empty {
+    display: none;
+}
+
 .event-desc--contacts {
     margin-bottom: 8px;
 }
