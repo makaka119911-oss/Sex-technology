@@ -3,8 +3,8 @@
     {
       "featured": true,
       "poster": {
-        "webp": "assets/images/events/zamok-barbekyu-4oct.webp?v=20261004",
-        "jpg": "assets/images/events/zamok-barbekyu-4oct.jpg?v=20261004",
+        "webp": "assets/images/events/zamok-barbekyu-4oct.webp?v=20260915",
+        "jpg": "assets/images/events/zamok-barbekyu-4oct.jpg?v=20260915",
         "alt": "Афиша: Замок Барбекю — Вечер королев, 4 октября 2026, Немчиновка"
       },
       "meta": [
@@ -30,6 +30,59 @@
       "doors": [],
       "closingParagraphs": [],
       "priceNote": "оплата 3000 ₽",
+      "contacts": [
+        {
+          "href": "https://t.me/Tan4ik77G",
+          "label": "@Tan4ik77G"
+        }
+      ],
+      "ctaHref": "#contact",
+      "ctaLabel": "Записаться на событие"
+    },
+    {
+      "featured": true,
+      "poster": {
+        "webp": "assets/images/events/klyuchi-zamok-13sep.webp?v=20260915",
+        "jpg": "assets/images/events/klyuchi-zamok-13sep.jpg?v=20260915",
+        "alt": "Афиша: Ключи от Зачарованного Замка — 13 сентября 2026, Немчиновка"
+      },
+      "meta": [
+        {
+          "icon": "fa-calendar-alt",
+          "text": "13 сентября 2026"
+        },
+        {
+          "icon": "fa-clock",
+          "text": "14:00 – 19:00"
+        },
+        {
+          "icon": "fa-map-marker-alt",
+          "text": "Замок в Немчиновке"
+        }
+      ],
+      "title": "Ключи от Зачарованного Замка",
+      "hosts": "Однодневный женский ретрит · Ведущие: Татьяна Солнечная и Сулейманова Мадина",
+      "intro": "Сказочное погружение в замке: встреча со своей Богиней, освобождение от стыда и запретов, женский круг и чувственность.",
+      "moreParagraphs": [],
+      "doors": [
+        {
+          "mod": "sensorium",
+          "title": "Дверь первая — Тени",
+          "text": "Сказочная психодрама: спуск в Подземелье, встреча со своей Богиней, освобождение от стыда и запретов."
+        },
+        {
+          "mod": "reflex",
+          "title": "Дверь вторая — Чувства",
+          "text": "Женский круг: саундхилинг, магия зеркала, артефакты удовольствия, танец с огнём."
+        },
+        {
+          "mod": "flame",
+          "title": "Вручение Ключей",
+          "text": "Финальная церемония в Башне Замка. Каждая получает свой Ключ — личный талисман силы и свободы."
+        }
+      ],
+      "closingParagraphs": [],
+      "priceNote": "",
       "contacts": [
         {
           "href": "https://t.me/Tan4ik77G",
