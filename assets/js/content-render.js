@@ -48,8 +48,10 @@
         return el('p', className ? `event-desc ${className}` : 'event-desc', text);
     }
 
-    function renderEvent(event) {
+    function renderEvent(event, index) {
         const article = el('article', 'event-card event-card--featured');
+        const cardId = `event-card-${index + 1}`;
+        article.id = cardId;
         const layout = el('div', 'event-featured-layout');
 
         const posterWrap = el('div', 'event-poster-wrap');
@@ -107,11 +109,44 @@
         const toggleWrap = el('div', 'mobile-collapsible-toggle mobile-collapsible-toggle--events');
         const toggleBtn = el('button', 'btn btn-secondary');
         toggleBtn.type = 'button';
-        toggleBtn.dataset.target = '#events';
+        // своя карточка: иначе updateState() в script.js применяет состояние
+        // одной кнопки ко ВСЕМ карточкам секции (побеждала последняя) —
+        // из-за этого «Читать полностью» не раскрывал текст.
+        toggleBtn.dataset.target = `#${cardId}`;
         toggleBtn.dataset.items = '.event-body-more';
         toggleBtn.dataset.expandLabel = 'Читать полностью';
         toggleBtn.dataset.collapseLabel = 'Свернуть';
         toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-controls', cardId);
+
+        // Плавность: анимируем ТОЧНУЮ высоту блока, а не «потолок» max-height 4000px из CSS
+        // (иначе короткая карточка раскрывалась почти мгновенно). Слушатель навешивается
+        // раньше общего в script.js, поэтому срабатывает ДО переключения класса.
+        toggleBtn.addEventListener('click', () => {
+            const COLLAPSED = 'is-collapsed-mobile';
+            const DUR = 450;
+            const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+            const wasCollapsed = more.classList.contains(COLLAPSED);
+            const full = more.scrollHeight; // полная высота контента (не зависит от обрезки)
+            let done = false;
+            const finish = () => {
+                if (done) return;
+                done = true;
+                more.style.maxHeight = '';
+                more.style.transition = '';
+                more.removeEventListener('transitionend', finish);
+            };
+            // 1) мгновенно ставим точную стартовую высоту (иначе анимация ехала от CSS-потолка 4000px)
+            more.style.transition = 'none';
+            more.style.maxHeight = wasCollapsed ? '0px' : `${full}px`;
+            void more.offsetHeight;
+            // 2) включаем переход и едем к целевой высоте
+            more.style.transition = `max-height ${DUR}ms ${EASE}, opacity ${Math.round(DUR * 0.7)}ms ease`;
+            more.style.maxHeight = wasCollapsed ? `${full}px` : '0px';
+            void more.offsetHeight;
+            more.addEventListener('transitionend', finish);
+            setTimeout(finish, DUR + 120);
+        });
         const toggleSpan = el('span', null, 'Читать полностью');
         const toggleIcon = el('i', 'fas fa-chevron-down');
         toggleIcon.setAttribute('aria-hidden', 'true');
@@ -152,7 +187,7 @@
 
     function renderEvents(data, mount) {
         const frag = document.createDocumentFragment();
-        data.items.forEach((event) => frag.appendChild(renderEvent(event)));
+        data.items.forEach((event, i) => frag.appendChild(renderEvent(event, i)));
         mount.replaceChildren(frag);
     }
 
