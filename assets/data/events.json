@@ -3,45 +3,6 @@
     {
       "featured": true,
       "poster": {
-        "webp": "assets/images/events/zamok-barbekyu-4oct.webp?v=20260915",
-        "jpg": "assets/images/events/zamok-barbekyu-4oct.jpg?v=20260915",
-        "alt": "Афиша: Замок Барбекю — Вечер королев, 4 октября 2026, Немчиновка"
-      },
-      "meta": [
-        {
-          "icon": "fa-calendar-alt",
-          "text": "4 октября 2026"
-        },
-        {
-          "icon": "fa-clock",
-          "text": "14:00 – 20:00"
-        },
-        {
-          "icon": "fa-map-marker-alt",
-          "text": "Замок в Немчиновке"
-        }
-      ],
-      "title": "Замок Барбекю: Вечер королев",
-      "hosts": "Ваше Величество, шампур ждёт!",
-      "intro": "В программе: огромный двухъярусный мангал, королевский повар, гора вкуснейших шашлыков, песни и танцы, конкурсы и Золотой шампур, финальное огненное шоу.",
-      "moreParagraphs": [
-        "Приходите в том, в чём вам удобно. Королева может быть королевой в чём угодно."
-      ],
-      "doors": [],
-      "closingParagraphs": [],
-      "priceNote": "оплата 3000 ₽",
-      "contacts": [
-        {
-          "href": "https://t.me/Tan4ik77G",
-          "label": "@Tan4ik77G"
-        }
-      ],
-      "ctaHref": "#contact",
-      "ctaLabel": "Записаться на событие"
-    },
-    {
-      "featured": true,
-      "poster": {
         "webp": "assets/images/events/uroven-1-2026.webp?v=20261017",
         "jpg": "assets/images/events/uroven-1-2026.jpg?v=20261017",
         "alt": "Афиша: Погружение в чувственность — Уровень 1, 17 октября, Немчиновка"
