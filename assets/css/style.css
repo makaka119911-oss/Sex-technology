@@ -5226,6 +5226,33 @@ body.hero-slide-1 .header:not(.scrolled) {
         display: none !important;
     }
 
+    /*
+     * Афиша: плавное раскрытие «Читать полностью» вместо резкого display:none.
+     * Специфичность (3 класса) выше общего правила выше, поэтому display:block
+     * перебивает display:none !important, а высоту анимируем через max-height.
+     * Потолок 4000px — с большим запасом под 6 «дверей» и абзацы (обрезать контент нечем).
+     */
+    .event-body-more.mobile-collapsible-item {
+        display: block !important;
+        max-height: 4000px;
+        opacity: 1;
+        overflow: hidden;
+        transition:
+            max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.35s ease;
+    }
+
+    .event-body-more.mobile-collapsible-item.is-collapsed-mobile {
+        max-height: 0;
+        opacity: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        pointer-events: none;
+        transition:
+            max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.28s ease;
+    }
+
     .mobile-collapsible-toggle {
         margin-top: 14px;
         display: flex;
