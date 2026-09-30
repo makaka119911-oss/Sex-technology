@@ -332,3 +332,15 @@
     width: 100% !important;
     max-width: 210px !important;
 }
+
+/* «Галерея» (слайд 3) — растянуть контейнер узкого --single до 210px, как у остальных */
+.hero-slider .slide-buttons--single {
+    width: auto !important;
+    max-width: 210px !important;
+}
+.hero-slider .slide--desire .slide-buttons--desire-foot .btn-hero {
+    width: 100% !important;
+    max-width: 210px !important;
+    min-width: 148px !important;
+    justify-content: center;
+}
