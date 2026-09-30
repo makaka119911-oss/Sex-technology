@@ -323,3 +323,12 @@
     width: auto !important;
     margin: 0 !important;
 }
+
+/* «Афиша» (слайд 1) — убрать растяжение на 100% своего контейнера, выровнять с остальными */
+.hero-slider .slide--intro .slide-buttons--intro-foot {
+    max-width: 210px !important;
+}
+.hero-slider .slide--intro .slide-buttons--intro-foot .btn-hero {
+    width: 100% !important;
+    max-width: 210px !important;
+}
