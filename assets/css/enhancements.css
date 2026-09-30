@@ -298,3 +298,28 @@
         opacity: 1;
     }
 }
+
+/* ===== Единая ширина кнопок hero-слайдов ===== */
+/* Все кнопки «Афиша» / «Узнать о кругах» / «Галерея» — одна средняя ширина,
+   чтобы не разъезжались по ширине (просьба владельца, 2026-09-30). */
+.hero-slider .slide-buttons .btn-hero {
+    width: auto !important;
+    max-width: 210px !important;
+    min-width: 148px !important;
+    flex: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+    box-sizing: border-box;
+}
+.hero-slider .slide-buttons .btn-hero:has(> i:last-child) {
+    padding-right: 16px;
+}
+/* Пары кнопок (слайд 2: «Узнать о кругах» + «Записаться») не растягивать на полконтейнера */
+.hero-slider .slide--circles .slide-buttons .btn-hero {
+    flex: none !important;
+    max-width: 210px !important;
+    min-width: 148px !important;
+    width: auto !important;
+    margin: 0 !important;
+}
