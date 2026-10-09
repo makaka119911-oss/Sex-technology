@@ -214,7 +214,7 @@
 
         if (eventsMount) {
             tasks.push(
-                fetch(`${DATA_BASE}/events.json?v=20261031`)
+                fetch(`${DATA_BASE}/events.json?v=20261107`)
                     .then((r) => {
                         if (!r.ok) throw new Error('events.json');
                         return r.json();
