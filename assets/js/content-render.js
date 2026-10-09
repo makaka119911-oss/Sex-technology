@@ -63,8 +63,11 @@
         img.src = event.poster.jpg;
         img.alt = event.poster.alt;
         img.className = 'event-poster';
-        img.width = 1080;
-        img.height = 1350;
+        // Размеры берём из данных: у афиш разные пропорции (710×1280, 848×1264, 1000×1803…),
+        // а жёсткие 1080×1350 показывали браузеру неверную пропорцию — карточка прыгала,
+        // пока грузился постер. Нет данных — остаётся запасное значение.
+        img.width = event.poster.width || 1080;
+        img.height = event.poster.height || 1350;
         img.loading = 'lazy';
         img.decoding = 'async';
         picture.appendChild(source);
