@@ -5,7 +5,9 @@
       "poster": {
         "webp": "assets/images/events/vypusknoi-bogin.webp?v=20261107",
         "jpg": "assets/images/events/vypusknoi-bogin.jpg?v=20261107",
-        "alt": "Афиша: Выпускной богинь наших ретритов — 7 ноября 2026, поход в стриптиз-клуб"
+        "alt": "Афиша: Выпускной богинь наших ретритов — 7 ноября 2026, поход в стриптиз-клуб",
+        "width": 1000,
+        "height": 1803
       },
       "meta": [
         {
@@ -48,7 +50,9 @@
       "poster": {
         "webp": "assets/images/events/uroven-1-2026.webp?v=20261017",
         "jpg": "assets/images/events/uroven-1-2026.jpg?v=20261017",
-        "alt": "Афиша: Погружение в чувственность — Уровень 1, 17 октября, Немчиновка"
+        "alt": "Афиша: Погружение в чувственность — Уровень 1, 17 октября, Немчиновка",
+        "width": 710,
+        "height": 1280
       },
       "meta": [
         {
@@ -114,7 +118,9 @@
       "poster": {
         "webp": "assets/images/events/misteriya-24okt-2026.webp?v=20261024",
         "jpg": "assets/images/events/misteriya-24okt-2026.jpg?v=20261024",
-        "alt": "Афиша: Мистерия чувственности и сексуальности — 24 октября 2026, Немчиновка"
+        "alt": "Афиша: Мистерия чувственности и сексуальности — 24 октября 2026, Немчиновка",
+        "width": 710,
+        "height": 1280
       },
       "meta": [
         {
@@ -187,7 +193,9 @@
       "poster": {
         "webp": "assets/images/events/otkrytie-doveriya-31okt-2026.webp?v=20261031",
         "jpg": "assets/images/events/otkrytie-doveriya-31okt-2026.jpg?v=20261031",
-        "alt": "Афиша: Открытие доверия — 31 октября 2026, Немчиновка"
+        "alt": "Афиша: Открытие доверия — 31 октября 2026, Немчиновка",
+        "width": 710,
+        "height": 1280
       },
       "meta": [
         {
@@ -266,7 +274,9 @@
       "poster": {
         "webp": "assets/images/events/klyuchi-zamok-13sep.webp?v=20260915",
         "jpg": "assets/images/events/klyuchi-zamok-13sep.jpg?v=20260915",
-        "alt": "Афиша: Ключи от Зачарованного Замка — 13 сентября 2026, Немчиновка"
+        "alt": "Афиша: Ключи от Зачарованного Замка — 13 сентября 2026, Немчиновка",
+        "width": 848,
+        "height": 1264
       },
       "meta": [
         {
