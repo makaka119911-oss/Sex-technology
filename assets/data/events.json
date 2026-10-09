@@ -3,6 +3,49 @@
     {
       "featured": true,
       "poster": {
+        "webp": "assets/images/events/vypusknoi-bogin.webp?v=20261107",
+        "jpg": "assets/images/events/vypusknoi-bogin.jpg?v=20261107",
+        "alt": "Афиша: Выпускной богинь наших ретритов — 7 ноября 2026, поход в стриптиз-клуб"
+      },
+      "meta": [
+        {
+          "icon": "fa-calendar-alt",
+          "text": "7 ноября 2026"
+        },
+        {
+          "icon": "fa-clock",
+          "text": "с 23:00"
+        },
+        {
+          "icon": "fa-map-marker-alt",
+          "text": "Поход в стриптиз-клуб"
+        }
+      ],
+      "title": "Выпускной богинь наших ретритов",
+      "hosts": "Ведущие: Татьяна Солнечная и Виктория Румянцева",
+      "intro": "Богини, у нас выпускной! 🥂 Мы прошли вместе наши ретриты — и отмечаем это по-настоящему: 7 ноября, с 23:00, идём в стриптиз-клуб.",
+      "moreParagraphs": [],
+      "doors": [],
+      "closingParagraphs": [
+        "Место и точное время встречи пришлём тем, кто запишется.",
+        "С любовью, Татьяна Солнечная и Виктория Румянцева ❤️"
+      ],
+      "contacts": [
+        {
+          "href": "https://t.me/Tan4ik77G",
+          "label": "@Tan4ik77G"
+        },
+        {
+          "href": "https://t.me/ViktoriaRum",
+          "label": "@ViktoriaRum"
+        }
+      ],
+      "ctaHref": "#contact",
+      "ctaLabel": "Записаться на событие"
+    },
+    {
+      "featured": true,
+      "poster": {
         "webp": "assets/images/events/uroven-1-2026.webp?v=20261017",
         "jpg": "assets/images/events/uroven-1-2026.jpg?v=20261017",
         "alt": "Афиша: Погружение в чувственность — Уровень 1, 17 октября, Немчиновка"
