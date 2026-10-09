@@ -544,10 +544,11 @@ img {
 /* Оптимизация для ориентации экрана */
 @media (orientation: portrait) and (max-width: 768px) {
     .hero-slider {
+        /* Высота не должна меняться при прокрутке: svh стабильна, dvh «дышит» вместе
+           с адресной строкой браузера и даёт тот самый эффект «размер меняется». */
         height: 100vh;
-        height: 100dvh;
+        height: 100svh;
         min-height: 100svh;
-        min-height: 100dvh;
     }
 
     .slide-content {
