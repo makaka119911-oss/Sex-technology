@@ -1,21 +1,10 @@
 // ===== КОНСТАНТЫ ОТПРАВКИ ЗАЯВОК =====
-// Безопасный вариант: отправка в backend endpoint (VK/Telegram ключи хранятся в секретах сервера).
+// Форма отправляет заявку ТОЛЬКО на backend (Cloudflare Worker), а он рассылает
+// её в Telegram и VK. Токены на клиенте не хранятся: раньше токен бота Telegram
+// лежал прямо здесь, в публичном репозитории — это была утечка.
 const LEAD_BACKEND_URL = window.__LEAD_BACKEND_URL__ || '';
 
-// Legacy fallback (небезопасно): оставлено на время миграции, пока backend не включен.
-const BOT_TOKEN = '8402206062:AAEJim1GkriKqY_o1mOo0YWSWQDdw5Qy2h0';
-const CHAT_ID = '-1002313355102';
-const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-/** Экранирование для Telegram parse_mode HTML (имя, контакты, сообщение) */
-function escapeTelegramHtml(text) {
-    return String(text ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-}
-
-/** fetch с таймаутом: без этого запрос может «висеть» вечно (другой оператор, блокировка API) */
+/** Таймаут для fetch */
 async function fetchWithTimeout(url, options, timeoutMs = 25000) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -812,11 +801,12 @@ class ContactForm {
             this.disableForm(true);
             
             try {
-                if (LEAD_BACKEND_URL) {
-                    await this.sendToBackend(data);
-                } else {
-                    await this.sendToTelegram(data);
+                if (!LEAD_BACKEND_URL) {
+                    // Раньше здесь отправлялось напрямую в Telegram с токеном в коде.
+                    // Токен убран (утечка), а без backend заявка не дойдёт — говорим честно.
+                    throw new Error('Приём заявок временно недоступен');
                 }
+                await this.sendToBackend(data);
                 
                 this.showStatus('Спасибо! Мы получили вашу заявку и скоро свяжемся с вами.', 'success');
                 
@@ -884,60 +874,6 @@ class ContactForm {
         return result;
     }
 
-    async sendToTelegram(data) {
-        // Форматируем формат для читаемости
-        const formatMap = {
-            'individual': 'Индивидуальная сессия',
-            'circle': 'Женский круг',
-            'levels': 'Уровень погружения',
-            'not_sure': 'Пока не знаю, нужна консультация'
-        };
-        
-        const formatText = formatMap[data.format] || data.format;
-        const safeName = escapeTelegramHtml(data.name);
-        const safeContact = escapeTelegramHtml(data.contact);
-        const safeFormat = escapeTelegramHtml(formatText);
-        const safeMessage = escapeTelegramHtml(data.message || 'Не указано');
-        const safeDate = escapeTelegramHtml(data.date);
-        
-        // Формируем сообщение для Telegram
-        const message = `📝 НОВАЯ ЗАЯВКА С САЙТА
-
-👤 Имя: ${safeName}
-📞 Контакт: ${safeContact}
-🎯 Формат: ${safeFormat}
-📝 Сообщение: ${safeMessage}
-📅 Дата: ${safeDate}
-
-🚀 Отправлено с сайта: ${escapeTelegramHtml(window.location.hostname)}`;
-        
-        const payload = {
-            chat_id: CHAT_ID,
-            text: message,
-            parse_mode: 'HTML'
-        };
-        
-        const response = await fetchWithTimeout(TELEGRAM_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        }, 25000);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (!result.ok) {
-            throw new Error(result.description || 'Telegram API error');
-        }
-        
-        return result;
-    }
-    
     initMobileInputOptimization() {
         if (window.innerWidth <= 768) {
             const inputs = this.form.querySelectorAll('input, textarea, select');
